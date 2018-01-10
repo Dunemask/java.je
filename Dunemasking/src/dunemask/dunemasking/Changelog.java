@@ -124,7 +124,6 @@ public class Changelog {
 	private static void calcVersion() {
 		File dir = new File(toPackages);
 		File[] subFiles = FileUtil.getAllSubFiles(dir);
-		String[] displayedFiles = new String[subFiles.length];
 		ArrayList<Double> versions = new ArrayList<>();
 		for(int i=0;i<subFiles.length;i++) {
 			String x = subFiles[i].getPath();
@@ -165,7 +164,7 @@ public class Changelog {
 		line = line.replace("final static double version", "");
 		line = line.replace(";", "");
 		line = line.replace("=", "");
-	
+		
 		
 		double version = Double.parseDouble(line);
 		return version;
@@ -266,7 +265,6 @@ public class Changelog {
 		DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		//2017-12-12 08:34
 		
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 			
 			Date docDate = df.parse(df.format(attr.lastModifiedTime().toMillis()));
 			/**

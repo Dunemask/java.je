@@ -298,7 +298,7 @@ public class JarUtil{
 		
 		
 		
-		URL x = URLClassLoader.newInstance(urls).findResource(res.toString());
+		//URL x = URLClassLoader.newInstance(urls).findResource(res.toString());
 		
 		//Write tmpFile
 		File file=null;
