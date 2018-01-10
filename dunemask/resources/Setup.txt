@@ -1,0 +1,24 @@
+	//Default Setup
+	/** Name Of Jar
+	**/
+	public static final String jarName = "MYJAR!";
+	/** Default Folder (SRC)
+	**/
+	public static String defaultFolder;
+		/**Resource Folder (resources/)
+	**/
+	public static String resourceFolder;
+	//Custom Setup (Other Global Variables Needed)
+	
+	/** Main Entry Point (DO NOT USE THIS IN RECURSION WILL CAUSE STACK OVERFLOW)
+	 * Other Notes:
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		//Default Setup
+		defaultFolder = Setup.init(Setup.setUpStyle, jarName, jarName+"_lib", This.class);
+		resourceFolder = defaultFolder+"resources\\";
+		new File(resourceFolder).mkdirs();	
+		//Custom Setup
+		(Other Things for Program To Run)
+	}//Close Main Entry Point
