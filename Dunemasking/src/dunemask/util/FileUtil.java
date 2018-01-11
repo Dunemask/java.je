@@ -304,8 +304,8 @@ public class FileUtil{
 				//Catch Any Spaces in the name
 				try {
 					res = new URL(res.toString().replace("%20", " "));
-				} catch (MalformedURLException e) {
-	
+				} catch (Exception e) {
+					System.err.println("Prb don't exist");
 					e.printStackTrace();
 				}//Close Catch
 				
