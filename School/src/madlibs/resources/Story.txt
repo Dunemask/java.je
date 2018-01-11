@@ -12,7 +12,7 @@ It landed in front of a giant %s  with bats hanging from it.
 The dog could see a %s thing hiding inside of it.
 The dog began to %s and the owner walked over
 They quickly called the %s to cure the situation
-Tey looked very %s and handeled the situation well.
+They looked very %s and handeled the situation well.
 They %sed up the tree and removed what had been hiding inside
 The dog had saved the %s!
 "%s boy!" The owner called
