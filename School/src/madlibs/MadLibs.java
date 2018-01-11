@@ -13,7 +13,9 @@ package madlibs;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,6 +32,7 @@ public class MadLibs {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
 		System.out.println("1 - Choose, n - auto?");
 		switch(new Scanner(System.in).nextInt()){
 		case 1: choose = true;
@@ -38,13 +41,31 @@ public class MadLibs {
 		break;
 		}
 		
+		
 		//Retrieve answers
 		ArrayList<String> answers = getAnswers();
 		//Display Story
 		displayStory(answers);
 	}
 
+	private static void saveDoc() {
+		PrintStream out = null;
+		try {
+			out = new PrintStream(new FileOutputStream(new File("src/madlibs/resources/output.txt")));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.setOut(out);	
+		
+	}
+
 	private static void displayStory(ArrayList<String> answers) {
+		System.out.println("1 - Save Output To File, n - Run Normal");
+		switch(new Scanner(System.in).nextInt()){
+		case 1:  saveDoc();
+		break;
+		}
+		
 		File story = FileUtil.getResource("madlibs/resources/Story.txt");
 		String[] lines = RW.read(story, 0, FileUtil.linesInFile(story)-1);
 		String[] ans = answers.toArray(new String[answers.size()]);
@@ -53,6 +74,7 @@ public class MadLibs {
 			lines[i] = lines[i].replace("%sed", ans[i]+"ed");
 			System.out.println(lines[i]);
 		}
+	
 		
 	}
 
