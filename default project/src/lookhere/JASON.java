@@ -1,7 +1,7 @@
 /** 
  * Dunemask Created This File on the Main Repository
  * @contact Dunemask at dunemask@gmail.com
- * commit = false
+ * commit = true
  * File: lookhere.JASON.java
  * Version: 0.1
  * info: (Information About The Class)
