@@ -8,8 +8,6 @@ import java.util.Random;
  *  <p>Tests if the Text passes Criteria Set Ignoring Cases: {@link dunemask.util.StringUtil#filteredItemIgnoreCase(String, String[], String[])}</p>
  *   <p>Generate Character from {@link dunemask.util.StringUtil#alphabet}
  *   Random CharGenny Method: {@link dunemask.util.StringUtil#randomCharacterGenerator(String[])} </p> 
- *   <p>Encrypt (With Simple Math): {@link dunemask.util.StringUtil#encrypt(String, int[])}</p>
- *   <p>Decrypt (With Simple Math): {@link dunemask.util.StringUtil#decrypt(String, int[])}</p>
  * 
  * */
 public class StringUtil {

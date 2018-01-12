@@ -15,13 +15,14 @@ import java.util.Scanner;
  * <p>Write Multiple Lines of Text: {@link dunemask.util.RW#write(File, String[], int)}</p>
  * <p>Read One Line of Text From File: {@link dunemask.util.RW#read(File, int)}</p>
  * <p>Read Lines from File: {@link dunemask.util.RW#read(File, int, int)}</p>
+ * <p>Reads all lines from File: {@link dunemask.util.RW#readAll(File)}</p>
  * @author Elijah Dunemask
  **/
 public class RW {
 	/*@RW.java: RW Is the fast version with a clean file function that copies the file 
     before reading them off, Clean takes fairly long*/
 	/***Version*/
-    final static double version = 3.8;
+    final static double version = 3.9;
 	/**
 	 * Write Line To Specified file
 	 * 
@@ -58,7 +59,17 @@ public class RW {
 
 
 	}
-
+	/**Reads All Lines In The File
+	 * @param file File to be read
+	 * @return String Array of all the liens
+	 * */
+	public static String[] readAll(File file) {
+		String[] lines = read(file, 1, FileUtil.linesInFile(file));
+		return lines;
+	}
+	
+	
+	
 	/**
 	 * Write String array To Specified file
 	 * 
