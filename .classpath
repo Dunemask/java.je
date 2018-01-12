@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="default project/src"/>
-	<classpathentry kind="src" path="Dunemasking/src"/>
-	<classpathentry kind="src" path="School/src"/>
-	<classpathentry kind="lib" path="Libraries/org.eclipse.jgit-4.10.0.201712302008-r.jar"/>
-	<classpathentry kind="output" path="Dunemasking/bin"/>
-</classpath>
