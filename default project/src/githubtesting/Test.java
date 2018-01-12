@@ -1,9 +1,9 @@
 /** 
  * Dunemask Created This File on the Main Repository
  * @contact Dunemask at dunemask@gmail.com
- * commit = false
+ * commit = True
  * File: githubtesting.Test.java
- * Version: 0.1
+ * Version: 0.3
  * info: (Information About The Class)
  * (To Change This Go To Window > Preferences 
  * > Java > Code Style > Code Templates)
