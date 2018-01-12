@@ -10,14 +10,14 @@
  */
 package dunemask.dunemasking;
 
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
-
-import javax.swing.JFileChooser;
 
 import dunemask.util.FileUtil;
 import dunemask.util.RW;
@@ -89,10 +89,16 @@ public class GitHubStation {
 	 * 
 	 */
 	private static void removeFile() {
-		JFileChooser jc = new JFileChooser(repPath+"tmp\\");
-		jc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		jc.showOpenDialog(null);
-		File[] chosen = jc.getSelectedFiles();
+		Frame frame = new Frame();
+		frame.setVisible(true);
+		FileDialog fd = new FileDialog(frame);
+		fd.setAlwaysOnTop(true);
+		fd.setMultipleMode(true);
+		fd.setDirectory(repPath+"tmp/");
+		fd.setVisible(true);
+		
+		File[] chosen = fd.getFiles();
+		frame.dispose();
 		for(File f:chosen) {
 			f.delete();
 		}
@@ -154,10 +160,14 @@ public class GitHubStation {
 		File format = null;
 		switch(arg) {
 		case Add: format = FileUtil.getResource("dunemask/resources/github/Format.add.txt");
-			JFileChooser jc = new JFileChooser();
-			jc.showOpenDialog(null);
-			jc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			File chosen = jc.getSelectedFile();
+			Frame frame = new Frame();
+			frame.setVisible(true);
+			FileDialog fd = new FileDialog(frame);
+			fd.setAlwaysOnTop(true);
+			fd.setDirectory(repPath);
+			fd.setVisible(true);
+			File chosen = fd.getFiles()[0];
+			frame.dispose();
 			System.out.println("Custom Path: (Leave Blank For default and end with a /)");
 			File outFile = new File(repPath+"tmp\\"+sysin.nextLine()+chosen.getName());
 			FileUtil.writeFile(chosen, outFile);
