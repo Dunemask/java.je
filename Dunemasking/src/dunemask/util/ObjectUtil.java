@@ -17,7 +17,7 @@ import java.util.Random;
 public class ObjectUtil{
 	
 	/***Version*/
-    final static double version = 3.8;
+    final static double version = 3.9;
 	/**
 	 * Writes an object to specified file
 	 * 
@@ -27,8 +27,9 @@ public class ObjectUtil{
 	 *            Object that will be stored
 	 */
 	public static void writeObject(File file, Object ob) {
-		file = new File(FileUtil.changeExtension(file.getPath(), "OB"));
+		//file = new File(FileUtil.changeExtension(file.getPath(), "OB"));
 		try {
+			file.getParentFile().mkdirs();
 			file.createNewFile();
 		} catch (IOException e) {
 
@@ -71,6 +72,7 @@ public class ObjectUtil{
 	public static void writeObject(File file, Object ob, String extension) {
 		file = new File(FileUtil.changeExtension(file.getPath(), extension));
 		try {
+			file.getParentFile().mkdirs();
 			file.createNewFile();
 		} catch (IOException e) {
 
