@@ -38,6 +38,7 @@ public class JASON {
 		System.out.println("For information on the products of Dunemasking please See the Dunemasking Changelog");
 		System.out.println("It's located in dunemask.resources");
 		//In Yo Face!
+		
 	}
 
 }
