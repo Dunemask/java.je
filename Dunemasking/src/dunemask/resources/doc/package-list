@@ -4,4 +4,5 @@ dunemask.dunemasking.objects
 dunemask.objects
 dunemask.other
 dunemask.resources
+dunemask.resources.github
 dunemask.util

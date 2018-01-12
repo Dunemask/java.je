@@ -1,5 +1,6 @@
-Dunemasking Ver: 3.88
+Dunemasking Ver: 3.89
 dunemask.dunemasking.Changelog.java Version: 3.8
+dunemask.dunemasking.GitHubStation.java Version: 3.95
 dunemask.dunemasking.Setup.java Version: 3.8
 dunemask.dunemasking.Src.java Version: 3.8
 dunemask.dunemasking.Version.java Version: 3.8
@@ -16,6 +17,7 @@ dunemask.util.ObjectUtil.java Version: 3.9
 dunemask.util.RW.java Version: 3.9
 dunemask.util.StringUtil.java Version: 3.95
 dunemask.dunemasking.Changelog.java Version: 3.8
+dunemask.dunemasking.GitHubStation.java Version: 3.95
 dunemask.dunemasking.Setup.java Version: 3.8
 dunemask.dunemasking.Src.java Version: 3.8
 dunemask.dunemasking.Version.java Version: 3.8
@@ -45,5 +47,5 @@ Additionally:
 @Changelog.java: Tests javadoc version (Only works in ide) and labels with package
 				 Styling	
 
-Created at: 2018-01-11 20:40
+Created at: 2018-01-11 20:52
 (Class-Update)
