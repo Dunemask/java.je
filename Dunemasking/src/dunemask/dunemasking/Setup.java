@@ -20,7 +20,7 @@ import dunemask.util.RW;
  */
 public class Setup {
 	/***Version*/
-    final static double version = 3.8;
+    final static double version = 3.89;
 	/**
 	 * Automatically extracts jar if it is a jar and returns the path for the
 	 * resource folder

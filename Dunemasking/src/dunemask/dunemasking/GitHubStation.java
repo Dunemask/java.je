@@ -2,8 +2,8 @@
  * Dunemask Created This File on the Main Repository
  * @contact Dunemask at dunemask@gmail.com
  * commit = false
- * File: githubtesting.Test.java
- * Version: 0.1
+ * File: dunemask.dunemasking.GitHubStation.java
+ * Version: 0.3
  * info: (Information About The Class)
  * (To Change This Go To Window > Preferences 
  * > Java > Code Style > Code Templates)
@@ -13,6 +13,8 @@ package dunemask.dunemasking;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -21,7 +23,9 @@ import dunemask.util.FileUtil;
 import dunemask.util.RW;
 
 
-/**
+/**<p>Add/Remove files from temp: {@link dunemask.dunemasking.GitHubStation#Start()}</p>
+ *<p>Get File From github online temp: {@link dunemask.dunemasking.GitHubStation#gitFile(String)}</p>
+ * 
  * @author Elijah
  *
  */
@@ -30,7 +34,7 @@ public class GitHubStation {
 	public static 	String repPath;
 	public static Scanner sysin = new Scanner(System.in);
 	/**Version*/
-	final static double version = 3.95;
+    final static double version = 4.1;
 	
 	/**
 	 * Main Entity that opens a station
@@ -53,8 +57,34 @@ public class GitHubStation {
 		}
 		
 	}
-
 	}
+	
+	
+	/** Get file From Temp repository on github
+	 * @param genericPath Relative path to file from github tmp repository
+	 * @return file From dunemask.github.tmp directory by the specified path
+	 */
+	public static File gitFile(String genericPath) {
+		URL url = null;
+		try {
+			url = new URL("https://github.com/Dunemask/tmp/raw/master/"+genericPath);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+		File webFile = null;
+		try {
+		webFile = FileUtil.getWebFile(url);
+		}catch(Exception e) {
+			System.err.println("Resource not found at:"+url.toString());
+			e.printStackTrace();
+		}	
+		File file = webFile;
+		return file;
+		
+	}
+
+
 	/**
 	 * 
 	 */
