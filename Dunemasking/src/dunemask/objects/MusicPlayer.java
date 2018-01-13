@@ -8,11 +8,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -236,14 +231,7 @@ public class MusicPlayer extends JInternalFrame{
 	 * @param path URL
 	 */
 	protected void load(String path) {
-		URL url = null;
-		try {
-			url = new URI(path).toURL();
-		} catch (MalformedURLException | URISyntaxException e) {
-	
-			e.printStackTrace();
-		}
-		File tmp = FileUtil.getWebFile(url);
+		File tmp = FileUtil.getWebFile(path);
 		//System.out.println(tmp);
 		File song = tmp;
 		//FileUtil.writeFile(tmp, song);
@@ -270,7 +258,7 @@ public class MusicPlayer extends JInternalFrame{
 				if (songs[c] == null) {
 					songs[c] = "";
 				} else {
-					songs[c] = String.valueOf(i + c) + ":" + songs[c];
+					songs[c] = String.valueOf(i + c) + ":" + songs[c].replace("%20", " ");
 				} // Close ifElse
 			} // Close INternal For
 
@@ -291,8 +279,8 @@ public class MusicPlayer extends JInternalFrame{
 		
 
 		final String trackPath = songFolder + trackName;
+		//System.out.println("Tpath: "+trackPath);
 		final File song = FileUtil.getResource(trackPath);
-
 		playing = song;
 		lblPlaying.setText("Playing:  " + trackName);
 		lblPlaying.setSize(lblPlaying.getPreferredSize());

@@ -1,4 +1,4 @@
-Dunemasking Ver: 3.89
+Dunemasking Ver: 3.9
 dunemask.dunemasking.Changelog.java Version: 3.89
 dunemask.dunemasking.GitHubStation.java Version: 4.1
 dunemask.dunemasking.Setup.java Version: 3.89
@@ -47,5 +47,4 @@ Additionally:
 @Changelog.java: Tests javadoc version (Only works in ide) and labels with package
 				 Styling	
 
-Created at: 2018-01-12 06:23
-(Class-Update)
+Created at: 2018-01-12 17:33

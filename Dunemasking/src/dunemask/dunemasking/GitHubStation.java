@@ -15,9 +15,11 @@ import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+
 
 import dunemask.util.FileUtil;
 import dunemask.util.RW;
@@ -33,6 +35,7 @@ public class GitHubStation {
 	public static InputStream stream = System.in;
 	public static 	String repPath;
 	public static Scanner sysin = new Scanner(System.in);
+	public static String relPath;
 	/**Version*/
     final static double version = 4.1;
 	
@@ -43,9 +46,18 @@ public class GitHubStation {
 		setup();
 		boolean run = true;
 	while(run) {
-		System.out.println("1- Add File");
-		System.out.println("2 - Remove File");
-		System.out.println("3 - Quit");
+		for(int i=0;i<"*1- Add File*".length();i++) {
+			System.out.print("*");
+		}
+		System.out.println();
+		System.out.println("1 - Add File");
+		System.out.println("2 - Rmv File");
+		System.out.println("3 - Quit Git");
+		for(int i=0;i<"*1- Add File*".length();i++) {
+			System.out.print("*");
+		}
+		System.out.println();
+		
 		switch(Integer.parseInt(sysin.nextLine())) {
 		case 1: addFile();
 			break;
@@ -57,6 +69,9 @@ public class GitHubStation {
 		}
 		
 	}
+	
+	System.out.println("GitHubStation has been Closed - Thanks For using!");
+	System.out.println();
 	}
 	
 	
@@ -65,18 +80,13 @@ public class GitHubStation {
 	 * @return file From dunemask.github.tmp directory by the specified path
 	 */
 	public static File gitFile(String genericPath) {
-		URL url = null;
-		try {
-			url = new URL("https://github.com/Dunemask/tmp/raw/master/"+genericPath);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
+		String url = "https://github.com/Dunemask/tmp/raw/master/"+genericPath;
 		
 		File webFile = null;
 		try {
 		webFile = FileUtil.getWebFile(url);
 		}catch(Exception e) {
-			System.err.println("Resource not found at:"+url.toString());
+			System.err.println("Resource not found at: "+url);
 			e.printStackTrace();
 		}	
 		File file = webFile;
@@ -104,8 +114,19 @@ public class GitHubStation {
 		}
 		
 		try {
-			Process p = Runtime.getRuntime().exec("cmd /c start "+repPath+"Push.bat");
+			/*Process p = Runtime.getRuntime().exec("cmd /c start "+repPath+"Push.bat");
+			p.waitFor();*/
+			ArrayList<String> commands = new  ArrayList<String>();
+			commands.add(repPath+"Push.bat");
+			commands.add("exit");
+			ProcessBuilder pb = new ProcessBuilder(commands);
+			pb.redirectError(Redirect.INHERIT);
+			pb.redirectOutput(Redirect.INHERIT);
+	//		pb.redirectOutput(new File(repPath+"Log.txt")); 
+	//		pb.redirectError(new File(repPath+"Log.txt"));
+			Process p = pb.start();			
 			p.waitFor();
+			p.destroy();
 		} catch (IOException | InterruptedException e) {
 			
 			e.printStackTrace();
@@ -118,12 +139,27 @@ public class GitHubStation {
 	private static void addFile() {
 		format(Add);
 		File addbat =FileUtil.getResource("dunemask/resources/github/Add.bat");;
-		RW.write(addbat, "cd "+repPath+"tmp", 1);
+		RW.write(addbat, "cd "+repPath+"tmp", 2);
 		System.out.println(RW.read(addbat, 1));
+	///	RW.write(addbat, "pause", FileUtil.linesInFile(addbat));
 		FileUtil.writeFile(addbat, new File(repPath+"Add.bat"));
 		try {
-			Process p = Runtime.getRuntime().exec("cmd /c start "+repPath+"Add.bat");
+			System.out.println("Adding...");
+			ArrayList<String> commands = new  ArrayList<String>();
+			commands.add(repPath+"Add.bat");
+			commands.add("exit");
+			ProcessBuilder pb = new ProcessBuilder(commands);
+			pb.redirectError(Redirect.INHERIT);
+			pb.redirectOutput(Redirect.INHERIT);
+	//		pb.redirectOutput(new File(repPath+"Log.txt")); 
+	//		pb.redirectError(new File(repPath+"Log.txt"));
+			Process p = pb.start();
 			p.waitFor();
+			p.destroy();
+			/*
+			Process p = Runtime.getRuntime().exec("cmd /c start "+repPath+"Add.bat");
+			p.waitFor();*/
+			
 		} catch (IOException | InterruptedException e) {
 			
 			e.printStackTrace();
@@ -134,22 +170,45 @@ public class GitHubStation {
 	 * 
 	 */
 	private static void setup() {
+		engage();
 	repPath = getDocumentsFileLocation()+"\\reps\\";
 		File repFolder = new File(repPath);
+		repFolder.delete();
 		repFolder.mkdirs();
-		RW.write(FileUtil.getResource("dunemask/resources/github/Create.bat"), "cd "+repPath, 1);
-		RW.write(FileUtil.getResource("dunemask/resources/github/Push.bat"), "cd "+repPath+"tmp/", 1);
+		System.out.println("Createing Fake Rep In "+repFolder.getAbsolutePath());
+		RW.write(FileUtil.getResource("dunemask/resources/github/Create.bat"), "cd "+repPath, 2);
+		RW.write(FileUtil.getResource("dunemask/resources/github/Push.bat"), "cd "+repPath+"tmp/", 2);
 		
 		FileUtil.writeFile(FileUtil.getResource("dunemask/resources/github/Create.bat"), new File(repPath+"Create.bat"));
 		FileUtil.writeFile(FileUtil.getResource("dunemask/resources/github/Push.bat"), new File(repPath+"Push.bat"));
 		try {
-			Process p = Runtime.getRuntime().exec("cmd /c start "+repPath+"Create.bat");
+		/*	Process p = Runtime.getRuntime().exec("cmd /c start "+repPath+"Create.bat");
+			p.waitFor();*/
+			System.out.println("Setting Up");
+			ArrayList<String> commands = new  ArrayList<String>();
+			commands.add(repPath+"Create.bat");
+			commands.add("exit");
+			ProcessBuilder pb = new ProcessBuilder(commands);
+			pb.redirectError(Redirect.INHERIT);
+			pb.redirectOutput(Redirect.INHERIT);
+	//		pb.redirectOutput(new File(repPath+"Log.txt")); 
+	//		pb.redirectError(new File(repPath+"Log.txt"));
+			Process p = pb.start();
 			p.waitFor();
+			p.destroy();
+			
 
 		} catch (IOException | InterruptedException e) {
 			
 			e.printStackTrace();
 		}
+		
+	}
+	/**
+	 * 
+	 */
+	private static void engage() {
+	  
 		
 	}
 	final static int Add = 1;
@@ -168,8 +227,12 @@ public class GitHubStation {
 			fd.setVisible(true);
 			File chosen = fd.getFiles()[0];
 			frame.dispose();
-			System.out.println("Custom Path: (Leave Blank For default and end with a /)");
-			File outFile = new File(repPath+"tmp\\"+sysin.nextLine()+chosen.getName());
+			System.out.println("Custom Path: (Leave Blank For default ");
+			relPath = sysin.nextLine()+"";
+			if(relPath.equals("")) {
+				relPath = chosen.getName();
+			}
+			File outFile = new File(repPath+"tmp\\"+relPath);
 			FileUtil.writeFile(chosen, outFile);
 			//String fileName = outFile.getAbsolutePath();
 			//Store lines

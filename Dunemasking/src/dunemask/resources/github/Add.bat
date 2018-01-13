@@ -1,3 +1,4 @@
+C:
 cd tmp
 git add tmp.txt
 git commit tmp.txt --amend --no-edit

@@ -1,3 +1,4 @@
+C:
 changeThis
 git add .
 git commit . --amend --no-edit
