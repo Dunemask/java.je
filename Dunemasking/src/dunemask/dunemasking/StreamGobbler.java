@@ -20,13 +20,17 @@ import java.io.InputStreamReader;
  *
  */
 public class StreamGobbler extends Thread {
+	/**Version*/
+    final static double version = 4.1;
+	
     InputStream is;
 
-    // reads everything from is until empty. 
+    /**Call start function
+     * @param is Input Stream to be read*/
     public StreamGobbler(InputStream is) {
         this.is = is;
     }
-
+    /**Call start function*/
     public void run() {
         try {
             InputStreamReader isr = new InputStreamReader(is);

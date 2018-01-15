@@ -23,7 +23,7 @@ import java.util.Scanner;
  * <p>Get Resource: {@link dunemask.util.FileUtil#getResource(String)}</p>
  *  <p>Last Line: {@link dunemask.util.FileUtil#lastLine(File)}</p>
  * <p>Return Next Free Line In File: {@link dunemask.util.FileUtil#nextFreeLine(File)}</p>
- * <p>Get File From URL: {@link dunemask.util.FileUtil#getWebFile(URL)}</p>
+ * <p>Get File From URL: {@link dunemask.util.FileUtil#getWebFile(String)}</p>
  * <p>Write File from File: {@link dunemask.util.FileUtil#writeFile(File, File)}</p>
  * <p>Last Index of Text: {@link dunemask.util.FileUtil#lastInstanceOfText(File, String)}}</p>
  * <p>Remove Spaces: {@link dunemask.util.FileUtil#fixSpaces(String)}}</p>
@@ -63,7 +63,7 @@ public class FileUtil{
     
     /**Get File From Specified URL
 	 * <p>(Web File)</p>
-	 * @param adress  address
+	 * @param address  address
 	 * @return Return file from url
 	 * */
     public static File getWebFile(String address) {

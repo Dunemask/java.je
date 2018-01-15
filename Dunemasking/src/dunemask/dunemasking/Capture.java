@@ -31,7 +31,8 @@ import javax.swing.JTextArea;
  *
  */
 public class Capture {
-
+	/**Version*/
+    final static double version = 4.1;
 	public static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	public static ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 	public final static PrintStream sysDefaultOut = System.out;
@@ -51,7 +52,7 @@ public class Capture {
 	  
 	}
 	
-	/**
+	/**@param msg Message
 	 * @return InputStream from a String Displayed Via JoptionPane
 	 */
 	public static InputStream getConsoleIn(String msg) {
@@ -78,7 +79,10 @@ public class Capture {
 		
 	}
 	
-	/**Get Input From User*/
+	/**Get Input From User
+	 * @param msg Message
+	 * @return Return String input
+	 * */
 	public static String getInput(String msg) {
 		String input =null;		
 		input =  JOptionPane.showInputDialog(msg);

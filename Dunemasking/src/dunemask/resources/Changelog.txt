@@ -1,8 +1,10 @@
-Dunemasking Ver: 3.9
+Dunemasking Ver: 3.94
+dunemask.dunemasking.Capture.java Version: 4.1
 dunemask.dunemasking.Changelog.java Version: 3.89
 dunemask.dunemasking.GitHubStation.java Version: 4.1
 dunemask.dunemasking.Setup.java Version: 3.89
 dunemask.dunemasking.Src.java Version: 3.89
+dunemask.dunemasking.StreamGobbler.java Version: 4.1
 dunemask.dunemasking.Version.java Version: 3.89
 dunemask.objects.Expression.java Version: 3.9
 dunemask.objects.MusicPlayer.java Version: 4.1
@@ -16,10 +18,12 @@ dunemask.util.MediaUtil.java Version: 3.89
 dunemask.util.ObjectUtil.java Version: 3.9
 dunemask.util.RW.java Version: 3.9
 dunemask.util.StringUtil.java Version: 3.95
+dunemask.dunemasking.Capture.java Version: 4.1
 dunemask.dunemasking.Changelog.java Version: 3.89
 dunemask.dunemasking.GitHubStation.java Version: 4.1
 dunemask.dunemasking.Setup.java Version: 3.89
 dunemask.dunemasking.Src.java Version: 3.89
+dunemask.dunemasking.StreamGobbler.java Version: 4.1
 dunemask.dunemasking.Version.java Version: 3.89
 dunemask.objects.Expression.java Version: 3.9
 dunemask.objects.MusicPlayer.java Version: 4.1
@@ -47,4 +51,5 @@ Additionally:
 @Changelog.java: Tests javadoc version (Only works in ide) and labels with package
 				 Styling	
 
-Created at: 2018-01-12 17:33
+Created at: 2018-01-15 10:07
+(Update)

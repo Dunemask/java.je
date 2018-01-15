@@ -1,2 +1,2 @@
-Version 3.94
+Version 3.96
 Library Version: 3.0
