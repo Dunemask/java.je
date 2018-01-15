@@ -15,7 +15,6 @@ import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -43,22 +42,12 @@ public class GitHubStation {
 	 * Main Entity that opens a station
 	 */
 	public static void Start() {
+		Capture.startConsole();
 		setup();
 		boolean run = true;
 	while(run) {
-		for(int i=0;i<"*1- Add File*".length();i++) {
-			System.out.print("*");
-		}
-		System.out.println();
-		System.out.println("1 - Add File");
-		System.out.println("2 - Rmv File");
-		System.out.println("3 - Quit Git");
-		for(int i=0;i<"*1- Add File*".length();i++) {
-			System.out.print("*");
-		}
-		System.out.println();
-		
-		switch(Integer.parseInt(sysin.nextLine())) {
+
+		switch(Integer.parseInt(Capture.getInput("1 - Add File, 2 - Rmv File, 3 - Quit Git"))) {
 		case 1: addFile();
 			break;
 		case 2: removeFile();
@@ -72,6 +61,7 @@ public class GitHubStation {
 	
 	System.out.println("GitHubStation has been Closed - Thanks For using!");
 	System.out.println();
+	Capture.closeConsole();
 	}
 	
 	
@@ -104,7 +94,7 @@ public class GitHubStation {
 		FileDialog fd = new FileDialog(frame);
 		fd.setAlwaysOnTop(true);
 		fd.setMultipleMode(true);
-		fd.setDirectory(repPath+"tmp/");
+		fd.setDirectory(new File(repPath+"tmp/").getAbsolutePath());
 		fd.setVisible(true);
 		
 		File[] chosen = fd.getFiles();
@@ -120,11 +110,14 @@ public class GitHubStation {
 			commands.add(repPath+"Push.bat");
 			commands.add("exit");
 			ProcessBuilder pb = new ProcessBuilder(commands);
-			pb.redirectError(Redirect.INHERIT);
-			pb.redirectOutput(Redirect.INHERIT);
-	//		pb.redirectOutput(new File(repPath+"Log.txt")); 
-	//		pb.redirectError(new File(repPath+"Log.txt"));
-			Process p = pb.start();			
+		//	pb.redirectError(Redirect.INHERIT);
+		//	pb.redirectOutput(Redirect.INHERIT);
+
+			Process p = pb.start();		
+			StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream());
+			StreamGobbler outputGobbler = new StreamGobbler(p.getInputStream());
+			errorGobbler.start();
+			outputGobbler.start();
 			p.waitFor();
 			p.destroy();
 		} catch (IOException | InterruptedException e) {
@@ -149,11 +142,14 @@ public class GitHubStation {
 			commands.add(repPath+"Add.bat");
 			commands.add("exit");
 			ProcessBuilder pb = new ProcessBuilder(commands);
-			pb.redirectError(Redirect.INHERIT);
-			pb.redirectOutput(Redirect.INHERIT);
-	//		pb.redirectOutput(new File(repPath+"Log.txt")); 
-	//		pb.redirectError(new File(repPath+"Log.txt"));
+		//	pb.redirectError(Redirect.INHERIT);
+		//	pb.redirectOutput(Redirect.INHERIT);
 			Process p = pb.start();
+			StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream());
+			StreamGobbler outputGobbler = new StreamGobbler(p.getInputStream());
+			errorGobbler.start();
+			outputGobbler.start();
+			
 			p.waitFor();
 			p.destroy();
 			/*
@@ -189,11 +185,16 @@ public class GitHubStation {
 			commands.add(repPath+"Create.bat");
 			commands.add("exit");
 			ProcessBuilder pb = new ProcessBuilder(commands);
-			pb.redirectError(Redirect.INHERIT);
-			pb.redirectOutput(Redirect.INHERIT);
+			//pb.redirectError(Redirect.INHERIT);
+		//	pb.redirectOutput(Redirect.INHERIT);
 	//		pb.redirectOutput(new File(repPath+"Log.txt")); 
 	//		pb.redirectError(new File(repPath+"Log.txt"));
 			Process p = pb.start();
+			StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream());
+			StreamGobbler outputGobbler = new StreamGobbler(p.getInputStream());
+			errorGobbler.start();
+			outputGobbler.start();
+			
 			p.waitFor();
 			p.destroy();
 			
@@ -223,12 +224,14 @@ public class GitHubStation {
 			frame.setVisible(true);
 			FileDialog fd = new FileDialog(frame);
 			fd.setAlwaysOnTop(true);
-			fd.setDirectory(repPath);
+			fd.setDirectory(new File(System.getProperty("user.home") + "/Desktop/").getAbsolutePath());
+		//	System.out.println(fd.getDirectory() +"- Get Dir");
+		//	System.out.println(repPath + "- When it was ");
 			fd.setVisible(true);
 			File chosen = fd.getFiles()[0];
 			frame.dispose();
-			System.out.println("Custom Path: (Leave Blank For default ");
-			relPath = sysin.nextLine()+"";
+			//System.out.println("Custom Path: (Leave Blank For default) ");
+			relPath = Capture.getInput("Custom Path: (Leave Blank For default) ");
 			if(relPath.equals("")) {
 				relPath = chosen.getName();
 			}
