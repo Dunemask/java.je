@@ -6,7 +6,9 @@ package dunemask.objects;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -49,8 +51,9 @@ public class MainController implements Initializable {
 	 * */
 	public void changeMedia(ActionEvent evt) {
 		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a File (*.mp4)","*.mp4");
-		fileChooser.getExtensionFilters().add(filter);
+		ArrayList<FileChooser.ExtensionFilter> filters = new ArrayList<FileChooser.ExtensionFilter>();
+		 filters.add(new FileChooser.ExtensionFilter("Select a Media ","*.mp4","*.mp3","*.wav","*.mpeg"));
+		fileChooser.getExtensionFilters().addAll(filters);
 		File file = fileChooser.showOpenDialog(null);
 		String filePath = file.toURI().toString();
 		if(filePath !=null) {
