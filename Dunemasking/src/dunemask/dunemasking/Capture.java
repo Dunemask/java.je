@@ -118,9 +118,11 @@ public class Capture {
 			   while(consOpen) {
 				 if(jta.getText()!=Capture.outContent.toString()) {
 					 jta.setText(Capture.outContent.toString()+Capture.errContent.toString());
+					 
+					 
 					 JScrollBar vertical = scrollPane.getVerticalScrollBar();
 					 vertical.setValue( vertical.getMaximum() );
-
+					 
 				 }
 				  
 				 cons.repaint();
