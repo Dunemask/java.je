@@ -105,6 +105,7 @@ public class MainController implements Initializable {
 	 * */
 	public void Play(ActionEvent evt) {
 		fixSlider();
+		mediaPlayer.setRate(1);
 		mediaPlayer.play();
 		
 	}
