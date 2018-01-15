@@ -32,7 +32,7 @@ import java.util.Scanner;
  * */
 public class FileUtil{
 	/***Version*/
-    final static double version = 3.95;
+    final static double version = 3.96;
 	
     
     /**Get The last line where a specific text was mentioned

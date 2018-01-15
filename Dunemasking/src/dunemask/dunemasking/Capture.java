@@ -101,7 +101,7 @@ public class Capture {
 	public static void startConsole() {
 		Capture.setUpStreams();
 		System.out.println("[DM Console]");
-		cons.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cons.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		cons.setSize(800, 500);
 		//jta.append(Capture.outContent.toString());
 

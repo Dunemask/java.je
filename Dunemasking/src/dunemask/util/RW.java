@@ -22,7 +22,7 @@ public class RW {
 	/*@RW.java: RW Is the fast version with a clean file function that copies the file 
     before reading them off, Clean takes fairly long*/
 	/***Version*/
-    final static double version = 3.9;
+    final static double version = 3.96;
 	/**
 	 * Write Line To Specified file
 	 * 

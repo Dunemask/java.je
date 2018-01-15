@@ -20,7 +20,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class AudioUtil{
 	/***Version*/
-    final static double version = 3.89;
+    final static double version = 3.96;
 
 	/*
 	 * public static Runnable Lyoko() throws LineUnavailableException,
