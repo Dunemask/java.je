@@ -105,6 +105,7 @@ public class MainController implements Initializable {
 	 * @param evt Event
 	 * */
 	public void Play(ActionEvent evt) {
+		System.out.println("Playing"+new File(mediaPath).getName());
 		fixSlider();
 		mediaPlayer.setRate(1);
 		mediaPlayer.play();
