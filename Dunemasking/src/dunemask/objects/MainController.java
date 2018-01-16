@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import dunemask.util.FileUtil;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -105,7 +106,7 @@ public class MainController implements Initializable {
 	 * @param evt Event
 	 * */
 	public void Play(ActionEvent evt) {
-		System.out.println("Playing"+new File(mediaPath).getName());
+		System.out.println("Playing "+mediaPath.replace("%20", " "));
 		fixSlider();
 		mediaPlayer.setRate(1);
 		mediaPlayer.play();

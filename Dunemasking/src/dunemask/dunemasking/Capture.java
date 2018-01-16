@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -125,24 +124,27 @@ public class Capture {
         jip.add(scrollPane);
 		cons.add(jip);
 		cons.setVisible(true);
-		jta.setEditable(false);
+		jta.setEditable(true);
 		cons.repaint();
 		cons.revalidate();
 		cons.setLocationRelativeTo(null);
 	
 		Thread update =    new Thread( () -> {
 			   while(consOpen) {
-				 if(jta.getText()!=Capture.outContent.toString()) {
+				
+				   if(!jta.getText().equals(Capture.outContent.toString()+Capture.errContent.toString())) {
+
 					 jta.setText(Capture.outContent.toString()+Capture.errContent.toString());
 					 
-					 
+					
 					 JScrollBar vertical = scrollPane.getVerticalScrollBar();
 					 vertical.setValue( vertical.getMaximum() );
+					  
+					 cons.repaint();
+					 cons.revalidate();
 					 
 				 }
-				  
-				 cons.repaint();
-				 cons.revalidate();
+				
 				   
 			   }
 			   
