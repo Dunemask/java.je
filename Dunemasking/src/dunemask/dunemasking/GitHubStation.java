@@ -166,8 +166,7 @@ public class GitHubStation {
 	 * 
 	 */
 	private static void setup() {
-		engage();
-	repPath = getDocumentsFileLocation()+"\\reps\\";
+		repPath = getDocumentsFileLocation()+"\\reps\\";
 		File repFolder = new File(repPath);
 		repFolder.delete();
 		repFolder.mkdirs();
@@ -205,13 +204,7 @@ public class GitHubStation {
 		}
 		
 	}
-	/**
-	 * 
-	 */
-	private static void engage() {
-	  
-		
-	}
+
 	final static int Add = 1;
 	/**
 	 * @param arg int for choice
