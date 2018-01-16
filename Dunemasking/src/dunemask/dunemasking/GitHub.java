@@ -173,8 +173,14 @@ public class GitHub {
 	 * @return
 	 */
 	private static boolean changed(File[] files) {
-		File[] now = FileUtil.getAllSubFiles(new File(repPath+"tmp/"));		
-		if(now==files){
+		boolean allSame = true;
+		File[] now = FileUtil.getAllSubFiles(new File(repPath+"tmp/"));	
+		if(now.length!=files.length) {
+			allSame = false;	
+		}
+		
+		
+		if(allSame){
 		System.out.println("You Have Not Changed The tmp Repository");
 		return false;
 		}else{
@@ -231,6 +237,25 @@ public class GitHub {
 			FileUtil.writeFile(FileUtil.getResource("dunemask/resources/github/Push.bat"), new File(repPath+"Push.bat"));
 			RW.write(new File(repPath+"Create.bat"), "cd "+repPath, 2);
 			RW.write(new File(repPath+"Push.bat"), "cd "+repPath+"tmp/", 2);
+			
+			try{
+				System.out.println("Setting Up");
+				ArrayList<String> commands = new  ArrayList<String>();
+				commands.add(repPath+"Create.bat");
+				commands.add("exit");
+				ProcessBuilder pb = new ProcessBuilder(commands);
+				Process p = pb.start();
+				StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream());
+				StreamGobbler outputGobbler = new StreamGobbler(p.getInputStream());
+				errorGobbler.start();
+				outputGobbler.start();	
+				p.waitFor();
+				} catch (IOException | InterruptedException e) {
+				
+					e.printStackTrace();
+				}
+			
+			
 		}else if(new File(repPath+"/tmp/.git/").exists()){
 		System.out.println("PUlling");
 			try{
@@ -251,22 +276,6 @@ public class GitHub {
 			
 		}
 		
-		try{
-			System.out.println("Setting Up");
-			ArrayList<String> commands = new  ArrayList<String>();
-			commands.add(repPath+"Create.bat");
-			commands.add("exit");
-			ProcessBuilder pb = new ProcessBuilder(commands);
-			Process p = pb.start();
-			StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream());
-			StreamGobbler outputGobbler = new StreamGobbler(p.getInputStream());
-			errorGobbler.start();
-			outputGobbler.start();	
-			p.waitFor();
-			} catch (IOException | InterruptedException e) {
-			
-				e.printStackTrace();
-			}
 		
 		
 		

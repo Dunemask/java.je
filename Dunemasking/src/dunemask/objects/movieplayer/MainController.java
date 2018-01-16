@@ -1,4 +1,4 @@
-package dunemask.objects;
+package dunemask.objects.movieplayer;
 /**
  * 
  */
@@ -8,8 +8,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import dunemask.util.FileUtil;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -32,6 +30,8 @@ public class MainController implements Initializable {
 	/***Version*/
     final static double version = 4.5;
     
+    public static boolean setup=false;
+    
 	@FXML
 	private MediaView mv;
 	
@@ -46,36 +46,43 @@ public class MainController implements Initializable {
 	
 	public static String mediaPath;
 
+
+
 	
 	/** MoviePlayer Action
 	 * @param evt Event
 	 * */
 	public void changeMedia(ActionEvent evt) {
-		FileChooser fileChooser = new FileChooser();
-		ArrayList<FileChooser.ExtensionFilter> filters = new ArrayList<FileChooser.ExtensionFilter>();
-		 filters.add(new FileChooser.ExtensionFilter("Select a Media ","*.mp4","*.mp3","*.wav","*.mpeg"));
-		fileChooser.getExtensionFilters().addAll(filters);
-		File file = fileChooser.showOpenDialog(null);
-		String filePath = file.toURI().toString();
-		if(filePath !=null) {
-			Stop(evt);
-			mediaPath = filePath;
-			System.out.println(mediaPath);
-			media = new Media(filePath);
-			mediaPlayer = new MediaPlayer(media);
-			mv.setMediaPlayer(mediaPlayer);
-			
-			mediaPlayer.currentTimeProperty().addListener(new InvalidationListener() {
+		if(setup) {
+			FileChooser fileChooser = new FileChooser();
+			ArrayList<FileChooser.ExtensionFilter> filters = new ArrayList<FileChooser.ExtensionFilter>();
+			 filters.add(new FileChooser.ExtensionFilter("Select a Media ","*.mp4","*.mp3","*.wav","*.mpeg"));
+			fileChooser.getExtensionFilters().addAll(filters);
+			File file = fileChooser.showOpenDialog(null);
+			String filePath = file.toURI().toString();
+			if(filePath !=null) {
+				Stop(evt);
+				mediaPath = filePath;
+				System.out.println(mediaPath);
+				media = new Media(filePath);
+				mediaPlayer = new MediaPlayer(media);
+				mv.setMediaPlayer(mediaPlayer);
+				
+				mediaPlayer.currentTimeProperty().addListener(new InvalidationListener() {
 
-				@Override
-				public void invalidated(Observable arg0) {
-					seekSlider.setValue(mediaPlayer.currentTimeProperty().getValue().toSeconds());
+					@Override
+					public void invalidated(Observable arg0) {
+						seekSlider.setValue(mediaPlayer.currentTimeProperty().getValue().toSeconds());
+				
+					}});
+				
+				
+				
+			Restart(evt);
+			}
 			
-				}});
 			
 			
-			
-		Restart(evt);
 		}
 		
 	}
@@ -84,21 +91,27 @@ public class MainController implements Initializable {
 	 * @param evt Event
 	 * */
 	public void SkipAhead(ActionEvent evt) {
-		double current = mediaPlayer.getCurrentTime().toMillis();
-		double dur = media.getDuration().toMillis();
-		double skipping = dur/50;
-		mediaPlayer.seek(new Duration(current+skipping));	
+		if(setup) {
+			double current = mediaPlayer.getCurrentTime().toMillis();
+			double dur = media.getDuration().toMillis();
+			double skipping = dur/50;
+			mediaPlayer.seek(new Duration(current+skipping));	
+		}
+		
 	}
 	
 	/** MoviePlayer Action
 	 * @param evt Event
 	 * */
 	public void SkipBehind(ActionEvent evt) {
-	
-		double current = mediaPlayer.getCurrentTime().toMillis();
-		double dur = media.getDuration().toMillis();
-		double skipping = dur/50;
-		mediaPlayer.seek(new Duration(current-skipping));	
+		if(setup) {
+			double current = mediaPlayer.getCurrentTime().toMillis();
+			double dur = media.getDuration().toMillis();
+			double skipping = dur/50;
+			mediaPlayer.seek(new Duration(current-skipping));	
+			
+		}
+		
 	}
 	
 	
@@ -107,10 +120,12 @@ public class MainController implements Initializable {
 	 * @param evt Event
 	 * */
 	public void Play(ActionEvent evt) {
-		System.out.println("Playing "+mediaPath.replace("%20", " "));
-		fixSlider();
-		mediaPlayer.setRate(1);
-		mediaPlayer.play();
+		if(setup) {
+			System.out.println("Playing "+mediaPath.replace("%20", " "));
+			fixSlider();
+			mediaPlayer.setRate(1);
+			mediaPlayer.play();
+		}
 		
 	}
 	
@@ -119,33 +134,37 @@ public class MainController implements Initializable {
 	 *  
 	 * */
 	public void SetOnLoop(ActionEvent evt) {
-		mediaPlayer.setOnEndOfMedia(new Runnable() {
+		if(setup) {
+			mediaPlayer.setOnEndOfMedia(new Runnable() {
 
-			@Override
-			public void run() {
-				Restart(evt);
+				@Override
+				public void run() {
+					Restart(evt);
+					
+				}
 				
-			}
-			
-		});
+			});
+		}
 	}
 	
 	/**
 	 * 
 	 */
 	private void fixSlider() {
-		   mediaPlayer.setOnReady(new Runnable() {
+		  if(setup) {
+			  mediaPlayer.setOnReady(new Runnable() {
 
-		        @Override
-		        public void run() {
+			        @Override
+			        public void run() {
 
 
-		            // play if you want
-		        	seekSlider.setMin(0.0);
-		    		seekSlider.setMax(media.getDuration().toSeconds());
-		            mediaPlayer.play();
-		        }
-		    });
+			            // play if you want
+			        	seekSlider.setMin(0.0);
+			    		seekSlider.setMax(media.getDuration().toSeconds());
+			    		Play(null);
+			        }
+			    });
+		  }
 		
 		
 		
@@ -155,42 +174,50 @@ public class MainController implements Initializable {
 	 * @param evt Event
 	 * */
 	public void Slow(ActionEvent evt) {
-
+		if(setup) {
 		mediaPlayer.setRate(mediaPlayer.getRate()-.25);
+		}
 	}
 	
 	/** MoviePlayer Action
 	 * @param evt Event
 	 * */
 	public void Fast(ActionEvent evt) {
-	
+		if(setup) {
 		mediaPlayer.setRate(mediaPlayer.getRate()+.25);
+		}
 	}
 	
 	/** MoviePlayer Action
 	 * @param evt Event
 	 * */
 	public void Start(ActionEvent evt) {
+		if(setup) {
 		fixSlider();
 		mediaPlayer.seek(media.getDuration());
 		mediaPlayer.setRate(1);
+		}
 	}
 	
 	/** MoviePlayer Action
 	 * @param evt Event
 	 * */
 	public void Pause(ActionEvent evt) {
-		fixSlider();
-		mediaPlayer.pause();
+		if(setup) {
+			
+			mediaPlayer.pause();
+		}
 	}
 	
 	/** MoviePlayer Action
 	 * @param evt Event
 	 * */
 	public void Restart(ActionEvent evt) {
-		mediaPlayer.seek(mediaPlayer.getStartTime());
-		fixSlider();
-		mediaPlayer.play();
+		if(setup) {
+			mediaPlayer.seek(mediaPlayer.getStartTime());
+			fixSlider();
+			mediaPlayer.play();
+		}
 	}
 	
 	
@@ -198,9 +225,10 @@ public class MainController implements Initializable {
 	 * @param evt Event
 	 * */
 	public void Stop(ActionEvent evt) {
-		fixSlider();
+		if(setup) {
 		mediaPlayer.seek(mediaPlayer.getStartTime());
 		mediaPlayer.stop();
+		}
 	}
 	
 	
@@ -209,8 +237,22 @@ public class MainController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initPlayer(mediaPath);
+
+
+	}
+	
+	public void initPlayer(File media) {
+		initPlayer(media.toURI().toString());
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public void initPlayer(String pathToMedia) {
 		
-		media = new Media(mediaPath);
+		media = new Media(pathToMedia);
 		mediaPlayer = new MediaPlayer(media);
 		mv.setMediaPlayer(mediaPlayer);
 	
@@ -255,15 +297,9 @@ public class MainController implements Initializable {
 				seekSlider.setValue(mediaPlayer.currentTimeProperty().getValue().toSeconds());
 		
 			}});
-				
 		
-		
-
+		setup=true;
 		fixSlider();
-		
-		Play(null);
-
-
 	}
 	
 

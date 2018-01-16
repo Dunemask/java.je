@@ -12,7 +12,7 @@ package application;
 
 import java.io.File;
 
-import dunemask.objects.MoviePlayer;
+import dunemask.objects.movieplayer.MoviePlayer;
 import dunemask.util.FileUtil;
 
 /**

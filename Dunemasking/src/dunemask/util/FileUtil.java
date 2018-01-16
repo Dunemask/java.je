@@ -354,6 +354,7 @@ public class FileUtil{
 	 * 
 	 * **/
 	public static File[] getAllSubFiles(File dir) {
+		thefiles = new ArrayList<>();
 		File[] subPackage = dir.listFiles();
 		ArrayList<File> arfiles = new ArrayList<>(Arrays.asList(subPackage));
 		setf(dir,arfiles);

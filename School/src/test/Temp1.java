@@ -14,7 +14,7 @@ import java.awt.FileDialog;
 import java.io.File;
 
 import dunemask.dunemasking.GitHubStation;
-import dunemask.objects.MoviePlayer;
+import dunemask.objects.movieplayer.MoviePlayer;
 
 /**
  * @author karib
