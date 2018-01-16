@@ -59,7 +59,7 @@ public class MainController implements Initializable {
 		String filePath = file.toURI().toString();
 		if(filePath !=null) {
 			Stop(evt);
-			
+			mediaPath = filePath;
 			media = new Media(filePath);
 			mediaPlayer = new MediaPlayer(media);
 			mv.setMediaPlayer(mediaPlayer);
