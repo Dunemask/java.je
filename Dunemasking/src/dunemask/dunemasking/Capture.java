@@ -10,10 +10,13 @@
  */
 package dunemask.dunemasking;
 
+import java.awt.Toolkit;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 
 import javax.swing.BoxLayout;
@@ -23,6 +26,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import dunemask.util.FileUtil;
 
 /**
  * TO Parse an output as a string value do outContent.parse();
@@ -104,9 +109,16 @@ public class Capture {
 		cons.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		cons.setSize(800, 500);
 		//jta.append(Capture.outContent.toString());
-
+		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/DM-Dice.jpg");
+		
+		try {
+			cons.setIconImage(Toolkit.getDefaultToolkit().getImage(icon.toURI().toURL()));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
-		  jip.setLayout( new BoxLayout(jip, BoxLayout.PAGE_AXIS));
+		jip.setLayout( new BoxLayout(jip, BoxLayout.PAGE_AXIS));
 
         JTextArea jta = new JTextArea(5, 30);
         JScrollPane scrollPane = new JScrollPane(jta);

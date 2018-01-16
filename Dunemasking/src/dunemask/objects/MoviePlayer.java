@@ -33,7 +33,7 @@ public class MoviePlayer extends Application{
 		Parent root = FXMLLoader.load(FileUtil.getResource("dunemask/objects/Main.fxml").toURI().toURL());
 		Scene scene = new Scene(root,800,400,Color.BLACK);
 		try {
-		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/DM.png");
+		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/DM-Dice.jpg");
 		stage.getIcons().add(new Image(icon.toURI().toString()));
 		} catch (Exception e) {
 			

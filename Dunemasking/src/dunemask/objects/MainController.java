@@ -58,6 +58,7 @@ public class MainController implements Initializable {
 		String filePath = file.toURI().toString();
 		if(filePath !=null) {
 			Stop(evt);
+			
 			media = new Media(filePath);
 			mediaPlayer = new MediaPlayer(media);
 			mv.setMediaPlayer(mediaPlayer);
@@ -108,6 +109,22 @@ public class MainController implements Initializable {
 		mediaPlayer.setRate(1);
 		mediaPlayer.play();
 		
+	}
+	
+	/**MoviePlayer Action
+	 * @param evt Event
+	 *  
+	 * */
+	public void SetOnLoop(ActionEvent evt) {
+		mediaPlayer.setOnEndOfMedia(new Runnable() {
+
+			@Override
+			public void run() {
+				Restart(evt);
+				
+			}
+			
+		});
 	}
 	
 	/**
