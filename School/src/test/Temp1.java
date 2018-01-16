@@ -11,7 +11,6 @@
 package test;
 
 import java.awt.FileDialog;
-import java.awt.Frame;
 import java.io.File;
 
 import dunemask.dunemasking.GitHubStation;
