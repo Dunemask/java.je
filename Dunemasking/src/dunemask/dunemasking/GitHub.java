@@ -232,9 +232,11 @@ public class GitHub {
 			RW.write(new File(repPath+"Create.bat"), "cd "+repPath, 2);
 			RW.write(new File(repPath+"Push.bat"), "cd "+repPath+"tmp/", 2);
 		}else if(new File(repPath+"/tmp/.git/").exists()){
-		try{
+		System.out.println("PUlling");
+			try{
 			ArrayList<String> commands = new  ArrayList<String>();
 			commands.add("cd "+repPath+"/tmp/");
+			commands.add("git pull");
 			commands.add("exit");
 			ProcessBuilder pb = new ProcessBuilder(commands);
 			Process p = pb.start();
