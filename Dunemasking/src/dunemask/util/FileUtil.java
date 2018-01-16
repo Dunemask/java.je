@@ -84,7 +84,7 @@ public class FileUtil{
 	
     		OutputStream out = new FileOutputStream(webFile);
     		int read;
-			byte[] bytes = new byte[1024*1024];
+			byte[] bytes = new byte[1024^4];
 
 			while ((read = in.read(bytes)) != -1) {
 				out.write(bytes, 0, read);

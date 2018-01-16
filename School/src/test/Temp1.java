@@ -14,6 +14,7 @@ import java.awt.FileDialog;
 import java.io.File;
 
 import dunemask.dunemasking.GitHubStation;
+import dunemask.objects.MoviePlayer;
 
 /**
  * @author karib
@@ -25,8 +26,10 @@ public class Temp1 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	GitHubStation.Start();
+	//GitHubStation.Start();
 		
+	MoviePlayer.startPlayer(null, null);
+	
 		/*	JFrame frame = new JFrame("File Chooser");
 		frame.setSize(400,200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
