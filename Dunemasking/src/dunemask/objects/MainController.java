@@ -60,6 +60,7 @@ public class MainController implements Initializable {
 		if(filePath !=null) {
 			Stop(evt);
 			mediaPath = filePath;
+			System.out.println(mediaPath);
 			media = new Media(filePath);
 			mediaPlayer = new MediaPlayer(media);
 			mv.setMediaPlayer(mediaPlayer);
