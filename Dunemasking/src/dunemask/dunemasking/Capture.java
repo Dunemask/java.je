@@ -126,7 +126,7 @@ public class Capture {
 		});
 		cons.setSize(800, 500);
 		//jta.append(Capture.outContent.toString());
-		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/DM-Terminal.png");
+		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/dm_terminal_icon_black.png");
 		
 		try {
 			cons.setIconImage(Toolkit.getDefaultToolkit().getImage(icon.toURI().toURL()));
