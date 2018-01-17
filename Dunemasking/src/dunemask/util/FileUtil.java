@@ -23,15 +23,16 @@ import java.util.Scanner;
  * <p>Get Resource: {@link dunemask.util.FileUtil#getResource(String)}</p>
  *  <p>Last Line: {@link dunemask.util.FileUtil#lastLine(File)}</p>
  * <p>Return Next Free Line In File: {@link dunemask.util.FileUtil#nextFreeLine(File)}</p>
- * <p>Get File From URL: {@link dunemask.util.FileUtil#getWebFile(URL)}</p>
+ * <p>Get File From URL: {@link dunemask.util.FileUtil#getWebFile(String)}</p>
  * <p>Write File from File: {@link dunemask.util.FileUtil#writeFile(File, File)}</p>
  * <p>Last Index of Text: {@link dunemask.util.FileUtil#lastInstanceOfText(File, String)}}</p>
+ * <p>Remove Spaces: {@link dunemask.util.FileUtil#fixSpaces(String)}}</p>
  * 
  * @author Elijah
  * */
 public class FileUtil{
 	/***Version*/
-    final static double version = 3.95;
+    final static double version = 4.0;
 	
     
     /**Get The last line where a specific text was mentioned
@@ -62,20 +63,28 @@ public class FileUtil{
     
     /**Get File From Specified URL
 	 * <p>(Web File)</p>
-	 * @param url URL to file
+	 * @param address  address
 	 * @return Return file from url
 	 * */
-    public static File getWebFile(URL url) {
+    public static File getWebFile(String address) {
+    	URL url = null;
+		try {
+			url = new URL(FileUtil.fixSpaces(FileUtil.filePathFix(address)));
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
     	File webFile=null;
     	String name = new File(url.getFile()).getName();
     	String tDir = System.getProperty("java.io.tmpdir");
     	try {
     		InputStream in = url.openStream();
-    		webFile = new File(tDir+"/"+name);
+    		webFile = new File(tDir+"/"+name.replace("%20", " "));
 	
     		OutputStream out = new FileOutputStream(webFile);
     		int read;
-			byte[] bytes = new byte[1024*1024];
+			byte[] bytes = new byte[1024^4];
 
 			while ((read = in.read(bytes)) != -1) {
 				out.write(bytes, 0, read);
@@ -292,6 +301,7 @@ public class FileUtil{
 			//This catches if it's a Direct filepath, it should assume IDE path
 			if(resource.substring(1, 2).equals(":")) {
 				try {
+					resource = resource.replace("%20", " ");
 					res = new File(resource).toURI().toURL();
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
@@ -315,7 +325,7 @@ public class FileUtil{
 				file = File.createTempFile("tempfile", ".tmp");
 				OutputStream out = new FileOutputStream(file);
 				int read;
-				byte[] bytes = new byte[1024*1024];
+				byte[] bytes = new byte[1024^3];
 
 				while ((read = input.read(bytes)) != -1) {
 					out.write(bytes, 0, read);
@@ -331,7 +341,8 @@ public class FileUtil{
 		}
 
 		if (file != null && !file.exists()) {
-			throw new RuntimeException("Error: File " + file + " not found!");
+			throw new RuntimeException("Error: File " + file + " not found!"+"\n"+"From: "+res);
+			
 		}
 		return file;
 
@@ -343,6 +354,7 @@ public class FileUtil{
 	 * 
 	 * **/
 	public static File[] getAllSubFiles(File dir) {
+		thefiles = new ArrayList<>();
 		File[] subPackage = dir.listFiles();
 		ArrayList<File> arfiles = new ArrayList<>(Arrays.asList(subPackage));
 		setf(dir,arfiles);
@@ -387,8 +399,22 @@ public class FileUtil{
 	 **/
 	public static String filePathFix(String filePath) {
 		return filePath.replace("\\", "/");
+		
 	}
 	
+	
+	
+	/**Replaces all ' ' with '%20'
+	 * @param filePath Path of File
+	 * @return String with fixed spacing
+	 */
+	public static String fixSpaces(String filePath) {
+		return filePath.replace(" ", "%20");
+		
+	}
+
+
+
 	/**Tests File exists within a dir
 	 * <p>(Tests names)</p>
 	 * @param dirFile Package whose subcomponents will be searched
