@@ -16,6 +16,8 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -116,10 +118,15 @@ public class Capture {
 		Capture.setUpStreams();
 		System.setErr(new PrintStream(outContent));
 		System.out.println("[DM Console]");
-		cons.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		cons.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);// <- prevent closing
+		cons.addWindowListener(new WindowAdapter() {
+		    public void windowClosing(WindowEvent e) {
+		        cons.setExtendedState(JFrame.ICONIFIED);
+		    }
+		});
 		cons.setSize(800, 500);
 		//jta.append(Capture.outContent.toString());
-		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/DM-Dice.jpg");
+		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/DM-Terminal.png");
 		
 		try {
 			cons.setIconImage(Toolkit.getDefaultToolkit().getImage(icon.toURI().toURL()));
