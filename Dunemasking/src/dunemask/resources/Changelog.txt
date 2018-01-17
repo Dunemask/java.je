@@ -1,46 +1,25 @@
-Dunemasking Ver: 3.96
+Dunemasking Ver: 4.0
 dunemask.dunemasking.Capture.java Version: 4.1
-dunemask.dunemasking.Changelog.java Version: 3.96
-dunemask.dunemasking.GitHubStation.java Version: 4.1
-dunemask.dunemasking.Setup.java Version: 3.96
-dunemask.dunemasking.Src.java Version: 3.96
+dunemask.dunemasking.Changelog.java Version: 4.0
+dunemask.dunemasking.GitHub.java Version: 4.1
+dunemask.dunemasking.Setup.java Version: 4.0
+dunemask.dunemasking.Src.java Version: 4.0
 dunemask.dunemasking.StreamGobbler.java Version: 4.1
-dunemask.dunemasking.Version.java Version: 3.96
-dunemask.objects.Expression.java Version: 3.96
-dunemask.objects.MainController.java Version: 4.5
-dunemask.objects.MoviePlayer.java Version: 4.3
+dunemask.dunemasking.Version.java Version: 4.0
+dunemask.objects.Expression.java Version: 4.0
+dunemask.objects.movieplayer.MainController.java Version: 4.5
+dunemask.objects.movieplayer.MoviePlayer.java Version: 4.3
 dunemask.objects.MusicPlayer.java Version: 4.1
-dunemask.objects.ScaledImageLabel.java Version: 3.96
+dunemask.objects.ScaledImageLabel.java Version: 4.0
 dunemask.other.StringBasedEncryption.java Version: 4.0
-dunemask.util.AudioUtil.java Version: 3.96
-dunemask.util.FileUtil.java Version: 3.96
+dunemask.util.AudioUtil.java Version: 4.0
+dunemask.util.FileUtil.java Version: 4.0
 dunemask.util.JarUtil.java Version: 4.0
-dunemask.util.MathUtil.java Version: 3.96
-dunemask.util.MediaUtil.java Version: 3.96
-dunemask.util.ObjectUtil.java Version: 3.96
-dunemask.util.RW.java Version: 3.96
-dunemask.util.StringUtil.java Version: 3.96
-dunemask.dunemasking.Capture.java Version: 4.1
-dunemask.dunemasking.Changelog.java Version: 3.96
-dunemask.dunemasking.GitHubStation.java Version: 4.1
-dunemask.dunemasking.Setup.java Version: 3.96
-dunemask.dunemasking.Src.java Version: 3.96
-dunemask.dunemasking.StreamGobbler.java Version: 4.1
-dunemask.dunemasking.Version.java Version: 3.96
-dunemask.objects.Expression.java Version: 3.96
-dunemask.objects.MainController.java Version: 4.5
-dunemask.objects.MoviePlayer.java Version: 4.3
-dunemask.objects.MusicPlayer.java Version: 4.1
-dunemask.objects.ScaledImageLabel.java Version: 3.96
-dunemask.other.StringBasedEncryption.java Version: 4.0
-dunemask.util.AudioUtil.java Version: 3.96
-dunemask.util.FileUtil.java Version: 3.96
-dunemask.util.JarUtil.java Version: 4.0
-dunemask.util.MathUtil.java Version: 3.96
-dunemask.util.MediaUtil.java Version: 3.96
-dunemask.util.ObjectUtil.java Version: 3.96
-dunemask.util.RW.java Version: 3.96
-dunemask.util.StringUtil.java Version: 3.96
+dunemask.util.MathUtil.java Version: 4.0
+dunemask.util.MediaUtil.java Version: 4.0
+dunemask.util.ObjectUtil.java Version: 4.0
+dunemask.util.RW.java Version: 4.0
+dunemask.util.StringUtil.java Version: 4.0
 Additionally:
 @All: Package-Info Are Complete
 
@@ -55,5 +34,5 @@ Additionally:
 @Changelog.java: Tests javadoc version (Only works in ide) and labels with package
 				 Styling	
 
-Created at: 2018-01-15 15:52
-(Update)
+Created at: 2018-01-16 17:38
+(Class-Update)
