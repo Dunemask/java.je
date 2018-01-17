@@ -46,8 +46,12 @@ public class MainController implements Initializable {
 	
 	public static String mediaPath;
 
-
-
+	/** MoviePlayer Action
+	 * @param evt Event
+	 * */
+	public void resetSpeed() {
+		mediaPlayer.setRate(1);
+	}
 	
 	/** MoviePlayer Action
 	 * @param evt Event
@@ -60,6 +64,7 @@ public class MainController implements Initializable {
 			fileChooser.getExtensionFilters().addAll(filters);
 			File file = fileChooser.showOpenDialog(null);
 			String filePath = file.toURI().toString();
+			
 			if(filePath !=null) {
 				Stop(evt);
 				mediaPath = filePath;
@@ -67,7 +72,7 @@ public class MainController implements Initializable {
 				media = new Media(filePath);
 				mediaPlayer = new MediaPlayer(media);
 				mv.setMediaPlayer(mediaPlayer);
-				
+				mediaPlayer.setRate(1);
 				mediaPlayer.currentTimeProperty().addListener(new InvalidationListener() {
 
 					@Override
@@ -123,7 +128,7 @@ public class MainController implements Initializable {
 		if(setup) {
 			System.out.println("Playing "+mediaPath.replace("%20", " "));
 			fixSlider();
-			mediaPlayer.setRate(1);
+			
 			mediaPlayer.play();
 		}
 		
