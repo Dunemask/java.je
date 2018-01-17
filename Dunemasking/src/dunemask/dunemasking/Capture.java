@@ -10,7 +10,12 @@
  */
 package dunemask.dunemasking;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -18,7 +23,10 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +35,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import dunemask.util.FileUtil;
+import dunemask.util.RW;
 
 /**
  * TO Parse an output as a string value do outContent.parse();
@@ -100,6 +109,7 @@ public class Capture {
 	public static 	boolean consOpen = true;
 	/** Start Console
 	 * <p> Will Route all Outs and errors to a JFrame console</p>
+	 * @wbp.parser.entryPoint
 	 * 
 	 */
 	public static void startConsole() {
@@ -122,10 +132,53 @@ public class Capture {
 
         JTextArea jta = new JTextArea(5, 30);
         JScrollPane scrollPane = new JScrollPane(jta);
-        jip.add(scrollPane);
-		cons.add(jip);
+		jip.add(scrollPane);
+		
+		cons.getContentPane().add(jip);
 		cons.setVisible(true);
 		jta.setEditable(true);
+		
+		JPanel menuPanel = new JPanel();
+		cons.getContentPane().add(menuPanel, BorderLayout.NORTH);
+		menuPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JButton exit = new JButton("System Exit");
+		exit.setBackground(Color.LIGHT_GRAY);
+		menuPanel.add(exit);
+		exit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				System.exit(1);
+				
+			}
+			
+		});
+		exit.setAlignmentX(0);
+		
+		JButton writeButton = new JButton("Write To File");
+		writeButton.setBackground(Color.LIGHT_GRAY);
+		writeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String text = jta.getText();
+				ArrayList<String> lines = new ArrayList<String>();
+				char[] chars = text.toCharArray();
+				int lastIndex=0;
+				for(int i=0;i<chars.length;i++) {
+					if(chars[i]=='\n') {
+						String tmp = text.substring(lastIndex,i);
+						lines.add(tmp);
+						lastIndex=i+1;
+					}		
+				}
+				String desktop = System.getProperty("user.home") + "/Desktop/";
+				RW.write(new File(desktop+Capture.getInput("Name Of File (Will Be Placed on Desktop)")+".txt"),lines.toArray(new String[lines.size()]), 1);
+			}
+			
+		});
+		menuPanel.add(writeButton);
+		
 		cons.repaint();
 		cons.revalidate();
 		cons.setLocationRelativeTo(null);
