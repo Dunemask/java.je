@@ -11,9 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
+import dunemask.util.FileUtil;
+
 public class GameMain {
-	static ImageIcon image1 = new ImageIcon("bin/game/imgs/blok1.png");
+	//Use dunemask.fileutil.getresource it will ignore the bin and will also work in jar form
+	//static ImageIcon image1 = new ImageIcon("bin/game/imgs/blok1.png");
 	
+	static ImageIcon image1 = new ImageIcon(FileUtil.getResource("game/imgs/blok1.png").getPath());
 	public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setTitle("GAME MAIN");
