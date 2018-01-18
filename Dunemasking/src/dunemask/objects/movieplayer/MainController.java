@@ -8,6 +8,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.CountDownLatch;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -37,6 +39,15 @@ public class MainController implements Initializable {
 	@FXML
 	private MediaView mv;
 	
+	
+	private Runnable onEndDefault = new Runnable() {
+		@Override
+		public void run() {
+			 MoviePlayer.l.countDown();
+		}
+		
+		
+	};
 	@FXML
 	private Slider seekSlider;
 	
@@ -115,6 +126,7 @@ public class MainController implements Initializable {
 	/** MoviePlayer Action*/
 	public void ExternalSeek() {
 		mediaPlayer.seek(new Duration(externalSeekSlider));
+		mediaPlayer.play();
 		
 	}
 	
@@ -140,10 +152,12 @@ public class MainController implements Initializable {
 	 * */
 	public void Play(ActionEvent evt) {
 		if(setup) {
+			MoviePlayer.playerReady.countDown();
 			System.out.println("Playing "+mediaPath.replace("%20", " "));
 			fixSlider();
 			
 			mediaPlayer.play();
+			MoviePlayer.l = new CountDownLatch(1);
 		}
 		
 	}
@@ -154,13 +168,16 @@ public class MainController implements Initializable {
 	 * */
 	public void SetOnLoop(ActionEvent evt) {
 		if(setup) {
-			if(mediaPlayer.getOnEndOfMedia()==null) {
+			if(mediaPlayer.getOnEndOfMedia()==onEndDefault) {
 				mediaPlayer.setOnEndOfMedia(new Runnable() {
 
 					@Override
 					public void run() {
+						MoviePlayer.l.countDown();
 						Restart(evt);
-						
+						MoviePlayer.l = new CountDownLatch(1);
+						 
+						 
 					}
 					
 				});
@@ -168,7 +185,7 @@ public class MainController implements Initializable {
 				
 			}else {
 				repeatButton.setStyle("");
-				mediaPlayer.setOnEndOfMedia(null);
+				mediaPlayer.setOnEndOfMedia(onEndDefault);
 			}
 		}
 	}
@@ -187,7 +204,7 @@ public class MainController implements Initializable {
 			            // play if you want
 			        	seekSlider.setMin(0.0);
 			    		seekSlider.setMax(media.getDuration().toSeconds());
-			    		MoviePlayer.playerReady.countDown();
+			    		//MoviePlayer.playerReady.countDown();
 			    		Play(null);
 			        }
 			    });
@@ -202,7 +219,7 @@ public class MainController implements Initializable {
 	 * */
 	public void Slow(ActionEvent evt) {
 		if(setup) {
-		mediaPlayer.setRate(mediaPlayer.getRate()-.15);
+		mediaPlayer.setRate(mediaPlayer.getRate()-.125);
 		}
 	}
 	
@@ -211,20 +228,11 @@ public class MainController implements Initializable {
 	 * */
 	public void Fast(ActionEvent evt) {
 		if(setup) {
-		mediaPlayer.setRate(mediaPlayer.getRate()+.15);
+		mediaPlayer.setRate(mediaPlayer.getRate()+.125);
 		}
 	}
 	
-	/** MoviePlayer Action
-	 * @param evt Event
-	 * */
-	public void Start(ActionEvent evt) {
-		if(setup) {
-		fixSlider();
-		mediaPlayer.seek(media.getDuration());
-		mediaPlayer.setRate(1);
-		}
-	}
+
 	
 	/** MoviePlayer Action
 	 * @param evt Event
@@ -244,6 +252,7 @@ public class MainController implements Initializable {
 			mediaPlayer.seek(mediaPlayer.getStartTime());
 			fixSlider();
 			mediaPlayer.play();
+			MoviePlayer.l = new CountDownLatch(1);
 		}
 	}
 	
@@ -255,6 +264,7 @@ public class MainController implements Initializable {
 		if(setup) {
 		mediaPlayer.seek(mediaPlayer.getStartTime());
 		mediaPlayer.stop();
+		
 		}
 	}
 	
@@ -265,7 +275,8 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initPlayer(mediaPath);
-	
+		mediaPlayer.setOnEndOfMedia(onEndDefault);
+		
 		
 		 prev = mediaPath;
 		Runnable run = new Runnable() {
@@ -304,17 +315,26 @@ public class MainController implements Initializable {
 						 ExternalSeek();
 						 MoviePlayer.forceSeek = false;
 					 }
-					 
-					 
+					 if(MoviePlayer.currentMedia!=media) {
+						 MoviePlayer.currentMedia = media;
+					 }
+						if(MoviePlayer.l.getCount()==0) {
+							MoviePlayer.l = new CountDownLatch(1);
+							MoviePlayer.mediaFinished.countDown();
+							MoviePlayer.mediaFinished = new CountDownLatch(1);
+						}
 					 
 				 }
 				
 			}
 			
 		};
-		System.out.println("Started Testing");
+		
+		
 		Thread update = new Thread(run);
 		update.start();
+	
+	
 
 
 	}

@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -34,7 +35,10 @@ public class MoviePlayer extends Application{
 	public static boolean forceSeek = false;
 	
 	public static CountDownLatch playerReady = new CountDownLatch(1);
+	static CountDownLatch l = new CountDownLatch(1);	
+	public static CountDownLatch mediaFinished = new CountDownLatch(1);
 	
+	public static Media currentMedia;
 	/** Cause the player to play
 	 * */
 	public static void play() {
@@ -74,6 +78,9 @@ public class MoviePlayer extends Application{
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
+
+		
+		
 		Parent root = FXMLLoader.load(FileUtil.getResource("dunemask/objects/movieplayer/Main.fxml").toURI().toURL());
 		Scene scene = new Scene(root,800,400,Color.BLACK);
 		try {
@@ -82,6 +89,7 @@ public class MoviePlayer extends Application{
 		} catch (Exception e) {
 			
 		}
+		
 		stage.setTitle("DM - Movie Player");
 	
 		stage.setScene(scene);
@@ -114,6 +122,9 @@ public class MoviePlayer extends Application{
 				updatePlayer = false;
 				Capture.closeConsole();
 				MainController.setup=false;
+				l.countDown();
+				mediaFinished.countDown();
+				
 			});
 			mp.start();
 		}else {
@@ -123,6 +134,8 @@ public class MoviePlayer extends Application{
 			updatePlayer = false;
 			Capture.closeConsole();
 			MainController.setup=false;
+			l.countDown();
+			mediaFinished.countDown();
 		}
 		
 
