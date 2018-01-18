@@ -103,7 +103,7 @@ public class GitHub {
 		for(File f:chosen) {
 			f.delete();
 		}
-		
+		frame.dispose();
 		
 		
 	}
@@ -121,49 +121,30 @@ public class GitHub {
 		fd.setDirectory(new File(System.getProperty("user.home") + "/Desktop/").getAbsolutePath());
 	
 		fd.setVisible(true);
-		File chosen = fd.getFiles()[0];
-		frame.dispose();
+		File[] chosen = fd.getFiles();
+		for(File f:chosen) {
 		//System.out.println("Custom Path: (Leave Blank For default) ");
-		lastAddedFilePath = Capture.getInput("Custom Path: (Leave Blank For default) ");
-		if(lastAddedFilePath.equals("")) {
-			lastAddedFilePath = chosen.getName();
+		lastAddedFilePath = Capture.getInput("Custom Path For "+f.getName()+ "(Leave Blank For default) ");
+		if(lastAddedFilePath.startsWith("/")||lastAddedFilePath.startsWith("\\")) {
+			GitHub.lastAddedFilePath = GitHub.lastAddedFilePath.substring(1, GitHub.lastAddedFilePath.length());
 		}
-		File outFile = new File(repPath+"tmp\\"+lastAddedFilePath);
-		FileUtil.writeFile(chosen, outFile);
 		
+		if(lastAddedFilePath.equals("")) {
+			lastAddedFilePath = f.getName();
+		}
+		
+		if(lastAddedFilePath.endsWith("/")||lastAddedFilePath.endsWith("\\")) {
+			lastAddedFilePath = lastAddedFilePath + f.getName();
+		}
+		
+		
+		File outFile = new File(repPath+"tmp\\"+lastAddedFilePath);
+		FileUtil.writeFile(f, outFile);
+		}
+		frame.dispose();
 		
 		//Push It
-		File tmpaddbat =FileUtil.getResource("dunemask/resources/github/Add.bat");;
-		File addbat = null;
-		try {
-			addbat = File.createTempFile("tmpAddBat", ".tmp");
-		} catch (IOException e1) {
-			
-			e1.printStackTrace();
-		}
-		
-		FileUtil.writeFile(tmpaddbat, addbat);
-		RW.write(addbat, "cd "+repPath+"tmp", 2);
-		System.out.println(RW.read(addbat, 1));
-	///	RW.write(addbat, "pause", FileUtil.linesInFile(addbat));
-		FileUtil.writeFile(addbat, new File(repPath+"Add.bat"));
-		try {
-			System.out.println("Adding...");
-			ArrayList<String> commands = new  ArrayList<String>();
-			commands.add(repPath+"Add.bat");
-			commands.add("exit");
-			ProcessBuilder pb = new ProcessBuilder(commands);
-			Process p = pb.start();
-			StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream());
-			StreamGobbler outputGobbler = new StreamGobbler(p.getInputStream());
-			errorGobbler.start();
-			outputGobbler.start();
-			
-			p.waitFor();
-		} catch (IOException | InterruptedException e) {
-			
-			e.printStackTrace();
-		}
+
 		
 		
 	}

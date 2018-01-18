@@ -15,6 +15,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -31,7 +32,8 @@ public class MainController implements Initializable {
     final static double version = 4.5;
     
     public static boolean setup=false;
-    
+    @FXML
+    private Button repeatButton;
 	@FXML
 	private MediaView mv;
 	
@@ -66,13 +68,15 @@ public class MainController implements Initializable {
 			String filePath = file.toURI().toString();
 			
 			if(filePath !=null) {
+				Runnable endOfMedia = mediaPlayer.getOnEndOfMedia();
 				Stop(evt);
 				mediaPath = filePath;
-				System.out.println(mediaPath);
+				System.out.println("Playing "+mediaPath.replace("%20", " "));
 				media = new Media(filePath);
 				mediaPlayer = new MediaPlayer(media);
 				mv.setMediaPlayer(mediaPlayer);
 				mediaPlayer.setRate(1);
+				mediaPlayer.setOnEndOfMedia(endOfMedia);
 				mediaPlayer.currentTimeProperty().addListener(new InvalidationListener() {
 
 					@Override
@@ -140,15 +144,22 @@ public class MainController implements Initializable {
 	 * */
 	public void SetOnLoop(ActionEvent evt) {
 		if(setup) {
-			mediaPlayer.setOnEndOfMedia(new Runnable() {
+			if(mediaPlayer.getOnEndOfMedia()==null) {
+				mediaPlayer.setOnEndOfMedia(new Runnable() {
 
-				@Override
-				public void run() {
-					Restart(evt);
+					@Override
+					public void run() {
+						Restart(evt);
+						
+					}
 					
-				}
+				});
+				repeatButton.setStyle("-fx-background-color: #232323;"+" -fx-text-fill: #ffffff;");
 				
-			});
+			}else {
+				repeatButton.setStyle("");
+				mediaPlayer.setOnEndOfMedia(null);
+			}
 		}
 	}
 	
@@ -256,6 +267,7 @@ public class MainController implements Initializable {
 	 * 
 	 */
 	public void initPlayer(String pathToMedia) {
+		
 		
 		media = new Media(pathToMedia);
 		mediaPlayer = new MediaPlayer(media);

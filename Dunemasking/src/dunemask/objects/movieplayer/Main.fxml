@@ -28,10 +28,10 @@
                         <Button mnemonicParsing="false" onAction="#Fast" text="Faster" />
                         <Button mnemonicParsing="false" onAction="#resetSpeed" text="Normal" />
                         <Button mnemonicParsing="false" onAction="#Slow" text="Slower" />
-                        <Button mnemonicParsing="false" onAction="#Restart" text="Restart" />
-                        <Button mnemonicParsing="false" onAction="#changeMedia" text="Change" />
-                        <Button mnemonicParsing="false" onAction="#SkipBehind" text="&lt;&lt;" />
-                        <Button mnemonicParsing="false" onAction="#SetOnLoop" text="🔁" />
+                        <Button mnemonicParsing="false" onAction="#Restart" text="🔙" />
+                        <Button mnemonicParsing="false" onAction="#changeMedia" text="🔎" />
+                        <Button mnemonicParsing="false" onAction="#SkipBehind" text="⏪" />
+                        <Button fx:id="repeatButton" mnemonicParsing="false" onAction="#SetOnLoop" text="🔁" />
                         <Button mnemonicParsing="false" onAction="#SkipAhead" text="⏩" />
                         <Slider fx:id="volumeSlider" prefHeight="25.0" prefWidth="148.0" />
                      </children>

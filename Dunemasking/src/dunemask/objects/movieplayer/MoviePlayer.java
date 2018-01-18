@@ -43,6 +43,7 @@ public class MoviePlayer extends Application{
 		stage.setScene(scene);
 		stage.show();
 		
+		
 	}
 	
 
@@ -50,7 +51,7 @@ public class MoviePlayer extends Application{
 	 * @param args Args
 	 * @param file Starting File for moviePlayer
 	 */
-	public static void startPlayer(String[] args,File file) {
+	public static void startPlayer(File file) {
 		String path;
 		try {
 		path = file.toURI().toString();
@@ -59,6 +60,7 @@ public class MoviePlayer extends Application{
 		}
 		MainController.mediaPath = path;
 		Capture.startConsole();
+		String[] args = null;
 		launch(args);
 		Capture.closeConsole();
 		MainController.setup=false;
