@@ -40,6 +40,7 @@ public class MainController implements Initializable {
 	@FXML
 	private Slider seekSlider;
 	
+
 	@FXML 
 	private Slider volumeSlider;
 	
@@ -109,6 +110,15 @@ public class MainController implements Initializable {
 		
 	}
 	
+	public static int externalSeekSlider=0;
+
+	/** MoviePlayer Action*/
+	public void ExternalSeek() {
+		mediaPlayer.seek(new Duration(externalSeekSlider));
+		
+	}
+	
+	
 	/** MoviePlayer Action
 	 * @param evt Event
 	 * */
@@ -177,6 +187,7 @@ public class MainController implements Initializable {
 			            // play if you want
 			        	seekSlider.setMin(0.0);
 			    		seekSlider.setMax(media.getDuration().toSeconds());
+			    		MoviePlayer.playerReady.countDown();
 			    		Play(null);
 			        }
 			    });
@@ -191,7 +202,7 @@ public class MainController implements Initializable {
 	 * */
 	public void Slow(ActionEvent evt) {
 		if(setup) {
-		mediaPlayer.setRate(mediaPlayer.getRate()-.25);
+		mediaPlayer.setRate(mediaPlayer.getRate()-.15);
 		}
 	}
 	
@@ -200,7 +211,7 @@ public class MainController implements Initializable {
 	 * */
 	public void Fast(ActionEvent evt) {
 		if(setup) {
-		mediaPlayer.setRate(mediaPlayer.getRate()+.25);
+		mediaPlayer.setRate(mediaPlayer.getRate()+.15);
 		}
 	}
 	
@@ -268,9 +279,34 @@ public class MainController implements Initializable {
 						System.out.println("Media Externally changed!");
 						prev = mediaPath;
 						changeMedia(mediaPath);
-					}else {
-					
 					}
+					 if(MoviePlayer.forcePlay) {
+						 Play(null);
+						 MoviePlayer.forcePlay = false;
+					 }
+					 if(MoviePlayer.forcePause) {
+						 Pause(null);
+						 MoviePlayer.forcePause = false;
+					 }
+					 if(MoviePlayer.forceStop) {
+						 Stop(null);
+						 MoviePlayer.forceStop = false;
+					 }
+					 if(MoviePlayer.forceToggleRepeat) {
+						 SetOnLoop(null);
+						 MoviePlayer.forceToggleRepeat = false;
+					 }
+					 if(MoviePlayer.forceRestart) {
+						 Restart(null);
+						 MoviePlayer.forceRestart = false;
+					 }
+					 if(MoviePlayer.forceSeek) {
+						 ExternalSeek();
+						 MoviePlayer.forceSeek = false;
+					 }
+					 
+					 
+					 
 				 }
 				
 			}

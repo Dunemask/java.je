@@ -5,6 +5,8 @@ package dunemask.objects.movieplayer;
 
 
 import java.io.File;
+import java.util.concurrent.CountDownLatch;
+
 import dunemask.dunemasking.Capture;
 import dunemask.util.FileUtil;
 import javafx.application.Application;
@@ -24,6 +26,49 @@ public class MoviePlayer extends Application{
 	/***Version*/
     final static double version = 4.3;
 	public static boolean updatePlayer = true;
+	public static boolean forcePlay = false;
+	public static boolean forceStop = false;
+	public static boolean forcePause = false;
+	public static boolean forceToggleRepeat = false;
+	public static boolean forceRestart = false;
+	public static boolean forceSeek = false;
+	
+	public static CountDownLatch playerReady = new CountDownLatch(1);
+	
+	/** Cause the player to play
+	 * */
+	public static void play() {
+		forcePlay = true;
+	}
+	/**Stop mediaplayer
+	 * */
+	public static void stopMediaPlayer() {
+		forceStop = true;
+	}
+	/** Pause MediaPlayer
+	 * */
+	public static void pause() {
+		forcePause = true;
+	}
+	/**Set media Player on repeat
+	 * */
+	public static void setOnRepeat() {
+		forceToggleRepeat = true;
+	}
+	/**Restart the mediaplayer
+	 * */
+	public static void restart() {
+		forceRestart = true;
+	}
+	/**Seek a duration in milliseconds
+	 * */
+	public static void seek(int duration) {
+		MainController.externalSeekSlider = duration;
+		forceSeek = true;
+	}
+
+	
+	
 	/* (non-Javadoc)
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
 	 */
@@ -43,14 +88,15 @@ public class MoviePlayer extends Application{
 		stage.show();
 		
 		
+		
 	}
 	
 
 	/** Start Player
-	 * @param args Args
+	 * @param newThread Start in new thread or not External commands cannot be performed without a new thread being created
 	 * @param file Starting File for moviePlayer
 	 */
-	public static void startPlayer(File file) {
+	public static void startPlayer(File file,boolean newThread) {
 		String path;
 		try {
 		path = file.toURI().toString();
@@ -59,14 +105,27 @@ public class MoviePlayer extends Application{
 		}
 		MainController.mediaPath = path;
 		
-
+		if(newThread) {
+			Thread mp= new Thread( () -> {
+				
+				Capture.startConsole();
+				String[] args = null;
+				launch(args);
+				updatePlayer = false;
+				Capture.closeConsole();
+				MainController.setup=false;
+			});
+			mp.start();
+		}else {
+			Capture.startConsole();
+			String[] args = null;
+			launch(args);
+			updatePlayer = false;
+			Capture.closeConsole();
+			MainController.setup=false;
+		}
 		
-		Capture.startConsole();
-		String[] args = null;
-		launch(args);
-		updatePlayer = false;
-		Capture.closeConsole();
-		MainController.setup=false;
+
 		
 	}
 
@@ -85,7 +144,7 @@ public class MoviePlayer extends Application{
 		MainController.mediaPath = path;
 	}
 
-
+	
 	
 
 }
