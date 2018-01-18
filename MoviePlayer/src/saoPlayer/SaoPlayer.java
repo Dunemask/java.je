@@ -47,13 +47,15 @@ public class SaoPlayer {
 				for(int i=1;i<3;i++) {
 					File file = GitHub.gitFile("Saomp4","episode/10-"+i+".mp4");
 					files.add(file);
+					System.out.println("Added Episode 10-"+i);
 				}
 				for(int i=1;i<=3;i++) {
 					File file = GitHub.gitFile("Saomp4","episode/11-"+i+".mp4");
 					files.add(file);
+					System.out.println("Added Episode 11-"+i);
 				}
 				files.add(GitHub.gitFile("Saomp4","episode/12.mp4"));
-				
+				System.out.println("Added Episode 12");
 			}
 			
 			
@@ -66,11 +68,13 @@ public class SaoPlayer {
 			
 			e1.printStackTrace();
 		}
-		System.out.println("MOvin on");
+		
 		File second = files.get(0);
 		MoviePlayer.changeMedia(second);
+		
 	
-		for(int i=2;i<files.size();i++) {
+		
+		for(int i=1;i<files.size();i++) {
 			try {
 				MoviePlayer.mediaFinished.await();
 			} catch (InterruptedException e) {

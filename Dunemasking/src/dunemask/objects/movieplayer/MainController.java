@@ -107,6 +107,14 @@ public class MainController implements Initializable {
 		}
 		
 	}
+	/**MoviePlayer Action
+	 * @param evt Event
+	 * */
+	public void SkipToEnd(ActionEvent evt) {
+		mediaPlayer.seek(mediaPlayer.getTotalDuration());
+		MoviePlayer.l.countDown();
+	}
+	
 	
 	/** MoviePlayer Action
 	 * @param evt Event
