@@ -5,7 +5,6 @@ package dunemask.objects.movieplayer;
 
 
 import java.io.File;
-
 import dunemask.dunemasking.Capture;
 import dunemask.util.FileUtil;
 import javafx.application.Application;
@@ -24,7 +23,7 @@ import javafx.stage.Stage;
 public class MoviePlayer extends Application{
 	/***Version*/
     final static double version = 4.3;
-	
+	public static boolean updatePlayer = true;
 	/* (non-Javadoc)
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
 	 */
@@ -59,12 +58,34 @@ public class MoviePlayer extends Application{
 			path = FileUtil.getWebFile("https://dunemask.github.io/resources/media/mp4/Two%20Guys%20On%20A%20Scooter.mp4").toURI().toString();
 		}
 		MainController.mediaPath = path;
+		
+
+		
 		Capture.startConsole();
 		String[] args = null;
 		launch(args);
+		updatePlayer = false;
 		Capture.closeConsole();
 		MainController.setup=false;
 		
 	}
+
+
+	/**
+	 * @param webFile
+	 */
+	public static void changeMedia(File file) {
+		String path;
+		try {
+		path = file.toURI().toString();
+		}catch(Exception e) {
+			path = FileUtil.getWebFile("https://dunemask.github.io/resources/media/mp4/Two%20Guys%20On%20A%20Scooter.mp4").toURI().toString();
+		}
+		
+		MainController.mediaPath = path;
+	}
+
+
+	
 
 }

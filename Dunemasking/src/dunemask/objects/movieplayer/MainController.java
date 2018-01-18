@@ -247,19 +247,47 @@ public class MainController implements Initializable {
 		}
 	}
 	
-	
+	 static volatile String prev;
 	/* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initPlayer(mediaPath);
+	
+		
+		 prev = mediaPath;
+		Runnable run = new Runnable() {
+
+			@Override
+			public void run() {
+		
+				while(MoviePlayer.updatePlayer) {
+					
+					 if(prev!=mediaPath) {
+						System.out.println("Media Externally changed!");
+						prev = mediaPath;
+						changeMedia(mediaPath);
+					}else {
+					
+					}
+				 }
+				
+			}
+			
+		};
+		System.out.println("Started Testing");
+		Thread update = new Thread(run);
+		update.start();
 
 
 	}
 	
 	public void initPlayer(File media) {
 		initPlayer(media.toURI().toString());
+		
+
+		
 	}
 	
 	
@@ -317,7 +345,58 @@ public class MainController implements Initializable {
 		
 		setup=true;
 		fixSlider();
+		
+
+		
+		
+		
+		
 	}
 	
+	public void changeMedia(String mpath) {
+		
+		if(setup) {
 
+			String filePath = mpath;
+			
+			if(filePath !=null) {
+				Runnable endOfMedia = mediaPlayer.getOnEndOfMedia();
+				mediaPlayer.seek(	mediaPlayer.getStartTime());
+				mediaPlayer.stop();
+				mediaPath = filePath;
+				System.out.println("Playing "+mediaPath.replace("%20", " "));
+				media = new Media(filePath);
+				mediaPlayer = new MediaPlayer(media);
+				mv.setMediaPlayer(mediaPlayer);
+					mediaPlayer.setRate(1);
+				mediaPlayer.setOnEndOfMedia(endOfMedia);
+				mediaPlayer.currentTimeProperty().addListener(new InvalidationListener() {
+
+					@Override
+					public void invalidated(Observable arg0) {
+						seekSlider.setValue(mediaPlayer.currentTimeProperty().getValue().toSeconds());
+				
+					}});
+			}
+			
+			mediaPlayer.seek(mediaPlayer.getStartTime());
+			mediaPlayer.setOnReady(new Runnable() {
+
+			        @Override
+			        public void run() {
+
+
+			            // play if you want
+			        	seekSlider.setMin(0.0);
+			        	seekSlider.setMax(media.getDuration().toSeconds());
+			        	
+			        }
+			    });
+			
+			mediaPlayer.play();
+			
+		}
+			
+		
+	}
 }
