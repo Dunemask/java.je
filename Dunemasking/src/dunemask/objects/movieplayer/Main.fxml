@@ -11,20 +11,20 @@
       <MediaView fx:id="mv" fitHeight="200.0" fitWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="56.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="56.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-background-color: #000000;" BorderPane.alignment="CENTER">
         <items>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <StackPane cache="true" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-border-color: #000000; -fx-border-image-width: 0;">
                <children>
-                  <Slider fx:id="seekSlider" prefHeight="18.0" prefWidth="598.0" />
+                  <Slider fx:id="seekSlider" prefHeight="18.0" prefWidth="598.0" style="-fx-background-color: #000000; -fx-border-color: #000000;" />
                </children>
             </StackPane>
           <AnchorPane>
                <children>
-                  <HBox prefHeight="29.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <HBox prefHeight="29.0" prefWidth="598.0" style="-fx-background-color: #232323;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#Play" text="▶" />
-                        <Button mnemonicParsing="false" onAction="#Pause" text="⏸" />
-                        <Button mnemonicParsing="false" onAction="#Stop" text="◼" />
+                        <Button mnemonicParsing="false" onAction="#Pause" text="||" />
+                        <Button mnemonicParsing="false" onAction="#Stop" text="⏹" />
                         <Button mnemonicParsing="false" onAction="#Fast" text="Faster" />
                         <Button mnemonicParsing="false" onAction="#resetSpeed" text="Normal" />
                         <Button mnemonicParsing="false" onAction="#Slow" text="Slower" />
@@ -34,7 +34,7 @@
                         <Button mnemonicParsing="false" onAction="#SkipBehind" text="⏪" />
                         <Button fx:id="repeatButton" mnemonicParsing="false" onAction="#SetOnLoop" text="🔁" />
                         <Button mnemonicParsing="false" onAction="#SkipAhead" text="⏩" />
-                        <Slider fx:id="volumeSlider" prefHeight="25.0" prefWidth="148.0" />
+                        <Slider fx:id="volumeSlider" prefHeight="25.0" prefWidth="148.0" style="-fx-background-color: #232323;" />
                      </children>
                   </HBox>
                </children>
