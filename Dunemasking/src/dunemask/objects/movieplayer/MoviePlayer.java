@@ -10,6 +10,7 @@ import java.util.concurrent.CountDownLatch;
 import dunemask.dunemasking.Capture;
 import dunemask.util.FileUtil;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -69,6 +70,11 @@ public class MoviePlayer extends Application{
 	public static void seek(int duration) {
 		MainController.externalSeekSlider = duration;
 		forceSeek = true;
+	}
+	/**Force Close The Player
+	 * */
+	public static void forceClose() {
+		Platform.exit();
 	}
 
 	
@@ -157,6 +163,9 @@ public class MoviePlayer extends Application{
 		MainController.mediaPath = path;
 	}
 
+	/** Overide Controlls in the mainController
+	 * */
+	
 	
 	
 

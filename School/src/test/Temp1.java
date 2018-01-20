@@ -10,10 +10,6 @@
  */
 package test;
 
-import java.awt.FileDialog;
-import java.io.File;
-
-import dunemask.dunemasking.GitHubStation;
 import dunemask.objects.movieplayer.MoviePlayer;
 
 /**
@@ -28,7 +24,23 @@ public class Temp1 {
 	public static void main(String[] args) {
 	//GitHubStation.Start();
 		
-	MoviePlayer.startPlayer(null, null);
+	MoviePlayer.startPlayer(null, true);
+	System.out.println("Moo");
+	try {
+		MoviePlayer.playerReady.await();
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		Thread.sleep(5000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println("Foce Closed");
+	MoviePlayer.forceClose();
+	
 	
 		/*	JFrame frame = new JFrame("File Chooser");
 		frame.setSize(400,200);

@@ -40,7 +40,7 @@ public class MainController implements Initializable {
 	private MediaView mv;
 	
 	
-	private Runnable onEndDefault = new Runnable() {
+	private static Runnable onEndDefault = new Runnable() {
 		@Override
 		public void run() {
 			 MoviePlayer.l.countDown();
