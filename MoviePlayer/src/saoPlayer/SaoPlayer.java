@@ -70,7 +70,7 @@ public class SaoPlayer {
 			
 		});
 		getFiles.start();
-
+		String title = MovieLauncher.frame.getTitle();
 		
 		
 		try {
@@ -91,7 +91,7 @@ public class SaoPlayer {
 				if(playing-1>=0) {
 					MovieLauncher.current.changeMedia(new Media((files.get(playing-1).toURI().toString())));
 					playing--;
-					MovieLauncher.frame.setTitle(MovieLauncher.frame.getTitle()+" - "+files.get(playing).getName());
+					MovieLauncher.frame.setTitle(title+" - "+files.get(playing).getName());
 				}
 				
 			}
@@ -109,7 +109,7 @@ public class SaoPlayer {
 				if(playing+1<files.size()) {
 					MovieLauncher.current.changeMedia(new Media((files.get(playing+1).toURI().toString())));
 					playing++;
-					MovieLauncher.frame.setTitle(MovieLauncher.frame.getTitle()+" - "+files.get(playing).getName());
+					MovieLauncher.frame.setTitle(title+" - "+files.get(playing).getName());
 				}
 				
 			}
