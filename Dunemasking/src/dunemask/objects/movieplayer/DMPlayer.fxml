@@ -30,7 +30,7 @@
                         <Button mnemonicParsing="false" onAction="#Slow" text="Slower" />
                         <Button fx:id="backButton" mnemonicParsing="false" onAction="#Restart" text="&lt;-" />
                         <Button fx:id="forwardButton" mnemonicParsing="false" onAction="#SkipToEnd" text="-&gt;" />
-                        <Button mnemonicParsing="false" onAction="#changeMediaWithChooser" text="Change" />
+                        <Button fx:id="changeMediaButton" mnemonicParsing="false" onAction="#changeMediaWithChooser" text="Change" />
                         <Button mnemonicParsing="false" onAction="#SkipBehind" text="&lt;&lt;" />
                         <Button fx:id="repeatButton" mnemonicParsing="false" onAction="#SetOnLoop" text="Repeat" />
                         <Button mnemonicParsing="false" onAction="#SkipAhead" text="&gt;&gt;" />
