@@ -56,6 +56,7 @@ public class MovieLauncher extends Application {
 		
 		
 		current= new MoviePlayer(new Media(path));
+		
 		//c = new MoviePlayer();
 	   
 		

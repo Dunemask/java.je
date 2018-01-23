@@ -16,16 +16,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
-import javax.swing.SwingUtilities;
-
 import dunemask.util.FileUtil;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
-import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,12 +42,13 @@ public class MoviePlayer implements Initializable  {
 	public MoviePlayer(Media media){
 		setMedia(media);
 		
-		final CountDownLatch latch = new CountDownLatch(1);
+		/*final CountDownLatch latch = new CountDownLatch(1);
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
-		      JFXPanel p  = new JFXPanel(); // initializes JavaFX environment
+		    	System.out.println("Boom");
+			JFXPanel p  = new JFXPanel(); // initializes JavaFX environment
 		        latch.countDown();
-		     p.setEnabled(false);   
+		     
 		    }
 		});
 		
@@ -63,7 +60,7 @@ public class MoviePlayer implements Initializable  {
 		
 		this.volumeSlider  = new Slider();
 		this.seekSlider = new Slider();
-		seekSlider.setMax(this.media.getDuration().toSeconds());
+		seekSlider.setMax(this.media.getDuration().toSeconds());*/
 		this.setPlayerReady(new CountDownLatch(1));
 		
 	}
