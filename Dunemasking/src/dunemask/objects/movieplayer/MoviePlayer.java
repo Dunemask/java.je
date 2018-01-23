@@ -24,6 +24,9 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -215,20 +218,51 @@ public class MoviePlayer implements Initializable  {
 		
 	}
 	
-	
-	
-	/** MoviePlayer Action
-	 * 
-	 * */
-	public void Play() {
-		 
-	
-			//System.out.println("Playing "+media.getSource().replace("%20", " "));
-			fixSlider();
+	public Runnable pause  = new Runnable() {
+
+		@Override
+		public void run() {
 			
-			mediaPlayer.play();
+			mediaPlayer.pause();
+			getPlayButton().setText(">");
+			getPlayButton().setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent evt) {
+					play.run();
+					
+				}
+				
+			}
+			);
 			
+		}
 		
+	};
+	
+	public Runnable play = new Runnable() {
+
+		@Override
+		public void run() {
+			fixSlider();
+			mediaPlayer.play();
+			getPlayButton().setText("| |");
+			getPlayButton().setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent evt) {
+					pause.run();
+					
+				}
+				
+			}
+			);
+		}
+		
+	};
+	
+	public void playPause() {
+		getPlayButton().getOnAction().handle(null);
 		
 	}
 	
@@ -275,7 +309,17 @@ public class MoviePlayer implements Initializable  {
 			    		seekSlider.setMax(media.getDuration().toSeconds());
 			    		
 			    		//MoviePlayer.playerReady
-			    		Play();
+						getPlayButton().setOnAction(new EventHandler<ActionEvent>() {
+
+							@Override
+							public void handle(ActionEvent evt) {
+								play.run();
+								
+							}
+							
+						}
+						);
+						getPlayButton().getOnAction().handle(null);
 			    		getPlayerReady().countDown();
 			        }
 			    });
@@ -304,16 +348,7 @@ public class MoviePlayer implements Initializable  {
 	}
 	
 
-	
-	/** MoviePlayer Action
-	 * 
-	 * */
-	public void Pause() {
-		 
-			
-			mediaPlayer.pause();
-		
-	}
+
 	
 	/** MoviePlayer Action
 	 * 
@@ -394,8 +429,20 @@ public class MoviePlayer implements Initializable  {
 		
 			}});
 		
-		fixSlider();
+		getPlayButton().setOnAction(new EventHandler<ActionEvent>() {
 
+			@Override
+			public void handle(ActionEvent evt) {
+				play.run();
+				
+			}
+			
+		}
+		);
+		
+		mediaPlayer.setOnEndOfMedia(onEndDefault);
+		
+		fixSlider();
 
 		
 		
