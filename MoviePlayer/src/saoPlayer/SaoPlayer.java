@@ -15,7 +15,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import dunemask.dunemasking.GitHub;
+import dunemask.objects.movieplayer.MovieLauncher;
 import dunemask.objects.movieplayer.MoviePlayer;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.scene.control.Button;
+import javafx.scene.media.Media;
 
 /**
  * @author Elijah
@@ -24,13 +30,16 @@ import dunemask.objects.movieplayer.MoviePlayer;
 public class SaoPlayer {
 
 	static ArrayList<File> files = new ArrayList<File>();
+	static int playing = 0;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
 		File file = GitHub.gitFile("Saomp4","episode/1.mp4");
-		MoviePlayer.startPlayer(file,true);
+		files.add(file);
+		
+		MovieLauncher.startPlayer(file,true);
 		
 		
 		Thread getFiles = new Thread( new Runnable() {
@@ -61,29 +70,66 @@ public class SaoPlayer {
 			
 		});
 		getFiles.start();
+
+		
 		
 		try {
-			MoviePlayer.mediaFinished.await();
-		} catch (InterruptedException e1) {
+			MovieLauncher.current.getPlayerReady().await();
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
 			
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 		
-		File second = files.get(0);
-		MoviePlayer.changeMedia(second);
 		
-	
 		
-		for(int i=1;i<files.size();i++) {
-			try {
-				MoviePlayer.mediaFinished.await();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		MovieLauncher.current.getBackButton().setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent evt) {
+				if(playing-1>=0) {
+					MovieLauncher.current.changeMedia(new Media((files.get(playing-1).toURI().toString())));
+					playing--;
+				}
+				
 			}
 			
-			MoviePlayer.changeMedia(files.get(i));
 		}
+		);
+		
+		
+		
+		
+		MovieLauncher.current.getForwardButton().setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent evt) {
+				if(playing+1<files.size()) {
+					MovieLauncher.current.changeMedia(new Media((files.get(playing+1).toURI().toString())));
+					playing++;
+				}
+				
+			}
+			
+		}
+		);
+		
+		MovieLauncher.current.getMediaPlayer().setOnEndOfMedia(new Runnable() {
+
+			@Override
+			public void run() {
+				MovieLauncher.current.getForwardButton().getOnAction().handle(null);
+				
+			}
+			
+		});
+		
+		
+		
+		/*for(int i=0;i<files.size();i++) {
+			
+			MovieLauncher.current.changeMedia(new Media((files.get(i).toURI().toString())));
+		}*/
 		
 		
 	/*	for(int i=2;i<10;i++) {

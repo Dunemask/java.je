@@ -28,8 +28,8 @@
                         <Button mnemonicParsing="false" onAction="#Fast" text="Faster" />
                         <Button mnemonicParsing="false" onAction="#resetSpeed" text="Normal" />
                         <Button mnemonicParsing="false" onAction="#Slow" text="Slower" />
-                        <Button mnemonicParsing="false" onAction="#Restart" text="&lt;-" />
-                        <Button mnemonicParsing="false" onAction="#SkipToEnd" text="-&gt;" />
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#Restart" text="&lt;-" />
+                        <Button fx:id="forwardButton" mnemonicParsing="false" onAction="#SkipToEnd" text="-&gt;" />
                         <Button mnemonicParsing="false" onAction="#changeMediaWithChooser" text="Change" />
                         <Button mnemonicParsing="false" onAction="#SkipBehind" text="&lt;&lt;" />
                         <Button fx:id="repeatButton" mnemonicParsing="false" onAction="#SetOnLoop" text="Repeat" />

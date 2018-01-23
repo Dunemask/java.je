@@ -364,7 +364,7 @@ public class MoviePlayer implements Initializable  {
 	 * */
 	public void Restart() {
 		 
-			mediaPlayer.seek(mediaPlayer.getStartTime());
+			mediaPlayer.seek(new Duration(0.0));
 			fixSlider();
 			mediaPlayer.play();
 		//	MoviePlayer.l = new CountDownLatch(1);
