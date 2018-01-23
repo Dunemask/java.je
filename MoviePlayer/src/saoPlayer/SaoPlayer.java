@@ -118,6 +118,16 @@ public class SaoPlayer {
 		}
 		);
 		
+		MovieLauncher.current.setOnEndDefault(new Runnable() {
+
+			@Override
+			public void run() {
+				MovieLauncher.current.getForwardButton().getOnAction().handle(null);
+				
+			}
+			
+		});
+		
 		MovieLauncher.current.getMediaPlayer().setOnEndOfMedia(new Runnable() {
 
 			@Override

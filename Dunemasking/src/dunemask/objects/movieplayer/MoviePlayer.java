@@ -99,7 +99,7 @@ public class MoviePlayer implements Initializable  {
 	private MediaView mv;
 	
 	
-	private static Runnable onEndDefault = new Runnable() {
+	private Runnable onEndDefault = new Runnable() {
 		@Override
 		public void run() {
 			 
@@ -108,6 +108,24 @@ public class MoviePlayer implements Initializable  {
 		
 	};
 	
+	/**
+	 * @return the onEndDefault
+	 */
+	public Runnable getOnEndDefault() {
+		
+		return onEndDefault;
+	}
+
+
+
+
+	/**
+	 * @param onEndDefault the onEndDefault to set
+	 */
+	public void setOnEndDefault(Runnable onEndDefault) {
+		this.onEndDefault = onEndDefault;
+	}
+
 	@FXML
 	private Slider seekSlider;
 	
@@ -448,10 +466,10 @@ public class MoviePlayer implements Initializable  {
 			
 		}
 		);
-		
+		fixSlider();
 		mediaPlayer.setOnEndOfMedia(onEndDefault);
 		
-		fixSlider();
+		
 
 		
 		
