@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="603.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dunemask.objects.movieplayer.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="603.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <MediaView fx:id="mv" fitHeight="200.0" fitWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
@@ -22,18 +22,18 @@
                <children>
                   <HBox prefHeight="29.0" prefWidth="598.0" style="-fx-background-color: #232323;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#Play" text="▶" />
+                        <Button fx:id="playButton" mnemonicParsing="false" onAction="#Play" text="&gt;" />
                         <Button mnemonicParsing="false" onAction="#Pause" text="||" />
-                        <Button mnemonicParsing="false" onAction="#Stop" text="⏹" />
+                        <Button mnemonicParsing="false" onAction="#Stop" text="Stop" />
                         <Button mnemonicParsing="false" onAction="#Fast" text="Faster" />
                         <Button mnemonicParsing="false" onAction="#resetSpeed" text="Normal" />
                         <Button mnemonicParsing="false" onAction="#Slow" text="Slower" />
-                        <Button mnemonicParsing="false" onAction="#Restart" text="🔙" />
-                        <Button mnemonicParsing="false" onAction="#SkipToEnd" text="🔜" />
-                        <Button mnemonicParsing="false" onAction="#changeMedia" text="🔎" />
-                        <Button mnemonicParsing="false" onAction="#SkipBehind" text="⏪" />
-                        <Button fx:id="repeatButton" mnemonicParsing="false" onAction="#SetOnLoop" text="🔁" />
-                        <Button mnemonicParsing="false" onAction="#SkipAhead" text="⏩" />
+                        <Button mnemonicParsing="false" onAction="#Restart" text="&lt;-" />
+                        <Button mnemonicParsing="false" onAction="#SkipToEnd" text="-&gt;" />
+                        <Button mnemonicParsing="false" onAction="#changeMediaWithChooser" text="Change" />
+                        <Button mnemonicParsing="false" onAction="#SkipBehind" text="&lt;&lt;" />
+                        <Button fx:id="repeatButton" mnemonicParsing="false" onAction="#SetOnLoop" text="Repeat" />
+                        <Button mnemonicParsing="false" onAction="#SkipAhead" text="&gt;&gt;" />
                         <Slider fx:id="volumeSlider" prefHeight="25.0" prefWidth="148.0" style="-fx-background-color: #232323;" />
                      </children>
                   </HBox>
