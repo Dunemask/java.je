@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import dunemask.dunemasking.Capture;
 import dunemask.dunemasking.GitHub;
+import dunemask.objects.movieplayer.MovieLauncher;
 import dunemask.objects.movieplayer.MoviePlayer;
 import dunemask.util.StringUtil;
 
@@ -26,16 +27,16 @@ public class Calulator {
 		if(StringUtil.containsIgnoreCase(tmp, "y")) {
 			player = true;
 			File file = GitHub.gitFile("tmp", "resources/media/mp4/ppap.mp4");
-			MoviePlayer.startPlayer(file, true);
+			MovieLauncher.startPlayer(file, true);
 			try {
-				MoviePlayer.playerReady.await();
+				MovieLauncher.current.getPlayerReady().await();
 			} catch (InterruptedException e) {
 			
 				e.printStackTrace();
 			}
 			Capture.closeConsole();
 			System.out.println("Math Couldn't be made any more simple!");
-			MoviePlayer.setOnRepeat();
+			MovieLauncher.current.SetOnLoop();
 		}
 		
 		
