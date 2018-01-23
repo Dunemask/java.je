@@ -70,7 +70,7 @@ public class SaoPlayer {
 			
 		});
 		getFiles.start();
-		String title = MovieLauncher.frame.getTitle();
+	
 		
 		
 		try {
@@ -80,6 +80,7 @@ public class SaoPlayer {
 			
 			e.printStackTrace();
 		}
+		String title = MovieLauncher.frame.getTitle();
 		MovieLauncher.current.getRepeatButton().setDisable(true);
 		
 		MovieLauncher.frame.setTitle(MovieLauncher.frame.getTitle()+" - "+files.get(playing).getName());
