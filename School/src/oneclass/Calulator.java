@@ -9,7 +9,6 @@ import java.util.Scanner;
 import dunemask.dunemasking.Capture;
 import dunemask.dunemasking.GitHub;
 import dunemask.objects.movieplayer.MovieLauncher;
-import dunemask.objects.movieplayer.MoviePlayer;
 import dunemask.util.StringUtil;
 
 /**
@@ -42,12 +41,14 @@ public class Calulator {
 		
 		
 		
+		
 		boolean run = true;
 		Capture.getInput("Math Performed as such: num1 operand num2 (Click Ok To Continue)");
 		while(run) {
 			run = calculator();
 			
 		}
+		
 		
 		if(player) {
 			String store = Capture.getInput("Close Player? (Y/N)");

@@ -578,23 +578,12 @@ public class MoviePlayer implements Initializable  {
 	}
 
 
-
-
-
-
-
 	/**
 	 * @return the playerReady
 	 */
 	public CountDownLatch getPlayerReady() {
 		return playerReady;
 	}
-
-
-
-
-
-
 
 	/**
 	 * @param playerReady the playerReady to set

@@ -10,17 +10,16 @@
  */
 package saoPlayer;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
+
+import javax.swing.JLabel;
 
 import dunemask.dunemasking.GitHub;
 import dunemask.objects.movieplayer.MovieLauncher;
-import dunemask.objects.movieplayer.MoviePlayer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 
 /**
@@ -39,7 +38,7 @@ public class SaoPlayer {
 		File file = GitHub.gitFile("Saomp4","episode/1.mp4");
 		files.add(file);
 		
-		MovieLauncher.startPlayer(file,true);
+		MovieLauncher.startPlayer(null,true);
 		
 		
 		Thread getFiles = new Thread( new Runnable() {
@@ -137,7 +136,11 @@ public class SaoPlayer {
 			}
 			
 		});
-		
+		JLabel m = new JLabel("Moo");
+		m.setSize(m.getPreferredSize());
+		m.setLocation(200,200);
+		m.setForeground(Color.pink);
+		MovieLauncher.frame.add(m);
 		
 		
 		/*for(int i=0;i<files.size();i++) {
