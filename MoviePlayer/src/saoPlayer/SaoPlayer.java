@@ -80,6 +80,7 @@ public class SaoPlayer {
 			
 			e.printStackTrace();
 		}
+		MovieLauncher.current.getRepeatButton().setDisable(true);
 		
 		MovieLauncher.frame.setTitle(MovieLauncher.frame.getTitle()+" - "+files.get(playing).getName());
 		
