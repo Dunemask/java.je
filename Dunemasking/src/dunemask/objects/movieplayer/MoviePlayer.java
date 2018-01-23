@@ -40,24 +40,10 @@ import javafx.util.Duration;
 public class MoviePlayer implements Initializable  {
 	
 	public MoviePlayer(Media media){
+		
 		setMedia(media);
 		
-		/*final CountDownLatch latch = new CountDownLatch(1);
-		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
-		    	System.out.println("Boom");
-			JFXPanel p  = new JFXPanel(); // initializes JavaFX environment
-		        latch.countDown();
-		     
-		    }
-		});
-		
-		try {
-			latch.await();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
+		/*
 		this.volumeSlider  = new Slider();
 		this.seekSlider = new Slider();
 		seekSlider.setMax(this.media.getDuration().toSeconds());*/
@@ -77,6 +63,7 @@ public class MoviePlayer implements Initializable  {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initPlayer();
+		
 		
 	}
 	

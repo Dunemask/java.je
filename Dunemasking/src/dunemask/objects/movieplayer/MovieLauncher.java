@@ -15,8 +15,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import dunemask.dunemasking.Capture;
 import dunemask.util.FileUtil;
@@ -54,14 +56,26 @@ public class MovieLauncher extends Application {
 			path = FileUtil.getWebFile("https://dunemask.github.io/resources/media/mp4/Two%20Guys%20On%20A%20Scooter.mp4").toURI().toString();
 
 		}
-		
+		final CountDownLatch latch = new CountDownLatch(1);
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		        new JFXPanel(); // initializes JavaFX environment
+		        latch.countDown();
+		    }
+		});
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 		
 		
 		current= new MoviePlayer(new Media(path));
 		
 		//c = new MoviePlayer();
-	   
+	 
 		
 		if(newThread) {
 			Thread mp= new Thread( () -> {
@@ -94,9 +108,10 @@ public class MovieLauncher extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		Capture.startConsole();
+		
 		FXMLLoader loader = new FXMLLoader(FileUtil.getResource("dunemask/objects/movieplayer/DMPlayer.fxml").toURI().toURL());
 		loader.setController(current);
-		
+		  
 		Parent root = loader.load();
 	
 		Scene scene = new Scene(root,800,400,Color.BLACK);
@@ -113,7 +128,7 @@ public class MovieLauncher extends Application {
 		
 		stage.setTitle("DM - Movie Player");
 		
-		stage.setScene(scene);
+		//stage.setScene(scene);
 		
 		Capture.closeConsole();
 		 frame = new JFrame("DM - Movie Player");
