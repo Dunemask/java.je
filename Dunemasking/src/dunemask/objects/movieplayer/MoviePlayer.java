@@ -92,7 +92,7 @@ public class MoviePlayer implements Initializable  {
     @FXML private Button stopButton;
 	@FXML private Button forwardButton;
 	@FXML private Button backButton;
-	@FXML private Button pauseButton;
+	
 	@FXML private Button changeMediaButton;
 	
 	@FXML
@@ -214,6 +214,18 @@ public class MoviePlayer implements Initializable  {
 		
 		
 	}
+	
+	/**For External Force Closing*/
+	public void Pause() {
+		mediaPlayer.pause();
+	}
+	/**Seek
+	 * */
+	public void seek(Duration dur) {
+		mediaPlayer.seek(dur);
+	}
+	
+	
 	
 	public Runnable pause  = new Runnable() {
 
@@ -485,13 +497,6 @@ public class MoviePlayer implements Initializable  {
 		this.backButton = backButton;
 	}
 
-	public Button getPauseButton() {
-		return pauseButton;
-	}
-
-	public void setPauseButton(Button pauseButton) {
-		this.pauseButton = pauseButton;
-	}
 
 	public Button getChangeMediaButton() {
 		return changeMediaButton;

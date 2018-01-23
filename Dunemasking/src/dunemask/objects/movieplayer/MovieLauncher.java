@@ -11,6 +11,8 @@
 package dunemask.objects.movieplayer;
 
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 
@@ -19,6 +21,7 @@ import javax.swing.JFrame;
 import dunemask.dunemasking.Capture;
 import dunemask.util.FileUtil;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -127,16 +130,23 @@ public class MovieLauncher extends Application {
 	        frame.add(fxPanel);
 	        frame.setSize((int)scene.getWidth(),(int)scene.getHeight());
 	        frame.setVisible(true);
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        frame.setLocationRelativeTo(null);
 	        frame.setAlwaysOnTop(true);
 	        Thread.sleep(50);
 	        frame.setAlwaysOnTop(false);
+	        frame.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e) {
+					
+					Platform.exit();			
+					frame.dispose();
+					
+				}
+			});
 
 		
 		
 	
 		
 	}
-
+	
 }
