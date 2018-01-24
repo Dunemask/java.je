@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.event.MouseInputAdapter;
 import java.io.File;
 import java.awt.event.*;
@@ -24,33 +25,26 @@ public class GameMain {
 		for(int i = 0 ; i<lengthf;i++) {
 			images[i] = new ImageIcon("bin/game/imgs/blok"+(i+1)+".png");
 		}
+		int choose = 0;
 		JFrame f = new JFrame();
 		JLabel num = new JLabel("STUFF");
 		num.setSize(100,100);
 		num.setLocation(10,10);
-		int choose=0;
 		JPanel tab1 = new JPanel();
 		tab1.setLayout(null);
 		tab1.setBackground(new Color(200,200,200));
 		tab1.setSize(1024,256);
 		tab1.setLocation(0,768);
-		num.setText("NUM" + lengthf);
-		JButton[] labs = new JButton[lengthf];
+		num.setText("1");
+		
+		TButon[] labs = new TButon[lengthf];
 		for (int i=0; i<lengthf;i++) {
-			labs[i] = new JButton();
-			//labs[i].setText("blo "+ i);
-			labs[i].setIcon(images[i]);
-			labs[i].setSize(50,50);
-			labs[i].setLocation(i*50, 10);
-			tab1.add(labs[i]);
-			ActionListener al = new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					choose=1;
-				}
-			};
-			labs[i].addActionListener(al);
-			
-			
+		labs[i] = new TButon(i,num);
+		//labs[i].setText("blo "+ i);
+		labs[i].setIcon(images[i]);
+		labs[i].setSize(50,50);
+		labs[i].setLocation(i*50, 10);
+		tab1.add(labs[i]);
 		}
 		
 		
@@ -71,13 +65,14 @@ public class GameMain {
 		f.add(num);
 		f.repaint();
 		JPanel[][] AllSquares = new JPanel[32][32];
+		int c = Integer.parseInt(num.getText());
 		for(int i=0;i<10;i++) {
 			for (int j=0;j<10;j++) {
-				AllSquares[i][j] = Addsquare(i,j,p,choose);
+				AllSquares[i][j] = Addsquare(i,j,p,c);
 			}
 		}
 		f.repaint();
-		JLabel sel = new JLabel(images[choose]);
+		JLabel sel = new JLabel(images[Integer.parseInt(num.getText())]);
 		sel.setSize(16,16);
 		p.add(sel);
 		p.addMouseListener(new MouseListener() {
@@ -96,13 +91,23 @@ public class GameMain {
 				sel.setLocation((me.getX()/16)*16, (me.getY()/16)*16);
 			}
 			public void mouseDragged(MouseEvent me) {
-				AllSquares[me.getX()/16][me.getY()/16] = Addsquare(me.getX()/16,me.getY()/16,p,choose);
+				int c = Integer.parseInt(num.getText());
+				AllSquares[me.getX()/16][me.getY()/16] = Addsquare(me.getX()/16,me.getY()/16,p,c);
 				System.out.println(me.getX());
 				f.repaint();
 			}
 		});
-		
-		
+		/*Timer timer = new Timer(10,new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				choose = Integer.parseInt(num.getText());
+			}
+		});
+		timer.start();
+		*/
+		while (1==1) {
+			sel.setIcon(images[Integer.parseInt(num.getText())]);
+		}
 		
 	}
 	public static JPanel Addsquare(int x, int y,JPanel j,int choose){
