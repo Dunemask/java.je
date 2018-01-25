@@ -38,7 +38,7 @@ public class SaoPlayer {
 		File file = GitHub.gitFile("Saomp4","episode/1.mp4");
 		files.add(file);
 		
-		MovieLauncher.startPlayer(null,true);
+		MovieLauncher.startPlayer(file,true);
 		
 		
 		Thread getFiles = new Thread( new Runnable() {
@@ -136,11 +136,7 @@ public class SaoPlayer {
 			}
 			
 		});
-		JLabel m = new JLabel("Moo");
-		m.setSize(m.getPreferredSize());
-		m.setLocation(200,200);
-		m.setForeground(Color.pink);
-		MovieLauncher.frame.add(m);
+
 		
 		
 		/*for(int i=0;i<files.size();i++) {

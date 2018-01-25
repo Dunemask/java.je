@@ -202,9 +202,8 @@ public class MoviePlayer implements Initializable  {
 	 * 
 	 * */
 	public void SkipToEnd() {
-		mediaPlayer.seek(new Duration(media.getDuration().toSeconds()));
+		mediaPlayer.seek(media.getDuration());
 		
-		//TODO
 		
 	}
 	
@@ -689,6 +688,84 @@ public class MoviePlayer implements Initializable  {
 	 */
 	public void setPlayerReady(CountDownLatch playerReady) {
 		this.playerReady = playerReady;
+	}
+
+
+
+
+
+
+
+	/**
+	 * @return the splitPane
+	 */
+	public SplitPane getSplitPane() {
+		return splitPane;
+	}
+
+
+
+
+
+
+
+	/**
+	 * @param splitPane the splitPane to set
+	 */
+	public void setSplitPane(SplitPane splitPane) {
+		this.splitPane = splitPane;
+	}
+
+
+
+
+
+
+
+	/**
+	 * @return the borderPane
+	 */
+	public BorderPane getBorderPane() {
+		return borderPane;
+	}
+
+
+
+
+
+
+
+	/**
+	 * @param borderPane the borderPane to set
+	 */
+	public void setBorderPane(BorderPane borderPane) {
+		this.borderPane = borderPane;
+	}
+
+
+
+
+
+
+
+	/**
+	 * @return the stackPane
+	 */
+	public StackPane getStackPane() {
+		return stackPane;
+	}
+
+
+
+
+
+
+
+	/**
+	 * @param stackPane the stackPane to set
+	 */
+	public void setStackPane(StackPane stackPane) {
+		this.stackPane = stackPane;
 	}
 
 }
