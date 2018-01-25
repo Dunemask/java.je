@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
 import dunemask.util.FileUtil;
+import dunemask.util.StringUtil;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -27,6 +28,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -76,6 +86,11 @@ public class MoviePlayer implements Initializable  {
     @FXML 
     private Button playButton ;
     
+    @FXML
+    private SplitPane splitPane;
+    @FXML
+    private BorderPane borderPane;
+    @FXML private StackPane stackPane;
     @FXML private Button stopButton;
 	@FXML private Button forwardButton;
 	@FXML private Button backButton;
@@ -142,12 +157,13 @@ public class MoviePlayer implements Initializable  {
 			 filters.add(new FileChooser.ExtensionFilter("Select a Media ","*.mp4","*.mp3","*.wav","*.mpeg"));
 			fileChooser.getExtensionFilters().addAll(filters);
 			File file = fileChooser.showOpenDialog(null);
-			String filePath = file.toURI().toString();
-			
-			if(filePath !=null) {
+			if(file!=null) {
+				String filePath = file.toURI().toString();
+				if(filePath !=null) {
 					changeMedia(new Media(filePath));
+				}
 			}
-			
+
 			
 			
 		
@@ -186,7 +202,8 @@ public class MoviePlayer implements Initializable  {
 	 * 
 	 * */
 	public void SkipToEnd() {
-		mediaPlayer.seek(mediaPlayer.getTotalDuration());
+		mediaPlayer.seek(new Duration(media.getDuration().toSeconds()));
+		//TODO
 		
 	}
 	
@@ -285,20 +302,21 @@ public class MoviePlayer implements Initializable  {
 	 *  
 	 * */
 	public void SetOnLoop() {
-		 
+		 System.out.println("Clicked");
 			if(mediaPlayer.getOnEndOfMedia()==onEndDefault) {
 				mediaPlayer.setOnEndOfMedia(new Runnable() {
 
 					@Override
 					public void run() {
-						
+						System.out.println("Restarting");
 						Restart();
-						//MoviePlayer.l = new CountDownLatch(1);
+						
 						 
 						 
 					}
 					
 				});
+				
 				repeatButton.setStyle("-fx-background-color: #232323;"+" -fx-text-fill: #ffffff;");
 				
 			}else {
@@ -317,24 +335,38 @@ public class MoviePlayer implements Initializable  {
 
 			        @Override
 			        public void run() {
-
+			        	
 			            // play if you want
 			        	seekSlider.setMin(0.0);
 			    		seekSlider.setMax(media.getDuration().toSeconds());
 			    		
 			    		//MoviePlayer.playerReady
-						getPlayButton().setOnAction(new EventHandler<ActionEvent>() {
-
-							@Override
-							public void handle(ActionEvent evt) {
-								play.run();
-								
-							}
-							
-						}
-						);
-						getPlayButton().getOnAction().handle(null);
+			    		play.run();
 			    		getPlayerReady().countDown();
+			    		Image img = (Image) media.getMetadata().get("image");
+			    		if(img!=null&&StringUtil.containsIgnoreCase(media.getSource(), ".mp3")) {
+							BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+
+						    borderPane.setBackground(new Background(new BackgroundImage(img,
+						            BackgroundRepeat.NO_REPEAT,
+						            BackgroundRepeat.NO_REPEAT,
+						            BackgroundPosition.CENTER,
+						            bSize)));
+							
+							
+						//	borderPane.setStyle("-fx-background-image: url('"+imgPath+"');");
+							//ap.setStyle(ap.getStyle()+ "-fx-background-repeat: no-repeat;");
+						//	borderPane.setStyle(ap.getStyle()+ "-fx-background-size: cover;");
+						//	borderPane.setStyle(ap.getStyle()+"-fx-background-position:center;");
+						//	mv.setStyle(borderPane.getStyle());
+							//borderPane.setCenter(ap);
+			    		
+			    		}else if(StringUtil.containsIgnoreCase(media.getSource(),"mp4")) {
+			    		
+			    		
+			    			
+			    		}
+			    		
 			        }
 			    });
 		  
@@ -342,6 +374,50 @@ public class MoviePlayer implements Initializable  {
 		
 		
 	}
+	
+	/*private void swingImageUpdate() {
+		Container p = MovieLauncher.frame.getContentPane();
+		JFXPanel pan =  (JFXPanel) p.getComponent(0);
+		if(pan.getComponentCount()>0) {
+			pan.remove(0);
+		}
+		
+		Image img = (Image) media.getMetadata().get("image");
+		if(img!=null&&StringUtil.containsIgnoreCase(media.getSource(), ".mp3")) {
+		BufferedImage bmg = SwingFXUtils.fromFXImage(img, null);
+		
+		
+
+		
+		
+		
+
+		
+		int x=0;
+		int y=0;
+		int w=(int)mv.getScene().getWidth();
+		int h=(int) (mv.getScene().getHeight()-(stackPane.getHeight()+40));
+		
+		JLabel ico = new JLabel(new StretchIcon(bmg));
+		
+		
+	
+		
+		ico.setBounds(x,y,w,h);
+		System.out.println(x+","+y+","+w);
+		
+		pan.add(ico);
+		
+		p.remove(p.getComponent(0));
+		p.add(pan);
+		
+		MovieLauncher.frame.setContentPane(p);
+		MovieLauncher.frame.repaint();
+		MovieLauncher.frame.revalidate();
+
+		}
+	}*/
+	
 	
 	/** MoviePlayer Action
 	 * 
@@ -425,7 +501,8 @@ public class MoviePlayer implements Initializable  {
 
 				@Override
 				public void invalidated(Observable arg0) {
-					if(seekSlider.getValue()!=mediaPlayer.currentTimeProperty().getValue().toSeconds()){
+				boolean notOnEnd = seekSlider.getValue()<seekSlider.getMax();
+					if(seekSlider.getValue()!=mediaPlayer.currentTimeProperty().getValue().toSeconds()&&notOnEnd){
 						mediaPlayer.seek(Duration.seconds(seekSlider.getValue()));
 					}
 					
@@ -453,6 +530,27 @@ public class MoviePlayer implements Initializable  {
 			
 		}
 		);
+		
+		
+	
+
+	/*	javafx.scene.Node divider = splitPane.lookup(".split-pane:vertical>*.split-pane-divider");
+		    if(divider!=null){
+		        divider.setStyle("-fx-background-color: transparent;");
+		     
+		    }else {
+		    	System.out.println("Boom");
+		    	splitPane.setStyle(splitPane.getStyle()+"} *.split-pane-divider{-fx-background-color: #000000;}");
+		    }
+		    
+		 try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
+			Capture.closeConsole();*/
+			
 		fixSlider();
 		mediaPlayer.setOnEndOfMedia(onEndDefault);
 		

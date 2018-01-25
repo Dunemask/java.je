@@ -10,14 +10,10 @@
  */
 package temp;
 
-import java.awt.Color;
-import java.awt.Container;
 import java.io.File;
 
-import javax.swing.JLabel;
-
+import dunemask.dunemasking.GitHub;
 import dunemask.objects.movieplayer.MovieLauncher;
-import javafx.embed.swing.JFXPanel;
 
 /**
  * @author karib
@@ -29,13 +25,20 @@ public class MoviePlayerTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		//File file = FileUtil.getResource("C:\\Users\\Elijah\\Downloads\\Bye Bye Miss American Pie.mp3");
+		//File file = GitHub.gitFile("tmp","resources/media/mp4/Coming Home.mp4");
+		String name = "Two Steps From Hell - Never Give Up On Your Dreams.mp3";
+		File file = GitHub.gitFile("dunemask.github.io","resources/media/mp3/"+name);
 		
-		MovieLauncher.startPlayer(new File("C:/Users/karib/AppData/Local/Temp/Two Guys On A Scooter.mp4"), true);
+		MovieLauncher.startPlayer(file, true);
 		try {
 			MovieLauncher.current.getPlayerReady().await();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		
+		/*
 		JLabel moo = new JLabel("Moo");
 		moo.setSize(moo.getPreferredSize());	
 		moo.setLocation(200, 200);
@@ -49,7 +52,7 @@ public class MoviePlayerTest {
 		p.remove(p.getComponent(0));
 		p.add(pan);
 		p.setLayout(null);
-		MovieLauncher.frame.setContentPane(p);
+		MovieLauncher.frame.setContentPane(p);*/
 		
 	}
 

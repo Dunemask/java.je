@@ -43,6 +43,21 @@ public class ScaledImageLabel extends JLabel{
 		this.revalidate();
 
 	}
+	
+	/**
+	 * @param image image
+	 * @param width Int for the width of the image
+	 * @param height Int for the height of Image
+	 */
+	public ScaledImageLabel(Image image,int width,int height) {
+		setImageFilePath(null);
+		this.setSize(width, height);
+		Icon icon = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+		this.setIcon(icon);
+		this.repaint();
+		this.revalidate();
+
+	}
 
 	/**
 	 * @return the imageFile
