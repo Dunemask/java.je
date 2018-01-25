@@ -203,6 +203,7 @@ public class MoviePlayer implements Initializable  {
 	 * */
 	public void SkipToEnd() {
 		mediaPlayer.seek(new Duration(media.getDuration().toSeconds()));
+		
 		//TODO
 		
 	}
@@ -302,13 +303,13 @@ public class MoviePlayer implements Initializable  {
 	 *  
 	 * */
 	public void SetOnLoop() {
-		 System.out.println("Clicked");
+		
 			if(mediaPlayer.getOnEndOfMedia()==onEndDefault) {
 				mediaPlayer.setOnEndOfMedia(new Runnable() {
 
 					@Override
 					public void run() {
-						System.out.println("Restarting");
+						
 						Restart();
 						
 						 
