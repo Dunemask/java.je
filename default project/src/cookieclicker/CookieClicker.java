@@ -79,7 +79,7 @@ public class CookieClicker {
 			
 		}
 		);
-		
+
 		
 		btnCookie.setForeground(Color.WHITE);
 		btnCookie.setBackground(new Color(102, 51, 0));
@@ -98,12 +98,25 @@ public class CookieClicker {
 		btnClicker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(cookies>=10) {
+					cookies-=10;
 				new AutoClicker().start();
 				}
 			}
 		});
-		btnClicker.setBounds(304, 27, 104, 23);
+		btnClicker.setBounds(304, 27, 198, 23);
 		cframe.getContentPane().add(btnClicker);
+		
+		JButton addGrandma = new JButton("Grandma - 50");
+		addGrandma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cookies>=50) {
+					cookies-=50;
+				new Grandma().start();
+				}
+			}
+		});
+		addGrandma.setBounds(304, 61, 198, 23);
+		cframe.getContentPane().add(addGrandma);
 		cframe.setVisible(true);
 		
 	}

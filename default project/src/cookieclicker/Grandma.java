@@ -2,7 +2,7 @@
  * Dunemask Created This File on the Main Repository
  * @contact Dunemask at dunemask@gmail.com
  * commit = false
- * File: cookieclicker.AutoClicker.java
+ * File: cookieclicker.Gradnma.java
  * Version: 0.1
  * info: (Information About The Class)
  * (To Change This Go To Window > Preferences 
@@ -14,16 +14,15 @@ package cookieclicker;
  * @author karib
  *
  */
-public class AutoClicker extends Thread {
-	
-	
-	public AutoClicker(){
+public class Grandma extends Thread{
+
+	public Grandma() {
 		super(new Runnable() {
 
 			@Override
 			public void run() {
 				while(true) {
-				CookieClicker.cookies++;
+				CookieClicker.cookies+=5;
 				CookieClicker.cframe.repaint();
 				CookieClicker.cframe.revalidate();
 			//	System.out.println("Click");
@@ -40,7 +39,8 @@ public class AutoClicker extends Thread {
 			}
 			
 		});
-		
 	}
-
+	
+	
+	
 }
