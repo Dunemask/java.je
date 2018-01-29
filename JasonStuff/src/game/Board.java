@@ -53,7 +53,7 @@ public class Board extends JPanel{
 				if(me.getY()<p.getHeight()&&me.getX()<p.getWidth()&&me.getX()>0&&me.getY()>0) {
 					SetBlok(me.getX()/16,me.getY()/16,p,c);
 				}
-				System.out.println(me.getX());
+				//System.out.println(me.getX());
 				f.repaint();
 				mousx=(me.getX()/16)*16;
 				mousy=(me.getY()/16)*16;

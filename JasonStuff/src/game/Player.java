@@ -9,6 +9,7 @@ public class Player {
 	int y;
 	int vx = 0;
 	int vy = 0;
+	int detect;
 	JLabel lab = new JLabel("Player");
 	Board pan = null;
 	KeyList key = new KeyList();
@@ -31,6 +32,13 @@ public class Player {
 			x=0;
 		if(x>512-16)
 			x=512-16;
+		if(y<0)
+			y=0;
+		if(y>512-16)
+			y=512-16;
+		
+		//Square
+		detect = 1;
 		if(1==1) {
 			if (DetectBlok(x+15,y+14)||DetectBlok(x+15,y+1)) {
 				x-=vx;
@@ -56,13 +64,42 @@ public class Player {
 			y-=vy;
 			vy=1;
 		}
+		}
+		
+		detect = 2;
+		if(1==1) {
+			if (DetectBlok(x+15,y+14)||DetectBlok(x+15,y+1)) {
+				x-=vx;
+				vx=0;
+			}
+			if (DetectBlok(x,y+14)||DetectBlok(x,y+1)) {
+				x-=vx;
+				vx=0;
+			}
+		if (DetectBlok(x-0,y+15)||DetectBlok(x+15,y+15)) {
+			y-=vy;
+			vy=0;
+			
+			if (key.Output()[38]==1) {
+				if (!(DetectBlok(x-0,y+0)||DetectBlok(x+15,y+0))) {
+					vy = -15;
+				}
+			}
+		} else {
+			vy++;
+		}
+		if (DetectBlok(x-0,y+0)||DetectBlok(x+15,y+0)) {
+			y-=vy;
+			vy=1;
+		}
+		}
+		
+		
 		if (key.Output()[37]==1) {
 			vx += -5;
 		}
 		if (key.Output()[39]==1) {
 			vx += 5;
-		}
-		
 		}
 		//System.out.println("X:" + x +" Y:" + y +" XV:" + vx +" YV:" + vy );
 		vx = (vx * 60)/100;
@@ -70,7 +107,7 @@ public class Player {
 		lab.setLocation(x, y);
 	}
 	public boolean DetectBlok(int x,int y) {
-		if (pan.getAllSquares()[(x/16)][((y)/16)] != null) {
+		if (pan.getAllSquares()[(x/16)][((y)/16)] != null && Blok.getblock()[pan.getAllSquares()[(x/16)][((y)/16)].getType()] == detect) {
 		return true;
 		}else {
 		return false;

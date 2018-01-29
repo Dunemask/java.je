@@ -38,4 +38,8 @@ public class Blok extends JPanel {
 	public void setLab(JLabel lab) {
 		this.lab = lab;
 	}
+	public static int[] getblock() {
+		int[] i = {1,1,1,0,2,0};
+		return i;
+	}
 }

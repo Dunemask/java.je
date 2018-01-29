@@ -78,6 +78,7 @@ public class GameMain {
 		p.add(sel);
 		
 		
+		
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
