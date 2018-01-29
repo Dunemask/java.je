@@ -16,6 +16,7 @@ package jfxTest;
 import dunemask.objects.movieplayer.MovieLauncher;
 import dunemask.util.FileUtil;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 /**
@@ -37,8 +38,10 @@ public class TestPlayer {
 			e.printStackTrace();
 		}
 		String address = "https://dunemask.github.io/resources/media/mp3/If%20You%20Just%20Believe.mp3";
-		MovieLauncher.current.setMedia(new Media(FileUtil.getWebFile(address).toURI().toString()));
+		Media m = (new Media(FileUtil.getWebFile(address).toURI().toString()));
+		MovieLauncher.current.setMediaPlayer(new MediaPlayer(m));
 		MovieLauncher.current.getMediaPlayer().seek(new Duration(0.0));
+		MovieLauncher.current.getMediaView().setMediaPlayer(MovieLauncher.current.getMediaPlayer());
 		System.out.println("Done");
 	
 	

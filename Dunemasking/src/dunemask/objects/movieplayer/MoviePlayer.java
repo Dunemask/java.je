@@ -465,6 +465,7 @@ public class MoviePlayer implements Initializable  {
 	}
 	
 	
+	
 	/**
 	 * 
 	 */
@@ -743,7 +744,19 @@ public class MoviePlayer implements Initializable  {
 	}
 
 
+	/**
+	 * @return the mediaView
+	 */
+	public MediaView getMediaView() {
+		return mv;
+	}
 
+
+
+
+
+
+	
 
 
 
