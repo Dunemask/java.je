@@ -10,6 +10,7 @@
  */
 package dunemask.objects.movieplayer;
 
+import java.awt.Container;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -18,7 +19,9 @@ import java.net.MalformedURLException;
 import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.border.LineBorder;
 
 import dunemask.dunemasking.Capture;
 import dunemask.util.FileUtil;
@@ -162,6 +165,34 @@ public class MovieLauncher extends Application {
 		
 	
 		
+	}
+	
+	/** Returns a jInternalFrame reroutes view to jinternalframe
+	 * 
+	 * 
+	 * 
+	 * */
+	public static JInternalFrame getJInternalFrameStyle() {
+		JFrame cf = MovieLauncher.frame;
+		MovieLauncher.frame.setVisible(false);
+		MovieLauncher.frame.dispose();
+		Container cont = cf.getContentPane();
+		
+		JInternalFrame jif = new JInternalFrame(cf.getTitle());
+		jif.setSize(cf.getWidth(), cf.getHeight());
+		jif.setResizable(true);
+		jif.setBorder(new LineBorder(java.awt.Color.DARK_GRAY, 3, false));
+		  /*jif. putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+		  jif.  getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+		 /* JComponent jc = 	((BasicInternalFrameUI) jif.getUI()).getNorthPane();
+		  jc.setBackground(Color.white);
+		    ((BasicInternalFrameUI) jif.getUI()).setNorthPane(jc);*/
+		/*for(int i=0;i<cf.getComponentCount();i++) {
+			jif.add(cf.getComponent(0));
+		}*/
+		jif.setContentPane(cont);
+		jif.setVisible(true);
+		return jif;
 	}
 	
 }
