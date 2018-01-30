@@ -69,15 +69,18 @@ public class GameMain {
 		Board p = new Board(f,num,images);
 		Player play = new Player(p,32,32);
 		
-		f.add(p);
+		JPanel play1=new JPanel();
+		play1.setSize(512,512);
+		play1.setLayout(null);
+		play1.setLocation(256, 256);
+		play1.add(p);
+		f.add(play1);
 		f.add(num);
 		f.repaint();
 		f.repaint();
 		JLabel sel = new JLabel(images[Integer.parseInt(num.getText())]);
 		sel.setSize(16,16);
 		p.add(sel);
-		
-		
 		
 		try {
 			Thread.sleep(100);
@@ -90,10 +93,18 @@ public class GameMain {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				play.update();
+				int camx=play.x;
+				int camy=play.y;
+				camx= (camx+play.x)/2;
+				camy= (camy+play.y)/2;
+				if (camy>128) {
+					camy=128;
+				}
+				p.setLocation(-camx+128, -camy+128);
+				
 			}
 		});
 		timer.start();
-		
 		while (1==1) {
 			int ca= Integer.parseInt(num.getText())-1;
 			if (ca>=0) {

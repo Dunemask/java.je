@@ -22,9 +22,9 @@ public class Board extends JPanel{
 		images = image;
 		this.setLayout(null);
 		this.setBackground(new Color(20,240,250));
-		this.setSize(512,512);
-		this.setLocation(256, 256);
-		AllSquares = new Blok[32][32];
+		this.setSize(1024,512);
+		this.setLocation(0, 0);
+		AllSquares = new Blok[64][32];
 		for(int i=30;i<32;i++) {
 			for (int j=0;j<32;j++) {
 				AllSquares[j][i] = Addsquare(j,i,this,1);

@@ -1,5 +1,7 @@
 package game;
 
+import java.awt.Point;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import dunemask.util.FileUtil;
@@ -30,13 +32,13 @@ public class Player {
 		y+=vy;
 		if(x<0)
 			x=0;
-		if(x>512-16)
-			x=512-16;
+		if(x>pan.getAllSquares().length*16-16)
+			x=pan.getAllSquares().length*16-16;
 		if(y<0)
 			y=0;
-		if(y>512-16)
-			y=512-16;
-		
+		if(y>pan.getAllSquares()[0].length*16-16)
+			y=pan.getAllSquares()[0].length*16-16;
+		boolean og = false;
 		//Square
 		detect = 1;
 		if(1==1) {
@@ -51,14 +53,7 @@ public class Player {
 		if (DetectBlok(x-0,y+15)||DetectBlok(x+15,y+15)) {
 			y-=vy;
 			vy=0;
-			
-			if (key.Output()[38]==1) {
-				if (!(DetectBlok(x-0,y+0)||DetectBlok(x+15,y+0))) {
-					vy = -15;
-				}
-			}
-		} else {
-			vy++;
+			og =true;
 		}
 		if (DetectBlok(x-0,y+0)||DetectBlok(x+15,y+0)) {
 			y-=vy;
@@ -68,41 +63,45 @@ public class Player {
 		
 		detect = 2;
 		if(1==1) {
-			if (DetectBlok(x+15,y+14)||DetectBlok(x+15,y+1)) {
-				x-=vx;
-				vx=0;
-			}
-			if (DetectBlok(x,y+14)||DetectBlok(x,y+1)) {
-				x-=vx;
-				vx=0;
-			}
-		if (DetectBlok(x-0,y+15)||DetectBlok(x+15,y+15)) {
-			y-=vy;
-			vy=0;
-			
-			if (key.Output()[38]==1) {
-				if (!(DetectBlok(x-0,y+0)||DetectBlok(x+15,y+0))) {
-					vy = -15;
+			if (DetectBlok(x+15,y+15)) {
+				if((y+15-((y+15)/16)*16) > -1*(x+15-((x+15)/16)*16)+14) {
+				if(vy>-1) {
+					y-=vy;
+					vy=0;
+					og=true;
+				}
+				if(vx>1) {
+					y-=vx+0;
+					vy=-vx;
+				}
+				
+				
+				//System.out.println((y+14-((y+14)/16)*16)+">"+(-1*(x+14-((x+14)/16)*16)+16));
 				}
 			}
-		} else {
+			if (DetectBlok(x+8,y+8)) {
+				if(vy>-1) {
+					y-=vy;
+					vy=-5;
+				}
+			}
+			
+		}
+		if (!og) {
 			vy++;
+		}else if (key.Output()[38]==1) {
+			if (!(DetectBlok(x-0,y+0)||DetectBlok(x+15,y+0))) {
+				vy = -15;
+			}
 		}
-		if (DetectBlok(x-0,y+0)||DetectBlok(x+15,y+0)) {
-			y-=vy;
-			vy=1;
-		}
-		}
-		
-		
 		if (key.Output()[37]==1) {
 			vx += -5;
 		}
 		if (key.Output()[39]==1) {
 			vx += 5;
 		}
-		//System.out.println("X:" + x +" Y:" + y +" XV:" + vx +" YV:" + vy );
 		vx = (vx * 60)/100;
+		//System.out.println("X:" + x +" Y:" + y +" XV:" + vx +" YV:" + vy );
 		if (vy>15) {vy=15;}
 		lab.setLocation(x, y);
 	}

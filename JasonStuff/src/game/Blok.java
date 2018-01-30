@@ -14,6 +14,7 @@ public class Blok extends JPanel {
 		this.setSize(16, 16);
 		this.setLocation(x*16, y*16);
 		this.setLayout(null);
+		this.setBackground(null);
 		lab =  new JLabel(image);
 		lab.setSize(16,16);
 		lab.setLocation(0, 0);
