@@ -10,27 +10,24 @@
  */
 package dunemask.objects.movieplayer;
 
-import java.awt.Container;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.concurrent.CountDownLatch;
-
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
-import javax.swing.border.LineBorder;
-
 import dunemask.dunemasking.Capture;
 import dunemask.util.FileUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -43,6 +40,7 @@ public class MovieLauncher extends Application {
 
 	public static MoviePlayer current;
 	public static JFrame frame;
+
 	static String tmpPath;
 
 	
@@ -110,7 +108,7 @@ public class MovieLauncher extends Application {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
-		Capture.startConsole();
+		Capture.setUpStreams();
 		
 		FXMLLoader loader = new FXMLLoader(FileUtil.getResource("dunemask/objects/movieplayer/DMPlayer.fxml").toURI().toURL());
 		loader.setController(current);
@@ -133,7 +131,17 @@ public class MovieLauncher extends Application {
 		
 		//stage.setScene(scene);
 		
-		Capture.closeConsole();
+		Capture.cleanUpStreams();
+		//Key Event Listener if needed later
+		  scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	            @Override
+	            public void handle(KeyEvent event) {
+	            	String key = event.getCode().toString();
+	                switch (key) {
+	                }
+	            }
+	        });
+		
 		 frame = new JFrame("DM - Movie Player");
 		 
 			try {
@@ -160,39 +168,13 @@ public class MovieLauncher extends Application {
 					
 				}
 			});
+	        
+	     
+		
+		
+	
+		
+	}
 
-		
-		
-	
-		
-	}
-	
-	/** Returns a jInternalFrame reroutes view to jinternalframe
-	 * 
-	 * 
-	 * 
-	 * */
-	public static JInternalFrame getJInternalFrameStyle() {
-		JFrame cf = MovieLauncher.frame;
-		MovieLauncher.frame.setVisible(false);
-		MovieLauncher.frame.dispose();
-		Container cont = cf.getContentPane();
-		
-		JInternalFrame jif = new JInternalFrame(cf.getTitle());
-		jif.setSize(cf.getWidth(), cf.getHeight());
-		jif.setResizable(true);
-		jif.setBorder(new LineBorder(java.awt.Color.DARK_GRAY, 3, false));
-		  /*jif. putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
-		  jif.  getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-		 /* JComponent jc = 	((BasicInternalFrameUI) jif.getUI()).getNorthPane();
-		  jc.setBackground(Color.white);
-		    ((BasicInternalFrameUI) jif.getUI()).setNorthPane(jc);*/
-		/*for(int i=0;i<cf.getComponentCount();i++) {
-			jif.add(cf.getComponent(0));
-		}*/
-		jif.setContentPane(cont);
-		jif.setVisible(true);
-		return jif;
-	}
 	
 }

@@ -13,6 +13,14 @@ package jfxTest;
 
 
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.io.File;
+
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+
 import dunemask.objects.movieplayer.MovieLauncher;
 import dunemask.util.FileUtil;
 import javafx.scene.media.Media;
@@ -30,21 +38,26 @@ public class TestPlayer {
 	 */
 	public static void main(String[] args) {
 		
-		MovieLauncher.startPlayer(null ,true);
+		File file = new File("C:/Users/Elijah/Desktop/Nightcore - Sword Art Online - Courage.mp4");
+		MovieLauncher.startPlayer(file ,true);
 		try {
 			MovieLauncher.current.getPlayerReady().await();
+		//	MovieLauncher.current.Pause();
 		} catch (InterruptedException e) {
 
 			e.printStackTrace();
 		}
-		String address = "https://dunemask.github.io/resources/media/mp3/If%20You%20Just%20Believe.mp3";
+		MovieLauncher.current.getMediaPlayer().setRate(1.00);
+		//MovieLauncher.current.getMediaPlayer()
+		//changeFrames();
+		
+		/*String address = "https://dunemask.github.io/resources/media/mp3/If%20You%20Just%20Believe.mp3";
 		Media m = (new Media(FileUtil.getWebFile(address).toURI().toString()));
-		MovieLauncher.current.setMediaPlayer(new MediaPlayer(m));
-		MovieLauncher.current.getMediaPlayer().seek(new Duration(0.0));
-		MovieLauncher.current.getMediaView().setMediaPlayer(MovieLauncher.current.getMediaPlayer());
-		System.out.println("Done");
+		MovieLauncher.current.changeMedia(m);
+		System.out.println("Done");*/
 	
 	
 	}
+
 
 }

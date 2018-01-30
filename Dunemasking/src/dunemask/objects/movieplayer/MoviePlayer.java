@@ -13,6 +13,7 @@ package dunemask.objects.movieplayer;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
@@ -26,6 +27,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
@@ -37,9 +39,13 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.StrokeType;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -76,6 +82,8 @@ public class MoviePlayer implements Initializable  {
 		
 		
 	}
+	
+	@FXML private VBox audBar;
 	
 	private CountDownLatch playerReady;
 	private CountDownLatch mediaFinished;
@@ -175,6 +183,7 @@ public class MoviePlayer implements Initializable  {
 		setMedia(newMedia);
 		
 		Runnable endOfMedia = mediaPlayer.getOnEndOfMedia();
+		AudioSpectrumListener audSpct = mediaPlayer.getAudioSpectrumListener();
 		Stop();
 	
 		//System.out.println("Playing "+newMedia.getSource().replace("%20", " "));
@@ -191,6 +200,19 @@ public class MoviePlayer implements Initializable  {
 		
 			}});
 		
+	/*	bands = mediaPlayer.getAudioSpectrumNumBands()-80;
+		rects =  new javafx.scene.shape.Rectangle[bands];
+		for(int i=0;i<rects.length;i++) {
+			rects[i] = new javafx.scene.shape.Rectangle();
+			//Random r = new Random();
+			rects[i].setFill(Color.WHITESMOKE);
+			rects[i].setStroke(Color.BLACK);
+			rects[i].setStrokeType(StrokeType.INSIDE);
+		
+		}	*/
+		
+		mediaPlayer.setAudioSpectrumListener(audSpct);
+		
 		
 		
 		Restart();
@@ -203,6 +225,7 @@ public class MoviePlayer implements Initializable  {
 	 * */
 	public void SkipToEnd() {
 		mediaPlayer.seek(media.getDuration());
+		seekSlider.setValue(seekSlider.getMax());
 		
 		
 	}
@@ -339,6 +362,14 @@ public class MoviePlayer implements Initializable  {
 			            // play if you want
 			        	seekSlider.setMin(0.0);
 			    		seekSlider.setMax(media.getDuration().toSeconds());
+			    		DoubleProperty height = mv.fitHeightProperty();
+			    		audBar.setPrefHeight(height.get());
+			    		//audBar.setMinWidth(seekSlider.getWidth());
+			    		double bandHeight =  20;//audBar.getHeight()/(rects.length);
+			    		for(javafx.scene.shape.Rectangle r: rects) {
+			    			r.setHeight(bandHeight);
+			    			//r.setHeight(2);
+			    		}
 			    		
 			    		//MoviePlayer.playerReady
 			    		play.run();
@@ -464,7 +495,8 @@ public class MoviePlayer implements Initializable  {
 		
 	}
 	
-	
+	private int bands;
+	private javafx.scene.shape. Rectangle[] rects ;
 	
 	/**
 	 * 
@@ -494,6 +526,52 @@ public class MoviePlayer implements Initializable  {
 			
 			
 		});
+		
+		
+		bands = mediaPlayer.getAudioSpectrumNumBands()-80;
+		rects =  new javafx.scene.shape.Rectangle[bands];
+		for(int i=0;i<rects.length;i++) {
+			rects[i] = new javafx.scene.shape.Rectangle();
+			Random r = new Random();
+			rects[i].setFill(Color.WHITESMOKE);
+			rects[i].setStroke(Color.BLACK);
+			rects[i].setStrokeType(StrokeType.INSIDE);
+			audBar.getChildren().add(rects[i]);
+		}
+		
+		
+		mediaPlayer.setAudioSpectrumListener(new AudioSpectrumListener() {
+
+			@Override
+			public void spectrumDataUpdate(double arg0, double arg1, float[] sags, float[] floats1) {
+				for(int i=0;i<rects.length;i++) {
+					double w = sags[i]+70;
+					boolean wks = w>10;
+					
+					//Node node =  borderPane.getBottom();
+					double y = MovieLauncher.frame.getHeight()-splitPane.getHeight();
+					
+			;		//if Active
+					
+					if(wks&&rects[i].getLayoutY()<y) {
+				
+					rects[i].setWidth(w*mediaPlayer.getVolume());
+					
+					//If not active
+					}else if(rects[i].getLayoutY()<y){
+						rects[i].setWidth(5);
+						
+					}else{
+						rects[i].setWidth(0);
+					}
+				}
+				
+			}
+			
+		});
+		
+		
+		
 		
 		
 		//seekSlider.setValue(0.0);
