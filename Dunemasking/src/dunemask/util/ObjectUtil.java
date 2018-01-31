@@ -19,7 +19,7 @@ public class ObjectUtil{
 	/***Version*/
     final static double version = 4.0;
 	/**
-	 * Writes an object to specified file
+	 * Writes an object to specified file (make sure it has extension)
 	 * 
 	 * @param file
 	 *            File where object is stored
@@ -27,7 +27,7 @@ public class ObjectUtil{
 	 *            Object that will be stored
 	 */
 	public static void writeObject(File file, Object ob) {
-		//file = new File(FileUtil.changeExtension(file.getPath(), "OB"));
+		
 		try {
 			file.getParentFile().mkdirs();
 			file.createNewFile();
@@ -59,48 +59,6 @@ public class ObjectUtil{
 
 	}
 
-	/**
-	 * Writes an object to specified file
-	 * 
-	 * @param file
-	 *            File where object is stored
-	 * @param ob
-	 *            Object that will be stored
-	 * @param extension
-	 *            that will be placed on the file (DO NOT USE PERIOD)
-	 */
-	public static void writeObject(File file, Object ob, String extension) {
-		file = new File(FileUtil.changeExtension(file.getPath(), extension));
-		try {
-			file.getParentFile().mkdirs();
-			file.createNewFile();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		ObjectOutputStream os;
-		try {
-			os = new ObjectOutputStream(new FileOutputStream(file));
-			os.writeObject(ob);
-			os.flush();
-			os.close();
-			String parentFolder = file.getParentFile().getAbsolutePath() + "\\";
-			File objIndex = new File(parentFolder + "objIndx.index");
-			objIndex.createNewFile();
-			// If Not Indexed index
-			if (!FileUtil.alreadyInFile(objIndex, file.getName())) {
-				FileWriter fr = new FileWriter(objIndex, true);
-				fr.write(file.getName());
-				fr.write(System.lineSeparator());
-				fr.close();
-			}
-
-		} catch (IOException e1) {
-
-			e1.printStackTrace();
-		}
-
-	}
 
 	/**
 	 * Reads object From specified file, (Needs to be casted to desired variable)

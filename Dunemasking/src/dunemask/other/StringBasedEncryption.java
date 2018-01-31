@@ -26,8 +26,15 @@ public class StringBasedEncryption {
 	 * @return the Decrypted String using key provided
 	 */
 	public static String decrypt(Expression keyCode,String code,int key[]) {
-		if(keyCode.getVari()!=key) {
+		
+		if(keyCode.getVari().length!=key.length) {
 		throw new RuntimeException("INVALID KEY!");
+		//Count Off
+		}
+		for(int i = 0;i<key.length;i++) {
+			if(keyCode.getVari()[i]!=key[i]) {
+				throw new RuntimeException("INVALID KEY!");
+			}
 		}
 		
 		char[] stuff = new char[code.length()];
@@ -121,6 +128,8 @@ public class StringBasedEncryption {
 		//Last Character will have an additional thingy, so we'll just remove it :)
 		expression = expression.substring(0,expression.length()-1);
 		
+		expression.replace("%0", "%1");
+		expression.replace("/0", "%1");
 		return new Expression(expression,name,tk);
 		
 	}
