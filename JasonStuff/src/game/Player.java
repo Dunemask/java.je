@@ -87,6 +87,30 @@ public class Player {
 			}
 			
 		}
+		detect = 3;
+		if(1==1) {
+			if (DetectBlok(x,y+15)) {
+				if((y+15-((y+15)/16)*16) > (x-((x)/16)*16)-1){
+				if(vy>-1) {
+					y-=vy;
+					vy=0;
+					og=true;
+				}
+				if(vx<-1) {
+					y+=vx+0;
+					vy=vx;
+				}
+				//System.out.println((y+14-((y+14)/16)*16)+">"+(-1*(x+14-((x+14)/16)*16)+16));
+				}
+			}
+			if (DetectBlok(x+8,y+8)) {
+				if(vy>-1) {
+					y-=vy;
+					vy=-5;
+				}
+			}
+			
+		}
 		if (!og) {
 			vy++;
 		}else if (key.Output()[38]==1) {

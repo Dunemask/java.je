@@ -1,20 +1,19 @@
 package game;
 
 import java.awt.Color;
-import java.awt.MouseInfo;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
-import javax.swing.event.MouseInputAdapter;
-import java.io.File;
-import java.awt.event.*;
 
 import dunemask.util.FileUtil;
-import game.Board;
 
 public class GameMain {
 	//Use dunemask.fileutil.getresource it will ignore the bin and will also work in jar form
@@ -57,6 +56,23 @@ public class GameMain {
 		erase.setLocation(0,10);
 		tab1.add(erase);
 		
+		JTextField jtf = new JTextField();
+		JButton save = new JButton();
+		save.setLocation(64, 64);
+		save.setText("Save");
+		save.setSize(64,32);
+		save.setLayout(null);
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
+		jtf.setLocation(64, 128);
+		jtf.setSize(128,32);
+		
+		
 		f.setTitle("GAME MAIN");
 		f.setSize(1024,1024);
 		f.setResizable(true);
@@ -65,7 +81,8 @@ public class GameMain {
 		f.setLocationRelativeTo(null);
 		f.setLayout(null);
 		f.add(tab1);
-		
+		f.add(save);
+		f.add(jtf);
 		Board p = new Board(f,num,images);
 		Player play = new Player(p,32,32);
 		
@@ -105,6 +122,23 @@ public class GameMain {
 			}
 		});
 		timer.start();
+		
+		JButton start = new JButton();
+		start.setLocation(32, 512);
+		start.setText("Start");
+		start.setSize(64,32);
+		start.setLayout(null);
+		start.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				p.requestFocus();
+			}
+			
+		});
+		f.add(start);
+		
+		
+		
 		while (1==1) {
 			int ca= Integer.parseInt(num.getText())-1;
 			if (ca>=0) {
@@ -114,7 +148,7 @@ public class GameMain {
 			sel.setIcon(null);
 			}
 			sel.setLocation(p.getMouse());
-			p.requestFocus();
+			//p.requestFocus();
 		}
 	}
 }
