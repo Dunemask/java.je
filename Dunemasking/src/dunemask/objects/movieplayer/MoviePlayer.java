@@ -559,7 +559,7 @@ public class MoviePlayer implements Initializable  {
 					
 					//If not active
 					}else if(rects[i].getLayoutY()<y){
-						rects[i].setWidth(5);
+						rects[i].setWidth(5*mediaPlayer.getVolume());
 						
 					}else{
 						rects[i].setWidth(0);
