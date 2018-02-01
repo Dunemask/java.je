@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import dunemask.dunemasking.GitHub;
@@ -79,6 +80,8 @@ public class SaoPlayer {
 			
 			e.printStackTrace();
 		}
+		
+		MovieLauncher.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		String title = MovieLauncher.frame.getTitle();
 		MovieLauncher.current.getChangeMediaButton().setDisable(true);
 		
