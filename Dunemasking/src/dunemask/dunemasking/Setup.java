@@ -62,6 +62,7 @@ public class Setup {
 	 *            the name for the defaultFolder
 	 * @return Path To Dfault Folder
 	 */
+	@SuppressWarnings("deprecation")
 	public static String init(int setUpStyle, String jarName, String defaultFolderName) {
 		String path = null;
 		switch (setUpStyle) {
