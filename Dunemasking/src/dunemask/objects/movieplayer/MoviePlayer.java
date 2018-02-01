@@ -13,7 +13,6 @@ package dunemask.objects.movieplayer;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
@@ -27,7 +26,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
@@ -532,7 +530,7 @@ public class MoviePlayer implements Initializable  {
 		rects =  new javafx.scene.shape.Rectangle[bands];
 		for(int i=0;i<rects.length;i++) {
 			rects[i] = new javafx.scene.shape.Rectangle();
-			Random r = new Random();
+			//Random r = new Random();
 			rects[i].setFill(Color.WHITESMOKE);
 			rects[i].setStroke(Color.BLACK);
 			rects[i].setStrokeType(StrokeType.INSIDE);
