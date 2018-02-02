@@ -30,7 +30,6 @@ public class RunProgram implements ExternalRun {
 		mp.put("intro", sayWhatYouDo());
 		mp.put("result", sayResult());
 		mp.put("end", sayGoodbye());
-		
 		return mp;
 		
 	}
