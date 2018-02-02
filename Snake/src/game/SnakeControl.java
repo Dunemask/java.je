@@ -18,6 +18,11 @@ import javax.swing.JFrame;
  */
 public class SnakeControl {
 	
+	public static int currentDirection;
+	public static final int UP=2;
+	public static final int DOWN =4;
+	public static final int LEFT =1;
+	public static final int RIGHT =3;
 	public static int squareSize=20;
 	public static int snakeSize =5;
 	public static JFrame frame;
