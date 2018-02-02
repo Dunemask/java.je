@@ -34,7 +34,26 @@ public class RunSnakeGame extends SnakeControl {
 		b = new Board();
 		b.setBackground(Color.LIGHT_GRAY);
 		frame.add(b);
+		
+		SnakeControl.s = new Snake(Color.GREEN,Color.pink,0,0);
+		SnakeControl.f = new Food(Color.RED,9,9);
+		while(true) {
+		pushSnake();
+			
+		frame.repaint();
+		frame.revalidate();
+		
+		}
+		
 
+	}
+
+	/**
+	 * 
+	 */
+	public static void pushSnake() {
+		
+		
 	}
 
 }

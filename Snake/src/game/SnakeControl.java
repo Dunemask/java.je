@@ -17,11 +17,13 @@ import javax.swing.JFrame;
  *
  */
 public class SnakeControl {
-
+	
+	public static int squareSize=20;
 	public static int snakeSize =5;
 	public static JFrame frame;
 	public static Board b;
 	public static Snake s;
+	public static Food f;
 	
 	
 }

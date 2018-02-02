@@ -2,7 +2,7 @@
  * Dunemask Created This File on the Main Repository
  * @contact Dunemask at dunemask@gmail.com
  * commit = false
- * File: game.SnakeSquare.java
+ * File: game.Food.java
  * Version: 0.1
  * info: (Information About The Class)
  * (To Change This Go To Window > Preferences 
@@ -10,23 +10,40 @@
  */
 package game;
 
+import java.awt.Color;
+
 /**
  * @author karib
  *
  */
-public class SnakeSquare {
+public class Food {
 
+	private Color color;
 	private int x;
 	private int y;
 
 	/**
 	 * 
 	 */
-	public SnakeSquare(int x, int y) {
+	public Food(Color color,int x,int y) {
+		this.color = color;
 		this.x = x;
 		this.y = y;
 	}
-	
+
+	/**
+	 * @return the color
+	 */
+	public Color getColor() {
+		return color;
+	}
+
+	/**
+	 * @param color the color to set
+	 */
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 	/**
 	 * @return the x

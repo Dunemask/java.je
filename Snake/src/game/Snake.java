@@ -21,16 +21,17 @@ public class Snake {
 
 	private Color color;
 	private ArrayList<SnakeSquare> squares = new ArrayList<SnakeSquare>();
+	private SnakeHeadSquare head;
 
 	/**
 	 * 
 	 */
-	public Snake(Color color,int startX,int startY) {
+	public Snake(Color color,Color headColor, int startX,int startY) {
 		this.setColor(color);
-		for(int i=0;i<=SnakeControl.snakeSize;i++) {
+		for(int i=0;i<SnakeControl.snakeSize;i++) {
 			squares.add(new SnakeSquare(startX+i,startY));
 		}
-		
+		this.setHead(new SnakeHeadSquare(headColor,SnakeControl.snakeSize,startY));
 		
 	}
 
@@ -63,6 +64,22 @@ public class Snake {
 	 */
 	public void setSquares(ArrayList<SnakeSquare> squares) {
 		this.squares = squares;
+	}
+
+
+	/**
+	 * @return the head
+	 */
+	public SnakeHeadSquare getHead() {
+		return head;
+	}
+
+
+	/**
+	 * @param head the head to set
+	 */
+	public void setHead(SnakeHeadSquare head) {
+		this.head = head;
 	}
 
 }
