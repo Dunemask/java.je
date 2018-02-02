@@ -46,11 +46,11 @@ public class Player {
 				x-=vx;
 				vx=0;
 			}
-			if (DetectBlok(x,y+14)||DetectBlok(x,y+1)) {
+			if (DetectBlok(x+1,y+14)||DetectBlok(x+1,y+1)) {
 				x-=vx;
 				vx=0;
 			}
-		if (DetectBlok(x-0,y+15)||DetectBlok(x+15,y+15)) {
+		if (DetectBlok(x+1,y+15)||DetectBlok(x+15,y+15)) {
 			y-=vy;
 			vy=0;
 			og =true;
