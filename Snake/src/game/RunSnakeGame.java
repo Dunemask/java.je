@@ -37,7 +37,7 @@ public class RunSnakeGame extends SnakeControl {
 		
 		SnakeControl.s = new Snake(Color.GREEN,Color.pink,0,0);
 		SnakeControl.f = new Food(Color.RED,9,9);
-		SnakeControl.currentDirection = RIGHT;
+		SnakeControl.currentDirection = LEFT;
 		while(true) {
 		pushSnake();
 		
@@ -124,7 +124,20 @@ public class RunSnakeGame extends SnakeControl {
 			
 			break;
 		case "X-":
-			
+			for(int i=0;i<s.getSquares().size();i++) {
+				SnakeSquare cs = s.getSquares().get(i);
+				s.getSquares().get(i).setX(cs.getX()-1);
+				cs = s.getSquares().get(i);
+				if(cs.getX()*squareSize>frame.getWidth()) {
+					s.getSquares().get(i).setX(frame.getWidth()/squareSize);
+				}
+			}
+			head = s.getHead();
+			s.getHead().setX(head.getX()+1);
+			head = s.getHead();
+			if(head.getX()*squareSize>frame.getWidth()) {
+				s.getHead().setX(0);
+			}
 			
 			
 			
