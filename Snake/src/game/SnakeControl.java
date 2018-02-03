@@ -10,6 +10,8 @@
  */
 package game;
 
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 /**
@@ -29,6 +31,12 @@ public class SnakeControl {
 	public static Board b;
 	public static Snake s;
 	public static Food f;
-	
+	public static int boundsY = 45;
+	public static int boundsX = 45;
+	public static ArrayList<SnakeTurningPoint> turningPoints = new ArrayList<SnakeTurningPoint>() ;
+	public static int lastHeadDirection;
+	public static int score=0;
+	public static boolean run;
+	public static double speed=1;
 	
 }

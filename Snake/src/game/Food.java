@@ -11,6 +11,7 @@
 package game;
 
 import java.awt.Color;
+import java.util.Random;
 
 /**
  * @author karib
@@ -22,6 +23,17 @@ public class Food {
 	private int x;
 	private int y;
 
+	
+	
+	public Food(Color color) {
+		this.color = color;
+		Random r = new Random();
+		this.x = r.nextInt(SnakeControl.boundsX-1)+1;
+		this.y = r.nextInt(SnakeControl.boundsY-1)+1;
+		
+	}
+	
+	
 	/**
 	 * 
 	 */
