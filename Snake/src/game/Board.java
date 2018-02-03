@@ -11,6 +11,7 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -37,12 +38,18 @@ public class Board extends JPanel {
 		ArrayList<SnakeSquare> snake = SnakeControl.s.getSquares();
 		ArrayList<SnakeTurningPoint> turningPoints = SnakeControl.turningPoints;
 		SnakeHeadSquare head = SnakeControl.s.getHead();
+		//Food
+		for(int i=0;i<SnakeControl.food.size();i++) {
+			g.setColor(SnakeControl.food.get(i).getColor());
+			g.fillRect(sq*SnakeControl.food.get(i).getX(), sq*SnakeControl.food.get(i).getY(), sq, sq);
+		}
+		//body
 		for(int i=0;i<snake.size();i++) {
 			g.setColor(SnakeControl.s.getColor());
 			g.fillRect(sq*snake.get(i).getX(), sq*snake.get(i).getY(),sq, sq);
 			
 		}
-		
+		//TURNING POINTS
 		for(int i=0;i<turningPoints.size();i++) {
 			SnakeTurningPoint p = turningPoints.get(i);
 			if(p.getColor()!=null) {
@@ -51,16 +58,18 @@ public class Board extends JPanel {
 			}
 			
 		}
-		
+		//Head
 		g.setColor(head.getColor());
 		g.fillRect(head.getX()*sq, head.getY()*sq, sq, sq);
 		
 		
-		g.setColor(SnakeControl.f.getColor());
-		g.fillRect(sq*SnakeControl.f.getX(), sq*SnakeControl.f.getY(), sq, sq);
+
+		//g.fillRect(sq*SnakeControl.f.getX(), sq*SnakeControl.f.getY(), sq, sq);
 		
+		//Scores
 		g.setColor(Color.YELLOW);
-		g.drawString("Score:"+SnakeControl.score+"      Snake Size:"+(SnakeControl.s.getSquares().size()), 10, 10);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 18)); 
+		g.drawString("Score:"+SnakeControl.score+"      Snake Size:"+(SnakeControl.s.getSquares().size()), 10, 15);
 		
 		
 	}

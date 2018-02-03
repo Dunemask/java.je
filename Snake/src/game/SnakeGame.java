@@ -11,9 +11,9 @@
 package game;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -73,10 +73,13 @@ public class SnakeGame extends SnakeControl {
 		b.setBackground(Color.LIGHT_GRAY);
 		frame.add(b);
 		
-		SnakeControl.f = new Food(Color.RED);
+		food.add(new Food(Color.RED));
 		SnakeControl.currentDirection = RIGHT;
 		SnakeControl.s = new Snake(Color.GREEN,Color.pink,0,0,currentDirection);
 		run = true;
+		injectable();
+			
+		
 		//Dimension dim = frame.getSize();
 		while(run) {
 		/*if(dim!=frame.getSize()) {
@@ -89,7 +92,7 @@ public class SnakeGame extends SnakeControl {
 		pushHead();
 		pushSquares();
 		//Also Updates all turning points
-		testCollision();
+		//testCollision();
 		testFood();
 		
 		
@@ -105,40 +108,54 @@ public class SnakeGame extends SnakeControl {
 		
 		}
 	}
-
+	
+	private static void injectable() {
+		if(score<-1) {
+		int foodCount= 17;
+		for(int i=0;i<foodCount;i++) {
+			food.add(new Food(Color.RED));
+		}
+		}
+	}
+	
 	/**
 	 * 
 	 */
 	private static void testFood() {
+		injectable();
 		//If head at food
-		if(s.getHead().getX()==f.getX()&&s.getHead().getY()==f.getY()) {
-			score++;
-			speed+=.025;
-			SnakeSquare lastSquare = s.getSquares().get(0);
-			//s.getSquares().get(s.getSquares().size()-1).setX(20);
-			int x = lastSquare.getX();
-		    int y=lastSquare.getY();
-		    //System.out.println(x+","+y);
-		    //throw new RuntimeException("null");/*
-			switch(lastSquare.getLastDirection()) {
-			case UP:
-				y+=1;
-			break;
-			case DOWN:
-				y-=1;
-			break;
-			case RIGHT:
-				x-=1;
-			break;
-			case LEFT:
-				x+=1;
-			break;
+		for(int i=0;i<food.size();i++) {
+			Food f = food.get(i);
+			if(s.getHead().getX()==f.getX()&&s.getHead().getY()==f.getY()) {
+				score++;
+				speed+=.025;
+				SnakeSquare lastSquare = s.getSquares().get(0);
+				//s.getSquares().get(s.getSquares().size()-1).setX(20);
+				int x = lastSquare.getX();
+			    int y=lastSquare.getY();
+			    //System.out.println(x+","+y);
+			    //throw new RuntimeException("null");/*
+				switch(lastSquare.getLastDirection()) {
+				case UP:
+					y+=1;
+				break;
+				case DOWN:
+					y-=1;
+				break;
+				case RIGHT:
+					x-=1;
+				break;
+				case LEFT:
+					x+=1;
+				break;
+				}
+				SnakeSquare nsq = new SnakeSquare(x,y);
+				nsq.setLastDirection(lastSquare.getLastDirection());
+				s.getSquares().add(0,nsq);
+				food.remove(i);
+				food.add(i, new Food(Color.RED));
+				
 			}
-			SnakeSquare nsq = new SnakeSquare(x,y);
-			nsq.setLastDirection(lastSquare.getLastDirection());
-			s.getSquares().add(0,nsq);
-			
-			f = new Food(f.getColor());//*/
 		}
 		
 	}
@@ -191,8 +208,11 @@ public class SnakeGame extends SnakeControl {
 		run = false;
 		frame.dispose();
 		score = 0;
-		new SnakeGame();
 		speed=1;
+		for(int i=food.size()-1;i>=0;i--) {
+			food.remove(i);
+		}
+		new SnakeGame();
 	}
 
 	/**
