@@ -13,7 +13,6 @@ package game;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -92,7 +91,7 @@ public class SnakeGame extends SnakeControl {
 		pushHead();
 		pushSquares();
 		//Also Updates all turning points
-		//testCollision();
+		testCollision();
 		testFood();
 		
 		

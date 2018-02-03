@@ -27,6 +27,11 @@ public class Board extends JPanel {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 2558736634517421540L;
+
+	/**
+	 * 
+	 */
 	public Board() {
 		
 	}
