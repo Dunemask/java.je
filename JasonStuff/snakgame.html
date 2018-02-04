@@ -154,7 +154,7 @@
         var yrot=0;
         var space3d= new Array(30);
         for(var i = 0; i <30;i++){
-            space3d[i]= new Array(Math.floor(Math.random() * 100-50),Math.floor(Math.random() * 100-50),Math.floor(Math.random() * 100-50));
+            space3d[i]= new Array(Math.floor(Math.random() * 200-100),Math.floor(Math.random() * 200-100),Math.floor(Math.random() * 200-100));
         }
         document.addEventListener('keydown', function(event) {
         if(event.keyCode == 37) {
@@ -174,11 +174,14 @@
         
     function update2(){
         ctx2.clearRect(0,0,siz2,siz2);
-        for(var i = 0; i <space3d.length;i++){
-            ctx2.fillStyle = "#00FF00";
-            ctx2.fillRect(get3dx(space3d[i][0],space3d[i][1],space3d[i][2]),get3dy(space3d[i][0],space3d[i][1],space3d[i][2]),10,10);
+        ctx2.beginPath();
+        ctx2.moveTo(getxind(0),getyind(0));
+        for(var i = 0; i <space3d.length-1;i++){
+            //ctx2.fillStyle = "#00FF00";
+            //ctx2.fillRect(getxind(i),getyind(i),10,10);
+            lineto(i);
         }
-    
+        ctx2.stroke();
         ctx2.fillStyle = "#0000FF";
         ctx2.fillRect(get3dx(100,100,100),get3dy(100,100,100),10,10);
         ctx2.fillRect(get3dx(100,100,-100),get3dy(100,100,-100),10,10);
@@ -192,13 +195,22 @@
         xrot+=0.02;
         yrot+=0.04;
         function get3dx(x,y,z){
-            return (getclose(x,y,z)*(Math.cos(xrot)*x)-(Math.sin(xrot)*y)+siz2/2);
+            return (getclose(x,y,z)*((Math.cos(xrot)*x)-(Math.sin(xrot)*y))+siz2/2);
         }
         function get3dy(x,y,z){
-            return (getclose(x,y,z)*(((Math.cos(xrot)*y)+(Math.sin(xrot)*x))*Math.cos(yrot)+Math.sin(yrot)*z)+siz2/2);
+            return (getclose(x,y,z)*((((Math.cos(xrot)*y)+(Math.sin(xrot)*x))*Math.cos(yrot)+Math.sin(yrot)*z))+siz2/2);
         }
         function getclose(x,y,z){
             return (fov/((Math.cos(xrot)*y+Math.sin(xrot)*x)*Math.sin(yrot)+fov-(z*Math.cos(yrot))));
+        }
+        function getxind(i){
+            return get3dx(space3d[i][0],space3d[i][1],space3d[i][2]);
+        }
+        function getyind(i){
+            return get3dy(space3d[i][0],space3d[i][1],space3d[i][2]);
+        }
+        function lineto(i){
+            ctx2.lineTo(getxind(i),getyind(i));
         }
     }
     </script>
