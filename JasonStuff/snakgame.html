@@ -15,6 +15,18 @@
         </style>
     </head>
     <body>
+        <button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+        <script>
+var fruits = new Array(0);
+document.getElementById("demo").innerHTML = fruits;
+
+function myFunction() {
+    fruits.unshift(1);
+    document.getElementById("demo").innerHTML = fruits;
+}
+</script>
         <!-- SNAKE GAME-->
         <div>
     <h1>THE SNAKE GAME</h1>
@@ -152,10 +164,15 @@
         var fov =250;
         var xrot=0;
         var yrot=0;
-        var space3d= new Array(30);
-        for(var i = 0; i <30;i++){
-            space3d[i]= new Array(Math.floor(Math.random() * 200-100),Math.floor(Math.random() * 200-100),Math.floor(Math.random() * 200-100));
+        var xa = 0;
+        var ya = 0;
+        var za = 0;
+        var space3d= new Array(50);
+        for(var i = 0; i <50;i++){
+            space3d[i]= new Array(Math.floor(Math.random() * 200-100),Math.floor(Math.random() * 200-100),Math.floor(Math.random() * 200-100),0,0,0,100);
         }
+        var circles = new Array(0);
+
         document.addEventListener('keydown', function(event) {
         if(event.keyCode == 37) {
             dir2=2;
@@ -176,10 +193,26 @@
         ctx2.clearRect(0,0,siz2,siz2);
         ctx2.beginPath();
         ctx2.moveTo(getxind(0),getyind(0));
-        for(var i = 0; i <space3d.length-1;i++){
-            //ctx2.fillStyle = "#00FF00";
-            //ctx2.fillRect(getxind(i),getyind(i),10,10);
+        /*if (space3d.length>10){
+            space3d.shift();
+    }*/
+        for(var i=0; i <5; i++){
+        space3d.push(new Array(xa,ya,za,Math.random()*10-5,Math.random()*10-5,Math.random()*10-5,50));
+        }
+            for(var i = 0; i <space3d.length;i++){
+            
+            moveto(i);
+            setpos(space3d[i][0]+space3d[i][3],space3d[i][1]+space3d[i][4],space3d[i][2]+space3d[i][5],i);
             lineto(i);
+            
+            space3d[i][6] -=1;
+            space3d[i][5] -=1;
+            if(space3d[i][2]<-100){
+               space3d[i][5]= -0.5*space3d[i][5];
+               }
+            if(space3d[i][6]<0){
+               space3d.splice(i,1);
+               }
         }
         ctx2.stroke();
         ctx2.fillStyle = "#0000FF";
@@ -193,7 +226,13 @@
         ctx2.fillRect(get3dx(-100,-100,-100),get3dy(-100,-100,-100),10,10);
         //document.getElementById("dis2").innerHTML="X:"+x+" Y:"+y+" Length:"+length;
         xrot+=0.02;
-        yrot+=0.04;
+        yrot+=0.01;
+        xa+=Math.floor(Math.random() * 40-20);
+        ya+=Math.floor(Math.random() * 40-20);
+        za+=Math.floor(Math.random() * 40-20);
+        xa=xa*0.9;
+        ya=ya*0.9;
+        za=za*0.9;
         function get3dx(x,y,z){
             return (getclose(x,y,z)*((Math.cos(xrot)*x)-(Math.sin(xrot)*y))+siz2/2);
         }
@@ -211,6 +250,12 @@
         }
         function lineto(i){
             ctx2.lineTo(getxind(i),getyind(i));
+        }
+        function moveto(i){
+            ctx2.moveTo(getxind(i),getyind(i));
+        }
+        function setpos(x,y,z,i){
+            space3d[i]=new Array(x,y,z,space3d[i][3],space3d[i][4],space3d[i][5],space3d[i][6]);
         }
     }
     </script>
