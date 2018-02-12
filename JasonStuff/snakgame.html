@@ -15,18 +15,6 @@
         </style>
     </head>
     <body>
-        <button onclick="myFunction()">Try it</button>
-
-<p id="demo"></p>
-        <script>
-var fruits = new Array(0);
-document.getElementById("demo").innerHTML = fruits;
-
-function myFunction() {
-    fruits.unshift(1);
-    document.getElementById("demo").innerHTML = fruits;
-}
-</script>
         <!-- SNAKE GAME-->
         <div>
     <h1>THE SNAKE GAME</h1>
@@ -34,6 +22,7 @@ function myFunction() {
              <p><button class="button" id="sgp1">Play</button></p>
             <canvas id="Canvas"></canvas>
     <script>
+        var hs = getCookie("hs");
         var snakebutton = document.getElementById("sgp1");
         var snakegame = false;
         var snkupd;
@@ -116,9 +105,10 @@ function myFunction() {
         }
         ctx.fillStyle = "#0000FF";
         ctx.fillRect(x*ssiz,y*ssiz,ssiz-1,ssiz-1);
-        document.getElementById("dis").innerHTML="X:"+x+" Y:"+y+" Length:"+length;
+        document.getElementById("dis").innerHTML="X:"+x+" Y:"+y+" Length:"+length+ " Highscore:"+ hs;
         if (board[x][y] == -1){
             length+=1;
+            board[x][y]=0;
             var breaks = 0;
             while (breaks==0){
             randx = Math.floor(Math.random() * siz);
@@ -129,9 +119,45 @@ function myFunction() {
             }
             }
         }
+        if(board[x][y]==0){
         board[x][y]=length;
-        
+        }else{
+            setCookie("hs",length,3);
+            hs = getCookie("hs");
+            for(var i = 0; i <siz;i++){
+                board[i]= new Array(siz);
+                for(var j = 0; j <siz;j++){
+                    board[i][j]=0;
+                }   
+            }
+            length = 10;
+            x=1;
+            y=1;
+            dir=0;
+            board[4][4]=-1;
+        }
     }
+    function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
     </script>
     </div>
         <!-- 3D -->
