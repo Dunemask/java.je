@@ -4,6 +4,8 @@
 package elijah;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 import dunemask.util.FileUtil;
@@ -40,7 +42,7 @@ public class ReadStory {
 		printLines(lines);
 		System.out.println("What's your name!?");
 		Story.name = new Scanner(System.in).nextLine();
-		System.out.println("Well professor "++" welcome aboard!");
+		System.out.println("Well professor "+Story.name+" welcome aboard!");
 		//Dots if the dot printout
 		int dots = 5;
 		System.out.print("Loading");
@@ -53,6 +55,23 @@ public class ReadStory {
 			System.out.print(".");
 		}
 		System.out.println();
+		try {
+			Calendar c = Calendar.getInstance();
+			System.out.print(c.get(Calendar.MONTH));
+			Thread.sleep(1000);
+			System.out.print(" : "+c.get(Calendar.DAY_OF_MONTH));
+			Thread.sleep(1000);
+			System.out.println(" : "+ c.get(Calendar.YEAR));
+			Thread.sleep(1000);
+			System.out.print(c.get(Calendar.DAY_OF_WEEK));
+			Thread.sleep(1000);
+			System.out.println(" @ "+c.getTime().getHours()+":"+c.getTime().getMinutes());
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		lines= RW.read(file, 4, FileUtil.linesInFile(file));
+		printLines(lines);
 	}
 	
 	
