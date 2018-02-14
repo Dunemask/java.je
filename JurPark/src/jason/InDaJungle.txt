@@ -1,0 +1,7 @@
+You come to a wall made of tightly woven trees. It is about 150 feet tall, and spans as far as you can see. You see some vines that make it possible to climb the trees.
+if (You climb the wall){
+	You start climbing up the vines. Your arms get sore but the bloodthirsty Tigerasauruses gathered around the base of the tree keep you motivated. Your stomach starts rumbling as you spent the last 3 hours climbing the wall of trees. You smell something sweet. Looking at a branch next to you, you find a large plump fruit hanging there. 
+}
+elif (You look for a way around the wall){
+	
+}

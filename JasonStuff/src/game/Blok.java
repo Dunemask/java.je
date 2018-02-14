@@ -40,7 +40,7 @@ public class Blok extends JPanel {
 		this.lab = lab;
 	}
 	public static int[] getblock() {
-		int[] i = {1,1,1,0,2,3};
+		int[] i = {1,1,1,0,2,3,4};
 		return i;
 	}
 }
