@@ -72,6 +72,9 @@ public class ReadStory {
 		}
 		lines= RW.read(file, 4, FileUtil.linesInFile(file));
 		printLines(lines);
+		lines = new String[] {"1-Stay on the beach","2-Goto DA JUNGLE!"};
+		int choice = Story.getChoice(lines);
+		
 	}
 	
 	
