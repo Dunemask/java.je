@@ -9,8 +9,11 @@ import java.util.Scanner;
  * @author Karib
  *
  */
-public class RunStory {
+public class Story {
 	
+	public static String name;
+	public static int score;
+
 	public static void start() {
 		//Display info
 		ReadStory.intro();
