@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  *
  */
 public class FlappyPterodactyl extends JFrame {
-	public FlappyPterodactyl() throws InterruptedException {
+	public FlappyPterodactyl() {
 	//gets images and sets variables
 	ImageIcon image = new ImageIcon("src/jason/flappyptero/pterodactyl.gif");
 	ImageIcon bakground = new ImageIcon("src/jason/flappyptero/bg.png");
@@ -86,7 +86,7 @@ public class FlappyPterodactyl extends JFrame {
 		//System.out.println("Y:" +y);
 		y-=yvel;
 		yvel-=1;
-		ptero.setLocation(16, y);
+		ptero.setLocation(ptero.getX(), y);
 		if(alive ==1) {
 			x+=1;
 		if ((key.Output()[38]==0&&key.Output()[32]==0)&&(click==1)) {
@@ -97,11 +97,17 @@ public class FlappyPterodactyl extends JFrame {
 			click=1;
 		}
 		}
+		//System.out.println();
 		this.repaint();
-		Thread.sleep(30);
+		try {
+			Thread.sleep(30);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Everytime it goes to a switch
 		if ((4*x)%160<4) {
-			System.out.print("FFFFFFFLLLLLLLLLIIIIIIIIIPPPPPPPPPPPP DA SWITCH");
+			System.out.println("FFFFFFFLLLLLLLLLIIIIIIIIIPPPPPPPPPPPP DA SWITCH");
 			for (int i = 0 ; i < trees.length-1; i++) {
 				trees[i].setLocation(0, trees[i+1].getLocation().y);
 			}
@@ -110,6 +116,7 @@ public class FlappyPterodactyl extends JFrame {
 			if(dy<-100) {
 				dy=-100;
 			}
+			
 			if(dy>100) {
 				dy=100;
 			}
@@ -120,6 +127,10 @@ public class FlappyPterodactyl extends JFrame {
 		}
 		if(y+50>trees[1].getLocation().y) {
 			alive=0;
+		}
+		
+		if(x>200) {
+			System.out.println("Done");
 			
 		}
 	}
