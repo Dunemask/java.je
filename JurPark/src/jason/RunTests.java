@@ -13,7 +13,12 @@ public class RunTests {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		FlappyPterodactyl p = new FlappyPterodactyl();
+		try {
+			FlappyPterodactyl p = new FlappyPterodactyl();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
