@@ -16,7 +16,8 @@ public class Story {
 
 	public static void start() {
 		//Display info
-		ReadStory.intro();
+		//ReadStory.intro();
+		ReadStory.stayOnBeach();
 		
 		
 	}
@@ -51,6 +52,7 @@ public class Story {
 	public static void youDead() {
 		System.out.println("YOU DEAD!");
 		System.out.println("Your Score was:"+score);
+		System.exit(0);
 	}
 	
 	

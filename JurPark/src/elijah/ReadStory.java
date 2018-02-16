@@ -4,6 +4,7 @@
 package elijah;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
@@ -24,7 +25,6 @@ public class ReadStory {
 			try {
 				Thread.sleep(waitTime);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -37,6 +37,7 @@ public class ReadStory {
 	}
 	/**Inrto*/
 	public static void intro() {
+		Story.score+=10;
 		File file = FileUtil.getResource("resources/story/elijah/intro.txt");
 		String[] lines = RW.read(file, 1, 3);
 		printLines(lines);
@@ -88,8 +89,16 @@ public class ReadStory {
 	}
 	
 	/**Story Stay On Beach**/
-	private static void stayOnBeach() {
-		
+	public static void stayOnBeach() {
+		Story.score+=10;
+		File file = FileUtil.getResource("resources/story/elijah/SearchForFood.txt");
+		String[] lines = RW.read(file, 1, 3);
+		printLines(lines);
+		try {
+			Interactive.eatBurry();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}//Close Catch
 		
 	}
 	
