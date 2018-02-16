@@ -16,9 +16,9 @@ public class Story {
 
 	public static void start() {
 		//Display info
-		//ReadStory.intro();
-		ReadStory.stayOnBeach();
-		
+		ReadStory.intro();
+		//ReadStory.stayOnBeach();
+		//ReadStory.enterPteraDactylElijah();
 		
 	}
 	
