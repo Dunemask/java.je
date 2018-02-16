@@ -74,6 +74,22 @@ public class ReadStory {
 		printLines(lines);
 		lines = new String[] {"1-Stay on the beach","2-Goto DA JUNGLE!"};
 		int choice = Story.getChoice(lines);
+		//TODO Jason Start
+		switch(choice){
+		case 1: stayOnBeach();
+		break;
+		
+		case 2: // TODO goToJungle();
+		break;
+			
+		}
+		
+		
+	}
+	
+	/**Story Stay On Beach**/
+	private static void stayOnBeach() {
+		
 		
 	}
 	

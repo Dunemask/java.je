@@ -18,6 +18,7 @@ public class Story {
 		//Display info
 		ReadStory.intro();
 		
+		
 	}
 	
 	//Get Choices from user
@@ -30,7 +31,9 @@ public class Story {
 			for(int i=0;i<choices.length;i++) {
 				System.out.println(i+1+"-"+choices[i]);
 			}		
+			System.out.print("Choice:");
 			choice = in.nextInt();
+			System.out.println();
 			//Exit if 0
 			if(choice==0) {
 				System.out.println("Thanks for playing!");
@@ -45,6 +48,10 @@ public class Story {
 			return choice;
 	}
 	
+	public static void youDead() {
+		System.out.println("YOU DEAD!");
+		System.out.println("Your Score was:"+score);
+	}
 	
 	
 	
