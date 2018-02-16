@@ -54,6 +54,7 @@ public class Interactive {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setAlwaysOnTop(true);
 		new Thread( () -> {
 			try {
 				Thread.sleep(5000);

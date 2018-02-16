@@ -81,6 +81,8 @@ public class ReadStory {
 		break;
 		
 		case 2: // TODO goToJungle();
+			jason.FlappyPterodactyl p = new jason.FlappyPterodactyl();
+			System.out.println("Tato");
 		break;
 			
 		}
