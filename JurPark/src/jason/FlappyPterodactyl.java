@@ -19,8 +19,8 @@ public class FlappyPterodactyl extends JFrame {
 	ImageIcon image = new ImageIcon("src/jason/flappyptero/pterodactyl.gif");
 	ImageIcon bakground = new ImageIcon("src/jason/flappyptero/bg.png");
 	ImageIcon tree = new ImageIcon("src/jason/flappyptero/tree.png");
-	ImageIcon bad = new ImageIcon("src/jason/flappyptero/bad.png");
-	int y = 20;
+	ImageIcon bad = new ImageIcon("src/jason/flappyptero/bad.gif");
+	int y = 80;
 	int yvel = 5;
 	y-=yvel;
 	int x = 0;
@@ -69,6 +69,21 @@ public class FlappyPterodactyl extends JFrame {
 			dy=100;
 		}
 	}
+	JLabel[] pteros = new JLabel[5];
+	int dpy = 0;
+	for (int i = 0 ; i < pteros.length; i++) {
+		pteros[i] = new JLabel(bad);
+		pteros[i].setSize(64, 64);
+		this.add(pteros[i]);
+		pteros[i].setLocation(i*150, 0);
+		dpy+=(int)(Math.random()*100-50);
+		if(dpy<-100) {
+			dpy=-100;
+		}
+		if(dpy>100) {
+			dpy=100;
+		}
+	}
 	
 	this.add(ptero);
 	//Background
@@ -80,8 +95,9 @@ public class FlappyPterodactyl extends JFrame {
 	//click is to detect button presses
 	int click = 0;
 	int alive = 1;
+	int ending = 0;
 	//Main loop
-	while(true) {
+	while(y<1000) {
 		//System.out.println(y-trees[1].getLocation().y);
 		//System.out.println("Y:" +y);
 		y-=yvel;
@@ -99,6 +115,7 @@ public class FlappyPterodactyl extends JFrame {
 		}
 		//System.out.println();
 		this.repaint();
+		
 		try {
 			Thread.sleep(30);
 		} catch (InterruptedException e) {
@@ -107,7 +124,8 @@ public class FlappyPterodactyl extends JFrame {
 		}
 		//Everytime it goes to a switch
 		if ((4*x)%160<4) {
-			System.out.println("FFFFFFFLLLLLLLLLIIIIIIIIIPPPPPPPPPPPP DA SWITCH");
+			//System.out.println("FFFFFFFLLLLLLLLLIIIIIIIIIPPPPPPPPPPPP DA SWITCH");
+			elijah.Story.score += 1;
 			for (int i = 0 ; i < trees.length-1; i++) {
 				trees[i].setLocation(0, trees[i+1].getLocation().y);
 			}
@@ -122,20 +140,56 @@ public class FlappyPterodactyl extends JFrame {
 			}
 			trees[trees.length-1].setLocation(0,200+dy);
 		}
+		if ((5*x)%170<5) {
+			//System.out.println("FFFFFFFLLLLLLLLLIIIIIIIIIPPPPPPPPPPPP DA SWITCH");
+			elijah.Story.score += 1;
+			for (int i = 0 ; i < pteros.length-1; i++) {
+				pteros[i].setLocation(0, pteros[i+1].getLocation().y);
+			}
+			dy=pteros[pteros.length-1].getLocation().y-50;
+			dy+=(int)(Math.random()*100-50);
+			if(dy<-100) {
+				dy=-100;
+			}
+			
+			if(dy>100) {
+				dy=100;
+			}
+			pteros[pteros.length-1].setLocation(0,50+dy);
+		}
 		for (int i = 0 ; i < trees.length; i++) {
 			trees[i].setLocation(i*160 -(4*x)%160, trees[i].getLocation().y);
 		}
+		for (int i = 0 ; i < pteros.length; i++) {
+			pteros[i].setLocation(i*170 -(5*x)%170, pteros[i].getLocation().y);
+		}
+		//When you hit a tree
 		if(y+50>trees[1].getLocation().y) {
+			ending = 1;
 			alive=0;
 		}
-		
-		if(x>200) {
-			System.out.println("Done");
-			
+		//When you hit a pterodactyl
+		//System.out.println(y-pteros[1].getLocation().y);
+				if(y+10>pteros[1].getLocation().y&&y-10<pteros[1].getLocation().y) {
+					ending = 2;
+					alive=0;
+				}
+		//When you go past 200
+		if(x>2000) {
+			alive = 0;
+			elijah.Story.score += 20;
+			ending = 2;
 		}
 	}
-	
-	
-	
+	this.dispose();
+	if (ending ==1) {
+	System.out.println("The Pterodactyl flung your helpless body into a tree.");
+	}
+	if (ending ==1) {
+		System.out.println("The Pterodactyls fought over your corpse.");
+		}
+	if (ending ==2) {
+	System.out.println("The Pterodactyl got too tired and feel on your body.");
+	}
 	}
 }

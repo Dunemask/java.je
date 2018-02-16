@@ -1,10 +1,10 @@
-package objects;
+package jason;
 import java.util.Random;
 public class MazeGenerator {
 	public int[][] mazeGen(int size,int iterations) {
 		Random r = new Random();
 		//Creates empty array
-		int mg[][]= new int[size+1][size+1]; 
+		int mg[][]= new int[size+1][size+1];
 		//"Moves" to the middle
 		int mx = size/2-1;
 		int my = size/2-1;
