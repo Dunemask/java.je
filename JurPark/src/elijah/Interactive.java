@@ -8,14 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.concurrent.CountDownLatch;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import dunemask.objects.ScaledImageLabel;
 import dunemask.util.FileUtil;
 
 /**
@@ -26,15 +25,7 @@ public class Interactive {
 	private boolean berry;
 	
 	public static boolean eatBurry() throws MalformedURLException {
-		
-		new Thread( () -> {
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+		CountDownLatch latch = new CountDownLatch(1);
 		
 		
 		boolean berryEaten = false;
@@ -63,10 +54,29 @@ public class Interactive {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		new Thread( () -> {
+			try {
+				Thread.sleep(5000);
+				//System.out.println("Waitteetd");
+				latch.countDown();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			
+		}).start();;
+		//System.out.println("Taco");
 		
 		
 		
-		return berryEaten;
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		frame.dispose();
+		
+		return false;
 		
 		
 		
