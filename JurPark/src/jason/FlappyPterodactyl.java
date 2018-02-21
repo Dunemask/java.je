@@ -173,7 +173,6 @@ public class FlappyPterodactyl extends JFrame {
 			alive=0;
 		}
 		//When you hit a pterodactyl
-		//System.out.println(y-pteros[1].getLocation().y);
 				if(y+10>pteros[1].getLocation().y&&y-10<pteros[1].getLocation().y) {
 					ending = 3;
 					alive=0;

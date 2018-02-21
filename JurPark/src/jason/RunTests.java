@@ -19,7 +19,8 @@ public class RunTests {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-			CrossyFish c = new CrossyFish();
+			//CrossyFish c = new CrossyFish();
+		BunkerMaze bm = new BunkerMaze();
 	}
 
 }

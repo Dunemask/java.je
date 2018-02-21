@@ -43,6 +43,7 @@ public class CrossyFish extends JFrame {
 		tim.setLocation(0, 0);
 		tim.setText("TIME");
 		this.add(tim);
+		
 		//Creates Fishes
 				JLabel[] fishes =  new JLabel[5];
 				for (int i = 0 ; i < fishes.length; i++) {
@@ -99,13 +100,12 @@ public class CrossyFish extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			//Move Fishies
 			for (int i = 0 ; i < lfishes.length; i++) {
 				lfishes[i].setLocation((lfishes[i].getLocation().x-(5-i*1)-5-400)%((int) (Math.random()*400)+800)+400, lfishes[i].getLocation().y);
 				if ((lfishes[i].getLocation().x+32-x)*(lfishes[i].getLocation().x+32-x)+(lfishes[i].getLocation().y+32-y)*(lfishes[i].getLocation().y+32-y)<32*32) {
 					y-=29;
 					x-=(5-i*1)+5;
-					//System.out.println("DEAD");
 				}
 				
 			}
@@ -114,7 +114,6 @@ public class CrossyFish extends JFrame {
 				if ((fishes[i].getLocation().x+32-x)*(fishes[i].getLocation().x+32-x)+(fishes[i].getLocation().y+32-y)*(fishes[i].getLocation().y+32-y)<32*32) {
 					y-=29;
 					x+=(5-i*1)+5;
-					//System.out.println("DEAD");
 				}
 			}
 			
@@ -123,5 +122,4 @@ public class CrossyFish extends JFrame {
 		this.dispose();
 		System.out.println("You finally swam to the bottom. \nYou held your breath for " +Math.round(time)+" seconds!");
 	}
-
 }

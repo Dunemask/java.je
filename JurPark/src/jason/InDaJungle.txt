@@ -31,6 +31,8 @@ if(RUN){
 }
 
 }elif (You swim into the pond) {
+You found a small latch that is connected to an
+under-water bunker. 
 
 }
 
