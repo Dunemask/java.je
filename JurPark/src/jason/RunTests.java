@@ -14,12 +14,12 @@ public class RunTests {
 	 */
 	public static void main(String[] args) {
 		//try {
-			FlappyPterodactyl p = new FlappyPterodactyl();
+			//FlappyPterodactyl p = new FlappyPterodactyl();
 		/*} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-
+			CrossyFish c = new CrossyFish();
 	}
 
 }

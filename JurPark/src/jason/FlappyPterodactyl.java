@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 public class FlappyPterodactyl extends JFrame {
 	public FlappyPterodactyl() {
 	//gets images and sets variables
-	ImageIcon image = new ImageIcon("src/jason/flappyptero/pterodactyl.gif");
-	ImageIcon bakground = new ImageIcon("src/jason/flappyptero/bg.png");
-	ImageIcon tree = new ImageIcon("src/jason/flappyptero/tree.png");
-	ImageIcon bad = new ImageIcon("src/jason/flappyptero/bad.gif");
+	ImageIcon image = new ImageIcon("src/resources/flappyptero/pterodactyl.gif");
+	ImageIcon bakground = new ImageIcon("src/resources/flappyptero/bg.png");
+	ImageIcon tree = new ImageIcon("src/resources/flappyptero/tree.png");
+	ImageIcon bad = new ImageIcon("src/resources/flappyptero/bad.gif");
 	int y = 80;
 	int yvel = 5;
 	y-=yvel;
@@ -98,6 +98,7 @@ public class FlappyPterodactyl extends JFrame {
 	int ending = 0;
 	//Main loop
 	while(y<1000) {
+		ptero.requestFocus();
 		//System.out.println(y-trees[1].getLocation().y);
 		//System.out.println("Y:" +y);
 		y-=yvel;
@@ -163,6 +164,7 @@ public class FlappyPterodactyl extends JFrame {
 		for (int i = 0 ; i < pteros.length; i++) {
 			pteros[i].setLocation(i*170 -(5*x)%170, pteros[i].getLocation().y);
 		}
+		if(alive ==1){
 		//When you hit a tree
 		if(y+50>trees[1].getLocation().y) {
 			ending = 1;
@@ -171,7 +173,7 @@ public class FlappyPterodactyl extends JFrame {
 		//When you hit a pterodactyl
 		//System.out.println(y-pteros[1].getLocation().y);
 				if(y+10>pteros[1].getLocation().y&&y-10<pteros[1].getLocation().y) {
-					ending = 2;
+					ending = 3;
 					alive=0;
 				}
 		//When you go past 200
@@ -180,12 +182,14 @@ public class FlappyPterodactyl extends JFrame {
 			elijah.Story.score += 20;
 			ending = 2;
 		}
+		
+		}
 	}
 	this.dispose();
 	if (ending ==1) {
 	System.out.println("The Pterodactyl flung your helpless body into a tree.");
 	}
-	if (ending ==1) {
+	if (ending ==3) {
 		System.out.println("The Pterodactyls fought over your corpse.");
 		}
 	if (ending ==2) {
