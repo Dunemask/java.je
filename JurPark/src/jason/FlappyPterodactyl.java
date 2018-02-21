@@ -33,6 +33,8 @@ public class FlappyPterodactyl extends JFrame {
 	this.setVisible(true);
 	this.setLocationRelativeTo(null);
 	this.setLayout(null);
+	this.setEnabled(true);
+	this.setAlwaysOnTop(true);
 	
 	//Creates PTerodactyl Panel
 	JPanel ptero = new JPanel();

@@ -82,6 +82,7 @@ public class ReadStory {
 		
 		case 2: // TODO goToJungle();
 			jason.FlappyPterodactyl p = new jason.FlappyPterodactyl();
+			p.setAlwaysOnTop(true);
 			System.out.println("Tato");
 		break;
 			
