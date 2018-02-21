@@ -3,7 +3,13 @@
  */
 package elijah;
 
+import java.io.File;
 import java.util.Scanner;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * @author Karib
@@ -16,9 +22,10 @@ public class Story {
 
 	public static void start() {
 		//Display info
-		ReadStory.intro();
+		//ReadStory.intro();
 		//ReadStory.stayOnBeach();
 		//ReadStory.enterPteraDactylElijah();
+		JasonReadStory.findAnotherWay();
 		
 	}
 	
@@ -53,6 +60,28 @@ public class Story {
 		System.out.println("YOU DEAD!");
 		System.out.println("Your Score was:"+score);
 		System.exit(0);
+	}
+	
+	public static void showImage(File file) {
+		JLabel lab = new JLabel(new ImageIcon("src/resources/alby.jpg"));
+		lab.setSize(500, 500);
+		lab.setLocation(0, 0);
+		JFrame f = new JFrame();
+		f.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		f.setSize(lab.getWidth()+20, lab.getHeight()+40);
+		JPanel jip = new JPanel();
+		jip.setLayout(null);
+		jip.add(lab);
+		f.add(jip);
+		f.setVisible(true);
+		f.setAlwaysOnTop(true);
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
