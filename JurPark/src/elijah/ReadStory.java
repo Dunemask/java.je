@@ -73,7 +73,7 @@ public class ReadStory {
 		}
 		lines= RW.read(file, 4, FileUtil.linesInFile(file));
 		printLines(lines);
-		lines = new String[] {"Stay on the beach","Goto DA JUNGLE!"};
+		lines = new String[] {"Stay On Beach","Go To Da Jungle"};
 		int choice = Story.getChoice(lines);
 		//TODO Jason Start
 		switch(choice){
@@ -81,9 +81,7 @@ public class ReadStory {
 		break;
 		
 		case 2: // TODO goToJungle();
-			jason.FlappyPterodactyl p = new jason.FlappyPterodactyl();
-			p.setAlwaysOnTop(true);
-			System.out.println("Tato");
+			JasonReadStory.wallOfTrees();
 		break;
 			
 		}
@@ -93,6 +91,85 @@ public class ReadStory {
 	
 	/**Story Stay On Beach**/
 	public static void stayOnBeach() {
+		Story.score+=10;
+		System.out.println("Your stomache growls but you also feel really cold");
+		String[] lines = new String[] {"Look For Food","Look For Wood"};
+		int choice = Story.getChoice(lines);
+		switch(choice){
+		case 1: foodSearch();
+		break;
+		
+		case 2: woodSearch();
+		break;
+			
+		}
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public static void woodSearch() {
+		Story.score+=10;
+		File file = FileUtil.getResource("resources/story/elijah/WoodSearch.txt");
+		String[] lines = RW.readAll(file);
+		printLines(lines);
+		Calendar c = Calendar.getInstance();
+		int hour = c.get(Calendar.HOUR_OF_DAY);
+		if(hour>12) {
+			nightTime();
+		}else {
+			dayTime();
+		}
+		
+	}
+	/**
+	 * 
+	 */
+	private static void dayTime() {
+		Story.score+=10;
+		System.out.println("It's now daytime!");
+		System.out.println("Your Stomache Growls, Do you eat the egg?");
+		int c = Story.getChoice(new String[] {"Yes","No"});
+		switch(c) {
+		case 1:
+			System.out.println(" The angry Velociraptor Momma comes and eats you \r\n because you were gonan eat her kid! You bully!");
+			Story.score+=5;
+			Story.youDead();
+		break;
+		case 2:
+			System.out.println("Because you didn't eat the egg your stomache get's angry and kills you.\r\n Your stomache grows arms and legs " + 
+					" and eats you from the inside out. ");
+			Story.score+=50;
+			Story.youDead();
+	    break;
+		}
+	}
+	/**
+	 * 
+	 */
+	private static void nightTime() {
+		Story.score+=10;
+		System.out.println("It's now nighttime!");
+		System.out.println("Your Stomache Growls, Do you eat the egg?");
+		int c = Story.getChoice(new String[] {"Yes","No"});
+		switch(c) {
+		case 1:
+			System.out.println(" The angry Velociraptor Momma comes and eats you \r\n because you were gonan eat her kid! You bully!");
+			Story.score+=5;
+			Story.youDead();
+		break;
+		case 2:
+			System.out.println("  You drift to sleep with the egg by your side, the mom finds her \r\n egg and runs away. You slowly drift away\r\n" + 
+					" and freeze to death from Dinothermia, (The Lack of Dinosaur eggs)");
+			Story.score+=15;
+			Story.youDead();
+	    break;
+		}
+		
+	}
+	/***/
+	public static void foodSearch() {
 		Story.score+=10;
 		System.out.println("You decide to look around camp and see a small berry bush");
 		System.out.println("Suddenly a wild Berry Bush Appears!");
@@ -104,8 +181,8 @@ public class ReadStory {
 		
 		System.out.println("It Dissapears,");
 		enterPteraDactylElijah();
-		
 	}
+	
 	/**
 	 * 
 	 */
