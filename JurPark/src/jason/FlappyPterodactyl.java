@@ -98,6 +98,12 @@ public class FlappyPterodactyl extends JFrame {
 	int click = 0;
 	int alive = 1;
 	int ending = 0;
+	try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 	//Main loop
 	while(y<1000) {
 		ptero.requestFocus();

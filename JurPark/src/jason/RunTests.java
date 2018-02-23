@@ -21,6 +21,8 @@ public class RunTests {
 		}*/
 			//CrossyFish c = new CrossyFish();
 		BunkerMaze bm = new BunkerMaze();
+		CrossyFish c = new CrossyFish();
+		FlappyPterodactyl bc = new FlappyPterodactyl();
 	}
 
 }
