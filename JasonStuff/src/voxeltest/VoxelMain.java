@@ -1,34 +1,25 @@
-package Graphicstest;
-
-import java.util.Random;
+package voxeltest;
 
 import javax.swing.JFrame;
 
-public class TestMain {
-	Random rand = new Random();
-    public static Environment3D en3d = new Environment3D(new Vector3(0,0,0),0,0);
+import Graphicstest.KeyList;
+import Graphicstest.Vector3;
+
+public class VoxelMain {
+	public static VoxEn en3d = new VoxEn(new Vector3(0,0,100));
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("ColorPan");
-		Panel3D p = new Panel3D();
+		JFrame frame = new JFrame("VoxPan");
+		VoxPanel p = new VoxPanel();
 		p.SetE3d(en3d);
-		//for(int i = 0; i <3; i++) {
-		//en3d.AddFace(Vector3.rand(100),Vector3.rand(100), Vector3.rand(100));
-		//en3d.AddFace(new Vector3(-10,-10,-10),new Vector3(-10,10,-10), new Vector3(10,-10,-10),0);
-		//en3d.AddFace(new Vector3(-10,-10,-10),new Vector3(-10,-10,10), new Vector3(-10,10,-10),0);
-		en3d.AddFace(new Vector3(-100,-100,-10),new Vector3(100,-100,-10), new Vector3(-100,100,-10),0);
-		//en3d.AddFace(new Vector3(-10,0,-1000),new Vector3(10,-10,-1002), new Vector3(10,10,-1001));
-		//}
-		for(int i = 0; i <3; i++) {
-			en3d.AddCube(0, 0, i*30, 10-i*2.5, 1);
-		}
-	    frame.getContentPane().add(p);
-	    frame.setSize(600, 600);
+		frame.getContentPane().add(p);
+	    frame.setSize(400, 400);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setVisible(true);
 	    KeyList key = new KeyList();
 	    frame.addKeyListener(key);
 	    frame.setFocusable(true);
 	    frame.requestFocus();
+	    frame.repaint();
 	    int time = 0;
 	    while(true) {
 	    	time++;
@@ -70,17 +61,11 @@ public class TestMain {
 	    	if(key.Output()[16]==1) {
 	    		en3d.MoveCam(Vector3.downward());
 	    	}
-	    	frame.repaint();
+	    	//frame.repaint();
 	    	if (time%3==0) {
-	    		//en3d.ClearFaces();
-	    		//for(int i = 0; i <3; i++) {
-	    			//en3d.AddFace(Vector3.rand(100),Vector3.rand(100), Vector3.rand(100));
-	    			//}
 	    		System.out.println("X:"+(int)en3d.campos.x+" Y:"+(int)en3d.campos.y+" Z:"+(int)en3d.campos.z);
 	    	}
 	    }
 	}
-	public double rn(double low, double high) {
-		return Math.random()*(high-low)+low;
-	}
+
 }

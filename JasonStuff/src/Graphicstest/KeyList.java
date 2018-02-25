@@ -12,7 +12,7 @@ public class KeyList implements KeyListener{
 
 	public void keyPressed(KeyEvent e) {
 		int keCode = e.getKeyCode();
-	System.out.println(keCode);
+	//System.out.println(keCode);
 		keypre[keCode] = 1;
 	}
 	

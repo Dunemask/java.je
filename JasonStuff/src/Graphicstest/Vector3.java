@@ -27,6 +27,9 @@ public class Vector3 {
 	public static Vector3 add(Vector3 v1,Vector3 v2) {
 		return new Vector3 (v1.x+v2.x,v1.y+v2.y,v1.z+v2.z);
 	}
+	public static Vector3 subtract(Vector3 v1,Vector3 v2) {
+		return new Vector3 (v1.x-v2.x,v1.y-v2.y,v1.z-v2.z);
+	}
 	public static Vector3 scalmultiply(Vector3 v1, double m) {
 		return new Vector3 (v1.x*m,v1.y*m,v1.z*m);
 	}
@@ -35,6 +38,28 @@ public class Vector3 {
 		double normy=(v2.z-v1.z)*(v3.x-v1.x)-(v2.x-v1.x)*(v3.z-v1.z);
 		double normz=(v2.x-v1.x)*(v3.y-v1.y)-(v2.y-v1.y)*(v3.x-v1.x);
 		return new Vector3(normx,normy,normz);
+	}
+	public static double[] intersection(Vector3 va,Vector3 vb,String plane) {
+		double xint=0;
+		double yint=0;
+		double zint=0;
+		if (plane == "z") {
+			xint = va.x+(vb.x-va.x)*va.z/(va.z+vb.z);
+			yint = va.y+(vb.y-va.y)*va.z/(va.z+vb.z);
+			zint = 0;
+		}
+		if (plane == "y") {
+			xint = va.x+(vb.x-va.x)*va.y/(va.y+vb.y);
+			zint = va.z+(vb.z-va.z)*va.y/(va.y+vb.y);
+			yint = 0;
+		}
+		if (plane == "x") {
+			yint = va.y+(vb.y-va.y)*va.x/(va.x+vb.x);
+			zint = va.z+(vb.z-va.z)*va.x/(va.x+vb.x);
+			xint = 0;
+		}
+		double[] dub = {xint,yint,zint,0};
+		return dub;
 	}
 	public static double[] intersection(Vector3 va,Vector3 vb,Vector3 v0,Vector3 v1,Vector3 v2){
 		boolean intri=false;
