@@ -11,23 +11,55 @@ public class VoxEn {
 	int[][][] Voxels = new int[100][100][100];
 	public VoxEn(Vector3 vcam) {
 		campos=vcam;
-		resetCloud(0.5,3);
+		resetCloud(1,10);
 	}
 	public int GetPix(int x, int y) {
-		int blue = y%256;
-		int green=x%256;
-		int red = 255;
+		int blue = 0;
+		int green=0;
+		int red = 0;
+		double mag = viewdist;
 		Vector3 ve = new Vector3(0,0,-viewdist).rotate(Math.sqrt(x*x+y*y)*fovc,"x").rotate(Math.atan2(y, x), "z");
 		ve = ve.rotate(ry, "y").rotate(rx, "z");
-		for(int z = 0;z<Voxels.length;z++) {
-		double[] doi =Vector3.intersection(campos, Vector3.add(campos, ve), "z");
-		
-		
+		for(int z = 0;z<Voxels[0][0].length;z++) {
+		Vector3 v3 = Vector3.add(campos, new Vector3(0,0,0));
+		if(ve.z>0) {
+		double[] doi =Vector3.intersection(v3, Vector3.add(v3, ve), "z");
+		if(0<(int)doi[0]&&(int)doi[0]<100&&0<(int)doi[1]&&(int)doi[1]<100) {
+			int val= Voxels[(int)doi[0]][(int)doi[1]][z];
+			
+			if(val>100) {
+				double tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
+				if(mag>tmpmag) {
+					mag=tmpmag;
+					red = (val);
+					green=5*(int)(tmpmag);
+					//z=Voxels[0][0].length;
+				}
+				}
+			}
 		
 		}
+		}
+		/*for(int yy = 0;yy<Voxels[0].length;yy++) {
+			Vector3 v3 = Vector3.add(campos, new Vector3(0,yy,0));
+			double[] doi =Vector3.intersection(v3, Vector3.add(v3, ve), "y");
+			if(0<(int)doi[0]&&(int)doi[0]<100&&0<(int)doi[2]&&(int)doi[2]<100) {
+				int val= Voxels[(int)doi[0]][yy][(int)doi[2]];
+				
+				if(val>100) {
+					double tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
+					if(mag>tmpmag) {
+						mag=tmpmag;
+						green = (val);
+						red=5*(int)(tmpmag);
+						//z=Voxels[0][0].length;
+					}
+					}
+				}
+			
+			}
 		
-		
-		
+		*/
 		
 		
 		

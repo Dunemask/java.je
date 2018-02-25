@@ -6,7 +6,7 @@ import Graphicstest.KeyList;
 import Graphicstest.Vector3;
 
 public class VoxelMain {
-	public static VoxEn en3d = new VoxEn(new Vector3(0,0,100));
+	public static VoxEn en3d = new VoxEn(new Vector3(0,0,10));
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("VoxPan");
 		VoxPanel p = new VoxPanel();
@@ -61,7 +61,7 @@ public class VoxelMain {
 	    	if(key.Output()[16]==1) {
 	    		en3d.MoveCam(Vector3.downward());
 	    	}
-	    	//frame.repaint();
+	    	frame.repaint();
 	    	if (time%3==0) {
 	    		System.out.println("X:"+(int)en3d.campos.x+" Y:"+(int)en3d.campos.y+" Z:"+(int)en3d.campos.z);
 	    	}

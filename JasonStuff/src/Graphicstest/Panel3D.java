@@ -25,6 +25,7 @@ public class Panel3D extends JComponent {
 		    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		    image.setRGB(0, 0, width, height, data, 0, width);
 		    g.drawImage(image, 0, 0, width*res, height*res, this);
+		    System.out.println("DONE");
 	}
 	public void SetE3d(Environment3D edd) {
 		e3d=edd;
