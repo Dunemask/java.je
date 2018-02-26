@@ -44,18 +44,18 @@ public class Vector3 {
 		double yint=0;
 		double zint=0;
 		if (plane == "z") {
-			xint = va.x+(vb.x-va.x)*va.z/(va.z+vb.z);
-			yint = va.y+(vb.y-va.y)*va.z/(va.z+vb.z);
+			xint = va.x+(vb.x-va.x)*va.z/(va.z-vb.z);
+			yint = va.y+(vb.y-va.y)*va.z/(va.z-vb.z);
 			zint = 0;
 		}
 		if (plane == "y") {
-			xint = va.x+(vb.x-va.x)*va.y/(va.y+vb.y);
-			zint = va.z+(vb.z-va.z)*va.y/(va.y+vb.y);
+			xint = va.x+(vb.x-va.x)*va.y/(va.y-vb.y);
+			zint = va.z+(vb.z-va.z)*va.y/(va.y-vb.y);
 			yint = 0;
 		}
 		if (plane == "x") {
-			yint = va.y+(vb.y-va.y)*va.x/(va.x+vb.x);
-			zint = va.z+(vb.z-va.z)*va.x/(va.x+vb.x);
+			yint = va.y+(vb.y-va.y)*va.x/(va.x-vb.x);
+			zint = va.z+(vb.z-va.z)*va.x/(va.x-vb.x);
 			xint = 0;
 		}
 		double[] dub = {xint,yint,zint,0};
@@ -106,22 +106,22 @@ public class Vector3 {
 		
 		return new Vector3((Math.random()-0.5)*mag*2,(Math.random()-0.5)*mag*2,(Math.random()-0.5)*mag*2);
 	}
-	public static Vector3 foreward() {
-		return new Vector3(1,0,0);
+	public static Vector3 foreward(double a) {
+		return new Vector3(a,0,0);
 	}
-	public static Vector3 backward() {
-		return new Vector3(-1,0,0);
+	public static Vector3 backward(double a) {
+		return new Vector3(-a,0,0);
 	}
-	public static Vector3 rightward() {
-		return new Vector3(0,1,0);
+	public static Vector3 rightward(double a) {
+		return new Vector3(0,a,0);
 	}
-	public static Vector3 leftward() {
-		return new Vector3(0,-1,0);
+	public static Vector3 leftward(double a) {
+		return new Vector3(0,-a,0);
 	}
-	public static Vector3 upward() {
-		return new Vector3(0,0,1);
+	public static Vector3 upward(double a) {
+		return new Vector3(0,0,a);
 	}
-	public static Vector3 downward() {
-		return new Vector3(0,0,-1);
+	public static Vector3 downward(double a) {
+		return new Vector3(0,0,-a);
 	}
 }

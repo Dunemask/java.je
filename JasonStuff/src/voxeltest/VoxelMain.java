@@ -6,7 +6,7 @@ import Graphicstest.KeyList;
 import Graphicstest.Vector3;
 
 public class VoxelMain {
-	public static VoxEn en3d = new VoxEn(new Vector3(0,0,10));
+	public static VoxEn en3d = new VoxEn(new Vector3(10,10,17));
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("VoxPan");
 		VoxPanel p = new VoxPanel();
@@ -44,22 +44,22 @@ public class VoxelMain {
 	    		en3d.RotateCam(0, -0.05);
 	    	}
 	    	if(key.Output()[87]==1) {
-	    		en3d.MoveCam(Vector3.foreward().rotate(en3d.rx, "z"));
+	    		en3d.MoveCam(Vector3.foreward(0.1).rotate(en3d.rx, "z"));
 	    	}
 	    	if(key.Output()[83]==1) {
-	    		en3d.MoveCam(Vector3.backward().rotate(en3d.rx, "z"));
+	    		en3d.MoveCam(Vector3.backward(0.1).rotate(en3d.rx, "z"));
 	    	}
 	    	if(key.Output()[68]==1) {
-	    		en3d.MoveCam(Vector3.rightward().rotate(en3d.rx, "z"));
+	    		en3d.MoveCam(Vector3.rightward(0.1).rotate(en3d.rx, "z"));
 	    	}
 	    	if(key.Output()[65]==1) {
-	    		en3d.MoveCam(Vector3.leftward().rotate(en3d.rx, "z"));
+	    		en3d.MoveCam(Vector3.leftward(0.1).rotate(en3d.rx, "z"));
 	    	}
 	    	if(key.Output()[32]==1) {
-	    		en3d.MoveCam(Vector3.upward());
+	    		en3d.MoveCam(Vector3.upward(0.1));
 	    	}
 	    	if(key.Output()[16]==1) {
-	    		en3d.MoveCam(Vector3.downward());
+	    		en3d.MoveCam(Vector3.downward(0.1));
 	    	}
 	    	frame.repaint();
 	    	if (time%3==0) {
