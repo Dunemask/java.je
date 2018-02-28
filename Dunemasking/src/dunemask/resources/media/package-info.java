@@ -10,6 +10,5 @@
  */
 /**
  * @author Elijah
- *  <p>Belongs to Package {@link limit }</p>
  */
 package dunemask.resources.media;

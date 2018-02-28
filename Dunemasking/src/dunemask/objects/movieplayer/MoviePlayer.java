@@ -52,6 +52,8 @@ import javafx.util.Duration;
  *  <p>Belongs to Package {@link dunemask.objects.movieplayer }</p>
  */
 public class MoviePlayer implements Initializable  {
+	/***Version*/
+    final static double version = 4.0;
 	
 	public MoviePlayer(Media media){
 		

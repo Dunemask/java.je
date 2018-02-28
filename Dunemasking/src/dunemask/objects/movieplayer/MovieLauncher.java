@@ -37,7 +37,10 @@ import javafx.stage.Stage;
  *  <p>Belongs to Package {@link limit }</p>
  */
 public class MovieLauncher extends Application {
-
+	
+	/***Version*/
+    final static double version = 7.0;
+    
 	public static MoviePlayer current;
 	public static JFrame frame;
 

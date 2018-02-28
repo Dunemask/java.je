@@ -12,6 +12,7 @@ import java.awt.image.ImageObserver;
 import java.net.URL;
 import javax.swing.ImageIcon;
 
+
 /**
  * An <CODE>Icon</CODE> that scales its image to fill the component area,
  * excluding any border or insets, optionally maintaining the image's aspect
@@ -29,7 +30,9 @@ import javax.swing.ImageIcon;
  * @author Darryl
  */
 public class StretchIcon extends ImageIcon {
-
+	/***Version*/
+    final static double version = 4.04;
+	
   /**
 	 * 
 	 */
