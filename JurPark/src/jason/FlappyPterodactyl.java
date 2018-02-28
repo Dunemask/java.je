@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import elijah.Story;
+
 
 /**
  * @author Jason Roberts
@@ -195,12 +197,18 @@ public class FlappyPterodactyl extends JFrame {
 	this.dispose();
 	if (ending ==1) {
 	System.out.println("The Pterodactyl flung your helpless body into a tree.");
+	Story.score+=5;
+	Story.youDead();
 	}
 	if (ending ==3) {
 		System.out.println("The Pterodactyls fought over your corpse.");
+		Story.score+=50;
+		Story.youDead();
 		}
 	if (ending ==2) {
-	System.out.println("The Pterodactyl got too tired and feel on your body.");
+	System.out.println("The Pterodactyl got too tired and fell on The Ground.");
+	Story.score-=5;
+	Story.youDead();
 	}
 	}
 }

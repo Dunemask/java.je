@@ -11,7 +11,7 @@ import dunemask.util.FileUtil;
  */
 public class JasonReadStory {
 
-	/**
+	/** Enterance point for jason's part
 	 * 
 	 */
 	public static void wallOfTrees() {
@@ -20,6 +20,9 @@ public class JasonReadStory {
 				"It is about 150 feet tall, and spans as far\r\n" + 
 				"as you can see. You see some vines that make \r\n" + 
 				"it possible to climb the trees.");
+		Story.showImage(FileUtil.getResourceURL("resources/wall.jpg"));
+		
+		
 		int c = Story.getChoice(new String[] {"Look for a way around","Climb the wall of trees"});
 		switch(c) {
 		case 1: findPond();
@@ -32,11 +35,12 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path where you decide to climb the wall of trees
 	 * 
 	 */
 	private static void climbWall() {
 		Story.score+=10;
+		Story.showImage(FileUtil.getResourceURL("resources/putrid.jpg"));
 		System.out.println("You climb up the wall and your belly urges you towards the fruit \r\n" );
 		switch(Story.getChoice(new String[] {"Eat Fruit","Ignore Wall"})) {
 		case 1: eatFruit();
@@ -48,12 +52,14 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path where You ignore the fruit
 	 * 
 	 */
 	private static void ignoreFruit() {
 		Story.score+=10;
 		System.out.println("You find a breech in the leaves step through and fall 2 feet you see an old bunker ahead of you");
+		System.out.println("There is also a trex with a gun standing on top of it");
+		Story.showImage(FileUtil.getResourceURL("resources/bunker.png"));
 		switch(Story.getChoice(new String[] {"Run To Bunker","Find Another Way"})){
 		case 1: System.out.println("A mother velociraptor sniffs you out and you make your way through it's belly");
 				System.out.println("YOu STUPID! #21");
@@ -68,18 +74,18 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path where you don't run straight to the bunker
 	 * 
 	 */
 	public static void findAnotherWay() {
 		Story.score+=10;
-		//Jason TODO mazegame
-		System.out.println("You get to the bunker, You Fina  aphone and an old arcade machine");
+		jason.BunkerMaze bm = new jason.BunkerMaze();
+		System.out.println("You get to the bunker, You find a phone and an old arcade machine");
 		
 		switch(Story.getChoice(new String[] {"Pick Up Phone","Play The Game"})){
 		case 1: 
 			System.out.println("You touch the phone that had an electric charge of 9234234235345 volts that run through you. You look like albert Einstein");
-			Story.showImage(FileUtil.getResource("resources/alby.jpg"));
+			Story.showImage(FileUtil.getResourceURL("resources/alby.jpg"));
 			Story.score+=80;
 			Story.youDead();
 			break;
@@ -91,15 +97,16 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path Chose arcade machine
+	 * Succeeding with 9000+ makes you winning
 	 * 
 	 */
 	private static void arcadeMachine() {
-		
+		//TODO
 		
 	}
 
-	/**
+	/** Path Chose Eat Fruit
 	 * 
 	 */
 	private static void eatFruit() {
@@ -117,12 +124,11 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path Chose to hold the putrid fruit in
 	 * 
 	 */
 	private static void keepFruitIn() {
 		Story.score+=10;
-		//TODO Jason Fruit stuff
 		System.out.println("You Slowly Climb to the top of the trees, You see a flying Pteradactyle shooting 900 mph at you face");
 		switch(Story.getChoice(new String[] {"Jump","Duck"})) {
 		case 1:
@@ -140,14 +146,13 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path Where you ducked from the pteradactyl
 	 * 
 	 */
 	private static void flappyTerroInit() {
 		Story.score+=10;
 		System.out.println("The Pteradatyle Grabs you and flies, you to its babies,");
-		//TODO Jason Flaappy
-		jason.FlappyPterodactyl p = new jason.FlappyPterodactyl();
+		jason.FlappyPterodactyl fp = new jason.FlappyPterodactyl();
 		System.out.println(" you will beocome part of a new Dino Generation!");
 		Story.score += 50;
 		Story.youDead();
@@ -156,7 +161,7 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path where you look for a way aruond the wall
 	 * 
 	 */
 	private static void findPond() {
@@ -179,12 +184,13 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path where you go through the medow
 	 * 
 	 */
 	private static void goThroughmedow() {
 		Story.score+=10;
 		System.out.println("You Walk through the medow when suddenly a wild TREX bush appears, without the bush part");
+		Story.showImage(FileUtil.getResourceURL("resources/trex.jpg"));
 		switch(Story.getChoice(new String[] {"Pet The Trex","Run"})) {
 		case 1:
 			System.out.println("You stair up into the uncaring void of his mouth, your eyes meat and he eats you");
@@ -203,17 +209,18 @@ public class JasonReadStory {
 		
 	}
 
-	/**
+	/** Path whre you Swim Into The pond
 	 * 
 	 */
 	private static void swimIntoPond() {
 		Story.score+=10;
 		System.out.println("Dodge The Killer Fish and make it to the bottom of the pond!");
-		//TODO jason Kiler Fish Program
+		jason.CrossyFish cf = new jason.CrossyFish();
 		
 		System.out.println("You find a hatch");
 		switch(Story.getChoice(new String[] {"Open hatch","Swim Back Up"})) {
 		case 1:
+			Story.showImage(FileUtil.getResourceURL("resources/darkRoom.gif"));
 			System.out.println("Your Sucked Into The Deep Abyss, You Know you died in an epic way");
 			Story.score+=20;
 			Story.youDead();

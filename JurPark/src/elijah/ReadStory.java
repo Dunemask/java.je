@@ -55,6 +55,8 @@ public class ReadStory {
 			}//Close catch
 			System.out.print(".");
 		}
+		
+		//Really Kewly Prints out the date with numbers
 		System.out.println();
 		try {
 			Calendar c = Calendar.getInstance();
@@ -106,7 +108,7 @@ public class ReadStory {
 		
 	}
 	
-	/**
+	/** path whre you search for wood
 	 * 
 	 */
 	public static void woodSearch() {
@@ -123,12 +125,13 @@ public class ReadStory {
 		}
 		
 	}
-	/**
+	/** Instance when it's day
 	 * 
 	 */
 	private static void dayTime() {
 		Story.score+=10;
 		System.out.println("It's now daytime!");
+		Story.showImage(FileUtil.getResourceURL("resources/day.jpg"));
 		System.out.println("Your Stomache Growls, Do you eat the egg?");
 		int c = Story.getChoice(new String[] {"Yes","No"});
 		switch(c) {
@@ -145,12 +148,13 @@ public class ReadStory {
 	    break;
 		}
 	}
-	/**
+	/** Instance when it's night
 	 * 
 	 */
 	private static void nightTime() {
 		Story.score+=10;
 		System.out.println("It's now nighttime!");
+		Story.showImage(FileUtil.getResourceURL("resources/night.png"));
 		System.out.println("Your Stomache Growls, Do you eat the egg?");
 		int c = Story.getChoice(new String[] {"Yes","No"});
 		switch(c) {
@@ -168,7 +172,9 @@ public class ReadStory {
 		}
 		
 	}
-	/***/
+	/** Path where you look for food
+	 * 
+	 * */
 	public static void foodSearch() {
 		Story.score+=10;
 		System.out.println("You decide to look around camp and see a small berry bush");
@@ -183,7 +189,7 @@ public class ReadStory {
 		enterPteraDactylElijah();
 	}
 	
-	/**
+	/** Path where you search for things anda  pteradacylt appears
 	 * 
 	 */
 	public static void enterPteraDactylElijah() {
@@ -204,7 +210,7 @@ public class ReadStory {
 		}
 		
 	}
-	/**
+	/** Path when a triceratops inpales
 	 * 
 	 */
 	public static void elijahTriceratops() {

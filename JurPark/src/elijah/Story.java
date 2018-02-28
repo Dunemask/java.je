@@ -4,6 +4,7 @@
 package elijah;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
@@ -11,7 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
+/** Main Class For Choose Your Own Adventure Story
+ * 
  * @author Karib
  *
  */
@@ -22,14 +24,16 @@ public class Story {
 
 	public static void start() {
 		//Display info
-		//ReadStory.intro();
-		//ReadStory.stayOnBeach();
-		//ReadStory.enterPteraDactylElijah();
-		JasonReadStory.findAnotherWay();
+		ReadStory.intro();
+
 		
 	}
 	
-	//Get Choices from user
+	/**Get Choices from user
+	 * 
+	 * @param choices Strings List of things to be printed out
+	 * 
+	 **/
 	public static int getChoice(String[] choices) {
 		int choice;
 		Scanner in = new Scanner(System.in);
@@ -45,7 +49,8 @@ public class Story {
 			//Exit if 0
 			if(choice==0) {
 				System.out.println("Thanks for playing!");
-				System.exit(0);
+				Story.youDead();
+				
 			}
 			if(choice>choices.length||choice<0) {
 				System.out.println("Invalid choice, please select again!");
@@ -56,14 +61,20 @@ public class Story {
 			return choice;
 	}
 	
+	/** When you Die it mocks you and tells you your score then exits the program
+	 * */
 	public static void youDead() {
 		System.out.println("YOU DEAD!");
 		System.out.println("Your Score was:"+score);
 		System.exit(0);
 	}
 	
-	public static void showImage(File file) {
-		JLabel lab = new JLabel(new ImageIcon("src/resources/alby.jpg"));
+	/** Simply displays image and then sleeps for 2 seconds
+	 * 
+	 * @paqram path it neesd a path for the file probably starting from the src place
+	 * */
+	public static void showImage(URL path) {
+		JLabel lab = new JLabel(new ImageIcon(path));
 		lab.setSize(500, 500);
 		lab.setLocation(0, 0);
 		JFrame f = new JFrame();

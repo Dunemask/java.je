@@ -279,6 +279,60 @@ public class FileUtil{
 	 * 
 	 * @param ResourceDirectory
 	 *            Directory To resource should be relative
+	 * @return Returns the wanted Resource as a url
+	 **/
+	public static  URL getResourceURL(String ResourceDirectory) {
+		if (!ResourceDirectory.startsWith("/")) {
+			//ResourceDirectory = "/" + ResourceDirectory; Add it
+		}else {
+			ResourceDirectory=ResourceDirectory.substring(1, ResourceDirectory.length());
+		}
+		/***(Does Not Need Absolute Referencing now apparently I:)**/
+
+		String resource = FileUtil.filePathFix(ResourceDirectory); // "..\\..\\resources\\"+rm.getPath();
+		//resource = "/resources/track-list.txt";
+		
+		//Create ClassLoader to get resources
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		URL res = null;
+			//Fixes stuffs
+		
+			//This catches if it's a Direct filepath, it should assume IDE path
+			if(resource.substring(1, 2).equals(":")) {
+				try {
+					resource = resource.replace("%20", " ");
+					res = new File(resource).toURI().toURL();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+			//Otherwise have the classloader get the resource
+			}else {
+				
+				res = classLoader.getResource(resource);
+			}
+				//Catch Any Spaces in the name
+				try {
+					res = new URL(res.toString().replace("%20", " "));
+				} catch (Exception e) {
+					System.err.println("Prb don't exist");
+					e.printStackTrace();
+				}//Close Catch
+				
+			return res;
+	
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Get File From relative Location "starts at src folder" Inside src folder
+	 * "resources/README!.txt"; Use that
+	 * 
+	 * @param ResourceDirectory
+	 *            Directory To resource should be relative
 	 * @return Returns the wanted Resource as a file
 	 **/
 	public static  File getResource(String ResourceDirectory) {
