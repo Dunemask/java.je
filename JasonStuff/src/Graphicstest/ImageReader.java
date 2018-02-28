@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class ImageReader {
 	public int[][] imagedat;
-	public int GetPixel(double x, double y, String image){
+	public int GetPixel(float x, float y, String image){
 		BufferedImage img=null;
 		File f = null;
 		f = new File(image);

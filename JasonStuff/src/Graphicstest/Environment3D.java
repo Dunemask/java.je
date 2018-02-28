@@ -2,9 +2,9 @@ package Graphicstest;
 import java.util.*;
 public class Environment3D {
 	Vector3 campos;
-	double rx = 0;
-	double ry = 0;
-	double fovc = 0.01;
+	float rx = 0;
+	float ry = 0;
+	float fovc = 0.01f;
 	int viewdist = 3000;
 	ImageReader[] imgas = new ImageReader[2];
 	
@@ -22,11 +22,11 @@ public class Environment3D {
 		int blue = 0;
 		int green=0;
 		int red = 0;
-		double[] db = null;
+		float[] db = null;
 		int mag = viewdist;
 		int id = 0;
 		for(int i=0; i<faces.size(); i++) {
-		double[] dub = Vector3.intersection(campos, Vector3.add(campos, ve), faces.get(i)[0], faces.get(i)[1], faces.get(i)[2]);
+		float[] dub = Vector3.intersection(campos, Vector3.add(campos, ve), faces.get(i)[0], faces.get(i)[1], faces.get(i)[2]);
 		if(dub[6]==1) {
 			if(mag>(Vector3.subtract(new Vector3(dub[3],dub[4],dub[5]), campos)).magnitude()) {
 				db = dub;	
@@ -58,18 +58,18 @@ public class Environment3D {
 		faces.clear();
 		mats.clear();
 	}
-	public void RotateCam(double dx, double dy) {
+	public void RotateCam(float dx, float dy) {
 		rx +=dx;
 		ry +=dy;
 	}
-	public void SetCam(double dx, double dy) {
+	public void SetCam(float dx, float dy) {
 		rx =dx;
 		ry =dy;
 	}
 	public void MoveCam(Vector3 v3) {
 		campos=Vector3.add(campos, v3);
 	}
-	public void AddCube(double x,double y,double z, double size, int mat) {
+	public void AddCube(float x,float y,float z, float size, int mat) {
 		AddFace(new Vector3(x+size,y+size,z+size),new Vector3(x+size,y-size,z+size), new Vector3(x+size,y+size,z-size),mat);
 		AddFace(new Vector3(x-size,y+size,z+size),new Vector3(x-size,y-size,z+size), new Vector3(x-size,y+size,z-size),mat);
 		AddFace(new Vector3(x+size,y+size,z+size),new Vector3(x-size,y+size,z+size), new Vector3(x+size,y-size,z+size),mat);

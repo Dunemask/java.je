@@ -80,7 +80,7 @@ public class TestMain {
 	    	}
 	    }
 	}
-	public double rn(double low, double high) {
+	public float rn(float low, float high) {
 		return Math.random()*(high-low)+low;
 	}
 }
