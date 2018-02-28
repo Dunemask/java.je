@@ -75,6 +75,7 @@ public class VoxEn {
 				if(mag>tmpmag) {
 					mag=tmpmag;
 					findub = doi;
+					findub[2]=z;
 					red = (val+128);
 					green=(siz*(int)(tmpmag))%256;
 					blue=0;
@@ -104,6 +105,7 @@ public class VoxEn {
 					if(mag>tmpmag) {
 						mag=tmpmag;
 						findub = doi;
+						findub[2]=z;
 						red = (val+128);
 						green=(siz*(int)(tmpmag))%256;
 						blue=0;
@@ -133,6 +135,7 @@ public class VoxEn {
 					if(mag>tmpmag) {
 						mag=tmpmag;
 						findub = doi;
+						findub[1]=yy;
 						green = (val+128);
 						blue=(siz*(int)(tmpmag))%256;
 						red=0;
@@ -160,6 +163,7 @@ public class VoxEn {
 					if(mag>tmpmag) {
 						mag=tmpmag;
 						findub = doi;
+						findub[1]=yy;
 						green = (val+128);
 						blue=(siz*(int)(tmpmag))%256;
 						red=0;
@@ -187,6 +191,7 @@ public class VoxEn {
 					if(mag>tmpmag) {
 						mag=tmpmag;
 						findub = doi;
+						findub[0]=xx;
 						blue = (val+128);
 						red=(siz*(int)(tmpmag))%256;
 						green=0;
@@ -214,6 +219,7 @@ public class VoxEn {
 					if(mag>tmpmag) {
 						mag=tmpmag;
 						findub = doi;
+						findub[0]=xx;
 						blue = (val+128);
 						red=(siz*(int)(tmpmag))%256;
 						green=0;
@@ -229,7 +235,6 @@ public class VoxEn {
 			sel.x=(int)findub[0];
 			sel.y=(int)findub[1];
 			sel.z=(int)findub[2];
-			sel.print();
 			seld =side;
 		}
 		if(side=="x1") {
@@ -339,6 +344,32 @@ public class VoxEn {
 		}else {
 		return -128;
 		} 
+	}
+	public void setBlock(int block) {
+		Voxels[(int)sel.x][(int)sel.y][(int)sel.z] = (byte)block;
+	}
+	public void setBlockOut(int block) {
+		int dx=0;
+		int dy=0;
+		int dz=0;
+		try {
+		if(seld=="x1")
+			dx=-1;
+		if(seld=="x2")
+			dx=1;
+		if(seld=="y1")
+			dy=-1;
+		if(seld=="y2")
+			dy=1;
+		if(seld=="z1")
+			dz=-1;
+		if(seld=="z2")
+			dz=1;
+		if(!((int)sel.x+dx==(int)campos.x&&(int)sel.z+dz==(int)campos.z&&(int)sel.y+dy==(int)campos.y))
+		Voxels[(int)sel.x+dx][(int)sel.y+dy][(int)sel.z+dz] = (byte)block;
+		}catch(ArrayIndexOutOfBoundsException e) {
+			
+		}
 	}
 	public void resetCloud(float weight, int count){
 		

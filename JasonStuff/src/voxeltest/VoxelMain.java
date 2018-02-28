@@ -18,6 +18,7 @@ import Graphicstest.Vector3;
 public class VoxelMain {
 	public static VoxEn en3d = new VoxEn(new Vector3(10,10,28));
 	public static boolean mousedown;
+	public static boolean rmousedown;
 	public static void main(String[] args) {
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
@@ -41,10 +42,17 @@ public class VoxelMain {
 	    frame.getContentPane().setCursor(blankCursor);
 	    frame.addMouseListener(new MouseAdapter() {
 	    	public void mousePressed(MouseEvent e) {
+	    		if(e.getButton()==1)
 	    		mousedown = true;
+	    		if(e.getButton()==3)
+		    		rmousedown = true;
+	    		
 	    	}
 	    	public void mouseReleased(MouseEvent e) {
-	    		mousedown = true;
+	    		if(e.getButton()==1)
+		    		mousedown = false;
+		    		if(e.getButton()==3)
+			    		rmousedown = false;
 	    	}
 	    });
 	    int time = 0;
@@ -111,11 +119,17 @@ public class VoxelMain {
 	    	if (time%3==0) {
 	    		//System.out.println("X:"+(int)en3d.campos.x+" Y:"+(int)en3d.campos.y+" Z:"+(int)en3d.campos.z);
 	    		//en3d.campos.print();
+	    		//System.out.println(mousedown);
+	    	}
+	    	if (mousedown) {
+	    		en3d.setBlock(0);
+	    	}
+	    	if (rmousedown) {
+	    		en3d.setBlockOut(1);
 	    	}
 	    }
 	    frame.getContentPane().setCursor(normCursor);
 	    while(key.Output()[27]==1) {
-	    	System.out.println("Hay");
 	    }
 	    while(escape==1) {
 	    	try {
