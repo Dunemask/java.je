@@ -24,8 +24,8 @@ public class Story {
 
 	public static void start() {
 		//Display info
-		//ReadStory.intro();
-		ReadStory.startStory();
+		ReadStory.intro();
+		//ReadStory.startStory();
 	}
 	
 	/**Get Choices from user
