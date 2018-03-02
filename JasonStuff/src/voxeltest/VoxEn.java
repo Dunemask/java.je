@@ -21,20 +21,21 @@ public class VoxEn {
 	int siz = 1;
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
-	ImageReader[] imgas = new ImageReader[5];
+	ImageReader[] imgas = new ImageReader[7];
 	ImageReader selecc = new ImageReader("src/voxeltest/select.png");
 	byte[][] blkrndr = {
 				{0,0,0,0,0,0},
 				{0,2,1,1,1,1},
 				{3,3,3,3,3,3},
 				{4,4,4,4,4,4},
-				{1,2,3,4,0,1}};
+				{6,6,5,5,5,5}};
 	VoxChunk[][][] vc = new VoxChunk[4][4][4];
-	byte[][][] Voxels = new byte[100][100][18];
+	byte[][][] Voxels = new byte[10][10][30];
 	public VoxEn(Vector3 vcam) {
 		campos=vcam;
 		resetCloud(1,4);
 		//getimages
+		//resetHills(1, 4);
 		for(int i = 0;i<imgas.length;i++) {
 			imgas[i] = new ImageReader("src/voxeltest/img"+i+".png");
 		}
@@ -411,7 +412,7 @@ public class VoxEn {
 			for(int y = 0; y < Voxels[0].length; y++) {
 				for(int z = 0; z < Voxels[0][0].length; z++) {
 					if(Voxels[x][y][z]>density) {
-						Voxels[x][y][z]=(byte) (Math.random()*4+1);
+						Voxels[x][y][z]=(byte) (Math.random()*5+1);
 					}else {
 						Voxels[x][y][z]=0;
 					}
@@ -422,6 +423,65 @@ public class VoxEn {
 		//Voxels= tmp;
 
 		System.out.println("Done With Cloud");
+		
+		
+		
+		
+		
+	}
+public void resetHills(float weight, int count){
+		
+		
+		byte[][] tmp = new byte[Voxels.length][Voxels[0].length];
+		byte[][] tmp2 = new byte[tmp.length][tmp[0].length];
+		for(int x = 0; x < tmp.length; x++) {
+			for(int y = 0; y < tmp[0].length; y++) {
+					tmp[x][y]=(byte) (Math.random()*256-128);
+			}
+			//System.out.println("Done with plane "+x);
+		}
+		for(int i = 0; i< count; i++) {
+		for(int x = 1; x < tmp.length-1; x++) {
+			for(int y = 1; y < tmp[0].length-1; y++) {
+					int sum = 0;
+					sum+=tmp[x+1][y];
+					sum+=tmp[x-1][y];
+					sum+=tmp[x][y+1];
+					sum+=tmp[x][y-1];
+					tmp2[x][y]=(byte) (tmp[x][y]*(1-(weight*6/7))+(sum*weight/7));
+			}
+			//System.out.println("Done avging plane "+x);
+		}
+		for(int x = 1; x < tmp.length-1; x++) {
+			for(int y = 1; y < tmp[0].length-1; y++) {
+					tmp[x][y]=tmp2[x][y];
+			}
+		}
+		}
+		for(int x = 0; x < Voxels.length; x++) {
+			for(int y = 0; y < Voxels[0].length; y++) {
+				int height = tmp[x][y];
+				if(height >= Voxels[0][0].length)
+					height= Voxels[0][0].length-1;
+				if(height <0)
+					height=0;
+				for(int z = 0; z < Voxels[0][0].length; z++) {
+					if(z<height/2+Voxels[0][0].length/2) {
+						Voxels[x][y][z]=(byte) (3);
+					}else if(z-5<height/2+Voxels[0][0].length/2){
+						Voxels[x][y][z]=(byte) (1);
+					} else if(z-6<height/2+Voxels[0][0].length/2){
+						Voxels[x][y][z]=(byte) (2);
+					}else{
+						Voxels[x][y][z]=0;
+					}
+				}
+			}
+			//System.out.println("Done with plane "+x);
+		}
+		//Voxels= tmp;
+
+		System.out.println("Done With Hills");
 		
 		
 		

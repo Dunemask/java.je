@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 
 public class VoxPanel extends JComponent {
 	public VoxEn e3d = null;
-	public int res = 3;
+	public int res = 2;
 	public void paint(Graphics g) {
 		 int width = getSize().width/res;
 		    int height = getSize().height/res;
