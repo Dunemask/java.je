@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import elijah.Story;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;;
 
@@ -133,13 +135,17 @@ public class Tetris extends JFrame {
 			checker++;
 		}
 		if(checker>1) {
-			if(this.NewBlock(false)) {
+			this.NewBlock(false);
+				if(casty==y) {
 				out =1;
-			};
+				}
 			checker =0;
 		}
 		}
-		System.out.println();
+		System.out.println("You got " +score + " points in TETRIS!");
+		
+		elijah.Story.youDead();
+		
 		
 		
 		
@@ -240,7 +246,7 @@ public class Tetris extends JFrame {
 		hit = false;
 		for(int i = 0; i<5; i++) {
 			for(int j = 0; j<5; j++) {
-				if((test[i][j]==0)) {
+				if(!(test[i][j]==0)) {
 					//System.out.print("("+(i-2+nx)+","+(j-2+ny)+")");
 					if((i-2+nx>=0)&&(i-2+nx<size)&&(j-2+ny>=0)&&(j-2+ny<height)) {
 						if(!(block[i-2+nx][j-2+ny]==0)) {
@@ -259,7 +265,7 @@ public class Tetris extends JFrame {
 		}
 		}
 		casty=ny-1;
-		//System.out.println(casty);
+		System.out.println(casty);
 		return hit;
 	}
 	public void Turn(int dgres) {
@@ -302,9 +308,6 @@ public class Tetris extends JFrame {
 				if ((i>=x-2)&&(i<=x+2)&&(j>=y-2)&&(j<=y+2)&&!(selected[i-x+2][j-y+2]==0)){
 					
 					block[i][j]=selected[i-x+2][j-y+2];
-					if(block[i][j]!=0) {
-						//return true;
-					}
 				}
 			}
 		}
@@ -365,9 +368,7 @@ public class Tetris extends JFrame {
 		}
 		if(key.Output()[32]==1) {
 			bp.Cast();
-			if(bp.NewBlock(true)) {
-				out=1;
-			};
+			bp.NewBlock(true);
 			key.Output()[32]=2;
 		}
 	}
