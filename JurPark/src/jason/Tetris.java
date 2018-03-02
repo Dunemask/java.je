@@ -270,7 +270,7 @@ public class Tetris extends JFrame {
 		}
 		}
 		casty=ny-1;
-		System.out.println(casty);
+		//System.out.println(casty);
 		return hit;
 	}
 	public void Turn(int dgres) {
