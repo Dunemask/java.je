@@ -10,7 +10,7 @@ package dunemask.util;
  */
 public class MathUtil {
 	/***Version*/
-    final static double version = 4.04;
+    final static double version = 4.16;
 	
 	/**Removes the decimal
 	 * @param doub The double you want the decimal removed from

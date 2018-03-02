@@ -17,7 +17,7 @@ import javax.swing.JLabel;
  */
 public class ScaledImageLabel extends JLabel{
 	/***Version*/
-    final static double version = 4.04;
+    final static double version = 4.16;
 	/**
 	 * 
 	 */

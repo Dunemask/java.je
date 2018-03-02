@@ -36,7 +36,7 @@ import javax.swing.WindowConstants;
 public class JarUtil{
 	
 	/***Version*/
-    final static double version = 4.04;
+    final static double version = 4.16;
 	private static JFrame f = new JFrame();
 	private static JPanel p = new JPanel();
 

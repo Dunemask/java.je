@@ -28,7 +28,7 @@ public class GitHub {
 	public static String repPath;
 	public static String lastAddedFilePath;
 	/**Version*/
-    final static double version = 4.1;
+    final static double version = 4.16;
     
     /** Open GithubStation
      **/

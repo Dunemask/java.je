@@ -24,8 +24,8 @@ public class Story {
 
 	public static void start() {
 		//Display info
-		ReadStory.intro();
-
+		//ReadStory.intro();
+		JasonReadStory.findAnotherWay();
 		
 	}
 	

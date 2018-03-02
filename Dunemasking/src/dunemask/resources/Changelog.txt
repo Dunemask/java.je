@@ -1,26 +1,26 @@
-Dunemasking Ver: 4.04
-dunemask.dunemasking.Capture.java Version: 4.1
-dunemask.dunemasking.Changelog.java Version: 4.04
-dunemask.dunemasking.GitHub.java Version: 4.1
-dunemask.dunemasking.Setup.java Version: 4.04
-dunemask.dunemasking.Src.java Version: 4.04
-dunemask.dunemasking.StreamGobbler.java Version: 4.1
-dunemask.dunemasking.Version.java Version: 4.04
-dunemask.objects.Expression.java Version: 4.04
+Dunemasking Ver: 4.16
+dunemask.dunemasking.Capture.java Version: 4.16
+dunemask.dunemasking.Changelog.java Version: 4.16
+dunemask.dunemasking.GitHub.java Version: 4.16
+dunemask.dunemasking.Setup.java Version: 4.16
+dunemask.dunemasking.Src.java Version: 4.16
+dunemask.dunemasking.StreamGobbler.java Version: 4.16
+dunemask.dunemasking.Version.java Version: 4.16
+dunemask.objects.Expression.java Version: 4.16
 dunemask.objects.movieplayer.MovieLauncher.java Version: 7.0
 dunemask.objects.movieplayer.MoviePlayer.java Version: 4.0
-dunemask.objects.MusicPlayer.java Version: 4.1
-dunemask.objects.ScaledImageLabel.java Version: 4.04
-dunemask.objects.StretchIcon.java Version: 4.04
-dunemask.other.StringBasedEncryption.java Version: 4.04
-dunemask.util.AudioUtil.java Version: 4.04
-dunemask.util.FileUtil.java Version: 4.04
-dunemask.util.JarUtil.java Version: 4.04
-dunemask.util.MathUtil.java Version: 4.04
-dunemask.util.MediaUtil.java Version: 4.04
-dunemask.util.ObjectUtil.java Version: 4.04
-dunemask.util.RW.java Version: 4.04
-dunemask.util.StringUtil.java Version: 4.04
+dunemask.objects.MusicPlayer.java Version: 4.16
+dunemask.objects.ScaledImageLabel.java Version: 4.16
+dunemask.objects.StretchIcon.java Version: 4.16
+dunemask.other.StringBasedEncryption.java Version: 4.16
+dunemask.util.AudioUtil.java Version: 4.16
+dunemask.util.FileUtil.java Version: 4.16
+dunemask.util.JarUtil.java Version: 4.16
+dunemask.util.MathUtil.java Version: 4.16
+dunemask.util.MediaUtil.java Version: 4.16
+dunemask.util.ObjectUtil.java Version: 4.16
+dunemask.util.RW.java Version: 4.16
+dunemask.util.StringUtil.java Version: 4.16
 Additionally:
 @All: Package-Info Are Complete
 
@@ -35,5 +35,4 @@ Additionally:
 @Changelog.java: Tests javadoc version (Only works in ide) and labels with package
 				 Styling	
 
-Created at: 2018-02-28 08:57
-(Class-Update)
+Created at: 2018-03-02 07:58

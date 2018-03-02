@@ -24,7 +24,7 @@ import javafx.util.Duration;
  */
 public class MediaUtil{
 	/***Version*/
-    final static double version = 4.04;
+    final static double version = 4.16;
 	static  MediaPlayer mediaPlayer;
 	/**Play a song Once
 	 * @param song The Song File

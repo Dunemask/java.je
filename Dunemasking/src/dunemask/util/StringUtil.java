@@ -12,7 +12,7 @@ import java.util.Random;
  * */
 public class StringUtil {
 
-    final static double version = 4.04;
+    final static double version = 4.16;
 	/**
 	 * The Alphabet To Be Searched for Random Char Gen.
 	 */

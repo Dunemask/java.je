@@ -4,6 +4,7 @@
 package elijah;
 
 import dunemask.util.FileUtil;
+import jason.Tetris;
 
 /**
  * @author Karib
@@ -102,7 +103,9 @@ public class JasonReadStory {
 	 * 
 	 */
 	private static void arcadeMachine() {
-		//TODO
+		System.out.println("Tetris suddenly Lights up!");
+		System.out.println("Get Higher than 9000 points to win!");
+		Tetris t = new Tetris();
 		
 	}
 
@@ -235,5 +238,31 @@ public class JasonReadStory {
 		
 		
 	}
-
+	
+	
+	/** Final Ending if you beat Tetris
+	 * 
+	 * */
+	public static void finalEnding() {
+		Story.score+=9000;
+		
+		System.out.println("The tetris game suddenlyl Lights up and cookies start raining from the sky.");
+		System.out.println("The dinosaurs all bow before you and a Shield hovercraft arrives and offers you a ride home");
+		switch(Story.getChoice(new String[] {"Stay With Dino"," Go With Shield"})) {
+		
+		case 1: 
+			System.out.println("You Become King of the Dinosaurs and live for 4eva");
+			Story.score+=10;
+			break;
+		case 2:
+			System.out.println("You return home, you are safe");
+			Story.score+=9;
+			break;
+		
+		}
+		
+		System.out.println("Congratiulations "+ Story.name + " you win");
+		System.out.println("Your Score was "+ Story.score);
+		System.exit(0);
+	}
 }

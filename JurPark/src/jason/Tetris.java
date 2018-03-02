@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import elijah.JasonReadStory;
 import elijah.Story;
 
 import java.awt.event.ActionEvent;
@@ -141,6 +142,10 @@ public class Tetris extends JFrame {
 				}
 			checker =0;
 		}
+		}
+		
+		if(score>=9000) {
+			JasonReadStory.finalEnding();
 		}
 		System.out.println("You got " +score + " points in TETRIS!");
 		

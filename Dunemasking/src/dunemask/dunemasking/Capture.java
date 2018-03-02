@@ -47,7 +47,7 @@ import dunemask.util.RW;
  */
 public class Capture {
 	/**Version*/
-    final static double version = 4.1;
+    final static double version = 4.16;
 	public static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	public static ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 	public final static PrintStream sysDefaultOut = System.out;
