@@ -172,12 +172,7 @@ public class JasonReadStory {
 		System.out.println("You travel for only about 7 steps, and suddenly \r\n" + 
 				"you come across a meadow next to a large pond.\r\n" + 
 				"There is a faint glow emanating out of the pond.\r\n" + 
-				"\r\n" + 
-				"if (You go into the meadow){\r\n" + 
-				"You prance into the meadow, and find a large\r\n" + 
-				"footprint of a T-Rex. You notice that the large rock\r\n" + 
-				"right in front of you is not a rock at all. It is a \r\n" + 
-				"Muderdering Marchine.");
+				"\r\n ");
 		int c = Story.getChoice(new String[] {"Swim Into Pond","Go Through Medow"});
 		switch(c) {
 		case 1: swimIntoPond(); break;
