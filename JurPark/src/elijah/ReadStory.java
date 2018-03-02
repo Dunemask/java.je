@@ -73,24 +73,34 @@ public class ReadStory {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		lines= RW.read(file, 4, FileUtil.linesInFile(file));
+		startStory();
+		
+		
+	}
+	
+	/** Starts Actual Stuffs
+	 * 
+	 */
+	public static void startStory() {
+		File file = FileUtil.getResource("resources/story/elijah/intro.txt");
+		String[] lines = RW.read(file, 4, FileUtil.linesInFile(file));
 		printLines(lines);
 		lines = new String[] {"Stay On Beach","Go To Da Jungle"};
 		int choice = Story.getChoice(lines);
-		//TODO Jason Start
+
 		switch(choice){
+		//Elijah Chain
 		case 1: stayOnBeach();
 		break;
 		
-		case 2: // TODO goToJungle();
+		case 2: 
+			//Jason Chain *correct Path*
 			JasonReadStory.wallOfTrees();
 		break;
 			
 		}
 		
-		
 	}
-	
 	/**Story Stay On Beach**/
 	public static void stayOnBeach() {
 		Story.score+=10;
