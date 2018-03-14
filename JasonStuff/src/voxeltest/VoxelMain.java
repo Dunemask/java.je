@@ -16,7 +16,7 @@ import Graphicstest.KeyList;
 import Graphicstest.Vector3;
 
 public class VoxelMain {
-	public static VoxEn en3d = new VoxEn(new Vector3(10,10,28));
+	public static VoxEn en3d = new VoxEn(new Vector3(10,10,50));
 	public static boolean mousedown;
 	public static boolean rmousedown;
 	public static void main(String[] args) {
@@ -118,8 +118,9 @@ public class VoxelMain {
 	    	frame.repaint();
 	    	if (time%3==0) {
 	    		//System.out.println("X:"+(int)en3d.campos.x+" Y:"+(int)en3d.campos.y+" Z:"+(int)en3d.campos.z);
-	    		//en3d.campos.print();
+	    		en3d.campos.print();
 	    		//System.out.println(mousedown);
+	    		
 	    	}
 	    	if (mousedown) {
 	    		en3d.setBlock(0);
