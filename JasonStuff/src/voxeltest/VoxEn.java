@@ -5,6 +5,10 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Robot;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import Graphicstest.ImageReader;
 import Graphicstest.Vector3;
@@ -15,10 +19,11 @@ public class VoxEn {
 	int my = 0;
 	float rx = 0;
 	float ry = 0;
-	float fovc = 0.01f;
+	float fovc = 0.02f;
 	int viewdist=3000;
 	int density = 0;
 	int siz = 1;
+	HashMap<Float,Vector3> hmm = new HashMap<Float,Vector3>();
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
 	ImageReader[] imgas = new ImageReader[7];
@@ -29,7 +34,8 @@ public class VoxEn {
 				{3,3,3,3,3,3},
 				{4,4,4,4,4,4},
 				{6,6,5,5,5,5}};
-	VoxChunk[][][] Chnks = new VoxChunk[2][2][2];
+	VoxChunk[][][] Chnks = new VoxChunk[3][3][3];
+	byte[][][] airs = new byte[Chnks.length][Chnks[0].length][Chnks[0][0].length];
 	byte[][][] Voxels = new byte[10][10][30];
 	public VoxEn(Vector3 vcam) {
 		campos=vcam;
@@ -41,15 +47,42 @@ public class VoxEn {
 			imgas[i] = new ImageReader("src/voxeltest/img"+i+".png");
 		}
 	}
+	////UPDATES THE AIRS ARRAY FOR THE STUFFS
+	public void UpdateAirs() {
+		for(int x = 0; x < airs.length; x++) {
+			for(int y = 0; y < airs[0].length; y++) {
+				for(int z = 0; z < airs[0][0].length; z++) {
+					if(Chnks[x][y][z].isair) {
+					airs[x][y][z]=1;
+					}else{
+						airs[x][y][z]=0;
+					}
+				}
+			}
+		}
+	}
 	public int GetPix(int x, int y) {
 		int blue = 0;
 		int green=0;
 		int red = 0;
 		int pix = 0;
 		int val2=0;
-		int xx=0;
-		int yy=0;
-		int zz=1;
+		int xx=(int)campos.x/16;
+		int yy=(int)campos.y/16;
+		int zz=(int)campos.z/16;
+		if(xx>airs.length-1)
+			xx=airs.length-1;
+		if(xx<0)
+			xx=0;
+		if(yy>airs[0].length-1)
+			yy=airs[0].length-1;
+		if(yy<0)
+			yy=0;
+		if(zz>airs[0][0].length-1)
+			zz=airs[0][0].length-1;
+		if(zz<0)
+			zz=0;
+		int b2 = 0;
 		byte bright=127;
 		String side= "none";
 		float mag = viewdist;
@@ -58,15 +91,37 @@ public class VoxEn {
 		float[] findub = new float[7];
 		
 		
-		
 		Voxels = null;
 		Voxels = Chnks[xx][yy][zz].StorChunk;
-		String[] str = GetSquare(Voxels,Vector3.add(ve, (new Vector3(xx*-16,yy*-16,zz*-16))),Vector3.add(campos, (new Vector3(xx*-16,yy*-16,zz*-16))));
+		String[] str = GetSquare(Voxels,Vector3.add(ve, (new Vector3(xx*-16,yy*-16,zz*-16))),Vector3.add(campos, (new Vector3(xx*-16,yy*-16,zz*-16))),false);
 		findub[0] = Float.parseFloat(str[0]);
 		findub[1] = Float.parseFloat(str[1]);
 		findub[2] = Float.parseFloat(str[2]);
 		val2= Integer.parseInt(str[4]);
 		side = str[3];
+		if(side=="none") {
+			red=255;
+			String[] str2 = GetSquare(airs, Vector3.scalmultiply(ve, (float)(1.0/16)),Vector3.scalmultiply(campos, (float)(1.0/16)),true);
+		for(Entry<Float, Vector3> flt :hmm.entrySet()) {
+			b2-=50;
+			xx=(int) flt.getValue().x;
+			yy=(int) flt.getValue().y;
+			zz=(int) flt.getValue().z;
+			blue=(int)flt.getValue().x*50;
+			green=(int)flt.getValue().y*50;
+			red=(int)flt.getValue().z*50;
+			//System.out.print((flt.getValue().z+" + "+(flt.getKey())+""));
+		}
+		}
+		//System.out.println("");
+		/*Voxels = null;
+		Voxels = Chnks[xx][yy][zz].StorChunk;
+		String[] str3 = GetSquare(Voxels,Vector3.add(ve, (new Vector3(xx*-16,yy*-16,zz*-16))),Vector3.add(campos, (new Vector3(xx*-16,yy*-16,zz*-16))),false);
+		findub[0] = Float.parseFloat(str[0]);
+		findub[1] = Float.parseFloat(str[1]);
+		findub[2] = Float.parseFloat(str[2]);
+		val2= Integer.parseInt(str[4]);
+		side = str[3];*/
 		if(x==0&&y==0) {
 			sel.x=(int)findub[0]+16*xx;
 			sel.y=(int)findub[1]+16*yy;
@@ -123,6 +178,7 @@ public class VoxEn {
 		if (pix==0) {
 			pix = (red << 16) | (green << 8) | blue;
 		}
+		bright +=b2;
 		red = (pix >> 16) & 0xFF;
 		green = (pix >> 8) & 0xFF;
 		blue = pix & 0xFF;
@@ -132,7 +188,8 @@ public class VoxEn {
 		pix = (red << 16) | (green << 8) | blue;
 		return pix;
 	}
-	public String[] GetSquare(byte[][][] Box, Vector3 ve,Vector3 campos) {
+	public String[] GetSquare(byte[][][] Box, Vector3 ve,Vector3 campos,boolean sethm) {
+		HashMap<Float,Vector3> ht = new HashMap<Float,Vector3>();
 		byte[][][] Voxels = Box;
 		int zlen = Voxels[0][0].length;
 		int ylen = Voxels[0].length;
@@ -160,8 +217,14 @@ public class VoxEn {
 					findub = doi;
 					findub[2]=z;
 					side = "z1";
-					z=zlen;
 					val2=val;
+					if(sethm) {
+						Vector3 v4=new Vector3((int)findub[0],(int)findub[1],(int)findub[2]);
+						if(!ht.containsValue(v4))
+						ht.put(mag, v4);
+					}else {
+						z=zlen;
+					}
 				}
 				}
 			}
@@ -187,8 +250,14 @@ public class VoxEn {
 						findub = doi;
 						findub[2]=z;
 						side = "z2";
-						z=-1;
 						val2=val;
+						if(sethm) {
+							Vector3 v4=new Vector3((int)findub[0],(int)findub[1],(int)findub[2]);
+							if(!ht.containsValue(v4))
+							ht.put(mag, v4);
+						}else {
+							z=-1;
+						}
 					}
 					
 					}
@@ -214,8 +283,14 @@ public class VoxEn {
 						findub = doi;
 						findub[1]=yy;
 						side = "y1";
-						yy=ylen;
 						val2=val;
+						if(sethm) {
+							Vector3 v4=new Vector3((int)findub[0],(int)findub[1],(int)findub[2]);
+							if(!ht.containsValue(v4))
+							ht.put(mag, v4);
+						}else {
+							yy=ylen;
+						}
 					}
 					}
 				}
@@ -239,8 +314,14 @@ public class VoxEn {
 						findub = doi;
 						findub[1]=yy;
 						side = "y2";
-						yy=-1;
 						val2=val;
+						if(sethm) {
+							Vector3 v4=new Vector3((int)findub[0],(int)findub[1],(int)findub[2]);
+							if(!ht.containsValue(v4))
+							ht.put(mag, v4);
+						}else {
+							yy=-1;
+						}
 					}
 					}
 				}
@@ -264,8 +345,14 @@ public class VoxEn {
 						findub = doi;
 						findub[0]=xx;
 						side = "x1";
-						xx=xlen;
 						val2=val;
+						if(sethm) {
+							Vector3 v4=new Vector3((int)findub[0],(int)findub[1],(int)findub[2]);
+							if(!ht.containsValue(v4))
+							ht.put(mag, v4);
+						}else {
+							xx=xlen;
+						}
 					}
 					}
 				}
@@ -289,14 +376,23 @@ public class VoxEn {
 						findub = doi;
 						findub[0]=xx;
 						side = "x2";
-						xx=-1;
 						val2=val;
+						if(sethm) {
+							Vector3 v4=new Vector3((int)findub[0],(int)findub[1],(int)findub[2]);
+							if(!ht.containsValue(v4))
+							ht.put(mag, v4);
+						}else {
+							xx=-1;
+						}
 					}
 					}
 				}
 			}
 			}
 		String[] bob = {""+findub[0],""+findub[1],""+findub[2],side,""+val2,""+mag}; 
+		if(sethm) {
+			hmm=ht;
+		}
 		return bob;
 	}
 	
@@ -441,6 +537,7 @@ public class VoxEn {
 								}
 							}
 						}
+						Chnks[x][y][z].Setisair(true);
 				}
 			}
 		}
