@@ -23,7 +23,7 @@ public class ReadStory {
 		for(String s: lines) {
 			System.out.println(s);
 			try {
-				Thread.sleep(waitTime);
+				Thread.sleep(waitTime/2);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -13,7 +13,7 @@ public class VoxPanel extends JComponent {
 		    int height = getSize().height/res;
 		    int[] data = new int[width * height];
 		    int i = 0;
-		    e3d.UpdateAirs();
+		    //e3d.UpdateAirs();
 		    for (int y = 0; y < height; y++) {
 		      //int red = (y * 255) / (height - 1);
 		      for (int x = 0; x < width; x++) {

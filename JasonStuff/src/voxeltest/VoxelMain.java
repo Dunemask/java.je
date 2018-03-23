@@ -16,7 +16,7 @@ import Graphicstest.KeyList;
 import Graphicstest.Vector3;
 
 public class VoxelMain {
-	public static VoxEn en3d = new VoxEn(new Vector3(10,10,50));
+	public static VoxEn en3d = new VoxEn(new Vector3(10,10,90));
 	public static boolean mousedown;
 	public static boolean rmousedown;
 	public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class VoxelMain {
 		VoxPanel p = new VoxPanel();
 		p.SetE3d(en3d);
 		frame.getContentPane().add(p);
-	    frame.setSize(400, 400);
+	    frame.setSize(500, 500);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setVisible(true);
 	    KeyList key = new KeyList();
@@ -57,6 +57,9 @@ public class VoxelMain {
 	    });
 	    int time = 0;
 	    int escape = 0;
+	    Vector3 v = new Vector3(0,0,0);
+	    boolean up = false;
+	    int mode = 1;
 	    while(true) {
 	    try {
 			Thread.sleep(100);
@@ -75,58 +78,105 @@ public class VoxelMain {
 				e.printStackTrace();
 			}
 	    	
-	    	en3d.RotateCam(0.000f, 0.000f);
-	    	
 	    	if(key.Output()[39]==1) {
 	    		en3d.RotateCam(0.05f, 0);
+	    		up=true;
 	    	}
 	    	
 	    	if(key.Output()[38]==1) {
 	    		en3d.RotateCam(0, 0.05f);
-
+	    		up=true;
 	    	}
 	    	if(key.Output()[37]==1) {
 	    		en3d.RotateCam(-0.05f, 0);
-
+	    		up=true;
 	    	}
 	    	if(key.Output()[40]==1) {
 	    		en3d.RotateCam(0, -0.05f);
-
+	    		up=true;
 	    	}
+	    	//CREATIVE MODE
+	    	if (mode ==0) {
 	    	if(key.Output()[87]==1) {
-	    		en3d.MoveCam(Vector3.foreward(0.1f).rotate(en3d.rx, "z"));
+	    		en3d.MoveCam(Vector3.foreward(0.2f).rotate(en3d.rx, "z"));
+	    		up=true;
 	    	}
 	    	if(key.Output()[83]==1) {
-	    		en3d.MoveCam(Vector3.backward(0.1f).rotate(en3d.rx, "z"));
+	    		en3d.MoveCam(Vector3.backward(0.2f).rotate(en3d.rx, "z"));
+	    		up=true;
 	    	}
 	    	if(key.Output()[68]==1) {
-	    		en3d.MoveCam(Vector3.rightward(0.1f).rotate(en3d.rx, "z"));
+	    		en3d.MoveCam(Vector3.rightward(0.2f).rotate(en3d.rx, "z"));
+	    		up=true;
 	    	}
 	    	if(key.Output()[65]==1) {
-	    		en3d.MoveCam(Vector3.leftward(0.1f).rotate(en3d.rx, "z"));
+	    		en3d.MoveCam(Vector3.leftward(0.2f).rotate(en3d.rx, "z"));
+	    		up=true;
 	    	}
 	    	if(key.Output()[32]==1) {
-	    		en3d.MoveCam(Vector3.upward(0.1f));
+	    		en3d.MoveCam(Vector3.upward(0.2f));
+	    		up=true;
 	    	}
 	    	if(key.Output()[16]==1) {
-	    		en3d.MoveCam(Vector3.downward(0.1f));
+	    		en3d.MoveCam(Vector3.downward(0.2f));
+	    		up=true;
 	    	}
+	    	}
+	    	//SURVIVAL MODE
+	    	if (mode ==1) {
+	    		if(key.Output()[87]==1) {
+	    			v = Vector3.add(v,Vector3.foreward(0.1f).rotate(en3d.rx, "z"));
+	    		}
+	    		if(key.Output()[83]==1) {
+		    		v = Vector3.add(v,Vector3.backward(0.1f).rotate(en3d.rx, "z"));
+		    	}
+	    		if(key.Output()[68]==1) {
+		    		v = Vector3.add(v,Vector3.rightward(0.1f).rotate(en3d.rx, "z"));
+		    	}
+	    		if(key.Output()[65]==1) {
+		    		v = Vector3.add(v,Vector3.leftward(0.1f).rotate(en3d.rx, "z"));
+		    	}
+	    		v.y = v.y*0.7f;
+	    		v.x = v.x*0.7f;
+	    		v.z -= 0.025f;
+		    		en3d.MoveCam(new Vector3(0,v.y,0));
+		    		en3d.MoveCam(new Vector3(v.x,0,0));
+		    		if(v.z<0) {
+		    			if(!en3d.MoveCam(new Vector3(0,0,v.z))) {
+		    				if(key.Output()[32]==1) {
+		    		    		v.z =0.5f;
+		    				}else{
+		    		    		v.z=0;
+		    				}}else{
+		    				//v.z -= 0.1f;
+		    			}
+		    		}else {
+		    			en3d.MoveCam(new Vector3(0,0,v.z));
+		    		}
+		    	if(key.Output()[16]==1) {
+		    		en3d.MoveCam(Vector3.downward(0.2f));
+		    		up=true;
+		    	}
+		    	}
 	    	//Escape
 	    	if(key.Output()[27]==1) {
 	    		escape=1;
 	    	}
+	    	//if(up) {
 	    	frame.repaint();
+	    	up=false;
+	    	//}
 	    	if (time%3==0) {
 	    		//System.out.println("X:"+(int)en3d.campos.x+" Y:"+(int)en3d.campos.y+" Z:"+(int)en3d.campos.z);
-	    		en3d.campos.print();
+	    		//en3d.campos.print();
+	    		//v.print();
 	    		//System.out.println(mousedown);
-	    		
 	    	}
 	    	if (mousedown) {
 	    		en3d.setBlock(0);
 	    	}
 	    	if (rmousedown) {
-	    		en3d.setBlockOut(1);
+	    		en3d.setBlockOut(5);
 	    	}
 	    }
 	    frame.getContentPane().setCursor(normCursor);

@@ -132,4 +132,7 @@ public class Vector3 {
 	public void print() {
 		System.out.println("X:"+(int)x+" Y:"+(int)y+" Z:"+(int)z);
 	}
+	public void printf() {
+		System.out.println("X:"+(int)(x*100)+" Y:"+(int)(y*100)+" Z:"+(int)(z*100));
+	}
 }
