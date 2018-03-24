@@ -3,6 +3,8 @@ package voxeltest;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -11,6 +13,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 import Graphicstest.KeyList;
 import Graphicstest.Vector3;
@@ -57,9 +60,18 @@ public class VoxelMain {
 	    });
 	    int time = 0;
 	    int escape = 0;
+	    int buildref =0;
 	    Vector3 v = new Vector3(0,0,0);
 	    boolean up = false;
 	    int mode = 1;
+	    Timer t = new Timer(30, new ActionListener() {
+	        public void actionPerformed(ActionEvent evt) {
+	        	frame.repaint();
+	            }    
+	        });
+	    t.start();
+	    
+	    
 	    while(true) {
 	    try {
 			Thread.sleep(100);
@@ -67,6 +79,7 @@ public class VoxelMain {
 			e1.printStackTrace();
 		}
 	    frame.getContentPane().setCursor(blankCursor);
+	    
 	    en3d.SetMouse(frame.getLocation().x+(int)frame.getSize().getWidth()/2, frame.getLocation().y+(int)frame.getSize().getHeight()/2);
 	    while(escape==0) {
 	    	time++;
@@ -77,7 +90,7 @@ public class VoxelMain {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    	
+	    	en3d.timer+=1;
 	    	if(key.Output()[39]==1) {
 	    		en3d.RotateCam(0.05f, 0);
 	    		up=true;
@@ -144,7 +157,7 @@ public class VoxelMain {
 		    		if(v.z<0) {
 		    			if(!en3d.MoveCam(new Vector3(0,0,v.z))) {
 		    				if(key.Output()[32]==1) {
-		    		    		v.z =0.5f;
+		    		    		v.z =0.24f;
 		    				}else{
 		    		    		v.z=0;
 		    				}}else{
@@ -163,7 +176,7 @@ public class VoxelMain {
 	    		escape=1;
 	    	}
 	    	//if(up) {
-	    	frame.repaint();
+	    	//frame.repaint();
 	    	up=false;
 	    	//}
 	    	if (time%3==0) {
@@ -172,12 +185,16 @@ public class VoxelMain {
 	    		//v.print();
 	    		//System.out.println(mousedown);
 	    	}
-	    	if (mousedown) {
+	    	if (mousedown&&buildref==0) {
 	    		en3d.setBlock(0);
+	    		buildref=5;
 	    	}
-	    	if (rmousedown) {
-	    		en3d.setBlockOut(5);
+	    	if (rmousedown&&buildref==0) {
+	    		en3d.setBlockOut(8);
+	    		buildref=5;
 	    	}
+	    	if(buildref>0)
+	    	buildref-=1;
 	    }
 	    frame.getContentPane().setCursor(normCursor);
 	    while(key.Output()[27]==1) {

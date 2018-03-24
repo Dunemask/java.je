@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImageReader {
-	public int[][] imagedat;
+	public int[][][] imagedat;
 	public int GetPixel(float x, float y, String image){
 		BufferedImage img=null;
 		File f = null;
@@ -33,10 +33,10 @@ public class ImageReader {
 		}
 		int width= img.getWidth();
 		int height = img.getHeight();
-		imagedat = new int[width][height];
+		imagedat = new int[height/width][width][width];
 		for(int x=0;x<width;x++) {
-			for(int y=0;y<width;y++) {
-				imagedat[x][y]=img.getRGB(x,y);
+			for(int y=0;y<height;y++) {
+				imagedat[y/width][x][y%width]=img.getRGB(x,y);
 			}
 		}
 	}

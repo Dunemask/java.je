@@ -19,28 +19,36 @@ public class VoxEn {
 	int my = 0;
 	float rx = 0;
 	float ry = 0;
-	float fovc = 0.01f;
+	float fovc = 0.015f;
 	int viewdist=3000;
 	int density = 0;
 	int siz = 1;
+	int timer=0;
+	VoxGenerate vg = new VoxGenerate(this);
 	HashMap<Float,Vector3> hmm = new HashMap<Float,Vector3>();
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
-	ImageReader[] imgas = new ImageReader[8];
+	ImageReader[] imgas = new ImageReader[11];
 	ImageReader selecc = new ImageReader("src/voxeltest/select.png");
 	byte[][] blkrndr = {
-				{0,0,0,0,0,0},
-				{0,2,1,1,1,1},
-				{3,3,3,3,3,3},
-				{4,4,4,4,4,4},
-				{6,6,5,5,5,5}};
+				{0,0,0,0,0,0,0},
+				{0,2,1,1,1,1,0},
+				{3,3,3,3,3,3,0},
+				{4,4,4,4,4,4,0},
+				{6,6,5,5,5,5,0},
+				{8,8,8,8,8,8,0},
+				{9,9,9,9,9,9,5},
+				{10,10,10,10,10,10,3}};
 	//VoxChunk[][][] Chnks = new VoxChunk[3][3][3];
 	//byte[][][] airs = new byte[Chnks.length][Chnks[0].length][Chnks[0][0].length];
-	byte[][][] Voxels = new byte[100][100][128];
+	byte[][][] Voxels = new byte[100][100][100];
+	byte[][][] SunLight = new byte[Voxels.length][Voxels[0].length][Voxels[0][0].length];
 	public VoxEn(Vector3 vcam) {
 		campos=vcam;
-		resetCloud(1,4);
-		resetHills(1,5);
+		//resetCloud(1,4);
+		resetHills(1,6);
+		vg.SpreadTree(0.05f, 50, 50, 25);
+		vg.MakePond(20, 20);
 		//resetChunks(1,4);
 		//getimages
 		//resetHills(1, 4);
@@ -66,6 +74,8 @@ public class VoxEn {
 		int blue = 0;
 		int green=0;
 		int red = 0;
+		int tint=0;
+		float tintamount=0;
 		int pix = 0;
 		int val2=0;
 		/*int xx=(int)campos.x/16;
@@ -95,16 +105,37 @@ public class VoxEn {
 		//Voxels = null;
 		//Voxels = Chnks[xx][yy][zz].StorChunk;
 		//String[] str = GetSquare(Voxels,Vector3.add(ve, (new Vector3(xx*-16,yy*-16,zz*-16))),Vector3.add(campos, (new Vector3(xx*-16,yy*-16,zz*-16))),false);
-		String[] str = GetSquare(Voxels,ve,campos,false);
+		String[] str = GetSquare(Voxels,ve,campos,false,0);
 		findub[0] = Float.parseFloat(str[0]);
 		findub[1] = Float.parseFloat(str[1]);
 		findub[2] = Float.parseFloat(str[2]);
 		val2= Integer.parseInt(str[4]);
 		side = str[3];
+		//WATER RENDERRRRRRRRRRR
+		if(val2==7) {
+			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0.3f) ),false,0);
+			findub[0] = Float.parseFloat(str[0]);
+			findub[1] = Float.parseFloat(str[1]);
+			findub[2] = Float.parseFloat(str[2]);
+			val2= Integer.parseInt(str[4]);
+			side = str[3];
+			if(val2==7) {
+			int[] kil = GetColo(side,bright,findub,val2);
+			tint=kil[0];}
+			str = GetSquare(Voxels,ve,campos,false,7);
+			findub[0] = Float.parseFloat(str[0]);
+			findub[1] = Float.parseFloat(str[1]);
+			findub[2] = Float.parseFloat(str[2]);
+			val2= Integer.parseInt(str[4]);
+			side = str[3];
+			tintamount=1-0.5f/(1+0.1f*Float.parseFloat(str[5]));
+		}
 		if(side=="none") {
-			red=255;
+			blue=255;
+			red=125;
+			green=170;
 			//String[] str2 = GetSquare(airs, Vector3.scalmultiply(ve, (float)(1.0/16)),Vector3.scalmultiply(campos, (float)(1.0/16)),true);
-		for(Entry<Float, Vector3> flt :hmm.entrySet()) {
+		//for(Entry<Float, Vector3> flt :hmm.entrySet()) {
 			//b2-=50;
 			/*xx=(int) flt.getValue().x;
 			yy=(int) flt.getValue().y;
@@ -113,7 +144,7 @@ public class VoxEn {
 			//green=(int)flt.getValue().y*50;
 			//red=(int)flt.getValue().z*50;
 			//System.out.print((flt.getValue().z+" + "+(flt.getKey())+"   "));
-		}
+		//}
 		}
 		//System.out.println("" +xx +" " + yy+ " " + zz +" s");
 		/*Voxels = null;
@@ -133,40 +164,14 @@ public class VoxEn {
 			sel.z=(int)findub[2];
 			seld=side;
 		}
-		if(side=="x1") {
-			bright=87;
-			int[][] tdata = imgas[blkrndr[val2-1][4]].imagedat;
-			pix = tdata[(int)Math.ceil(tdata.length*(1-findub[1]%1))-1][(int)Math.ceil(tdata[0].length*(1-findub[2]%1))-1];
-		}
-		if(side=="x2") {
-			bright=87;
-			int[][] tdata = imgas[blkrndr[val2-1][5]].imagedat;
-			pix = tdata[(int)(tdata.length*(findub[1]%1))][(int)Math.ceil(tdata[0].length*(1-findub[2]%1))-1];
-		}
-		if(side=="y1") {
-			bright=107;
-			int[][] tdata = imgas[blkrndr[val2-1][2]].imagedat;
-			pix = tdata[(int)(tdata.length*(findub[0]%1))][(int)Math.ceil(tdata[0].length*(1-findub[2]%1))-1];
-		}
-		if(side=="y2") {
-			bright=107;
-			int[][] tdata = imgas[blkrndr[val2-1][3]].imagedat;
-			pix = tdata[(int)(tdata.length*(findub[0]%1))][(int)Math.ceil(tdata[0].length*(1-findub[2]%1))-1];
-		}
-		if(side=="z1") {
-			bright=127;
-			int[][] tdata = imgas[blkrndr[val2-1][0]].imagedat;
-			pix = tdata[(int)(tdata.length*(findub[0]%1))][(int)(tdata[0].length*(findub[1]%1))];
-		}
-		if(side=="z2") {
-			bright=127;
-			int[][] tdata = imgas[blkrndr[val2-1][1]].imagedat;
-			pix = tdata[(int)(tdata.length*(findub[0]%1))][(int)(tdata[0].length*(findub[1]%1))];
-		}
+		if(side!="none") {
+		int[] kil = GetColo(side,bright,findub,val2);
+				pix=kil[0];
+				bright =(byte)kil[1];}
 		//if(sel.x==(int)findub[0]+xx*16&&sel.y==(int)findub[1]+yy*16&&sel.z==(int)findub[2]+zz*16) {
 		if(sel.x==(int)findub[0]&&sel.y==(int)findub[1]&&sel.z==(int)findub[2]) {
 			if(seld == side) {
-				int[][] tdata = selecc.imagedat;
+				int[][] tdata = selecc.imagedat[0];
 				int dod=0;
 				if(seld == "x1"||seld == "x2") 
 				dod = tdata[(int)(tdata.length*(findub[1]%1))][(int)(tdata[0].length*(findub[2]%1))];
@@ -191,10 +196,69 @@ public class VoxEn {
 		red = red*(bright+127)/256;
 		green = green*(bright+127)/256;
 		blue = blue*(bright+127)/256;
+		if(tint!=0) {
+			red= (int)(red*(1-tintamount) + ((tint>> 16) & 0xFF)*tintamount);
+			green= (int)(green*(1-tintamount) + ((tint>> 9) & 0xFF)*tintamount);
+			blue= (int)(blue*(1-tintamount) + (tint & 0xFF)*tintamount);
+		}
 		pix = (red << 16) | (green << 8) | blue;
 		return pix;
 	}
-	public String[] GetSquare(byte[][][] Box, Vector3 ve,Vector3 campos,boolean sethm) {
+	public int[] GetColo(String side,byte bright, float[] findub, int val2) {
+		float xxd=0;
+		float yyd=0;
+		int ssd=0;
+		if(side=="x1") {
+			bright=87;
+			ssd=4;
+			xxd=findub[1];
+			yyd=findub[2];
+		}
+		if(side=="x2") {
+			bright=87;
+			ssd=5;
+			xxd=findub[1];
+			yyd=findub[2];
+		}
+		if(side=="y1") {
+			bright=107;
+			ssd=2;
+			xxd=findub[0];
+			yyd=findub[2];
+		}
+		if(side=="y2") {
+			bright=107;
+			ssd=3;
+			xxd=findub[0];
+			yyd=findub[2];
+		}
+		if(side=="z1") {
+			bright=127;
+			ssd=0;
+			xxd=findub[0];
+			yyd=findub[1];
+		}
+		if(side=="z2") {
+			bright=127;
+			ssd=1;
+			xxd=findub[0];
+			yyd=findub[1];
+		}
+		if(side!="none") {
+			int[][] tdata=null;
+			if(blkrndr[val2-1][6]==0) {
+				tdata = imgas[blkrndr[val2-1][ssd]].imagedat[0];
+			}else{
+				tdata = imgas[blkrndr[val2-1][ssd]].imagedat[(timer/blkrndr[val2-1][6])%imgas[blkrndr[val2-1][ssd]].imagedat.length];
+			}
+				int[] kil = new int[2];
+				kil[0]=tdata[(int)(tdata.length*(xxd%1))][(int)Math.ceil(tdata[0].length*(1-yyd%1))-1];
+				kil[1]=bright;
+			return kil;
+		}
+		return null;
+	}
+	public String[] GetSquare(byte[][][] Box, Vector3 ve,Vector3 campos,boolean sethm, int medium) {
 		HashMap<Float,Vector3> ht = new HashMap<Float,Vector3>();
 		byte[][][] Voxels = Box;
 		int zlen = Voxels[0][0].length;
@@ -216,7 +280,7 @@ public class VoxEn {
 		if(0<doi[0]&&doi[0]<xlen&&0<doi[1]&&doi[1]<ylen) {
 			val= Voxels[(int)doi[0]][(int)doi[1]][z];
 			
-			if(val>0) {
+			if(val!=medium&&val!=0) {
 				float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 				if(mag>tmpmag) {
 					findub = doi;
@@ -249,7 +313,7 @@ public class VoxEn {
 			if(0<doi[0]&&doi[0]<xlen&&0<doi[1]&&doi[1]<ylen) {
 				val= Voxels[(int)doi[0]][(int)doi[1]][z];
 				
-				if(val>0) {
+				if(val!=medium&&val!=0) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -282,7 +346,7 @@ public class VoxEn {
 			if(0<doi[0]&&doi[0]<xlen&&0<doi[2]&&doi[2]<zlen) {
 				val= Voxels[(int)doi[0]][yy][(int)doi[2]];
 				
-				if(val>0) {
+				if(val!=medium&&val!=0) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -313,7 +377,7 @@ public class VoxEn {
 			if(0<doi[0]&&doi[0]<xlen&&0<doi[2]&&doi[2]<zlen) {
 				val= Voxels[(int)doi[0]][yy][(int)doi[2]];
 				
-				if(val>0) {
+				if(val!=medium&&val!=0) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -344,7 +408,7 @@ public class VoxEn {
 			if(0<doi[1]&&doi[1]<ylen&&0<doi[2]&&doi[2]<zlen) {
 				val= Voxels[xx][(int)doi[1]][(int)doi[2]];
 				
-				if(val>0) {
+				if(val!=medium&&val!=0) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -375,7 +439,7 @@ public class VoxEn {
 			if(0<doi[1]&&doi[1]<ylen&&0<doi[2]&&doi[2]<zlen) {
 				val= Voxels[xx][(int)doi[1]][(int)doi[2]];
 				
-				if(val>0) {
+				if(val!=medium&&val!=0) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
