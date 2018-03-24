@@ -12,17 +12,77 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import Graphicstest.KeyList;
 import Graphicstest.Vector3;
 
 public class VoxelMain {
-	public static VoxEn en3d = new VoxEn(new Vector3(10,10,90));
+	public static VoxEn en3d;
+	
 	public static boolean mousedown;
 	public static boolean rmousedown;
+	static boolean out = true;
+	static int type= 0;
+	public static String name;
 	public static void main(String[] args) {
+		//en3d = new VoxEn(new Vector3(10,10,90));
+		try {
+		File fs = FileStuff.Choose("src\\voxeltest\\saves");
+		en3d = new VoxEn(new Vector3(10,10,90),fs);
+		name = fs.getName().substring(0, fs.getName().length()-4);
+		System.out.println(name);
+		}catch(NullPointerException e) {
+			System.out.println("What is the thing?");
+			JFrame xd= new JFrame("NAME?");
+			xd.setSize(350, 150);
+			xd.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width)/2, Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			xd.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			xd.setVisible(true);
+			xd.setLayout(null);
+			JTextField tf = new JTextField("Untitled");
+			tf.setBounds(0,0,200,25);
+			JTextField tfx = new JTextField("64");
+			tfx.setBounds(0,25,30,25);
+			JTextField tfy = new JTextField("64");
+			tfy.setBounds(0,50,30,25);
+			JTextField tfz = new JTextField("64");
+			tfz.setBounds(0,75,30,25);
+			JButton jb = new JButton("Normal");
+			jb.setBounds(200,0,100,50);
+			JButton jb2 = new JButton("Flat");
+			jb2.setBounds(200,50,100,50);
+			jb.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					out =false;
+					type=1;
+				}
+			});
+			jb2.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					out =false;
+					type=2;
+				}
+			});
+			xd.add(tf);
+			xd.add(jb);xd.add(jb2);
+			xd.add(tfx);xd.add(tfy);xd.add(tfz);
+			xd.repaint();
+			while(out) {
+				System.out.print("");
+			}
+			name = tf.getText();
+			int x = Integer.parseInt(tfx.getText());
+			int y = Integer.parseInt(tfy.getText());
+			int z = Integer.parseInt(tfz.getText());
+			xd.dispose();
+			en3d = new VoxEn(new Vector3(10,10,90),x,y,z,type);
+		}
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
 			    cursorImg, new Point(0, 0), "blank cursor");
@@ -171,6 +231,32 @@ public class VoxelMain {
 		    		up=true;
 		    	}
 		    	}
+	    	//SAVE
+
+	    	if(key.Output()[77]==1) {
+	    		File f = new File("src\\voxeltest\\saves\\"+name+".sav");
+	    		try {
+					if (f.createNewFile()){
+						System.out.println("File is created!");
+						}else{
+						System.out.println("File already exists.");
+						}
+					int[] d = FileStuff.Array3Dto1D(en3d.Voxels);
+					String s = FileStuff.SaveArray(d);
+					FileStuff.Write(f, 1, ""+en3d.Voxels.length );
+					FileStuff.Write(f, 2, ""+en3d.Voxels[0].length);
+					FileStuff.Write(f, 3, ""+en3d.Voxels[0][0].length);
+					FileStuff.Write(f, 4, ""+en3d.campos.x);
+					FileStuff.Write(f, 5, ""+en3d.campos.y);
+					FileStuff.Write(f, 6, ""+en3d.campos.z);
+					FileStuff.Write(f, 7,s );
+					System.out.println("File "+name+".sav saved succesfully at "+ f.getPath());
+					
+					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+	    	}
 	    	//Escape
 	    	if(key.Output()[27]==1) {
 	    		escape=1;
@@ -187,17 +273,18 @@ public class VoxelMain {
 	    	}
 	    	if (mousedown&&buildref==0) {
 	    		en3d.setBlock(0);
-	    		buildref=5;
+	    		buildref=4;
 	    	}
 	    	if (rmousedown&&buildref==0) {
 	    		en3d.setBlockOut(8);
-	    		buildref=5;
+	    		buildref=4;
 	    	}
 	    	if(buildref>0)
 	    	buildref-=1;
 	    }
 	    frame.getContentPane().setCursor(normCursor);
 	    while(key.Output()[27]==1) {
+	    	System.out.print("");
 	    }
 	    while(escape==1) {
 	    	try {
@@ -206,6 +293,7 @@ public class VoxelMain {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+	    	System.out.print("");
 	    	if(key.Output()[27]==1) {
 	    		escape=0;
 	    	}

@@ -60,6 +60,7 @@ public class VoxGenerate {
 			for(int yy=-(int)size; yy < size+1; yy ++) {
 				for(int zz=-(int)size; zz < size+1; zz ++) {
 					if(size*size>xx*xx+yy*yy+zz*zz) {
+						if(x+xx>0&&x+xx<v.Voxels.length&&y+yy>0&&y+yy<v.Voxels[0].length&&zz+z>0&&z+zz<v.Voxels[0][0].length)
 						if(v.Voxels[x+xx][y+yy][z+zz]==replaced)
 							v.Voxels[x+xx][y+yy][z+zz] = (byte)block;
 					}
@@ -75,7 +76,7 @@ public class VoxGenerate {
 		while(!al.isEmpty()) {
 			nl.clear();
 			for(int[] el: al) {
-				if(el[0]<0||el[0]>v.Voxels.length||el[1]<0||el[1]>v.Voxels[0].length||el[2]<0||el[2]>v.Voxels[0][0].length) {
+				if(el[0]<1||el[0]>v.Voxels.length-1||el[1]<1||el[1]>v.Voxels[0].length-1||el[2]<1||el[2]>v.Voxels[0][0].length-1) {
 					//STUFF
 				} else {
 					v.Voxels[el[0]][el[1]][el[2]]=(byte)block;

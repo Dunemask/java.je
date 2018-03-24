@@ -129,4 +129,64 @@ public static File Choose(String dir) {
 	} else
 	return null;
 }
+static public String SaveArray(int[] array) {
+	String s = array.length +";";
+	int c=0;
+	int tmp = 0;
+	int selected=array[0];
+	while(c<array.length) {
+		c++;
+		if(array[c-1]==selected) {
+			tmp++;
+		}
+		else {
+			s+=tmp+","+selected+";";
+			tmp=1;
+			selected=array[c-1];
+		}
+	}
+	s+=tmp+","+selected+";";
+	return s;
+}
+static public int[] LoadArray(String s) {
+	String[] ltmp = s.split(";");
+	int[] i = new int[Integer.parseInt(ltmp[0])];
+	int c = 0;	
+	for(int l = 1; l<ltmp.length;l++) {
+		int selected=Integer.parseInt(ltmp[l].split(",")[1]);
+	for(int k = 0; k<Integer.parseInt(ltmp[l].split(",")[0]);k++) {
+			i[c]=selected;
+			c++;
+			}
+	}
+	return i;
+}
+static public int[] Array3Dto1D(int[][][] dra) {
+	int[] i = new int[dra.length*dra[0].length*dra[0][0].length];
+	for(int j = 0; j<i.length;j++) {
+		i[j]=dra[j%dra.length][(j/dra.length)%dra[0].length][j/(dra.length*dra[0].length)];
+	}
+	return i ;
+}
+static public int[] Array3Dto1D(byte[][][] dra) {
+	int[] i = new int[dra.length*dra[0].length*dra[0][0].length];
+	for(int j = 0; j<i.length;j++) {
+		i[j]=dra[j%dra.length][(j/dra.length)%dra[0].length][j/(dra.length*dra[0].length)];
+	}
+	return i ;
+}
+static public int[][][] Array1Dto3D(int[] dra, int sx, int sy){
+	int[][][] i = new int[sx][sy][dra.length/(sx*sy)];
+	for(int j = 0; j< dra.length; j++) {
+		i[j%sx][(j/sx)%sy][j/(sx*sy)] = dra[j];
+	}
+	return i;
+}
+static public byte[][][] Array1Dto3Db(int[] dra, int sx, int sy){
+	byte[][][] i = new byte[sx][sy][dra.length/(sx*sy)];
+	for(int j = 0; j< dra.length; j++) {
+		i[j%sx][(j/sx)%sy][j/(sx*sy)] = (byte)dra[j];
+	}
+	return i;
+}
 }

@@ -5,6 +5,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Robot;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class VoxEn {
 	float ry = 0;
 	float fovc = 0.015f;
 	int viewdist=3000;
+	int trydist=50;
 	int density = 0;
 	int siz = 1;
 	int timer=0;
@@ -41,14 +43,48 @@ public class VoxEn {
 				{10,10,10,10,10,10,3}};
 	//VoxChunk[][][] Chnks = new VoxChunk[3][3][3];
 	//byte[][][] airs = new byte[Chnks.length][Chnks[0].length][Chnks[0][0].length];
-	byte[][][] Voxels = new byte[100][100][100];
-	byte[][][] SunLight = new byte[Voxels.length][Voxels[0].length][Voxels[0][0].length];
-	public VoxEn(Vector3 vcam) {
+	byte[][][] Voxels;
+	byte[][][] VoxData;
+	byte[][][] SunLight;
+	public VoxEn(Vector3 vcam,int xsiz, int ysiz, int zsiz,int type) {
+		//SET STUFFSSSS
+		Voxels = new byte[xsiz][ysiz][zsiz];
+		 VoxData = new byte[Voxels.length][Voxels[0].length][Voxels[0][0].length];
+		 SunLight = new byte[Voxels.length][Voxels[0].length][Voxels[0][0].length];
 		campos=vcam;
 		//resetCloud(1,4);
+		if(type==1) {
 		resetHills(1,6);
-		vg.SpreadTree(0.05f, 50, 50, 25);
-		vg.MakePond(20, 20);
+		vg.MakePond(xsiz/2, ysiz/2);
+		vg.SpreadTree(0.05f, xsiz/2, ysiz/2, xsiz/4);
+		vg.MakePond((int)(xsiz*0.1)+(int)(0.8*Math.random()*xsiz), (int)(ysiz*0.1)+(int)(0.8*Math.random()*ysiz));
+		}
+		if(type==2) {
+		resetFlat(5,(byte)3);
+		}
+		//resetChunks(1,4);
+		//getimages
+		//resetHills(1, 4);
+		for(int i = 0;i<imgas.length;i++) {
+			imgas[i] = new ImageReader("src/voxeltest/img"+i+".png");
+		}
+	}
+	public VoxEn(Vector3 vcam,File f) {
+		//SET STUFFSSSS
+		int sizexxx=Integer.parseInt(FileStuff.ReadLine(f, 1));
+		int sizeyyy=Integer.parseInt(FileStuff.ReadLine(f, 2));
+		int sizezzz=Integer.parseInt(FileStuff.ReadLine(f, 3));
+		campos = vcam;
+		campos.x=Float.parseFloat(FileStuff.ReadLine(f, 4));
+		campos.y=Float.parseFloat(FileStuff.ReadLine(f, 5));
+		campos.z=Float.parseFloat(FileStuff.ReadLine(f, 6));
+		String s = FileStuff.ReadLine(f, 7);
+		byte[][][] is = FileStuff.Array1Dto3Db((FileStuff.LoadArray(s)), sizexxx, sizeyyy);
+		Voxels = is;
+		 VoxData = new byte[Voxels.length][Voxels[0].length][Voxels[0][0].length];
+		 SunLight = new byte[Voxels.length][Voxels[0].length][Voxels[0][0].length];
+		//resetCloud(1,4);
+		
 		//resetChunks(1,4);
 		//getimages
 		//resetHills(1, 4);
@@ -105,7 +141,7 @@ public class VoxEn {
 		//Voxels = null;
 		//Voxels = Chnks[xx][yy][zz].StorChunk;
 		//String[] str = GetSquare(Voxels,Vector3.add(ve, (new Vector3(xx*-16,yy*-16,zz*-16))),Vector3.add(campos, (new Vector3(xx*-16,yy*-16,zz*-16))),false);
-		String[] str = GetSquare(Voxels,ve,campos,false,0);
+		String[] str = GetSquare(Voxels,ve,campos,false,0,-1);
 		findub[0] = Float.parseFloat(str[0]);
 		findub[1] = Float.parseFloat(str[1]);
 		findub[2] = Float.parseFloat(str[2]);
@@ -113,22 +149,25 @@ public class VoxEn {
 		side = str[3];
 		//WATER RENDERRRRRRRRRRR
 		if(val2==7) {
-			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0.3f) ),false,0);
+			float hite = (float)(0.3+0.2*Math.sin(2*findub[0]+0.03*timer)+0.1*Math.cos(2*findub[1]+0.01*timer));
+			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0) ),false,7,-1);
+			float mag2 = Float.parseFloat(str[5]);
+			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,hite) ),false,0,7);
 			findub[0] = Float.parseFloat(str[0]);
 			findub[1] = Float.parseFloat(str[1]);
 			findub[2] = Float.parseFloat(str[2]);
 			val2= Integer.parseInt(str[4]);
 			side = str[3];
-			if(val2==7) {
+			if(val2==7&&Float.parseFloat(str[5])<mag2) {
 			int[] kil = GetColo(side,bright,findub,val2);
 			tint=kil[0];}
-			str = GetSquare(Voxels,ve,campos,false,7);
+			str = GetSquare(Voxels,ve,campos,false,7,-1);
 			findub[0] = Float.parseFloat(str[0]);
 			findub[1] = Float.parseFloat(str[1]);
 			findub[2] = Float.parseFloat(str[2]);
 			val2= Integer.parseInt(str[4]);
 			side = str[3];
-			tintamount=1-0.5f/(1+0.1f*Float.parseFloat(str[5]));
+			tintamount=1-0.3f/(1+0.1f*Float.parseFloat(str[5]));
 		}
 		if(side=="none") {
 			blue=255;
@@ -258,7 +297,7 @@ public class VoxEn {
 		}
 		return null;
 	}
-	public String[] GetSquare(byte[][][] Box, Vector3 ve,Vector3 campos,boolean sethm, int medium) {
+	public String[] GetSquare(byte[][][] Box, Vector3 ve,Vector3 campos,boolean sethm, int medium,int isolated) {
 		HashMap<Float,Vector3> ht = new HashMap<Float,Vector3>();
 		byte[][][] Voxels = Box;
 		int zlen = Voxels[0][0].length;
@@ -273,14 +312,14 @@ public class VoxEn {
 		if(zstrt < 0) {
 			zstrt=0;
 		}
-		for(int z = zstrt;z<zlen;z++) {
+		for(int z = zstrt;z<zlen&&z-zstrt<trydist;z++) {
 		Vector3 v3 = Vector3.add(campos, new Vector3(0,0,-z));
 		if((v3.z<0&&Vector3.add(v3, ve).z>0)) {
 		float[] doi =Vector3.intersection(v3, Vector3.add(v3, ve), "z");
 		if(0<doi[0]&&doi[0]<xlen&&0<doi[1]&&doi[1]<ylen) {
 			val= Voxels[(int)doi[0]][(int)doi[1]][z];
 			
-			if(val!=medium&&val!=0) {
+			if(val!=medium&&val!=0&&(isolated==-1||val==isolated)) {
 				float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 				if(mag>tmpmag) {
 					findub = doi;
@@ -306,14 +345,14 @@ public class VoxEn {
 			zstrt=zlen;
 		}
 		
-		for(int z = zstrt-1;z>=0;z--) {
+		for(int z = zstrt-1;z>=0&&zstrt-z<trydist;z--) {
 			Vector3 v3 = Vector3.add(campos, new Vector3(0,0,-1-z));
 			if((v3.z>0&&Vector3.add(v3, ve).z<0)) {
 			float[] doi =Vector3.intersection(v3, Vector3.add(v3, ve), "z");
 			if(0<doi[0]&&doi[0]<xlen&&0<doi[1]&&doi[1]<ylen) {
 				val= Voxels[(int)doi[0]][(int)doi[1]][z];
 				
-				if(val!=medium&&val!=0) {
+				if(val!=medium&&val!=0&&(isolated==-1||val==isolated)) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -346,7 +385,7 @@ public class VoxEn {
 			if(0<doi[0]&&doi[0]<xlen&&0<doi[2]&&doi[2]<zlen) {
 				val= Voxels[(int)doi[0]][yy][(int)doi[2]];
 				
-				if(val!=medium&&val!=0) {
+				if(val!=medium&&val!=0&&(isolated==-1||val==isolated)) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -377,7 +416,7 @@ public class VoxEn {
 			if(0<doi[0]&&doi[0]<xlen&&0<doi[2]&&doi[2]<zlen) {
 				val= Voxels[(int)doi[0]][yy][(int)doi[2]];
 				
-				if(val!=medium&&val!=0) {
+				if(val!=medium&&val!=0&&(isolated==-1||val==isolated)) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -408,7 +447,7 @@ public class VoxEn {
 			if(0<doi[1]&&doi[1]<ylen&&0<doi[2]&&doi[2]<zlen) {
 				val= Voxels[xx][(int)doi[1]][(int)doi[2]];
 				
-				if(val!=medium&&val!=0) {
+				if(val!=medium&&val!=0&&(isolated==-1||val==isolated)) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -439,7 +478,7 @@ public class VoxEn {
 			if(0<doi[1]&&doi[1]<ylen&&0<doi[2]&&doi[2]<zlen) {
 				val= Voxels[xx][(int)doi[1]][(int)doi[2]];
 				
-				if(val!=medium&&val!=0) {
+				if(val!=medium&&val!=0&&(isolated==-1||val==isolated)) {
 					float tmpmag = Vector3.subtract(new Vector3(doi[0],doi[1],doi[2]), v3).magnitude();
 					if(mag>tmpmag) {
 						findub = doi;
@@ -634,7 +673,7 @@ public class VoxEn {
 public void resetHills(float weight, int count){
 		
 		
-		byte[][] tmp = new byte[Voxels.length][Voxels[0].length];
+		byte[][] tmp = new byte[Voxels.length+4][Voxels[0].length+4];
 		byte[][] tmp2 = new byte[tmp.length][tmp[0].length];
 		for(int x = 0; x < tmp.length; x++) {
 			for(int y = 0; y < tmp[0].length; y++) {
@@ -662,7 +701,7 @@ public void resetHills(float weight, int count){
 		}
 		for(int x = 0; x < Voxels.length; x++) {
 			for(int y = 0; y < Voxels[0].length; y++) {
-				int height = tmp[x][y]*2+20;
+				int height = tmp[x+2][y+2]*2+20;
 				if(height >= Voxels[0][0].length)
 					height= Voxels[0][0].length-1;
 				if(height <0)
@@ -684,10 +723,24 @@ public void resetHills(float weight, int count){
 		//Voxels= tmp;
 
 		System.out.println("Done With Hills");
-		
-		
-		
-		
-		
 	}
+public void resetFlat(int height, byte block){
+	for(int x = 0; x < Voxels.length; x++) {
+		for(int y = 0; y < Voxels[0].length; y++) {
+			for(int z = 0; z < Voxels[0][0].length; z++) {
+				if(z<height) {
+					Voxels[x][y][z]=block;
+				}else {
+					Voxels[x][y][z]=0;
+				}
+			}
+		}
+		//System.out.println("Done with plane "+x);
+	}
+	//Voxels= tmp;
+
+	System.out.println("Done With Hills");
+
+}
+
 }
