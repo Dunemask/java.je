@@ -1,12 +1,16 @@
 package voxeltest;
 
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +18,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
@@ -25,11 +30,13 @@ public class VoxelMain {
 	
 	public static boolean mousedown;
 	public static boolean rmousedown;
+	public static int mouseswoosh;
 	static boolean out = true;
 	static int type= 0;
 	public static String name;
 	public static void main(String[] args) {
 		//en3d = new VoxEn(new Vector3(10,10,90));
+		/////GET THE THING THAT DOES STUFF AND GET FILE OR CREATE NEW ONE!!!
 		try {
 		File fs = FileStuff.Choose("src\\voxeltest\\saves");
 		en3d = new VoxEn(new Vector3(10,10,90),fs);
@@ -93,8 +100,8 @@ public class VoxelMain {
 		JFrame frame = new JFrame("VoxPan");
 		VoxPanel p = new VoxPanel();
 		p.SetE3d(en3d);
+		 frame.setSize(500, 500);
 		frame.getContentPane().add(p);
-	    frame.setSize(500, 500);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setVisible(true);
 	    KeyList key = new KeyList();
@@ -118,6 +125,18 @@ public class VoxelMain {
 			    		rmousedown = false;
 	    	}
 	    });
+	    frame.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				mouseswoosh = e.getWheelRotation();
+			}
+	    });
+	    //Adds the stuff at the bottom
+	    
+	    
+	    
+	    
+	    
+
 	    int time = 0;
 	    int escape = 0;
 	    int buildref =0;
@@ -271,12 +290,18 @@ public class VoxelMain {
 	    		//v.print();
 	    		//System.out.println(mousedown);
 	    	}
+	    	///MOUSE SWOOSH
+	    	if (mouseswoosh!=0) {
+	    		en3d.selected=((en3d.selected+mouseswoosh)%9+9)%9;
+	    		mouseswoosh=0;
+	    	}
+	    	///BUILD AND DESTROY BLOCKS
 	    	if (mousedown&&buildref==0) {
 	    		en3d.setBlock(0);
-	    		buildref=4;
+	    		buildref=6;
 	    	}
 	    	if (rmousedown&&buildref==0) {
-	    		en3d.setBlockOut(8);
+	    		en3d.setBlockOut(en3d.hotbar[en3d.selected]);
 	    		buildref=4;
 	    	}
 	    	if(buildref>0)

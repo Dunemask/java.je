@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 public class ImageReader {
 	public int[][][] imagedat;
+	public int[][] rawdat;
 	public int GetPixel(float x, float y, String image){
 		BufferedImage img=null;
 		File f = null;
@@ -34,9 +35,11 @@ public class ImageReader {
 		int width= img.getWidth();
 		int height = img.getHeight();
 		imagedat = new int[height/width][width][width];
-		for(int x=0;x<width;x++) {
-			for(int y=0;y<height;y++) {
+		rawdat = new int[height/width][width*width];
+		for(int y=0;y<height;y++) {
+			for(int x=0;x<width;x++) {
 				imagedat[y/width][x][y%width]=img.getRGB(x,y);
+				rawdat[y/width][(y%width)*width+x]=img.getRGB(x, y);
 			}
 		}
 	}

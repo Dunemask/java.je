@@ -26,13 +26,15 @@ public class VoxEn {
 	int density = 0;
 	int siz = 1;
 	int timer=0;
+	public int[] hotbar= {9,1,11,3,10,5,6,7,8};
+	public int selected=0;
 	VoxGenerate vg = new VoxGenerate(this);
 	HashMap<Float,Vector3> hmm = new HashMap<Float,Vector3>();
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
-	ImageReader[] imgas = new ImageReader[11];
-	ImageReader selecc = new ImageReader("src/voxeltest/select.png");
-	byte[][] blkrndr = {
+	public static ImageReader[] imgas = new ImageReader[14];
+	ImageReader selecc = new ImageReader("src/voxeltest/res/select.png");
+	public static byte[][] blkrndr = {
 				{0,0,0,0,0,0,0},
 				{0,2,1,1,1,1,0},
 				{3,3,3,3,3,3,0},
@@ -40,7 +42,10 @@ public class VoxEn {
 				{6,6,5,5,5,5,0},
 				{8,8,8,8,8,8,0},
 				{9,9,9,9,9,9,5},
-				{10,10,10,10,10,10,3}};
+				{10,10,10,10,10,10,3},
+				{11,11,11,11,11,11,0},
+				{12,12,12,12,12,12,0},
+				{13,13,13,13,13,13,0}};
 	//VoxChunk[][][] Chnks = new VoxChunk[3][3][3];
 	//byte[][][] airs = new byte[Chnks.length][Chnks[0].length][Chnks[0][0].length];
 	byte[][][] Voxels;
@@ -66,7 +71,7 @@ public class VoxEn {
 		//getimages
 		//resetHills(1, 4);
 		for(int i = 0;i<imgas.length;i++) {
-			imgas[i] = new ImageReader("src/voxeltest/img"+i+".png");
+			imgas[i] = new ImageReader("src/voxeltest/res/img"+i+".png");
 		}
 	}
 	public VoxEn(Vector3 vcam,File f) {
@@ -89,7 +94,7 @@ public class VoxEn {
 		//getimages
 		//resetHills(1, 4);
 		for(int i = 0;i<imgas.length;i++) {
-			imgas[i] = new ImageReader("src/voxeltest/img"+i+".png");
+			imgas[i] = new ImageReader("src/voxeltest/res/img"+i+".png");
 		}
 	}
 	////UPDATES THE AIRS ARRAY FOR THE STUFFS
