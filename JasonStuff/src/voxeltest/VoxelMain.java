@@ -140,6 +140,7 @@ public class VoxelMain {
 	    int time = 0;
 	    int escape = 0;
 	    int buildref =0;
+	    int flytim=0;
 	    Vector3 v = new Vector3(0,0,0);
 	    boolean up = false;
 	    int mode = 1;
@@ -213,8 +214,19 @@ public class VoxelMain {
 	    		en3d.MoveCam(Vector3.downward(0.2f));
 	    		up=true;
 	    	}
+	    	if(key.Output()[32]==1) {
+	    		if(flytim >0)
+	    			mode =1;
+	    		flytim=-1;
+	    	}else{
+	    		if (flytim==-1)
+	    			flytim=10;
+	    		if(flytim>0)
+	    		flytim--;
 	    	}
-	    	//SURVIVAL MODE
+	    	v.z=0;
+	    	}
+	    	//Walking MODE
 	    	if (mode ==1) {
 	    		if(key.Output()[87]==1) {
 	    			v = Vector3.add(v,Vector3.foreward(0.1f).rotate(en3d.rx, "z"));
@@ -248,6 +260,16 @@ public class VoxelMain {
 		    	if(key.Output()[16]==1) {
 		    		en3d.MoveCam(Vector3.downward(0.2f));
 		    		up=true;
+		    	}
+		    	if(key.Output()[32]==1) {
+		    		if(flytim >0)
+		    			mode =0;
+		    		flytim=-1;
+		    	}else{
+		    		if (flytim==-1)
+		    			flytim=10;
+		    		if(flytim>0)
+		    		flytim--;
 		    	}
 		    	}
 	    	//SAVE

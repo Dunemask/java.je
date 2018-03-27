@@ -40,7 +40,7 @@ public class Environment3D {
 			red=255;
 			pix = (red << 16) | (green << 8) | blue;
 			int mater=mats.get(id);
-			pix = imgas[mater].imagedat[(int)(db[1]*imgas[mater].imagedat.length)][(int)(db[2]*imgas[mater].imagedat[0].length)];
+			//pix = imgas[mater].imagedat[(int)(db[1]*imgas[mater].imagedat.length)][(int)(db[2]*imgas[mater].imagedat[0].length)];
 		}
 		
 		
