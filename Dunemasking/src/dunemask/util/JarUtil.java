@@ -53,12 +53,12 @@ public class JarUtil{
 	 * @throws IOException
 	 *             If the file don't exist, it's not gonna work
 	 */
-	public static void extractAllOpenDialog(String dir, String jarName, String resourceFolderName) throws IOException {
-		JarFile jarfile = new JarFile(new java.io.File(dir + jarName + ".jar"));
+	public static void extractAllOpenDialog(File jar, String destination) throws IOException {
+		JarFile jarfile = new JarFile(jar);
 		Enumeration<JarEntry> enu = jarfile.entries();
 		// File file = new File(dir+"\\"+jarName+"_lib\\");
 		while (enu.hasMoreElements()) {
-			String destdir = dir + "\\" + resourceFolderName + "\\";
+			String destdir = destination;
 			JarEntry je = enu.nextElement();
 			if (!je.getName().contains("org") && !je.getName().contains("META-INF")) {
 
@@ -105,6 +105,27 @@ public class JarUtil{
 		JOptionPane.showMessageDialog(null, "Completed Extracting!");
 		f.dispose();
 		jarfile.close();
+	}
+	
+	
+	
+	
+	/**
+	 * Extracts jar into new folder named: jarName_lib Displays Small Progress Bar
+	 * While Extracting
+	 * 
+	 * @param dir
+	 *            Directory to the jar
+	 * @param jarName
+	 *            Name of Jar
+	 * @param resourceFolderName
+	 *            Name of folder that will become the resource folder
+	 * @throws IOException
+	 *             If the file don't exist, it's not gonna work
+	 */
+	public static void extractAllOpenDialog(String dir, String jarName, String resourceFolderName) throws IOException {
+
+		extractAllOpenDialog(new java.io.File(dir + jarName + ".jar"),dir+"\\"+jarName+"_lib\\");
 	}
 
 	private static void updateScreen(String name, JarEntry je) {

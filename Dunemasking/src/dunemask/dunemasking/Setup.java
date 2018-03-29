@@ -120,7 +120,7 @@ public class Setup {
 			}
 
 			// Update path
-			path = dir + defaultFolderName + "\\";
+			path = dir + jarName + "_lib\\";
 		} else {
 			path = JarUtil.getProgramPath();
 		}

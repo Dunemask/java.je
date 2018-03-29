@@ -370,7 +370,7 @@ public class FileUtil{
 					res = new URL(res.toString().replace("%20", " "));
 				} catch (Exception e) {
 					System.err.println("Prb don't exist");
-					System.err.println("Try checking your path for:"+res.toString().replace("%20", " "));
+					System.err.println("Try checking your path for:"+ResourceDirectory.toString().replace("%20", " "));
 					e.printStackTrace();
 				}//Close Catch
 				
@@ -385,7 +385,7 @@ public class FileUtil{
 				while ((read = input.read(bytes)) != -1) {
 					out.write(bytes, 0, read);
 				}
-				file.deleteOnExit();
+				//file.deleteOnExit();
 				out.close();
 			} catch (IOException ex) {
 				ex.printStackTrace();
