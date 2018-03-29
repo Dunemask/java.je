@@ -34,6 +34,24 @@ public class FileUtil{
 	/***Version*/
     final static double version = 4.16;
 	
+    /** Recursively delete Sub Files and Folders
+     * @param file Folder in File form to delete
+     * 
+     * 
+     * */
+   public static void deleteAllSubFolders(File file) {
+		  if (file.isDirectory()) {
+		    for (File c : file.listFiles())
+		      deleteAllSubFolders(c);
+		  }
+		  if (!file.delete())
+			try {
+				throw new FileNotFoundException("Failed to delete file: " + file);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+    
     
     /**Get The last line where a specific text was mentioned
      * @param file File Searched
