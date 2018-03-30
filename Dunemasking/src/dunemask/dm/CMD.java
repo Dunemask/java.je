@@ -20,9 +20,45 @@ public class CMD {
 	
 	
 	
-	public static String copyFolderAndSubContetntsViaCmd(String folderIn,String folderOut) {
-		return "xcopy \""+folderIn+"\" \""+folderOut+"\""+" /h/i/c/k/e/r/y";
+	public static ArrayList<String> copyFolderAndSubContetntsViaCmd(String folderIn,String folderOut) {
+		ArrayList<String> cmd = new ArrayList<String>();
+		File homeDir = new File(folderIn);
+		File in = null,out = null;
+		File[] files = FileUtil.getAllSubFiles(homeDir);
+		for(int i=0;i<files.length;i++) {
+			String tmp;
+			String relPath = FileUtil.filePathFix(files[i].getAbsolutePath()).replace(FileUtil.filePathFix(folderIn), "");
+			//System.out.println("RelPath:"+(files[i].getAbsolutePath().replace(folderIn, "")));
+			if(files[i].isDirectory()) {
+				tmp = mkdirAbs(folderOut+relPath);
+			}else {
+				in = files[i];
+				out = new File(folderOut+relPath);
+				tmp = copyFileViaCmd(in,out);
+			}
+			cmd.add(tmp);
+		}
+		
+		
+		
+		
+		return cmd;
 	}
+	/** Creates Relative Directory
+	 * */
+	public static String mkdir(String dir) {
+		return "mkdir "+dir;		
+	}
+	/** Creates Absolutee Directory
+	 * */
+	public static String mkdirAbs(String dir) {
+		return "mkdir "+absolutePathFixCmd(dir);		
+	}
+	
+	public static String absolutePathFixCmd(String command) {
+		return "\""+command+"\"";
+	}
+	
     
 	/** @param in File in(must be real)
 	 * 	@param out File out(must be real)
