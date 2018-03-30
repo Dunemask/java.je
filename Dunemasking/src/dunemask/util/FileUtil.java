@@ -32,7 +32,7 @@ import java.util.Scanner;
  * */
 public class FileUtil{
 	/***Version*/
-    final static double version = 4.16;
+    final static double version = 4.35;
 	
     /** Recursively delete Sub Files and Folders
      * @param file Folder in File form to delete
@@ -89,7 +89,6 @@ public class FileUtil{
 		try {
 			url = new URL(FileUtil.fixSpaces(FileUtil.filePathFix(address)));
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     	
@@ -420,7 +419,28 @@ public class FileUtil{
 		return file;
 
 	}
+	/**Replaces all ' ' with '%20'
+	 * @param path Path of File
+	 * @return String with fixed spacing
+	 */
+	public static String fixSpaces(String path) {
+		return path.replace(" ", "%20");
+			
 
+		
+	}
+	
+	/**Replaces all '%20' with ' '
+	 * @param path Path of File
+	 * @return String with fixed spacing
+	 */
+	public static String fixToSpaces(String path) {
+		return path.replace("%20", " ");
+			
+
+		
+	}
+	
 	/**Get a list of files and folders from a package
 	 * @param dir Starts at src level and works relative from that
 	 * @return Returnrs array of files
@@ -474,17 +494,18 @@ public class FileUtil{
 		return filePath.replace("\\", "/");
 		
 	}
-	
-	
-	
-	/**Replaces all ' ' with '%20'
-	 * @param filePath Path of File
-	 * @return String with fixed spacing
-	 */
-	public static String fixSpaces(String filePath) {
-		return filePath.replace(" ", "%20");
+	/**
+	 * Replace all Forward Slashes with back ones
+	 * 
+	 * @param filePath
+	 *            Path To File
+	 * @return String WIth back slahes as opposed to forwardslahes
+	 **/
+	public static String filePathFixReverse(String filePath) {
+		return filePath.replace("/", "\\");
 		
 	}
+
 
 
 

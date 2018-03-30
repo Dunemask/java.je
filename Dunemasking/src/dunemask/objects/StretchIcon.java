@@ -31,7 +31,7 @@ import javax.swing.ImageIcon;
  */
 public class StretchIcon extends ImageIcon {
 	/***Version*/
-    final static double version = 4.16;
+    final static double version = 4.35;
 	
   /**
 	 * 

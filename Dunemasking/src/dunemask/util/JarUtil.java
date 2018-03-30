@@ -36,10 +36,56 @@ import javax.swing.WindowConstants;
 public class JarUtil{
 	
 	/***Version*/
-    final static double version = 4.16;
+    final static double version = 4.4;
 	private static JFrame f = new JFrame();
 	private static JPanel p = new JPanel();
+	
 
+	/**External Jar Extract
+	 * @param desintationDir - Destination
+	 * @param file JarFile
+	 * */
+	public static void unzipJar(String destinationDir, File file) throws IOException {
+		//File file = new File(jarPath);
+		JarFile jar = new JarFile(file);
+ 
+		// fist get all directories,
+		// then make those directory on the destination Path
+		for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements();) {
+			JarEntry entry = (JarEntry) enums.nextElement();
+ 
+			String fileName = destinationDir + File.separator + entry.getName();
+			File f = new File(fileName);
+ 
+			if (fileName.endsWith("/")) {
+				f.mkdirs();
+			}
+ 
+		}
+ 
+		//now create all files
+		for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements();) {
+			JarEntry entry = (JarEntry) enums.nextElement();
+ 
+			String fileName = destinationDir + File.separator + entry.getName();
+			File f = new File(fileName);
+ 
+			if (!fileName.endsWith("/")) {
+				InputStream is = jar.getInputStream(entry);
+				FileOutputStream fos = new FileOutputStream(f);
+ 
+				// write contents of 'is' to 'fos'
+				while (is.available() > 0) {
+					fos.write(is.read());
+				}
+ 
+				fos.close();
+				is.close();
+			}
+		}
+	}
+	
+	
 	/**
 	 * Extracts jar into new folder named: jarName_lib Displays Small Progress Bar
 	 * While Extracting
@@ -54,9 +100,11 @@ public class JarUtil{
 	 *             If the file don't exist, it's not gonna work
 	 */
 	public static void extractAllOpenDialog(File jar, String destination) throws IOException {
+		destination = FileUtil.fixSpaces(destination).replaceAll("%20", " ");
 		JarFile jarfile = new JarFile(jar);
 		Enumeration<JarEntry> enu = jarfile.entries();
 		// File file = new File(dir+"\\"+jarName+"_lib\\");
+		System.out.println(jar.getAbsolutePath());
 		while (enu.hasMoreElements()) {
 			String destdir = destination;
 			JarEntry je = enu.nextElement();
@@ -124,8 +172,8 @@ public class JarUtil{
 	 *             If the file don't exist, it's not gonna work
 	 */
 	public static void extractAllOpenDialog(String dir, String jarName, String resourceFolderName) throws IOException {
-
-		extractAllOpenDialog(new java.io.File(dir + jarName + ".jar"),dir+"\\"+jarName+"_lib\\");
+		
+		extractAllOpenDialog(new java.io.File(FileUtil.fixSpaces(dir).replaceAll("%20", " ") + jarName + ".jar"),dir+"\\"+jarName+"_lib\\");
 	}
 
 	private static void updateScreen(String name, JarEntry je) {
@@ -192,6 +240,9 @@ public class JarUtil{
 	 *             If the jarFile don't exists it's gonna blow up
 	 */
 	public static void extractAll(String dir, String jarName, String resourceFolderName) throws IOException {
+		dir = FileUtil.fixSpaces(dir).replaceAll("%20", " ");
+		jarName = FileUtil.fixSpaces(jarName).replaceAll("%20", " ");
+		resourceFolderName = FileUtil.fixSpaces(resourceFolderName).replaceAll("%20", " ");
 		JarFile jarfile = new JarFile(new java.io.File(dir + jarName + ".jar"));
 		Enumeration<JarEntry> enu = jarfile.entries();
 		// File file = new File(dir+"\\"+jarName+"_lib\\");
@@ -250,7 +301,8 @@ public class JarUtil{
 			jarName = FileUtil.removeExtension(jarName);
 		}
 
-		if (new File(JarUtil.getProgramPath() + jarName + ".jar").exists()) {
+		if (new File(FileUtil.fixSpaces(JarUtil.getProgramPath()).replaceAll("%20", " ") + jarName + ".jar").exists()) {
+			
 			isJar = true;
 		}
 		return isJar;

@@ -16,7 +16,7 @@ import dunemask.util.RW;
  *
  */
 public class CMD {
-	
+    final static double version = 4.8;
 	
 	
 	

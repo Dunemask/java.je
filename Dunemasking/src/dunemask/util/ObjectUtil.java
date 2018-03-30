@@ -17,7 +17,7 @@ import java.util.Random;
 public class ObjectUtil{
 	
 	/***Version*/
-    final static double version = 4.16;
+    final static double version = 4.35;
 	/**
 	 * Writes an object to specified file (make sure it has extension)
 	 * 

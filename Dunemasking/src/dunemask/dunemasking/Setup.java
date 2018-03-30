@@ -20,7 +20,7 @@ import dunemask.util.RW;
  */
 public class Setup {
 	/***Version*/
-    final static double version = 4.16;
+    final static double version = 4.35;
 	/**
 	 * Automatically extracts jar if it is a jar and returns the path for the
 	 * resource folder
@@ -108,7 +108,7 @@ public class Setup {
 			jarName = FileUtil.removeExtension(jarName);
 		}
 
-		if (new File(JarUtil.getProgramPath() + jarName + ".jar").exists()) {
+		if (new File(FileUtil.fixSpaces(JarUtil.getProgramPath()).replace("%20", " ") + jarName + ".jar").exists()) {
 			String dir = new File(JarUtil.getProgramPath()).getAbsolutePath() + "\\";
 
 			if (!new File(dir + defaultFolderName + "\\").exists()) {

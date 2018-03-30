@@ -1,26 +1,27 @@
-Dunemasking Ver: 4.16
-dunemask.dunemasking.Capture.java Version: 4.16
-dunemask.dunemasking.Changelog.java Version: 4.16
-dunemask.dunemasking.GitHub.java Version: 4.16
-dunemask.dunemasking.Setup.java Version: 4.16
-dunemask.dunemasking.Src.java Version: 4.16
-dunemask.dunemasking.StreamGobbler.java Version: 4.16
-dunemask.dunemasking.Version.java Version: 4.16
-dunemask.objects.Expression.java Version: 4.16
+Dunemasking Ver: 4.35
+dunemask.dm.CMD.java Version: 4.8
+dunemask.dunemasking.Capture.java Version: 4.35
+dunemask.dunemasking.Changelog.java Version: 4.35
+dunemask.dunemasking.GitHub.java Version: 4.35
+dunemask.dunemasking.Setup.java Version: 4.35
+dunemask.dunemasking.Src.java Version: 4.35
+dunemask.dunemasking.StreamGobbler.java Version: 4.35
+dunemask.dunemasking.Version.java Version: 4.35
+dunemask.objects.Expression.java Version: 4.35
 dunemask.objects.movieplayer.MovieLauncher.java Version: 7.0
 dunemask.objects.movieplayer.MoviePlayer.java Version: 4.0
-dunemask.objects.MusicPlayer.java Version: 4.16
-dunemask.objects.ScaledImageLabel.java Version: 4.16
-dunemask.objects.StretchIcon.java Version: 4.16
-dunemask.other.StringBasedEncryption.java Version: 4.16
-dunemask.util.AudioUtil.java Version: 4.16
-dunemask.util.FileUtil.java Version: 4.16
-dunemask.util.JarUtil.java Version: 4.16
-dunemask.util.MathUtil.java Version: 4.16
-dunemask.util.MediaUtil.java Version: 4.16
-dunemask.util.ObjectUtil.java Version: 4.16
-dunemask.util.RW.java Version: 4.16
-dunemask.util.StringUtil.java Version: 4.16
+dunemask.objects.MusicPlayer.java Version: 4.35
+dunemask.objects.ScaledImageLabel.java Version: 4.35
+dunemask.objects.StretchIcon.java Version: 4.35
+dunemask.other.StringBasedEncryption.java Version: 4.35
+dunemask.util.AudioUtil.java Version: 4.35
+dunemask.util.FileUtil.java Version: 4.35
+dunemask.util.JarUtil.java Version: 4.4
+dunemask.util.MathUtil.java Version: 4.35
+dunemask.util.MediaUtil.java Version: 4.35
+dunemask.util.ObjectUtil.java Version: 4.35
+dunemask.util.RW.java Version: 4.35
+dunemask.util.StringUtil.java Version: 4.35
 Additionally:
 @All: Package-Info Are Complete
 
@@ -35,4 +36,5 @@ Additionally:
 @Changelog.java: Tests javadoc version (Only works in ide) and labels with package
 				 Styling	
 
-Created at: 2018-03-02 07:58
+Created at: 2018-03-29 21:55
+(Update)

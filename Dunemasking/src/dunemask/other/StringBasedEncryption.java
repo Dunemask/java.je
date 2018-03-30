@@ -17,7 +17,7 @@ public class StringBasedEncryption {
 	public static final int defKey[] =new int[] {7};
 	public static Expression defKeyCode = new Expression("((7*key)+2)",new String[] {"key"} ,defKey) ;
 	/***Version*/
-    final static double version = 4.16;
+    final static double version = 4.35;
 	
 	/**Decrypt a String based on mathematical re-arranging
 	 * @param keyCode expression for Solving

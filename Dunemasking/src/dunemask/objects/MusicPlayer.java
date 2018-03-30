@@ -32,7 +32,7 @@ public class MusicPlayer extends JInternalFrame{
 	   uses Deprecated methods that are not reccomended from java*/
 	
 	/***Version*/
-    final static double version = 4.16;
+    final static double version = 4.35;
 	/**
 	 * 
 	 */
