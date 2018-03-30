@@ -32,7 +32,7 @@ public class Changelog {
 	/*@Changelog.java: Tests javadoc version (Only works in ide) and labels with package
 	 				   Styling	*/
 	/***Version*/
-    final static double version = 4.16;
+    final static double version = 4.35;
 	final static String toPackages = "src/dunemask/";
 	final static File changeLog = new File("src/dunemask/resources/Changelog.txt");
 	final static File additionally = new File(toPackages+"resources/AdditionalNotes.txt");

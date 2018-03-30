@@ -32,7 +32,7 @@ import java.util.Scanner;
  * */
 public class FileUtil{
 	/***Version*/
-    final static double version = 4.35;
+    final static double version = 4.7;
 	
     /** Recursively delete Sub Files and Folders
      * @param file Folder in File form to delete

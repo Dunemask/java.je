@@ -15,8 +15,8 @@ dunemask.objects.ScaledImageLabel.java Version: 4.35
 dunemask.objects.StretchIcon.java Version: 4.35
 dunemask.other.StringBasedEncryption.java Version: 4.35
 dunemask.util.AudioUtil.java Version: 4.35
-dunemask.util.FileUtil.java Version: 4.35
-dunemask.util.JarUtil.java Version: 4.4
+dunemask.util.FileUtil.java Version: 4.7
+dunemask.util.JarUtil.java Version: 4.7
 dunemask.util.MathUtil.java Version: 4.35
 dunemask.util.MediaUtil.java Version: 4.35
 dunemask.util.ObjectUtil.java Version: 4.35
@@ -36,5 +36,5 @@ Additionally:
 @Changelog.java: Tests javadoc version (Only works in ide) and labels with package
 				 Styling	
 
-Created at: 2018-03-29 21:55
+Created at: 2018-03-29 20:02
 (Update)
