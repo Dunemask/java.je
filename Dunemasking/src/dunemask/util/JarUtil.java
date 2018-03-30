@@ -53,6 +53,7 @@ public class JarUtil{
 	 *             If the file don't exist, it's not gonna work
 	 */
 	public static void extractAllOpenDialog(File jar, String destination) throws IOException {
+		init();
 		destination = FileUtil.fixSpaces(destination).replaceAll("%20", " ");
 		JarFile jarfile = new JarFile(jar);
 		Enumeration<JarEntry> enu = jarfile.entries();
@@ -172,14 +173,26 @@ public class JarUtil{
 	public static void init() {
 
 		f.setSize(300, 100);
-		f.setLocation(400, 400);
+		f.setLocationRelativeTo(null);
 		p.setLayout(null);
 		f.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		f.setVisible(true);
 		f.add(p);
 
 	}
-
+	
+	/**
+	 * Extracts jar into new folder named: jarName_lib
+	 * 
+	 * @param dir
+	 *            Directory to the jar
+	 * @param jarName
+	 *            Name of Jar
+	 * @param resourceFolderName
+	 *            name of resource folder
+	 * @throws IOException
+	 *             If the jarFile don't exists it's gonna blow up
+	 */
 	public static void extractAll(String dir, String jarName, String resourceFolderName) throws IOException {
 		dir = FileUtil.fixSpaces(dir).replaceAll("%20", " ");
 		jarName = FileUtil.fixSpaces(jarName).replaceAll("%20", " ");
@@ -189,7 +202,6 @@ public class JarUtil{
 	
 	
 	/**
-	 * Extracts jar into new folder named: jarName_lib
 	 * 
 	 * @param jar Jar File
 	 * @param destination String path to export location
@@ -197,8 +209,6 @@ public class JarUtil{
 	 *             If the jarFile don't exists it's gonna blow up
 	 */
 	public static void extractAll(File jar,String destination) throws IOException {
-
-		
 			destination = FileUtil.fixSpaces(destination).replaceAll("%20", " ");
 			JarFile jarfile = new JarFile(jar);
 		Enumeration<JarEntry> enu = jarfile.entries();
