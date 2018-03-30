@@ -40,62 +40,15 @@ public class JarUtil{
 	private static JFrame f = new JFrame();
 	private static JPanel p = new JPanel();
 	
-
-	/**External Jar Extract
-	 * @param desintationDir - Destination
-	 * @param file JarFile
-	 * */
-	public static void unzipJar(String destinationDir, File file) throws IOException {
-		//File file = new File(jarPath);
-		JarFile jar = new JarFile(file);
- 
-		// fist get all directories,
-		// then make those directory on the destination Path
-		for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements();) {
-			JarEntry entry = (JarEntry) enums.nextElement();
- 
-			String fileName = destinationDir + File.separator + entry.getName();
-			File f = new File(fileName);
- 
-			if (fileName.endsWith("/")) {
-				f.mkdirs();
-			}
- 
-		}
- 
-		//now create all files
-		for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements();) {
-			JarEntry entry = (JarEntry) enums.nextElement();
- 
-			String fileName = destinationDir + File.separator + entry.getName();
-			File f = new File(fileName);
- 
-			if (!fileName.endsWith("/")) {
-				InputStream is = jar.getInputStream(entry);
-				FileOutputStream fos = new FileOutputStream(f);
- 
-				// write contents of 'is' to 'fos'
-				while (is.available() > 0) {
-					fos.write(is.read());
-				}
- 
-				fos.close();
-				is.close();
-			}
-		}
-	}
-	
 	
 	/**
 	 * Extracts jar into new folder named: jarName_lib Displays Small Progress Bar
 	 * While Extracting
 	 * 
-	 * @param dir
-	 *            Directory to the jar
 	 * @param jarName
 	 *            Name of Jar
-	 * @param resourceFolderName
-	 *            Name of folder that will become the resource folder
+	 * @param destination
+	 *            destination
 	 * @throws IOException
 	 *             If the file don't exist, it's not gonna work
 	 */
@@ -104,11 +57,11 @@ public class JarUtil{
 		JarFile jarfile = new JarFile(jar);
 		Enumeration<JarEntry> enu = jarfile.entries();
 		// File file = new File(dir+"\\"+jarName+"_lib\\");
-		System.out.println(jar.getAbsolutePath());
+		//System.out.println(jar.getAbsolutePath());
 		while (enu.hasMoreElements()) {
 			String destdir = destination;
 			JarEntry je = enu.nextElement();
-			if (!je.getName().contains("org") && !je.getName().contains("META-INF")) {
+			//if (!je.getName().contains("org") && !je.getName().contains("META-INF")) {
 
 				updateScreen(je.getName(), je);
 
@@ -148,7 +101,7 @@ public class JarUtil{
 				fo.close();
 				is.close();
 
-			}
+			//}
 		}
 		JOptionPane.showMessageDialog(null, "Completed Extracting!");
 		f.dispose();
@@ -227,29 +180,33 @@ public class JarUtil{
 
 	}
 
-	/**
-	 * Extracts jar into new folder named: jarName_lib
-	 * 
-	 * @param dir
-	 *            Directory to the jar
-	 * @param jarName
-	 *            Name of Jar
-	 * @param resourceFolderName
-	 *            name of resource folder
-	 * @throws IOException
-	 *             If the jarFile don't exists it's gonna blow up
-	 */
 	public static void extractAll(String dir, String jarName, String resourceFolderName) throws IOException {
 		dir = FileUtil.fixSpaces(dir).replaceAll("%20", " ");
 		jarName = FileUtil.fixSpaces(jarName).replaceAll("%20", " ");
 		resourceFolderName = FileUtil.fixSpaces(resourceFolderName).replaceAll("%20", " ");
-		JarFile jarfile = new JarFile(new java.io.File(dir + jarName + ".jar"));
+		extractAll(new java.io.File(FileUtil.fixSpaces(dir).replaceAll("%20", " ") + jarName + ".jar"),dir+"\\"+jarName+"_lib\\");
+	}
+	
+	
+	/**
+	 * Extracts jar into new folder named: jarName_lib
+	 * 
+	 * @param jar Jar File
+	 * @param destination String path to export location
+	 * @throws IOException
+	 *             If the jarFile don't exists it's gonna blow up
+	 */
+	public static void extractAll(File jar,String destination) throws IOException {
+
+		
+			destination = FileUtil.fixSpaces(destination).replaceAll("%20", " ");
+			JarFile jarfile = new JarFile(jar);
 		Enumeration<JarEntry> enu = jarfile.entries();
 		// File file = new File(dir+"\\"+jarName+"_lib\\");
 		while (enu.hasMoreElements()) {
-			String destdir = dir + "\\" + resourceFolderName + "\\";
+			String destdir = destination;
 			JarEntry je = enu.nextElement();
-			if (!je.getName().contains("org") && !je.getName().contains("META-INF")) {
+			//if (!je.getName().contains("org") && !je.getName().contains("META-INF")) {
 
 				File fl = new File(destdir, je.getName());
 				if (!fl.exists()) {
@@ -275,7 +232,7 @@ public class JarUtil{
 				fo.close();
 				is.close();
 
-			}
+			//}
 		}
 		jarfile.close();
 	}

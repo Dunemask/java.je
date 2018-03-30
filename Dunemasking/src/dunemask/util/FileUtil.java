@@ -120,6 +120,47 @@ public class FileUtil{
     	
     }
     
+    /**Get File From Specified URL and download to Wanted 'File'
+   	 * <p>(Web File)</p>
+   	 * @param address  address
+   	 * @return Return file from url
+   	 * */
+       public static File getWebFile(String address,File file) {
+       	URL url = null;
+   		try {
+   			url = new URL(FileUtil.fixSpaces(FileUtil.filePathFix(address)));
+   		} catch (MalformedURLException e1) {
+   			e1.printStackTrace();
+   		}
+       	
+       	File webFile=null;
+       	//String name = new File(url.getFile()).getName();
+       //	String tDir = System.getProperty("java.io.tmpdir");
+       	try {
+       		InputStream in = url.openStream();
+       		webFile = file;
+   	
+       		OutputStream out = new FileOutputStream(webFile);
+       		int read;
+   			byte[] bytes = new byte[1024^4];
+
+   			while ((read = in.read(bytes)) != -1) {
+   				out.write(bytes, 0, read);
+   			}
+       		
+       		
+       		out.close();
+       		in.close();	
+       		//webFile.deleteOnExit();
+       		
+       		
+       	}catch(IOException e) {
+       		e.printStackTrace();
+       	}
+       	return webFile;
+       	
+       }
+    
     
     /**Write File From "File"
      * @param fileIn Input File
