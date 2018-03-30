@@ -20,7 +20,10 @@ public class CMD {
 	
 	
 	
-	
+	public static String copyFolderAndSubContetntsViaCmd(String folderIn,String folderOut) {
+		return "xcopy \""+folderIn+"\" \""+folderOut+"\""+" xcopy c:\\ d:\\ /h/i/c/k/e/r/y";
+	}
+    
 	/** @param in File in(must be real)
 	 * 	@param out File out(must be real)
 	 * @return Returns String to run in command
