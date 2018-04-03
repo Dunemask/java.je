@@ -13,6 +13,14 @@ import java.util.Random;
 public class StringUtil {
 
     final static double version = 4.35;
+    
+    /** Tab WhiteSpace
+     * 
+     * */
+    public static final String tab = "	";
+    
+    
+    
 	/**
 	 * The Alphabet To Be Searched for Random Char Gen.
 	 */
