@@ -26,7 +26,7 @@ public class RW {
 	/***Version*/
     final static double version = 4.35;
     /**First Line In RW Document starts here*/
-    final static int firstLine=1;
+    public final static int firstLine=0;
     
 	/**
 	 * Insert Line To Specified file

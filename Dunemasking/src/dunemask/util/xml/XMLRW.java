@@ -1,11 +1,15 @@
 /**
  * 
  */
-package dunemask.util;
+package dunemask.util.xml;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import dunemask.util.FileUtil;
+import dunemask.util.RW;
+import dunemask.util.StringUtil;
 
 /**
  * @author dunemask
@@ -37,7 +41,7 @@ public class XMLRW {
     }
     
     /** Creates a File in the specified location, (handles parent folders)
-     * <p>Gives it a body as well, if no body is needed then use {@link dunemask.util.XMLRW#NOBODY} For the arg</p>
+     * <p>Gives it a body as well, if no body is needed then use {@link dunemask.util.xml.XMLRW#NOBODY} For the arg</p>
      * @param file File
      * @param body Body Element
      * 
@@ -102,13 +106,15 @@ public class XMLRW {
     public static void addElement(File file,String[] parentElementChain,String newElement,Object value) {
     	int low=0,high=FileUtil.linesInFile(file);
     	int tabs=0;
-    	for(int i=0;i<parentElementChain.length;i++) {
-    		String element = parentElementChain[i];
-    		int tlow = FileUtil.findInDocumentBounds(file,element(element), low, high);
-    		int thigh = FileUtil.findInDocumentBounds(file,closeElement(element), low, high);
-    		low=tlow;
-    		high=thigh;
-    		tabs++;
+    	if(parentElementChain!=null) {
+	    	for(int i=0;i<parentElementChain.length;i++) {
+	    		String element = parentElementChain[i];
+	    		int tlow = FileUtil.findInDocumentBounds(file,element(element), low, high);
+	    		int thigh = FileUtil.findInDocumentBounds(file,closeElement(element), low, high);
+	    		low=tlow;
+	    		high=thigh;
+	    		tabs++;
+	    	}
     	}
     	String tab = "";
     	for(int i=0;i<tabs;i++) {
