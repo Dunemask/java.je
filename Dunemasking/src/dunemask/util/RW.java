@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -23,6 +25,80 @@ public class RW {
     before reading them off, Clean takes fairly long*/
 	/***Version*/
     final static double version = 4.35;
+    /**First Line In RW Document starts here*/
+    final static int firstLine=1;
+    
+	/**
+	 * Insert Line To Specified file
+	 * 
+	 * @param file
+	 *            File Where line is inserted
+	 * @param text
+	 *            Text to be Inserted
+	 * @param line
+	 *            Line where text will be inserted
+	 *
+	 */
+    public static void insertLine(File file,String text,int line) {
+    	String[] lines = RW.readAll(file);
+    	ArrayList<String> newLines = new ArrayList<String>();
+		if(line>lines.length) {
+			throw new RuntimeException("Line Bounds "+ line + " Exceed the File's Length of "+lines.length);
+		}
+		int store = 0;
+    	// StartLine-1 Is one less than the holder
+    	for(int i=0;i<line-1;i++) {
+    		newLines.add(lines[i]);
+    		store++;
+    	}
+    	newLines.add(text);
+    	for(int i=store;i<lines.length;i++) {
+    		newLines.add(lines[i]);
+    		//System.out.println(newLines.get(i));
+    		store=i;
+    	}
+    	
+    	RW.writeAll(file, newLines.toArray(new String[newLines.size()]));
+    	
+    }
+    
+	/**
+	 * Insert Lines in Specified file
+	 * 
+	 * @param file
+	 *            File Where lines are written
+	 * @param text
+	 *            Text to be Inserted
+	 * @param startLine
+	 *            StartLine where text will be inserted
+	 *
+	 */
+    public static void insertLines(File file,String[] text,int startLine) {
+    	String[] lines = RW.readAll(file);
+    	ArrayList<String> newLines = new ArrayList<String>();
+		if(startLine>lines.length) {
+			throw new RuntimeException("Line Bounds "+ startLine + " Exceed the File's Length of "+lines.length);
+		}
+		int store = 0;
+    	// StartLine-1 Is one less than the holder
+    	for(int i=0;i<startLine-1;i++) {
+    		newLines.add(lines[i]);
+    		store++;
+    	}
+    	ArrayList<String> insertLines = new ArrayList<String>(Arrays.asList(text));
+    	newLines.addAll(insertLines);
+    	for(int i=store;i<lines.length;i++) {
+    		newLines.add(lines[i]);
+    		//System.out.println(newLines.get(i));
+    		store=i;
+    	}
+
+
+    	RW.writeAll(file, newLines.toArray(new String[newLines.size()]));
+    	
+    }
+    
+    
 	/**
 	 * Write Line To Specified file
 	 * 
@@ -67,6 +143,21 @@ public class RW {
 		String[] lines = read(file, 1, FileUtil.linesInFile(file));
 		return lines;
 	}
+	
+	/**
+	 * Write String array To Specified file
+	 * 
+	 * @param file
+	 *            File Where line is written
+	 * @param text
+	 *            String Array to be Written
+	 *
+	 */
+	public static void writeAll(File file, String[] text) {
+		write(file,text,0);
+		
+	}
+	
 	
 	
 	

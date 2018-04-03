@@ -295,6 +295,43 @@ public class FileUtil{
 		}
 		return location;
 	}
+	
+	/**Find a line of text in file, Case Not sensitive
+	 * <p>Returns First instance found</p>
+	 * @param file
+	 *            File to search
+	 * @param text
+	 *            Text to be searched for
+	 * @param low Lower Bounds to be searched
+	 * 
+	 * @param high Max Bounds to be searched
+	 * @return The line where the text is located
+	 */
+	public static int findInDocumentBounds(File file, String text,int low,int high) {
+		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		
+		if(low>lines.length) {
+			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
+		}
+		if(high>lines.length) {
+			throw new RuntimeException("Higher Bounds "+ high + " Exceed the File's Length of "+lines.length);
+		}
+		
+		int location = -5;
+		// Start at first line (Not 0 lines in file :P)
+		// To Account For the counter it has to be 0 revoked previous argument
+		for (int i = low; i <high; i++) {
+			if (StringUtil.containsIgnoreCase(lines[i],text)||lines[i].equalsIgnoreCase(text)) {
+				location = i+1;
+				i=lines.length;
+			}
+
+		}
+		if(location==-5) {
+			throw new RuntimeException("Text \n"+text+" not found in \n File:"+file);
+		}
+		return location;
+	}
 
 	/**
 	 * Gets the last Line in the document
