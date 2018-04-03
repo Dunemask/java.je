@@ -23,7 +23,7 @@ public class Expression implements Serializable{
 	 */
 	private static final long serialVersionUID = -8079254251686484945L;
 	/***Version*/
-    final static double version = 4.35;
+    final static double version = 4.5;
 	private String expression;
 	private String intExpression;
 	private int[] vari;

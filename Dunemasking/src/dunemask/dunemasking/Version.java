@@ -15,7 +15,7 @@ import dunemask.util.RW;
  */
 public class Version {
 	/***Version*/
-    final static double version = 4.35;
+    final static double version = 4.5;
 	
 	/**
 	 * Gets the Library version of Dunemasking

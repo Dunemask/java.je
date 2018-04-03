@@ -17,7 +17,7 @@ import dunemask.util.StringUtil;
  */
 public class XMLRW {
 	/***Version*/
-    final static double version = 4.7;
+    final static double version = 5.8;
     /** No Body for newXMLFile
      **/
     public static final String NOBODY = "$none$";
@@ -263,7 +263,7 @@ public class XMLRW {
         String lastElement = parentElementChain[parentElementChain.length-1];
         //Low Should Equal HIgh
         if(high!=low) {
-        	throw new RuntimeException("Invalid Dunemask XML Doc, Container Found; not Element");
+        	throw new RuntimeException("Invalid Dunemask XML Doc, Container "+ parentElementChain[parentElementChain.length-1]+" Found; not Element");
         }else {
         	String full =  RW.read(file, low);
         	int mark=0;
@@ -280,6 +280,26 @@ public class XMLRW {
         }
         
     	return ob;
+    }
+    /** Tests if directed path is element
+     * @param file XML doc
+     * @param parentElementChain Hiarchy down to the element to be added
+     * @return if Directed Path is element, assuming path is accurate
+     * */
+    public static boolean isElement(File file,String[] parentElementChain) {
+    	int low=0,high=FileUtil.linesInFile(file);
+    	for(int i=0;i<parentElementChain.length;i++) {
+    		String element = parentElementChain[i];
+    		int tlow = FileUtil.findInDocumentBounds(file,element(element), low, high);
+    		int thigh = FileUtil.findInDocumentBounds(file,closeElement(element), low, high);
+    		low=tlow;
+    		high=thigh;
+    	}
+        if(high!=low) {
+        	return false;
+        }else {
+        	return true;
+        }
     }
     
 	

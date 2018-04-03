@@ -24,7 +24,7 @@ public class RW {
 	/*@RW.java: RW Is the fast version with a clean file function that copies the file 
     before reading them off, Clean takes fairly long*/
 	/***Version*/
-    final static double version = 4.35;
+    final static double version = 4.5;
     /**First Line In RW Document starts here*/
     public final static int firstLine=0;
     

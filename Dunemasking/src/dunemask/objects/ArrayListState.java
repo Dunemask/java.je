@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class ArrayListState{
-		
+	/***Version*/
+    final static double version = 5.8;
 		private HashMap<String,ArrayList<String>> map;
 		public ArrayListState() {
 			setMap(new HashMap<String,ArrayList<String>>());

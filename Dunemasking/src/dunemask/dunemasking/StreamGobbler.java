@@ -21,7 +21,7 @@ import java.io.InputStreamReader;
  */
 public class StreamGobbler extends Thread {
 	/**Version*/
-    final static double version = 4.35;
+    final static double version = 4.5;
 	
     InputStream is;
 

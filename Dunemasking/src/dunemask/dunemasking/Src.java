@@ -16,7 +16,7 @@ import dunemask.util.JarUtil;
  **/
 public class Src {
 	/***Version*/
-    final static double version = 4.35;
+    final static double version = 4.5;
 	public static final int IDE = 0;
 	public static final int Jar = 1;
 	public static final int Close = 2;

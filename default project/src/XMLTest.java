@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -23,9 +24,31 @@ public class XMLTest {
 	 */
 	public static void main(String[] args) {
 		//fullChar();
-		sframe();
+		//sframe();
 		//tframe();
 		//frame();
+		epichar();
+		
+		
+	}
+
+	/**
+	 * 
+	 */
+	private static void epichar() {
+		String[] stats = new String[] {"42","12","5","100","85","https://Epic.gif"};
+		File file = new File(System.getProperty("user.home")+"/Desktop/Swordsman.xml");
+		XMLMap xml = new XMLMap(file,"Character");
+		xml.addContainer("Attributes", xml.getParentByState("Character"));
+		ArrayList<String> values = new ArrayList<String>(Arrays.asList(stats));
+		HashMap<String,Object> key = new HashMap<String,Object>();
+		key.put("HP", stats[0]);
+		key.put("ATK", stats[1]);
+		key.put("DEF", stats[2]);
+		key.put("CRIT", stats[3]);
+		key.put("BLOCK", stats[4]);
+		key.put("GIF", stats[5]);
+		xml.addElements(key, xml.getParentByState("Attributes"));
 		
 		
 	}
@@ -59,6 +82,13 @@ public class XMLTest {
 		vals.add("\"The Best\"");
 		vals.add("\"Almost The Best\"");
 		mp.addElements(els,mp.lastParent(), vals);
+		/*for(String s:mp.getSubComponents(mp.getParentByState("JFrame"))){
+			if(XMLRW.isElement(file, mp.getParentByState(s).toArray(new String[mp.getParentByState(s).size()]))) {
+				System.out.println(s);
+			}
+		}*/
+		
+		
 	}
 
 	/**
