@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 
 import dunemask.util.XMLRW;
 
@@ -34,6 +35,21 @@ public class XMLTest {
 		XMLRW.addElement(file, new String[] {"Character","Attributes"},"CRIT",100);
 		XMLRW.addElement(file, new String[] {"Character","Attributes"},"BLOCK",87);
 		XMLRW.addElement(file, new String[] {"Character","Attributes"},"GIF","C:/Ye");
+		/*for(int i=0;i<archs.size();i++) {
+			stats.add(XMLRW.getElementValue(file, new String[] {"Character","Attributes",archs.get(i)}));
+		}
+		for(String x:stats) {
+			System.out.println(x);
+		}*/
+		/*ArrayList<String> vals = XMLRW.getElementsValues(file, new String[] {"Character","Attributes"}, archs);
+		*/
+		ArrayList<String> vals = XMLRW.getElementsValues(file, new String[] {"Character","Attributes"});
+		vals.add(0,XMLRW.getElementValue(file, new String[] {"Character","Name"}));
+		for(String x:vals) {
+			System.out.println(x);
+		}
+		
+		
 		
 	}
 
