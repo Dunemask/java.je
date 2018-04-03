@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import dunemask.util.XMLRW;
 
@@ -18,7 +19,19 @@ public class XMLTest {
 	 */
 	public static void main(String[] args) {
 		//test();
-		character();
+		//character();
+		ArrayList<String> tmp = new ArrayList<String>();
+		tmp.add("1");
+		HashMap<String,ArrayList<String>> map = new HashMap<String,ArrayList<String>>();
+		map.put("ORIGINAL", new ArrayList<String>().addAll(tmp));
+		tmp.add("2");
+		map.put("NEXT", new ArrayList<String>().addAll(tmp));
+		for(String s:map.get("ORIGINAL")) {
+			System.out.println(s);
+		}
+		for(String s:map.get("NEXT")) {
+			System.out.println(s);
+		}
 	}
 
 	/**
