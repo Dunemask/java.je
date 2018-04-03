@@ -41,8 +41,24 @@ public class XMLTest {
 		int h=200;
 		String title = "Test!";
 		XMLMap mp = new XMLMap(file,"JFrame");
-		mp.addContainer(title,mp.getLastParent());
-		
+		//mp.addContainer(title,mp.getLastParent());
+		//mp.addContainer("dim", mp.getLastParent());
+		//mp.addContainer("attr", mp.getParentByState("JFrame"));
+		ArrayList<String> conts = new ArrayList<String>();
+		conts.add("dim");
+		conts.add("attr");
+		mp.addContainers(conts, mp.getParentByState("JFrame"));
+		mp.setLastState("dim");
+		mp.addElement("X", mp.getParentByState(mp.getLastState()), "23");
+		mp.addElement("Y", mp.lastParent(), "42");
+		mp.setLastState("attr");
+		ArrayList<String> els = new ArrayList<String>();
+		els.add("Taco");
+		els.add("HotDog");
+		ArrayList<String> vals = new ArrayList<String>();
+		vals.add("\"The Best\"");
+		vals.add("\"Almost The Best\"");
+		mp.addElements(els,mp.lastParent(), vals);
 	}
 
 	/**
