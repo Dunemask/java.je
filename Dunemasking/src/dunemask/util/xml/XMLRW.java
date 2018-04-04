@@ -290,10 +290,14 @@ public class XMLRW {
     	int low=0,high=FileUtil.linesInFile(file);
     	for(int i=0;i<parentElementChain.length;i++) {
     		String element = parentElementChain[i];
+    		try {
     		int tlow = FileUtil.findInDocumentBounds(file,element(element), low, high);
     		int thigh = FileUtil.findInDocumentBounds(file,closeElement(element), low, high);
     		low=tlow;
     		high=thigh;
+    		}catch(RuntimeException e) {
+    			return false;
+    		}
     	}
         if(high!=low) {
         	return false;

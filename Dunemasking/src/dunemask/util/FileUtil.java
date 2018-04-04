@@ -328,7 +328,7 @@ public class FileUtil{
 
 		}
 		if(location==-5) {
-			throw new RuntimeException("Text \n"+text+" not found in \n File:"+file);
+			throw new RuntimeException("Text \n"+text+" not found between "+low+" and "+high+" \n File:"+file);
 		}
 		return location;
 	}

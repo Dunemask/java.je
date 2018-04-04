@@ -35,6 +35,63 @@ public class XMLMap {
 		holder.removeAll(holder);
 		XMLRW.newXMLFile(xml, body);
 	}
+	/** Used For Loading Existing Xml files
+	 * @param file XML doc location
+	 * 
+	 * */
+	public XMLMap(File file) {
+		/*String path = file.getAbsolutePath();
+		path = FileUtil.removeExtension(path);
+		path+="tmp.xml";
+		File tfile = new File(path);
+		XMLRW.newXMLFile(tfile, XMLRW.NOBODY);*/
+		this.setXml(file);
+		ha =  new ArrayListState();
+		holder = new ArrayList<String>();
+		ArrayList<String> tmp = XMLRW.getElements(file, new String[] {});
+		String body = tmp.get(0);
+		lastState = body;
+		holder.add(body);
+		ha.addState(holder, body);
+		holder.removeAll(holder);
+		map(tmp);
+		
+	}
+	
+	/** Works for now
+	 * 
+	 * */
+	private void map(ArrayList<String> full) {
+		ArrayList<String> chain = ha.getState(lastState);
+		//0 is top
+		for(int i=1;i<full.size();i++) {
+			ParentBuilder.init(getXml(),chain);
+			ParentBuilder.addPiece(full.get(i));
+
+			if(XMLRW.isElement(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
+				mapElement(chain,full.get(i));
+			}else {
+				mapContainer(chain,full.get(i));
+				map(chain);
+			}
+		}
+		
+	}
+	private void mapContainer(ArrayList<String> parent,String name) {
+		holder.removeAll(holder);
+		if(parent!=null){holder.addAll(parent);}
+		holder.add(name);
+		ha.addState(holder, name);
+		lastState=name;
+		holder.removeAll(holder);
+	}
+	private void mapElement(ArrayList<String> parent,String name) {
+		holder.removeAll(holder);
+		if(parent!=null){holder.addAll(parent);}
+		holder.add(name);
+		ha.addState(holder, name);
+		holder.removeAll(holder);
+	}
 	
 	/** Create new XML file 
 	 * @param xml File

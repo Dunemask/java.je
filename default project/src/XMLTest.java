@@ -27,8 +27,20 @@ public class XMLTest {
 		//sframe();
 		//tframe();
 		//frame();
-		epichar();
+		//epichar();
+		limiter();
 		
+		
+	}
+
+	/**
+	 * 
+	 */
+	private static void limiter() {
+		File file = new File(System.getProperty("user.home")+"/Desktop/Limit.xml");
+		XMLMap xml = new XMLMap(file,"Limit");
+		xml.addElement("Container", xml.getParentByState("Limit"),"4");
+		xml.addContainer("Container", xml.lastParent());
 		
 	}
 
@@ -49,7 +61,17 @@ public class XMLTest {
 		key.put("BLOCK", stats[4]);
 		key.put("GIF", stats[5]);
 		xml.addElements(key, xml.getParentByState("Attributes"));
-		
+		xml.addContainer("Potato", xml.getParentByState("Character"));
+		xml.addElement("Green", xml.lastParent(), "Yes");
+		xml.addContainer("Orange", xml.getParentByState("Potato"));
+		xml.addContainer("NotCitrus", xml.getParentByState("Orange"));
+		xml.addElement("Citrus", xml.getParentByState("Orange"), "No");
+		xml.addElement("Other", xml.getParentByState("NotCitrus"), "potato");
+		xml.addContainer("Attributes", xml.getParentByState("Character"));
+		xml.addElement("Oasdf", xml.lastParent(), "Moo");
+		xml = new XMLMap(file);
+		ArrayList<String> ha = xml.getParentByState("Other");
+		System.out.println(xml.getElementFromDoc(ha));
 		
 	}
 
