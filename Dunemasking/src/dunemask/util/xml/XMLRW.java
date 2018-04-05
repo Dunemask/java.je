@@ -24,7 +24,7 @@ public class XMLRW {
     
     /** Container Identifier
      * */
-    static final String CONTAINER = "$container$";
+    public static final String CONTAINER = "$container$";
     
     /**@param element
      * @return Element in XML Element Form
@@ -82,7 +82,16 @@ public class XMLRW {
     		}
     	
     }
-    
+    /** Adds a container in the XML Doc
+     * @param file XML File
+     * @param parentElementChain Hiarchy down to the container to be added
+     * @param container Name of Container
+     * 
+     * */
+    public static void addElementContainer(File file,String[] parentElementChain,String container,String uid) {
+    	addElementWithUID(file,parentElementChain,container,CONTAINER,uid);
+    	
+    }
     
     /** Adds a container in the XML Doc
      * @param file XML File
@@ -94,6 +103,156 @@ public class XMLRW {
     	addElement(file,parentElementChain,container,CONTAINER);
     	
     }
+    
+   /* public static ArrayList<String> getContainerByUID(File file,String uid){
+    	int line = FileUtil.containsInDocument(file, "UID="+uid);
+    	int tabCount=0;
+    	String fv = RW.read(file, line);
+    	String element = fv.replace(" UID="+uid, "");
+    	while(element!=element.replace(StringUtil.tab, "")) {
+    		////System.out.println(element);
+    		element=element.replaceFirst(StringUtil.tab, "");
+    		tabCount++;
+    	}
+    	System.out.println(element);
+    	ArrayList<String> path = new ArrayList<String>();
+    	path.add(element.replace("<", "").replace(">", ""));
+    	String[] lines = RW.read(file, 0, line-1);
+    	////System.out.println(lines[lines.length-1]);
+    	for(int i=1;i<tabCount;i++) {
+    		String ful = lines[lines.length-tabCount];
+			if(ful.contains(" UID=")) {
+				int index = ful.indexOf(" UID=");
+				ful = ful.replace(StringUtil.tab,"").substring(1, index);
+				////System.out.println("Changed:"+ful);
+			}
+			String simp=ful.replace(" ", "");
+    		////System.out.println(simp);
+    		path.add(0, simp);
+    	}
+    	////System.out.println(path);
+    	return path;
+    	
+    	
+    	
+    }
+    
+    public static ArrayList<String> getElementByUID(File file,String uid){
+    	int line = FileUtil.containsInDocument(file, "UID="+uid);
+    	int tabCount=0;
+    	String fv = RW.read(file, line);
+    	String element = fv.replace(" UID="+uid, "");
+    	while(element!=element.replace(StringUtil.tab, "")) {
+    		////System.out.println(element);
+    		element=element.replaceFirst(StringUtil.tab, "");
+    		tabCount++;
+    	}
+    	//System.out.println("Wanted El:"+element);
+    	int ind = element.indexOf(">");
+    	ArrayList<String> path = new ArrayList<String>();
+    	path.add(element.substring(0,ind).replace("<", ""));
+    	String[] lines = RW.read(file, 0, line-1);
+    	////System.out.println(lines[lines.length-1]);
+    	for(int i=1;i<tabCount;i++) {
+    		String ful = lines[lines.length-tabCount];
+			if(ful.contains(" UID=")) {
+				int index = ful.indexOf(" UID=");
+				ful = ful.replace(StringUtil.tab,"").substring(1, index);
+			}
+			String simp=ful.replace(" ", "");
+    		////System.out.println(simp);
+    		path.add(0, simp);
+    	}
+    	//System.out.println("FinalPath Too: "+path);
+    	return path;
+    	
+    	
+    	
+    }*/
+    
+    
+    
+    /** Removes a element in the XML Doc
+     * @param file XML File
+     * @param parentElementChain Hiarchy down to the element to be added
+     * @param newElement Name of new Element
+     * @param value Value for new Element
+     * 
+     * */
+    public static void removeElement(File file,String[] parentElementChain) {
+    	int low=0,high=FileUtil.linesInFile(file);
+    	if(parentElementChain!=null) {
+	    	for(int i=0;i<parentElementChain.length;i++) {
+	    		String element = parentElementChain[i];
+	    		int tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+	    		int thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		low=tlow;
+	    		high=thigh;
+	    	}
+    	}
+    	//Sequential
+    	if(low+1==high) {
+    		RW.write(file, "", high);
+    	}else if(low+1==high) {
+    		RW.write(file, "", high);
+    	}else if(low<high) {
+    		RW.write(file, "", high);
+    	}
+    }
+    /** Adds a element in the XML Doc
+     * @param file XML File
+     * @param parentElementChain Hiarchy down to the element to be added
+     * @param newElement Name of new Element
+     * @param value Value for new Element
+     * 
+     * */
+    public static void addElementWithUID(File file,String[] parentElementChain,String newElement,Object value,String uid) {
+    	//System.out.println(uid);
+    	int low=0,high=FileUtil.linesInFile(file);
+    	int tabs=0;
+    	if(parentElementChain!=null) {
+	    	for(int i=0;i<parentElementChain.length;i++) {
+	    		String element = parentElementChain[i];
+	    		int tlow;
+	    		int thigh;
+	    		try {
+	    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+	    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		}catch(RuntimeException e) {
+	    			String op = element(element);
+	    			tlow = FileUtil.containsInDocumentBounds(file,op.substring(0,element.length()-1), low, high);
+	        		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		}
+	    		low=tlow;
+	    		high=thigh;
+	    		tabs++;
+	    	}
+    	}
+    	String tab = "";
+    	for(int i=0;i<tabs;i++) {
+    		tab+=StringUtil.tab;
+    	}
+    	////System.out.println("H:"+high+",L:"+low);
+    	//Sequential
+    	if(low+1==high&&!value.toString().equalsIgnoreCase(CONTAINER)) {
+    		RW.insertLine(file, tab+element(newElement+" UID="+uid)+value+closeElement(newElement), high);
+    	}else if(low+1==high) {
+    		value = System.lineSeparator();
+    		RW.insertLine(file, tab+element(newElement+" UID="+uid)+value+tab+closeElement(newElement), high);
+    	}else if(low<high&&!value.toString().equalsIgnoreCase(CONTAINER)) {
+    		RW.insertLine(file, tab+element(newElement+" UID="+uid)+value+closeElement(newElement), high);
+    	}else if(value.toString().equalsIgnoreCase(CONTAINER)){
+    		value = System.lineSeparator();
+    		RW.insertLine(file, tab+element(newElement+" UID="+uid)+value+tab+closeElement(newElement), high);
+    	}
+    	
+    	if(low==high) {
+    		throw new RuntimeException("Invalid Dunemask XML Doc");
+    	}
+    	
+    	
+    }
+    
     
     
     /** Adds a element in the XML Doc
@@ -109,8 +268,16 @@ public class XMLRW {
     	if(parentElementChain!=null) {
 	    	for(int i=0;i<parentElementChain.length;i++) {
 	    		String element = parentElementChain[i];
-	    		int tlow = FileUtil.findInDocumentBounds(file,element(element), low, high);
-	    		int thigh = FileUtil.findInDocumentBounds(file,closeElement(element), low, high);
+	    		int tlow;
+	    		int thigh;
+	    		try {
+	    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+	    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		}catch(RuntimeException e) {
+	    			String op = element(element);
+	    			tlow = FileUtil.containsInDocumentBounds(file,op.substring(0,element.length()-1), low, high);
+	        		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		}
 	    		low=tlow;
 	    		high=thigh;
 	    		tabs++;
@@ -120,7 +287,7 @@ public class XMLRW {
     	for(int i=0;i<tabs;i++) {
     		tab+=StringUtil.tab;
     	}
-    	//System.out.println("H:"+high+",L:"+low);
+    	////System.out.println("H:"+high+",L:"+low);
     	//Sequential
     	if(low+1==high&&!value.toString().equalsIgnoreCase(CONTAINER)) {
     		RW.insertLine(file, tab+element(newElement)+value+closeElement(newElement), high);
@@ -193,7 +360,9 @@ public class XMLRW {
     		ArrayList<String> tmp = new ArrayList<String>();
     		tmp.addAll(fullArch);
     		tmp.add(cont.get(i));
+    		if(XMLRW.isElement(file, tmp.toArray(new String[tmp.size()]))) {
     		vals.add(XMLRW.getElementValue(file, tmp.toArray(new String[tmp.size()])));
+    		}
     	}
 		return vals;
     }
@@ -210,12 +379,20 @@ public class XMLRW {
     	int low=0,high=FileUtil.linesInFile(file);
     	for(int i=0;i<parentElementChain.length;i++) {
     		String element = parentElementChain[i];
-    		int tlow = FileUtil.findInDocumentBounds(file,element(element), low, high);
-    		int thigh = FileUtil.findInDocumentBounds(file,closeElement(element), low, high);
+    		int tlow;
+    		int thigh;
+    		try {
+    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    		}catch(RuntimeException e) {
+    			String op = element(element);
+    			tlow = FileUtil.containsInDocumentBounds(file,op.substring(0,element.length()-1), low, high);
+        		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    		}
     		low=tlow;
     		high=thigh;
     	}
-    	//System.out.println(RW.read(file, low)+","+RW.read(file, high));
+    	////System.out.println(RW.read(file, low)+","+RW.read(file, high));
     	String[] lines = RW.read(file, low+1, high-1);
     	for(int i=0;i<lines.length;i++) {
     		String full = lines[i];
@@ -251,21 +428,31 @@ public class XMLRW {
      * 
      * */
     public static String getElementValue(File file,String[] parentElementChain) {
+    	//System.out.println(Arrays.asList(parentElementChain));
     	int low=0,high=FileUtil.linesInFile(file);
     	for(int i=0;i<parentElementChain.length;i++) {
     		String element = parentElementChain[i];
-    		int tlow = FileUtil.findInDocumentBounds(file,element(element), low, high);
-    		int thigh = FileUtil.findInDocumentBounds(file,closeElement(element), low, high);
+    		int tlow;
+    		int thigh;
+    		try {
+    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    		}catch(RuntimeException e) {
+    			String op = element(element);
+    			tlow = FileUtil.containsInDocumentBounds(file,op.substring(0,element.length()-1), low, high);
+        		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    		}
+    		
     		low=tlow;
     		high=thigh;
     	}
     	String ob = null;
-        String lastElement = parentElementChain[parentElementChain.length-1];
         //Low Should Equal HIgh
         if(high!=low) {
         	throw new RuntimeException("Invalid Dunemask XML Doc, Container "+ parentElementChain[parentElementChain.length-1]+" Found; not Element");
         }else {
         	String full =  RW.read(file, low);
+        	/*
         	int mark=0;
         	for(int i=0;i<full.length();i++) {
         		mark++;
@@ -276,11 +463,37 @@ public class XMLRW {
         	full = full.substring(mark-1);
         	full= full.replaceAll("<"+lastElement+">", "");
         	full =full.replace("</"+lastElement+">", "");
-        	ob = full;
+        	ob = full;*/
+        	full = full.replaceFirst("<", "");
+        	int ind1 = full.indexOf(">");
+        	int ind2 = full.indexOf("<");
+        	ob = full.substring(ind1+1, ind2);
+        	
         }
         
     	return ob;
     }
+    public static String getValueByUID(File file,String uid) {
+    	int line = FileUtil.containsInDocument(file, " UID="+uid);
+    	String full =  RW.read(file, line);
+    	/*
+    	int mark=0;
+    	for(int i=0;i<full.length();i++) {
+    		mark++;
+    		if(String.valueOf(full.charAt(i)).equalsIgnoreCase("<")) {
+    			i=full.length();
+    		}
+    	}
+    	full = full.substring(mark-1);
+    	full= full.replaceAll("<"+lastElement+">", "");
+    	full =full.replace("</"+lastElement+">", "");
+    	ob = full;*/
+    	full = full.replaceFirst("<", "");
+    	int ind1 = full.indexOf(">");
+    	int ind2 = full.indexOf("<");
+    	return full.substring(ind1+1, ind2);
+    }
+    
     /** Tests if directed path is element
      * @param file XML doc
      * @param parentElementChain Hiarchy down to the element to be added
@@ -290,20 +503,86 @@ public class XMLRW {
     	int low=0,high=FileUtil.linesInFile(file);
     	for(int i=0;i<parentElementChain.length;i++) {
     		String element = parentElementChain[i];
+    		int tlow;
+    		int thigh;
     		try {
-    		int tlow = FileUtil.findInDocumentBounds(file,element(element), low, high);
-    		int thigh = FileUtil.findInDocumentBounds(file,closeElement(element), low, high);
-    		low=tlow;
-    		high=thigh;
+	    		try {
+	    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+	    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		}catch(RuntimeException e) {
+	    			String op = element(element);
+	        		if(element.contains("UID=")) {
+	        			element = element.replace(XMLRW.getUID(file, parentElementChain), "");
+	        		}
+	    			////System.out.println("El:"+element);
+	    			tlow = FileUtil.containsInDocumentBounds(file,op.substring(0,element.length()-1), low, high);
+	        		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		}
     		}catch(RuntimeException e) {
     			return false;
     		}
+    		
+    		low=tlow;
+    		high=thigh;
     	}
+        //Low Should Equal HIgh
         if(high!=low) {
         	return false;
         }else {
         	return true;
         }
+    }
+    
+    /** Tests if directed path has UID
+     * @param file XML doc
+     * @param parentElementChain Hiarchy down to the element to be added
+     * @return if Directed Path is element, assuming path is accurate
+     * */
+    public static boolean hasUID(File file,String[] parentElementChain) {
+    	String uid = getUID(file, parentElementChain);
+    	if(uid!=null) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    }
+    
+    
+    /** Tests if directed path has UID
+     * @param file XML doc
+     * @param parentElementChain Hiarchy down to the element to be added
+     * @return Null if none found, otherwise UID
+     * */
+    public static String getUID(File file,String[] parentElementChain) {
+    	int low=0,high=FileUtil.linesInFile(file);
+    	for(int i=0;i<parentElementChain.length;i++) {
+    		String element = parentElementChain[i];
+    		int tlow;
+    		int thigh;
+    		try {
+    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    		}catch(RuntimeException e) {
+    			String op = element(element);
+    			
+    			////System.out.println("El:"+element);
+    			tlow = FileUtil.containsInDocumentBounds(file,op.substring(0,element.length()-1), low, high);
+        		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    		}
+    		
+    		low=tlow;
+    		high=thigh;
+    	}
+    	
+    	String full = RW.read(file, low);
+    	if(StringUtil.containsIgnoreCase(full,"UID=")){
+    		int ind1 = full.indexOf("UID=");
+    		int ind2 = full.indexOf(">");
+    		full = full.substring(ind1+4, ind2);
+    		return full;
+    	}else {
+    		return null;
+    	}
     }
     
 	

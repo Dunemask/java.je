@@ -13,6 +13,15 @@ public class ArrayListState{
 			
 		}
 		
+		/** Remove State
+		 * @param state State Removed
+		 * 
+		 * */
+		public void removeState(String state) {
+			map.remove(state, map.get(state));
+		}
+
+		
 		/**@param list List to be added
 		 * @param state Name for the state
 		 * 

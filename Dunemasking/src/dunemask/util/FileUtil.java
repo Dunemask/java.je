@@ -268,7 +268,69 @@ public class FileUtil{
 		isInList = StringUtil.alreadyInList(lines, text);	
 		return isInList;
 	}
+	/**Find a line of text in file, Case Not sensitive
+	 * <p>Returns First instance found</p>
+	 * @param file
+	 *            File to search
+	 * @param text
+	 *            Text to be searched for
+	 * @return The line where the text is located
+	 */
+	public static int findInIgnoreCaseDocument(File file, String text) {
+		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		
+		int location = -5;
+		// Start at first line (Not 0 lines in file :P)
+		// To Account For the counter it has to be 0 revoked previous argument
+		for (int i = 0; i <lines.length; i++) {
+			if (lines[i].equalsIgnoreCase(text)) {
+				location = i+1;
+				i=lines.length;
+			}
 
+		}
+		if(location==-5) {
+			throw new RuntimeException("Text \n"+text+" not found in \n File:"+file);
+		}
+		return location;
+	}
+	//StringUtil.containsIgnoreCase(lines[i],text)||
+	/**Find a line of text in file, Case Not sensitive
+	 * <p>Returns First instance found</p>
+	 * @param file
+	 *            File to search
+	 * @param text
+	 *            Text to be searched for
+	 * @param low Lower Bounds to be searched
+	 * 
+	 * @param high Max Bounds to be searched
+	 * @return The line where the text is located
+	 */
+	public static int findInIgnoreCaseDocumentBounds(File file, String text,int low,int high) {
+		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		
+		if(low>lines.length) {
+			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
+		}
+		if(high>lines.length) {
+			throw new RuntimeException("Higher Bounds "+ high + " Exceed the File's Length of "+lines.length);
+		}
+		
+		int location = -5;
+		// Start at first line (Not 0 lines in file :P)
+		// To Account For the counter it has to be 0 revoked previous argument
+		for (int i = low; i <high; i++) {
+			if (lines[i].equalsIgnoreCase(text)) {
+				location = i+1;
+				i=lines.length;
+			}
+
+		}
+		if(location==-5) {
+			throw new RuntimeException("Text \n"+text+" not found between "+low+" and "+high+" \n File:"+file);
+		}
+		return location;
+	}
 	/**Find a line of text in file, Case Not sensitive
 	 * <p>Returns First instance found</p>
 	 * @param file
@@ -284,7 +346,7 @@ public class FileUtil{
 		// Start at first line (Not 0 lines in file :P)
 		// To Account For the counter it has to be 0 revoked previous argument
 		for (int i = 0; i <lines.length; i++) {
-			if (StringUtil.containsIgnoreCase(lines[i],text)||lines[i].equalsIgnoreCase(text)) {
+			if (lines[i].equals(text)) {
 				location = i+1;
 				i=lines.length;
 			}
@@ -295,7 +357,7 @@ public class FileUtil{
 		}
 		return location;
 	}
-	
+	//StringUtil.containsIgnoreCase(lines[i],text)||
 	/**Find a line of text in file, Case Not sensitive
 	 * <p>Returns First instance found</p>
 	 * @param file
@@ -321,7 +383,136 @@ public class FileUtil{
 		// Start at first line (Not 0 lines in file :P)
 		// To Account For the counter it has to be 0 revoked previous argument
 		for (int i = low; i <high; i++) {
-			if (StringUtil.containsIgnoreCase(lines[i],text)||lines[i].equalsIgnoreCase(text)) {
+			if (lines[i].equals(text)) {
+				location = i+1;
+				i=lines.length;
+			}
+
+		}
+		if(location==-5) {
+			throw new RuntimeException("Text \n"+text+" not found between "+low+" and "+high+" \n File:"+file);
+		}
+		return location;
+	}
+	/**Find a line of text in file, Case Not sensitive
+	 * <p>Returns First instance found</p>
+	 * @param file
+	 *            File to search
+	 * @param text
+	 *            Text to be searched for
+	 * @return The line where the text is located
+	 */
+	public static int containsInDocument(File file, String text) {
+		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		
+		int location = -5;
+		// Start at first line (Not 0 lines in file :P)
+		// To Account For the counter it has to be 0 revoked previous argument
+		for (int i = 0; i <lines.length; i++) {
+			if (lines[i].contains(text)) {
+				location = i+1;
+				i=lines.length;
+			}
+
+		}
+		if(location==-5) {
+			throw new RuntimeException("Text \n"+text+" not found in \n File:"+file);
+		}
+		return location;
+	}
+	
+	//StringUtil.containsIgnoreCase(lines[i],text)||
+	/**Find a line of text in file, Case Not sensitive
+	 * <p>Returns First instance found</p>
+	 * @param file
+	 *            File to search
+	 * @param text
+	 *            Text to be searched for
+	 * @param low Lower Bounds to be searched
+	 * 
+	 * @param high Max Bounds to be searched
+	 * @return The line where the text is located
+	 */
+	public static int containsInDocumentBounds(File file, String text,int low,int high) {
+		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		
+		if(low>lines.length) {
+			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
+		}
+		if(high>lines.length) {
+			throw new RuntimeException("Higher Bounds "+ high + " Exceed the File's Length of "+lines.length);
+		}
+		
+		int location = -5;
+		// Start at first line (Not 0 lines in file :P)
+		// To Account For the counter it has to be 0 revoked previous argument
+		for (int i = low; i <high; i++) {
+			if (lines[i].contains(text)) {
+				location = i+1;
+				i=lines.length;
+			}
+
+		}
+		if(location==-5) {
+			throw new RuntimeException("Text \n"+text+" not found between "+low+" and "+high+" \n File:"+file);
+		}
+		return location;
+	}
+	
+	/**Find a line of text in file, Case Not sensitive
+	 * <p>Returns First instance found</p>
+	 * @param file
+	 *            File to search
+	 * @param text
+	 *            Text to be searched for
+	 * @return The line where the text is located
+	 */
+	public static int containsIgnoreCaseInDocument(File file, String text) {
+		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		
+		int location = -5;
+		// Start at first line (Not 0 lines in file :P)
+		// To Account For the counter it has to be 0 revoked previous argument
+		for (int i = 0; i <lines.length; i++) {
+			if (StringUtil.containsIgnoreCase(lines[i],text)) {
+				location = i+1;
+				i=lines.length;
+			}
+
+		}
+		if(location==-5) {
+			throw new RuntimeException("Text \n"+text+" not found in \n File:"+file);
+		}
+		return location;
+	}
+	
+	//StringUtil.containsIgnoreCase(lines[i],text)||
+	/**Find a line of text in file, Case Not sensitive
+	 * <p>Returns First instance found</p>
+	 * @param file
+	 *            File to search
+	 * @param text
+	 *            Text to be searched for
+	 * @param low Lower Bounds to be searched
+	 * 
+	 * @param high Max Bounds to be searched
+	 * @return The line where the text is located
+	 */
+	public static int containsIgnoreCaseInDocumentBounds(File file, String text,int low,int high) {
+		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		
+		if(low>lines.length) {
+			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
+		}
+		if(high>lines.length) {
+			throw new RuntimeException("Higher Bounds "+ high + " Exceed the File's Length of "+lines.length);
+		}
+		
+		int location = -5;
+		// Start at first line (Not 0 lines in file :P)
+		// To Account For the counter it has to be 0 revoked previous argument
+		for (int i = low; i <high; i++) {
+			if (StringUtil.containsIgnoreCase(lines[i],text)) {
 				location = i+1;
 				i=lines.length;
 			}
