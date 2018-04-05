@@ -31,8 +31,9 @@ public class JTunes {
 		cf = new MainFrame();
 		cf.setVisible(true);
 		ArrayList<String> path = new ArrayList<String>(Arrays.asList(new String[] {"Library","30 Seconds To mars","Unknown Album","Song Info","Name"}));
-		System.out.println(library.getValueByPath(library.getParentByState("Name")));
-		System.out.println(library.getValueByPath(path));
+		//System.out.println(library.getValueByPath(library.getParentByState("Name")));
+		//System.out.println(library.getValueByPath(path));
+		library.tmp(library.getParentByState("30 Seconds To mars"));
 		/*File file = new File(System.getProperty("user.home")+"/Desktop/tmp.xml");
 		XMLMap xml = new XMLMap(file,"File");
 		xml.addContainerWithUID("Cookie", xml.lastParent(), "Alpha");
@@ -45,8 +46,13 @@ public class JTunes {
 	public static ArrayList<String> findArtists(String search){
 		ArrayList<String> art = new ArrayList<String>();
 		HashMap<String,String> mp = library.getElementsAndKeys(library.getParentByState("Library"));
+		ArrayList<String> keys = new ArrayList<String>(mp.keySet());
 		for(int i=0;i<mp.keySet().size();i++) {
-			System.out.println(mp.get(mp.keySet().size()));
+			//if(keys.get(i).equalsIgnoreCase("Name")) {
+				//System.out.println(mp.get(keys.get(i)));
+				//System.out.println(keys.get(i));
+			//}
+			
 		}
 		
 		

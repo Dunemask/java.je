@@ -133,10 +133,6 @@ public class XMLMap {
 			
 			
 			ParentBuilder.addPiece(tmp);
-			
-			
-			
-			
 			if(XMLRW.isElement(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
 				if(XMLRW.hasUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
 					mapElementUID(chain,full.get(i),XMLRW.getUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
@@ -292,7 +288,10 @@ public class XMLMap {
 
 		
 	}
-	
+	public HashMap<String,ArrayList<String>> getDirectSubComponents(ArrayList<String> path) {
+		ArrayListState st =  XMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()]));
+		return st.getMap();
+	}
 	
 	
 	/** Adds Container to xml doc
@@ -359,6 +358,10 @@ public class XMLMap {
 			return !true;
 		}
 	}
+	public void tmp(ArrayList<String> path) {
+		XMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()]));
+	}
+
 	
 	
 	/** Get Values from all sub elements in a container
@@ -368,19 +371,21 @@ public class XMLMap {
 	 *  
 	 * */
 	public HashMap<String, String> getElementsAndKeys(ArrayList<String> path) {
+		//TODO NONE IS GOOD!
 		HashMap<String,String> map = new HashMap<String,String>();
 		ArrayList<String> sub = XMLRW.getElements(getXml(), path.toArray(new String[path.size()]));
 		ArrayList<String> val = new ArrayList<String>(sub.size());
 		XMLMap.ParentBuilder.init(getXml(),path);
 		for( int i=0;i<sub.size();i++) {
+			//System.out.println(sub.get(i));
 			ParentBuilder.addPiece(sub.get(i));
 			if(XMLRW.isElement(getXml(), ParentBuilder.getParent().toArray(new String[ParentBuilder.getParent().size()]))) {
 				val.add(XMLRW.getElementValue(getXml(),ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
 			}else {
 				val.add("");
 			}
-			//System.out.print(sub.get(i)+",");
-			//System.out.println(val.get(i));
+			System.out.print(sub.get(i)+",");
+			System.out.println(val.get(i));
 			XMLMap.ParentBuilder.init(getXml(),path);
 			map.put(sub.get(i), val.get(i));
 		}

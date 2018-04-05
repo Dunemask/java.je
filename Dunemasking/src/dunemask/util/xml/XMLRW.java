@@ -6,7 +6,9 @@ package dunemask.util.xml;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
+import dunemask.objects.ArrayListState;
 import dunemask.util.FileUtil;
 import dunemask.util.RW;
 import dunemask.util.StringUtil;
@@ -366,7 +368,78 @@ public class XMLRW {
     	}
 		return vals;
     }
-    
+    /** Strips it of the uid if it has it
+     * 
+     * */
+    public static String removeUID(String elm) {
+    	String full = elm;
+    	if(StringUtil.containsIgnoreCase(full,"UID=")){
+    		int ind1 = full.indexOf("UID=");
+    		int ind2 = full.indexOf("<");
+    		full = full.substring(ind2, ind1-4);
+    	}
+    		return full;
+    }
+    //TODO
+    public static ArrayListState getSubElementsAndContainers(File file,String[] parentElementChain) {
+    	ArrayListState map = new ArrayListState();
+    	ArrayListState al = new ArrayListState();
+    	ArrayList<String> elms = new ArrayList<String>();
+    	ArrayList<String> par = new ArrayList<String>(Arrays.asList(parentElementChain));
+    	int low=0,high=FileUtil.linesInFile(file);
+    	int tabs=0;
+    	if(parentElementChain!=null) {
+	    	for(int i=0;i<parentElementChain.length;i++) {
+	    		String element = parentElementChain[i];
+	    		int tlow;
+	    		int thigh;
+	    		try {
+	    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+	    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		}catch(RuntimeException e) {
+	    			String op = element(element);
+	    			tlow = FileUtil.containsInDocumentBounds(file,op.substring(0,element.length()-1), low, high);
+	        		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		}
+	    		low=tlow;
+	    		high=thigh;
+	    		tabs++;
+	    	}
+    	}
+    	String tab = "";
+    	//TODO Some is good
+    	for(int i=0;i<tabs;i++) {
+    		tab+=StringUtil.tab;
+    	}
+    	//System.out.println(tabs);
+    	for(int i=1;i<high-low;i++) {//lines inbetween
+    		String l = RW.read(file, low+i);
+    		//System.out.print(l);
+    		int t = 0;
+    		while(l.replaceAll(StringUtil.tab, "")!=l) {
+    			l=l.replaceFirst(StringUtil.tab, "");
+    			t++;
+    		}
+    		l = XMLRW.removeUID(l);
+    		if(t!=tabs) {
+    		//System.out.println("Text:"+l+" Failed in comparison tabs:"+tabs+"text:"+t);
+    		}else if(l.charAt(1)=='/'){
+    		//	System.out.println("Caught");
+    		}else {
+    			ArrayList<String> tmp = new ArrayList<String>();
+    			tmp.addAll(par);
+    			tmp.add(l);
+    			map.addState(tmp,XMLRW.removeUID(l));
+    		}
+    		
+    	}
+
+    	
+    	
+    	
+    	return map;
+    }
+
     
     /** Get All Next Level Elements
      * @param file XML Doc
