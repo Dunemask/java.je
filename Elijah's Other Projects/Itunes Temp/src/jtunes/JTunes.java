@@ -33,7 +33,9 @@ public class JTunes {
 		ArrayList<String> path = new ArrayList<String>(Arrays.asList(new String[] {"Library","30 Seconds To mars","Unknown Album","Song Info","Name"}));
 		//System.out.println(library.getValueByPath(library.getParentByState("Name")));
 		//System.out.println(library.getValueByPath(path));
-		library.tmp(library.getParentByState("30 Seconds To mars"));
+		HashMap<String,ArrayList<String>> map =library.getAllSubComponents(library.getParentByState("Library"));
+														//Direct
+		
 		/*File file = new File(System.getProperty("user.home")+"/Desktop/tmp.xml");
 		XMLMap xml = new XMLMap(file,"File");
 		xml.addContainerWithUID("Cookie", xml.lastParent(), "Alpha");
@@ -66,7 +68,7 @@ public class JTunes {
 	}
 	public static ArrayList<String> findSongs(String search){
 		ArrayList<String> art = new ArrayList<String>();
-		ArrayList<String> full = library.getSubComponents(library.getParentByState("Library"));
+		HashMap<String, ArrayList<String>> full = library.getSubComponents(library.getParentByState("Library"));
 		for(int i=0;i<full.size();i++) {
 			
 		}

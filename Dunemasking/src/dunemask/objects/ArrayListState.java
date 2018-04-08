@@ -45,6 +45,23 @@ public class ArrayListState{
 			map.put(state, new  ArrayList<String>());
 			map.get(state).addAll(list);
 		}
+		
+		
+		/** Replaces all states that are same and merges all others
+		 * @param al ArrayListState
+		 * */
+		public void merge(ArrayListState al) {
+			HashMap<String,ArrayList<String>> mp = al.getMap();
+			this.getMap().putAll(mp);
+			
+		}
+		/** Replaces all states that are same and merges all others
+		 * @param mp HashMap ((HashMap<String, ArrayList<String>>)
+		 * */
+		public void merge(HashMap<String,ArrayList<String>> mp) {
+			this.getMap().putAll(mp);
+			
+		}
 		/**
 		 * @return the state
 		 * */

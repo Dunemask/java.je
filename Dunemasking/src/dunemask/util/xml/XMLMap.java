@@ -204,8 +204,8 @@ public class XMLMap {
 	 * @return list of Sub Components
 	 * 
 	 * */
-	public ArrayList<String> getSubComponents(ArrayList<String> parent){
-		return XMLRW.getElements(getXml(), parent.toArray(new String[parent.size()]));
+	public HashMap<String, ArrayList<String>> getSubComponents(ArrayList<String> parent){
+		return XMLRW.getSubElementsAndContainers(getXml(), parent.toArray(new String[parent.size()])).getMap();
 	}
 	
 	
@@ -358,8 +358,30 @@ public class XMLMap {
 			return !true;
 		}
 	}
-	public void tmp(ArrayList<String> path) {
-		XMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()]));
+	
+	/** Get Values from all sub elements in a container
+	 * @param path to top
+	 * @return Hashmap of elements and keys
+	 * 
+	 *  
+	 * */
+	public HashMap<String, ArrayList<String>> getAllSubComponents(ArrayList<String> path) {
+		//TODO NONE IS GOOD!
+		ArrayListState fList = new ArrayListState();
+		HashMap<String, ArrayList<String>> tmp = XMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()])).getMap();
+		ArrayList<String> key = new ArrayList<String>(tmp.keySet());
+		for(int i=0;i<key.size();i++) {
+			ArrayList<String> p = tmp.get(key.get(i));
+			if(this.isContainer(p)) {
+				fList.merge(this.getAllSubComponents(p));
+			}else {
+				fList.addState(p, key.get(i));
+			}
+		}
+		
+		
+		
+		return fList.getMap();
 	}
 
 	
