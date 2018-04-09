@@ -1,14 +1,10 @@
 package jtunes;
 
 import java.io.File;
-import java.util.concurrent.CountDownLatch;
-
-import javax.swing.SwingUtilities;
+import java.util.ArrayList;
 
 import dunemask.util.FileUtil;
 import dunemask.util.xml.XMLMap;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.media.Media;
 
 public class JTunes {
 	public static XMLMap library;
@@ -39,7 +35,9 @@ public class JTunes {
 		library.addElement("File", library.lastParent(), fo.toURI().toString());
 		
 	}
-	public static ArrayList<JSong>
+	public static ArrayList<JSong> searcSongs(String search){
+		ArrayList<JSong> matches = new ArrayList<String>();
+	}
 
 
 	
