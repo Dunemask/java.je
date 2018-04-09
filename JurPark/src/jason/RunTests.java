@@ -20,7 +20,7 @@ public class RunTests {
 			e.printStackTrace();
 		}*/
 			//CrossyFish c = new CrossyFish();
-		Tetris t = new Tetris();
+		FlappyPterodactyl t = new FlappyPterodactyl();
 		//BunkerMaze bm = new BunkerMaze();
 		//CrossyFish c = new CrossyFish();
 		//FlappyPterodactyl bc = new FlappyPterodactyl();
