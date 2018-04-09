@@ -236,7 +236,7 @@ public class FileUtil{
 		try {
 			fileReader = new Scanner(file);
 		} catch (FileNotFoundException e) {
-
+			System.out.println("File:"+file+" WAS NOT FOUND!");
 			e.printStackTrace();
 		} // Close Catch Clause
 		/***************************************/

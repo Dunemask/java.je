@@ -42,11 +42,6 @@ public class XMLMap {
 	 * 
 	 * */
 	public XMLMap(File file) {
-		/*String path = file.getAbsolutePath();
-		path = FileUtil.removeExtension(path);
-		path+="tmp.xml";
-		File tfile = new File(path);
-		XMLRW.newXMLFile(tfile, XMLRW.NOBODY);*/
 		this.setXml(file);
 		ha =  new ArrayListState();
 		holder = new ArrayList<String>();
@@ -73,6 +68,7 @@ public class XMLMap {
 		//map(tmp);
 		
 	}
+
 	/** Remove an element
 	 * @param state State
 	 * 
@@ -325,6 +321,40 @@ public class XMLMap {
 		holder.removeAll(holder);
 		
 	}
+	/**
+	 * */
+	public void addTopElement(String name,Object value) {
+		XMLRW.addTopLevelElement(getXml(), name, value);
+		holder.add(name);
+		ha.addState(holder, name);
+		lastUid=name;
+		holder.removeAll(holder);
+	}
+	public void addTopElementWithUID(String name,Object value,String uid) {
+		XMLRW.addTopLevelElementWithUID(getXml(), name, value,uid);
+		holder.add(name);
+		ha.addState(holder, uid);
+		lastUid=name;
+		holder.removeAll(holder);
+	}
+	
+	
+	public void addTopContainer(String name) {
+		XMLRW.addTopLevelElement(getXml(), name, XMLRW.CONTAINER);
+		holder.add(name);
+		ha.addState(holder, name);
+		lastUid=name;
+		holder.removeAll(holder);
+	}
+	public void addTopContainerWithUID(String name,String uid) {
+		XMLRW.addTopLevelElementWithUID(getXml(), name, XMLRW.CONTAINER,uid);
+		holder.add(name);
+		ha.addState(holder, uid);
+		lastUid=name;
+		holder.removeAll(holder);
+	}
+	
+	
 	
 	/** Get Value from Element
 	 * 

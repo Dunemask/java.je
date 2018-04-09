@@ -92,6 +92,41 @@ public class XMLRW {
     	
     }
     
+    /** @param file File
+     * @param element Element
+     * @param value Value XMLRW.container for container
+     * 
+     * */
+    public static void addTopLevelElement(File file,String element,Object value) {
+    	String[] lines = RW.readAll(file);
+    	int l = lines.length;
+    	if(value.equals(XMLRW.CONTAINER)) {
+    		RW.write(file, XMLRW.element(element), l+1);
+    		RW.write(file, XMLRW.closeElement(element), l+2);
+    	}else {
+    		RW.write(file, XMLRW.element(element)+value+XMLRW.closeElement(element), l+1);
+    	}
+    	
+    }
+
+    /** @param file File
+     * @param element Element
+     * @param value Value
+     * @param uid UID
+     * 
+     * */
+    public static void addTopLevelElementWithUID(File file,String element,Object value,String uid) {
+    	String[] lines = RW.readAll(file);
+    	int l = lines.length;
+    	if(element.equals(XMLRW.CONTAINER)) {
+    		RW.write(file, XMLRW.element(element), l+1);
+    		RW.write(file, XMLRW.closeElement(element), l+2);
+    	}else {
+    		RW.write(file, XMLRW.element(element+" UID="+uid)+value+XMLRW.closeElement(element), l+1);
+    	}
+    	
+    }
+    
     
     
     /** Adds a container in the XML Doc
@@ -300,6 +335,7 @@ public class XMLRW {
     	for(int i=0;i<tabs;i++) {
     		tab+=StringUtil.tab;
     	}
+    	//System.out.println(low+","+high);
     	////System.out.println("H:"+high+",L:"+low);
     	//Sequential
     	if(low+1==high&&!value.toString().equalsIgnoreCase(CONTAINER)) {
@@ -404,7 +440,6 @@ public class XMLRW {
     }
     
     
-    //TODO
     /** Get The level directly below
      *  @param file XMLDoc
      *  @param parentElementChain Chain down to desired location
@@ -607,8 +642,13 @@ public class XMLRW {
     		String element = parentElementChain[i];
     		element = XMLRW.ripElement(element);
     		int tlow; int thigh;
+    		try {
 	    	tlow = FileUtil.containsInDocumentBounds(file,element(element).substring(0, element.length()), low, high);
 	    	thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    		}catch(java.lang.RuntimeException e) {
+    			System.err.println("Could Not Find:"+element);
+    			return false;
+    		}
     		
     		low=tlow;
     		high=thigh;

@@ -24,8 +24,8 @@ public class Install {
 		new File(JTunes.JTunesFolder+"Music/").mkdirs();
 		File xml = new File(JTunes.JTunesFolder+"Library.xml");
 		JTunes.library = new XMLMap(xml,"Library");
-		JTunes.library.addElement("Info", new ArrayList<String>(), "This is a project of Jason Roberts and Eljah Parker");
-		JTunes.library.addContainers(new ArrayList<String>(Arrays.asList(new String[] {"Playlists"})),new ArrayList<String>());
+		JTunes.library.addTopElement("Info", "This is a project of Jason Roberts and Eljah Parker");
+		JTunes.library.addTopContainer("Playlist");
 		JTunes.main(args);
 	}
 
