@@ -39,7 +39,7 @@ public class JTunes {
 		library.addElement("File", library.lastParent(), fo.toURI().toString());
 		
 	}
-	public static File getFile();
+	public static ArrayList<JSong>
 
 
 	
