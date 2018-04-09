@@ -1,11 +1,16 @@
 package jtunes;
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
 
+import dunemask.objects.ArrayListState;
+import dunemask.util.MediaUtil;
+import dunemask.util.StringUtil;
 import dunemask.util.xml.XMLMap;
 import panels.MainFrame;
 
@@ -31,11 +36,19 @@ public class JTunes {
 		cf = new MainFrame();
 		cf.setVisible(true);
 		ArrayList<String> path = new ArrayList<String>(Arrays.asList(new String[] {"Library","30 Seconds To mars","Unknown Album","Song Info","Name"}));
-		//System.out.println(library.getValueByPath(library.getParentByState("Name")));
-		//System.out.println(library.getValueByPath(path));
-		HashMap<String,ArrayList<String>> map =library.getAllSubComponents(library.getParentByState("Library"));
-														//Direct
 		
+		HashMap<String,ArrayList<String>> map =library.getSubComponents(library.getParentByState("Library"));
+													//Direct
+		ArrayList<String> key = new ArrayList<String>(map.keySet());
+		for(int i=0;i<key.size();i++) {
+			HashMap<String,ArrayList<String>> m =library.getAllSubComponents(map.get(key.get(i)));
+			ArrayList<String> mkey = new ArrayList<String>(m.keySet());
+			for(int c=0;c<mkey.size();c++) {
+				ArrayList<String> paf = m.get(mkey.get(c));
+			}
+			
+			
+		}
 		/*File file = new File(System.getProperty("user.home")+"/Desktop/tmp.xml");
 		XMLMap xml = new XMLMap(file,"File");
 		xml.addContainerWithUID("Cookie", xml.lastParent(), "Alpha");
@@ -45,35 +58,7 @@ public class JTunes {
 		System.out.println(xml.getUid(xml.getParentByState("White Macadamia Nut")));*/
 
 	}
-	public static ArrayList<String> findArtists(String search){
-		ArrayList<String> art = new ArrayList<String>();
-		HashMap<String,String> mp = library.getElementsAndKeys(library.getParentByState("Library"));
-		ArrayList<String> keys = new ArrayList<String>(mp.keySet());
-		for(int i=0;i<mp.keySet().size();i++) {
-			//if(keys.get(i).equalsIgnoreCase("Name")) {
-				//System.out.println(mp.get(keys.get(i)));
-				//System.out.println(keys.get(i));
-			//}
-			
-		}
-		
-		
-		/*ArrayList<String> full = library.getSubComponents(library.getParentByState("Library"));
-		for(int i=0;i<full.size();i++) {
-			if(StringUtil.containsIgnoreCase(full.get(i), search)) {
-				art.add(full.get(i));
-			}
-		}*/
-		return art;
-	}
-	public static ArrayList<String> findSongs(String search){
-		ArrayList<String> art = new ArrayList<String>();
-		HashMap<String, ArrayList<String>> full = library.getSubComponents(library.getParentByState("Library"));
-		for(int i=0;i<full.size();i++) {
-			
-		}
-		return art;
-	}
+	
 
 	
 	
@@ -83,6 +68,63 @@ public class JTunes {
 		JTunes.library.addContainerWithUID("Song Info", JTunes.library.getParentByState(alb),art+" - "+name);
 		JTunes.library.addElement("Name", JTunes.library.lastParent(), name);
 		JTunes.library.addElement("File", JTunes.library.lastParent(), file.toURI().toString());
+	}
+
+	/**
+	 * @param text
+	 * @return
+	 */
+	public static ArrayList<String> findArtists(String need) {
+		ArrayList<String> match = new ArrayList<String>();
+		HashMap<String,ArrayList<String>> map =library.getSubComponents(library.getParentByState("Library"));
+		ArrayList<String> key = new ArrayList<String>(map.keySet());
+		for(int i=0;i<key.size();i++) {
+			if(StringUtil.containsIgnoreCase(key.get(i), need)) {
+				match.add(key.get(i));
+			}
+		}
+		return match;
+	}
+
+
+	
+	/**
+	 * @param text
+	 * @return
+	 */
+	public static ArrayList<JSong> findSongs(String need) {
+		ArrayList<JSong> match = new ArrayList<JSong>();
+		HashMap<String,ArrayList<String>> map =library.getSubComponents(library.getParentByState("Library"));
+		ArrayList<String> key = new ArrayList<String>(map.keySet());
+		for(int i=0;i<key.size();i++) {
+			HashMap<String,ArrayList<String>>  subMap = library.getSubComponents(map.get(key.get(i)));
+			ArrayList<String> subKey = new ArrayList<String>(subMap.keySet());
+			for(int c=0;c<subKey.size();c++) {
+				HashMap<String,ArrayList<String>>  subSubMap = library.getSubComponents(subMap.get(subKey.get(c)));
+				ArrayList<String> subSubKey = new ArrayList<String>(subSubMap.keySet());
+				for(int b=0;b<subSubKey.size();b++) {
+					ArrayList<String> p = subSubMap.get(subSubKey.get(b));
+					ArrayList<String> fp = new ArrayList<String>(p);
+					ArrayList<String> fname = new ArrayList<String>(p);
+					fp.add("File");
+					fname.add("Name");
+					String furi = library.getElementFromDoc(fp);
+					String name = library.getElementFromDoc(fname);
+					if(StringUtil.containsIgnoreCase(name, need)) {
+						try {
+							match.add(new JSong(new File(new URI(furi)),name));
+						} catch (URISyntaxException e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}
+			}
+			
+		}
+		
+		
+		return match;
 	}
 
 }

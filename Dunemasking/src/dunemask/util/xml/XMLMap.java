@@ -5,9 +5,11 @@ package dunemask.util.xml;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import dunemask.objects.ArrayListState;
+import dunemask.util.RW;
 
 /**
  * @author dunemask
@@ -48,13 +50,27 @@ public class XMLMap {
 		this.setXml(file);
 		ha =  new ArrayListState();
 		holder = new ArrayList<String>();
-		ArrayList<String> tmp = XMLRW.getElements(file, new String[] {});
-		String body = tmp.get(0);
-		lastUid = body;
-		holder.add(body);
-		ha.addState(holder, body);
+		int size = RW.readAll(file).length;
+		ArrayList<String> allTop = new ArrayList<String>();
+		for(int i=0;i<size;i++) {
+			String x = XMLRW.getTopLayerComponent(getXml(), i)[0];
+			if(!allTop.contains(x)) {
+				allTop.add(x);
+			}
+		}
+		for(int i=0;i<allTop.size();i++) {
+			if(XMLRW.hasUID(getXml(), new String[] {allTop.get(i)})) {
+				this.mapContainerUID(null, allTop.get(i), XMLRW.getUID(getXml(), new String[] {allTop.get(i)}));
+			}else {
+				this.mapContainer(null, allTop.get(i));
+			}
+			map(new ArrayList<String>(Arrays.asList(new String[] {allTop.get(i)})));
+			
+		}
+		
+		
 		holder.removeAll(holder);
-		map(tmp);
+		//map(tmp);
 		
 	}
 	/** Remove an element
@@ -109,6 +125,7 @@ public class XMLMap {
 		
 	}
 	
+	
 	/** Get Element Value by UID
 	 * 
 	 **/
@@ -130,8 +147,6 @@ public class XMLMap {
 				int ind2 = tmp.indexOf(" UID=");
 				tmp = tmp.substring(0,ind2);
 			}
-			
-			
 			ParentBuilder.addPiece(tmp);
 			if(XMLRW.isElement(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
 				if(XMLRW.hasUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
@@ -330,11 +345,11 @@ public class XMLMap {
 	
 	/** Get Values from all sub elements in a container
 	 * 
-	 * */
+	 * 
 	public ArrayList<String> getElementsFromDoc(ArrayList<String> path) {
 		
 		return XMLRW.getElementsValues(this.getXml(), path.toArray(new String[path.size()]));
-	}
+	}*/
 	
 	/** @param path Path
 	 * @return Wether it's a container or not
@@ -359,63 +374,37 @@ public class XMLMap {
 		}
 	}
 	
-	/** Get Values from all sub elements in a container
+	/** Get Values from all sub Sub Components
 	 * @param path to top
-	 * @return Hashmap of elements and keys
+	 * @return Hashmap of elements and keys WARNING!!(Uses Hashmap, Duplicates WILL BE OVERWIRTTEN)
 	 * 
 	 *  
-	 * */
+	 */
 	public HashMap<String, ArrayList<String>> getAllSubComponents(ArrayList<String> path) {
-		//TODO NONE IS GOOD!
 		ArrayListState fList = new ArrayListState();
-		HashMap<String, ArrayList<String>> tmp = XMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()])).getMap();
-		ArrayList<String> key = new ArrayList<String>(tmp.keySet());
-		for(int i=0;i<key.size();i++) {
-			ArrayList<String> p = tmp.get(key.get(i));
+		HashMap<String, ArrayList<String>> sub = XMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()])).getMap();
+		ArrayList<String> subKey = new ArrayList<String>(sub.keySet());
+		for( int i=0;i<subKey.size();i++) {
+			ArrayList<String> p = sub.get(subKey.get(i));
 			if(this.isContainer(p)) {
 				fList.merge(this.getAllSubComponents(p));
-			}else {
-				fList.addState(p, key.get(i));
 			}
+			if(XMLRW.hasUID(getXml(), p.toArray(new String[p.size()]))) {
+				String uid = XMLRW.getUID(getXml(), p.toArray(new String[p.size()]));
+				fList.addState(p, uid);
+			}else {
+				fList.addState(p, subKey.get(i));
+			}
+			
+			
+			
 		}
-		
-		
 		
 		return fList.getMap();
 	}
 
 	
 	
-	/** Get Values from all sub elements in a container
-	 * @param path to top
-	 * @return Hashmap of elements and keys
-	 * 
-	 *  
-	 * */
-	public HashMap<String, String> getElementsAndKeys(ArrayList<String> path) {
-		//TODO NONE IS GOOD!
-		HashMap<String,String> map = new HashMap<String,String>();
-		ArrayList<String> sub = XMLRW.getElements(getXml(), path.toArray(new String[path.size()]));
-		ArrayList<String> val = new ArrayList<String>(sub.size());
-		XMLMap.ParentBuilder.init(getXml(),path);
-		for( int i=0;i<sub.size();i++) {
-			//System.out.println(sub.get(i));
-			ParentBuilder.addPiece(sub.get(i));
-			if(XMLRW.isElement(getXml(), ParentBuilder.getParent().toArray(new String[ParentBuilder.getParent().size()]))) {
-				val.add(XMLRW.getElementValue(getXml(),ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
-			}else {
-				val.add("");
-			}
-			System.out.print(sub.get(i)+",");
-			System.out.println(val.get(i));
-			XMLMap.ParentBuilder.init(getXml(),path);
-			map.put(sub.get(i), val.get(i));
-		}
-		
-		return map;
-	}
-	/**
-	 **/
 	public ArrayList<String> getParent(ArrayList<String> child){
 		child.remove(child.size()-1);
 		return child;

@@ -25,12 +25,13 @@ import javafx.util.Duration;
 public class MediaUtil{
 	/***Version*/
     final static double version = 4.5;
-	static  MediaPlayer mediaPlayer;
+	public static  MediaPlayer mediaPlayer;
+	public static CountDownLatch latch = new CountDownLatch(1);
 	/**Play a song Once
 	 * @param song The Song File
 	 * */
 	public static void play(File song) {
-		final CountDownLatch latch = new CountDownLatch(1);
+		latch = new CountDownLatch(1);
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 		        new JFXPanel(); // initializes JavaFX environment
@@ -88,6 +89,13 @@ public class MediaUtil{
 		     });
 		}
 	}
+	/**Set Song on Repeat
+	 * */
+	public static void seek(double millis) {
+		if(mediaPlayer!=null) {
+		mediaPlayer.seek(new Duration(millis));
+		}
+	}
 	/**If Player was On Repeat this will remove it
 	 **/
 	public static void removeRepeat() {
@@ -105,7 +113,7 @@ public class MediaUtil{
 	 * @param song The Song File
 	 * */
 	public static void playRepeat(File song) {
-		final CountDownLatch latch = new CountDownLatch(1);
+		latch = new CountDownLatch(1);
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 		        new JFXPanel(); // initializes JavaFX environment
