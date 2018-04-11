@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
 import jtunes.JSong;
+import jtunes.JTunes;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame {
 	DList dlist;
 	
 	public MainFrame() {
-		isplay = false;
+		isplay = true;
 		
 		this.setTitle("MainFrameTitle");
 		this.setSize(512,512);
@@ -89,7 +90,7 @@ public class MainFrame extends JFrame {
 		
 		//TESTING ARRAYLISTS
 		ArrayList<JSong> tst = new ArrayList<JSong>();
-		tst.add(new JSong(null, "Daylight Moon"));
+		//tst.add(new JSong(null, ""));
 		
 		
 		dlist = new DList(tst);
@@ -118,9 +119,12 @@ public class MainFrame extends JFrame {
 				if(isplay){
 				btnPlay.setText("Stop");
 				isplay=false;
+				JTunes.pause();
 				}else {
 				btnPlay.setText("Play");
 				isplay=true;
+				
+				JTunes.play();
 				}
 				
 			}

@@ -10,6 +10,7 @@ import dunemask.objects.DMediaPlayer;
 import dunemask.util.FileUtil;
 import dunemask.util.StringUtil;
 import dunemask.util.xml.XMLMap;
+import frames.MainFrame;
 import javafx.util.Duration;
 
 public class JTunes {
@@ -24,7 +25,8 @@ public class JTunes {
 		addFile(new File(FileUtil.filePathFix(path)),"Two Steps","Unleashed","Never Give Up On Your Dreams");
 		dmp = new DMediaPlayer();
 		dmp.init();
-		JSong s = JTunes.searchSongs("Nev").get(0);
+		MainFrame f = new MainFrame();
+		/*JSong s = JTunes.searchSongs("Nev").get(0);
 		setSong(s.getFile());
 		play();
 		try {
@@ -35,7 +37,7 @@ public class JTunes {
 		}
 		pause();
 		setSong(s.getFile());
-		play();
+		play();*/
 
 	}
 	public static void play() {

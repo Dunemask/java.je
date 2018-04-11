@@ -14,6 +14,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 
 import jtunes.JSong;
+import jtunes.JTunes;
 
 
 public class DList extends JList{
@@ -73,6 +74,7 @@ public class DList extends JList{
 	}
 	public void SearchString(String str) {
 		mod.clear();
+		ArrayList<JSong> jSongs = JTunes.searchSongs(str);
 		for(int i = 0;i<jSongs.size();i++) {
 			if(jSongs.get(i).getTitle().toLowerCase().contains(str.toLowerCase())) {
 				mod.addElement(i+": "+jSongs.get(i).getTitle());
