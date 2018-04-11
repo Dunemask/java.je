@@ -61,6 +61,9 @@ public class JTunes {
 							HashMap<String, ArrayList<String>> subSubSubSubMap = library.getSubComponents(subSubSubSubParent);
 							ArrayList<String> subSubSubSubKey = new ArrayList<String>(subSubSubSubMap.keySet());
 							System.out.println(subSubSubSubKey);
+							if(subSubSubSubKey) {
+								]
+							}
 						}
 					}
 				}
