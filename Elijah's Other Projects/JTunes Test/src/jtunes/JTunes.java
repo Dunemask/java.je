@@ -24,6 +24,9 @@ public class JTunes {
 		addFile(new File(FileUtil.filePathFix(path)),"Two Steps","Unleashed","Never Give Up On Your Dreams");
 		dmp = new DMediaPlayer();
 		dmp.init();
+		JSong s = JTunes.searchSongs("Nev").get(0);
+		setSong(s.getFile());
+		play();
 
 	}
 	public static void play() {
@@ -39,7 +42,7 @@ public class JTunes {
 	public static void pause() {
 		dmp.getMediaPlayer().pause();
 	}
-
+		
 	
 	
 	/** Add The file
