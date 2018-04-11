@@ -2,6 +2,8 @@ package frames;
 
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -25,23 +27,28 @@ import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.JList;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JButton;
 
 public class MainFrame extends JFrame {
 	private JTextField txtSearch;
 	static ImageIcon notegIcon = new ImageIcon("src/resources/note.gif");
-
+	boolean isplay;
 	
 	public static ArrayList<JSong> aList;
 	DList dlist;
 	
 	public MainFrame() {
+		isplay = false;
 		
 		this.setTitle("MainFrameTitle");
 		this.setSize(512,512);
 		this.setLocation(256, 256);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JLabel lblStuff = new JLabel("Stuff");
+		JLabel lblStuff = new JLabel("JTunes");
 		lblStuff.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(lblStuff, BorderLayout.NORTH);
 		
@@ -95,7 +102,41 @@ public class MainFrame extends JFrame {
 		
 		//this.pack();
 		JLabel lab = new JLabel(notegIcon);
-		this.add(lab);
+		getContentPane().add(lab);
+		
+		JPanel panel_1 = new JPanel();
+		getContentPane().add(panel_1, BorderLayout.SOUTH);
+		
+		JButton button_1 = new JButton("<<");
+		panel_1.add(button_1);
+		
+		JButton btnPlay = new JButton("Play");
+		panel_1.add(btnPlay);
+		btnPlay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(isplay){
+				btnPlay.setText("Stop");
+				isplay=false;
+				}else {
+				btnPlay.setText("Play");
+				isplay=true;
+				}
+				
+			}
+		});
+		
+		JButton button = new JButton(">>");
+		panel_1.add(button);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		JMenuItem mntmAdd = new JMenuItem("Add");
+		mnFile.add(mntmAdd);
 	}
 	public void SetSongs(ArrayList<JSong> newaList) {
 		aList= newaList;
