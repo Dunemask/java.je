@@ -1,10 +1,13 @@
 package jtunes;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import dunemask.util.FileUtil;
+import dunemask.util.StringUtil;
 import dunemask.util.xml.XMLMap;
 
 public class JTunes {
@@ -34,7 +37,7 @@ public class JTunes {
 		File fo = new File(JTunes.JTunesSongPath+artist+"/"+album+"/"+title+ext);
 		FileUtil.writeFile(file, fo);
 		library.addElement("File", library.lastParent(), fo.toURI().toString());*/
-		searchSongs(null);
+		searchSongs("Nev");
 		
 		
 	}
@@ -48,22 +51,40 @@ public class JTunes {
 				ArrayList<String> subParent = map.get(key.get(a));
 				HashMap<String, ArrayList<String>> subMap = library.getSubComponents(subParent);
 				ArrayList<String> subKey = new ArrayList<String>(subMap.keySet());
-				for(int b=0;b<key.size();b++) {
+				for(int b=0;b<subKey.size();b++) {
 					ArrayList<String> subSubParent = subMap.get(subKey.get(b));
 					HashMap<String, ArrayList<String>> subSubMap = library.getSubComponents(subSubParent);
 					ArrayList<String> subSubKey = new ArrayList<String>(subSubMap.keySet());
-					for(int c=0;c<key.size();c++) {
+					for(int c=0;c<subSubKey.size();c++) {
 						ArrayList<String> subSubSubParent = subSubMap.get(subSubKey.get(c));
 						HashMap<String, ArrayList<String>> subSubSubMap = library.getSubComponents(subSubSubParent);
 						ArrayList<String> subSubSubKey = new ArrayList<String>(subSubSubMap.keySet());
-						for(int d=0;d<key.size();d++) {
-							ArrayList<String> subSubSubSubParent = subSubSubMap.get(subSubSubKey.get(d));
+						for(int d=0;d<subSubSubKey.size();d++) {
+							//System.out.println(subSubSubKey);
+							ArrayList<String> subSubSubSubParent = subSubSubMap.get(subSubSubKey.get(d));	
 							HashMap<String, ArrayList<String>> subSubSubSubMap = library.getSubComponents(subSubSubSubParent);
 							ArrayList<String> subSubSubSubKey = new ArrayList<String>(subSubSubSubMap.keySet());
-							System.out.println(subSubSubSubKey);
-							if(subSubSubSubKey) {
-								]
+							if(subSubSubSubParent.get(subSubSubSubParent.size()-1).equalsIgnoreCase("Title")) {
+								String val = library.getElementFromDoc(subSubSubSubParent);
+								if(StringUtil.containsIgnoreCase(val,search)) {
+									//System.out.println(subSubSubParent);
+									ArrayList<String> tmp = new ArrayList<String>(subSubSubParent);
+									tmp.add("File");
+									String fval = library.getElementFromDoc(tmp);
+									URI ur = null;
+									try {
+										ur = new URI(fval);
+									} catch (URISyntaxException e) {
+										e.printStackTrace();
+									}
+									JSong s = new JSong(new File(ur),val);
+									tmp.removeAll(tmp);
+									matches.add(s);
+								}
+								
 							}
+							//if(subSubSubSubKey) {
+							//}
 						}
 					}
 				}
