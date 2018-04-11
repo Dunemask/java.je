@@ -10,7 +10,7 @@ import dunemask.objects.DMediaPlayer;
 import dunemask.util.FileUtil;
 import dunemask.util.StringUtil;
 import dunemask.util.xml.XMLMap;
-import frames.MainFrame;
+import javafx.util.Duration;
 
 public class JTunes {
 	public static XMLMap library;
@@ -23,9 +23,25 @@ public class JTunes {
 		String path = "C:\\Users\\Dunemask\\Documents\\GitHub\\dunemask.github.io\\resources\\media\\mp3\\Two Steps From Hell - Never Give Up On Your Dreams.mp3";
 		addFile(new File(FileUtil.filePathFix(path)),"Two Steps","Unleashed","Never Give Up On Your Dreams");
 		dmp = new DMediaPlayer();
-		dmp.
+		dmp.init();
 
 	}
+	public static void play() {
+		dmp.getMediaPlayer().play();
+	}
+	public static void setSong(File file) {
+		dmp.getMediaPlayer().seek(new Duration(0));
+		Runnable s = dmp.getMediaPlayer().getOnEndOfMedia();
+		dmp.setMedia(file);
+		dmp.getMediaPlayer().setOnEndOfMedia(s);
+		
+	}
+	public static void pause() {
+		dmp.getMediaPlayer().pause();
+	}
+
+	
+	
 	/** Add The file
 	 * 
 	 * */
