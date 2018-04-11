@@ -19,7 +19,15 @@ public class DMediaPlayer {
 	/**
 	 * 
 	 */
-	public DMediaPlayer(File file) {
+	public DMediaPlayer() {
+		
+	}
+	
+	
+	
+	
+	
+	public void init() {
 		envLatch = new CountDownLatch(1);
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
@@ -34,14 +42,16 @@ public class DMediaPlayer {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	public void setMedia(File file) {
 		Media sound = new Media(file.toURI().toString());
 		mediaPlayer = new MediaPlayer(sound);
-		
 	}
 	
-	
-	
-	
+	public void setMedia(String string) {
+		Media sound = new Media(string);
+		mediaPlayer = new MediaPlayer(sound);
+	}
 	
 	
 	/**

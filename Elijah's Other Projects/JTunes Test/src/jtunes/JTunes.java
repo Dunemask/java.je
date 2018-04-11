@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import dunemask.objects.DMediaPlayer;
 import dunemask.util.FileUtil;
 import dunemask.util.StringUtil;
 import dunemask.util.xml.XMLMap;
@@ -15,14 +16,19 @@ public class JTunes {
 	public static XMLMap library;
 	public static String JTunesPath = System.getProperty("user.home")+"/Music/JTunes/";
 	public static String JTunesSongPath = System.getProperty("user.home")+"/Music/JTunes/Music/";
+	public static DMediaPlayer dmp;
 	
 	public static void main(String[] args) {
 		library = new XMLMap(new File(JTunes.JTunesPath+"Library.xml"));
 		String path = "C:\\Users\\Dunemask\\Documents\\GitHub\\dunemask.github.io\\resources\\media\\mp3\\Two Steps From Hell - Never Give Up On Your Dreams.mp3";
 		addFile(new File(FileUtil.filePathFix(path)),"Two Steps","Unleashed","Never Give Up On Your Dreams");
-		
+		dmp = new DMediaPlayer();
+		dmp.
 
 	}
+	/** Add The file
+	 * 
+	 * */
 	public static void addFile(File file,String artist,String album,String title) {
 		//fxInit();
 		//Media media = new Media(file.toURI().toString());
