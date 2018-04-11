@@ -27,16 +27,31 @@ public class JTunes {
 		JSong s = JTunes.searchSongs("Nev").get(0);
 		setSong(s.getFile());
 		play();
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pause();
+		setSong(s.getFile());
+		play();
 
 	}
 	public static void play() {
-		dmp.getMediaPlayer().play();
+		new Thread ( ()->{
+			dmp.getMediaPlayer().play();
+		}).start();
+
 	}
 	public static void setSong(File file) {
-		dmp.getMediaPlayer().seek(new Duration(0));
-		Runnable s = dmp.getMediaPlayer().getOnEndOfMedia();
+		if(dmp.getMediaPlayer()!=null) {
+			Runnable s = dmp.getMediaPlayer().getOnEndOfMedia();
+			dmp.getMediaPlayer().setOnEndOfMedia(s);
+
+		}
 		dmp.setMedia(file);
-		dmp.getMediaPlayer().setOnEndOfMedia(s);
+		dmp.getMediaPlayer().seek(new Duration(0));
 		
 	}
 	public static void pause() {

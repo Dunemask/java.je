@@ -20,7 +20,6 @@ public class DMediaPlayer {
 	 * 
 	 */
 	public DMediaPlayer() {
-		this.setMediaPlayer(new MediaPlayer(null));
 	}
 	
 	
