@@ -56,7 +56,6 @@ public class MainFrame extends JFrame {
 		verticalBox.add(lblNewLabel);
 		
 		
-		
 		//TEXT FEILD
 		txtSearch = new JTextField();
 		txtSearch.setText("search");
@@ -68,7 +67,6 @@ public class MainFrame extends JFrame {
 				if(txtSearch.getText().contains("search")){
 					txtSearch.setText("");
 				}
-				
 			}
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -85,16 +83,11 @@ public class MainFrame extends JFrame {
 		//TESTING ARRAYLISTS
 		ArrayList<JSong> tst = new ArrayList<JSong>();
 		tst.add(new JSong(null, "Daylight Moon"));
-		tst.add(new JSong(null, "Midnight Moon"));
-		tst.add(new JSong(null, "HarshLess"));
-		tst.add(new JSong(null, "SoulLess"));
-		
-		
 		
 		
 		dlist = new DList(tst);
 		JScrollPane scrollList = new JScrollPane(dlist);
-		scrollList.setPreferredSize(new Dimension(150,300));
+		scrollList.setPreferredSize(new Dimension(200,300));
 		verticalBox.add(scrollList);
 		
 		
