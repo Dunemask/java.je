@@ -9,6 +9,7 @@ import java.util.HashMap;
 import dunemask.util.FileUtil;
 import dunemask.util.StringUtil;
 import dunemask.util.xml.XMLMap;
+import frames.MainFrame;
 
 public class JTunes {
 	public static XMLMap library;
@@ -28,16 +29,18 @@ public class JTunes {
 		//String album=(String) media.getMetadata().get("album");
 		//String artist=(String) media.getMetadata().get("artist");
 		//String title = (String) media.getMetadata().get("title");
+		
 		library.addContainer(artist, library.getParentByState("Library"));
 		library.addContainer(album, library.getParentByState(artist));
 		library.addContainer(title, library.lastParent());
 		library.addElement("Title", library.lastParent(), title);
-		/*String ext = file.getName().substring(file.getName().lastIndexOf("."), file.getName().length());
+		String ext = file.getName().substring(file.getName().lastIndexOf("."), file.getName().length());
 		new File(JTunes.JTunesSongPath+artist+"/"+album+"/").mkdirs();
 		File fo = new File(JTunes.JTunesSongPath+artist+"/"+album+"/"+title+ext);
 		FileUtil.writeFile(file, fo);
-		library.addElement("File", library.lastParent(), fo.toURI().toString());*/
-		searchSongs("Nev");
+		library.addElement("File", library.lastParent(), fo.toURI().toString());
+		//searchSongs("Nev");
+		//MainFrame f = new MainFrame();
 		
 		
 	}
