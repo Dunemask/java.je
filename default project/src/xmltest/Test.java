@@ -21,8 +21,12 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		File file = new File(System.getProperty("user.home")+"/Desktop/tmp.xml");
+		File ot = new File(System.getProperty("user.home")+"/Desktop/otmp.xml");
 		//DXMLMap mp = DXMLMap.ParseDXMLMap(file);
-		DXMLMap mp = new DXMLMap(new File(System.getProperty("user.home")+"/Desktop/otmp.xml"),"Master");
+		//DXMLMap mp =  new DXMLMap(ot,"None");
+		DXMLMap mp =  DXMLMap.ParseDXMLMap(ot);
+		mp.removeElement("Cover/Sheets/Purple");
+	
 		//mp.tmp();
 		//mp.writeForcedElement("File/Asdf/Cookie", "Potato");
 		//mp.writeElement("File/Asdf/potato", "asdf");
@@ -30,20 +34,20 @@ public class Test {
 		//mp.writeForcedContainer("Amazing/Purple/Green/Orange");
 		//mp.writeContainer("Amazing/Purple/Green/Orange");
 		//mp.writeForcedElement("Cookie", "Just The best");
-		mp.writeElement("Cookie", "Just yes");
+		/*mp.writeElement("Cookie", "Just yes");
 		mp.changeElement("Cookie", "No");
 		mp.writeForcedElement("Cover/Sheets/Purple", "Flanel");
 		mp.changeElement("Cover/Sheets/Purple", "Egyptian Cotten");
 		mp.changeElement("Cover/Sheets/Purple", "Purple");
 		mp.writeForcedElement("Other/Things/Only/For/The/Coolest/People", "Potat");
-		System.out.println("What The");
 		mp.removeElement("Cookie");
-		HashMap<String, String> full = mp.getAllValues();
+		System.out.println("What The");
+		/*HashMap<String, String> full = mp.getAllValues();
 		ArrayList<String> key = new ArrayList<String>(full.keySet());
 		for(int i=0;i<key.size();i++) {
 			System.out.println(full.get(key.get(i)));
 			
-		}
+		}*/
 		//System.out.println(mp.getvalue("Cookie"));
 		/*ArrayList<String> urls = mp.getAllURLS();
 		for(int i=0;i<urls.size();i++) {

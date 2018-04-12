@@ -318,6 +318,7 @@ public class DXMLRW {
      * 
      * */
     public static void removeElement(File file,String[] parentElementChain) {
+    	String[] lines = RW.readAll(file);
     	int low=0,high=FileUtil.linesInFile(file);
     	if(parentElementChain!=null) {
 	    	for(int i=0;i<parentElementChain.length;i++) {
@@ -329,14 +330,12 @@ public class DXMLRW {
 	    		high=thigh;
 	    	}
     	}
+    	
+    	ArrayList<String> al = new ArrayList<String>(Arrays.asList(lines));
+    	al.remove(high-1);
+    	ArrayList<String> fin = new ArrayList<String>(al);
+    	RW.writeAll(file, fin.toArray(new String[fin.size()]));
     	//Sequential
-    	if(low+1==high) {
-    		RW.write(file, "", high);
-    	}else if(low+1==high) {
-    		RW.write(file, "", high);
-    	}else if(low<high) {
-    		RW.write(file, "", high);
-    	}
     }
     /** Adds a element in the XML Doc
      * @param file XML File
@@ -863,16 +862,36 @@ public class DXMLRW {
     		return null;
     	}
     }
-public static void other(File file,String s) {
-	
-}
+
     
 	/**
-	 * @param xml
-	 * @param string
+	 * @param file
+	 * @param element
 	 */
-	public static void removeTopElement(File xml, String string) {
-		// TODO Auto-generated method stub
+	public static void removeTopElement(File file, String element) {
+		String[] lines = RW.readAll(file);
+    	int tl =0;
+    	for(int i=0;i<lines.length;i++) {
+    		//If Not Element container
+    		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
+    			if(lines[i].contains(DXMLRW.element(element))) {
+    				tl = i; //Started at 0 when it starts at 1
+    				i=lines[i].length();
+    			}
+    		}
+    	}
+    	if(tl==0) {
+    		System.err.println("Item:"+element+" Does not Exist!");
+    	}else {
+    		System.out.println(tl);
+    		ArrayList<String> al = new ArrayList<String>(Arrays.asList(lines));
+        	al.remove(tl);
+        	ArrayList<String> fin = new ArrayList<String>(al);
+        	
+        	file.delete();
+        	RW.write(file,fin.toArray(new String[fin.size()]), 0);
+    	}
+    	
 		
 	}
     

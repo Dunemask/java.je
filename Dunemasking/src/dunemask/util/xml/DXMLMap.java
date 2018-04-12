@@ -195,12 +195,14 @@ public class DXMLMap {
 		if(this.isElement(this.urlToList(url))) {
 			this.getAllValues().remove(url);
 		}
-		ArrayList<String> p = this.urlToList(url);
-		if(p.size()==1) {
-			dunemask.util.xml.DXMLRW.removeTopElement(getXml(), p.get(0));
-		}else {
-			
-			DXMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
+		if(this.itemExists(this.urlToList(url))) {
+			ArrayList<String> p = this.urlToList(url);
+			if(p.size()==1) {
+				dunemask.util.xml.DXMLRW.removeTopElement(getXml(), p.get(0));
+			}else {
+				
+				DXMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
+			}
 		}
 		
 
