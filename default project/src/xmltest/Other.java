@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dunemask.util.xml.DXMLMap;
+import dunemask.util.xml.XMLMap;
 
 /**
  * @author dunemask
@@ -17,7 +17,7 @@ public class Other {
 	public static void main(String[] args) {
 		File file = new File(System.getProperty("user.home")+"/Desktop/tmp.xml");
 		//DXMLMap mp = DXMLMap.ParseDXMLMap(file);
-		DXMLMap mp = new DXMLMap(new File(System.getProperty("user.home")+"/Desktop/otmp.xml"),"Master");
+		XMLMap mp = new XMLMap(new File(System.getProperty("user.home")+"/Desktop/otmp.xml"),"Master");
 		//mp.tmp();
 		//mp.writeForcedElement("File/Asdf/Cookie", "Potato");
 		//mp.writeElement("File/Asdf/potato", "asdf");

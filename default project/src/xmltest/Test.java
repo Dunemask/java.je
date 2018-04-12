@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dunemask.util.xml.DXMLMap;
+import dunemask.util.xml.XMLMap;
 import dunemask.util.xml.XMLRW;
 
 /**
@@ -24,7 +24,7 @@ public class Test {
 		File ot = new File(System.getProperty("user.home")+"/Desktop/otmp.xml");
 		//DXMLMap mp = DXMLMap.ParseDXMLMap(file);
 		//DXMLMap mp =  new DXMLMap(ot,"None");
-		DXMLMap mp =  new DXMLMap(file,"Body");
+		XMLMap mp =  new XMLMap(file,"Body");
 		mp.writeContainer("Top");
 		mp.writeElement("Top/Master", "Branch");
 		HashMap<String, String> map = mp.getAllValues();
@@ -35,9 +35,15 @@ public class Test {
 		mp.removeElement("Top/Master");
 		mp.writeForcedContainer("Top/Master/Cookie/");
 		mp.removeContainer("Top");
-		mp = DXMLMap.ParseDXMLMap(file);
+		mp = XMLMap.ParseDXMLMap(file);
 		mp.writeForcedContainer("ChickenScratch/Amazing/Ninja");
 		mp.removeContainer("ChickenScratch/Amazing/");
+		mp.writeForcedElement("Other/Amazing", "Just Yes");
+		mp.writeForcedElement("People/Are/Freaking/Amazing/So/Don't/Eny/It", "(Cause you really Can't)");
+		ArrayList<String> u = mp.getSubURLS("People/Are/Freaking/Amazing/So/Don't/Eny/");
+		for(String s:u) {
+			System.out.println(s);
+		}
 		
 		//mp.tmp();
 		//mp.writeForcedElement("File/Asdf/Cookie", "Potato");

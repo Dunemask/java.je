@@ -8,513 +8,674 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import dunemask.objects.ArrayListState;
 import dunemask.util.RW;
-
-/**
- * @author dunemask
- *
- */
+import dunemask.util.xml.XMLRW;
 public class XMLMap {
 	/***Version*/
     final static double version = 5.8;
-	private ArrayList<String> holder;
-	private ArrayListState ha;
-	private String lastUid;
+    static final String URLStart = "$DXML$:/";
+    private ArrayList<String> xmlurl;
+    private HashMap<String,String> fullMap;
+   // private XMLMap map;
 	private File xml;
-	/** Create new XML file 
-	 * @param xml File
-	 * @param body Body Container
-	 * @param state State for Body Element
-	 * */
-	public XMLMap(File xml,String body,String uid) {
-		this.setXml(xml);
-		ha =  new ArrayListState();
-		holder = new ArrayList<String>();
-		setLastUid(body);
-		holder.add(body);
-		ha.addState(holder, uid);
-		holder.removeAll(holder);
-		OXMLRW.newXMLFile(xml, body);
+	public void tmp() {
+
+		
+		
 	}
-	/** Used For Loading Existing Xml files
-	 * @param file XML doc location
+	
+	
+	/** Get Value from the indexer not the doc
+	 * @param url
+	 * @return String
 	 * 
 	 * */
-	public XMLMap(File file) {
+	public String pullValue(String url) {
+		return this.fullMap.get(url);
+		
+	}
+	
+	
+	
+	
+	
+	
+	/** Write a Container and forces the Write (Creates parents)
+	 * @param url Url
+	 * @param value Value
+	 * 
+	 * */
+	public void writeForcedContainer(String url) {
+		ArrayList<String> path = this.urlToList(url);
+		ArrayList<String[]> toMake = new ArrayList<String[]>();
+		while(path!=null) {
+			path = this.getParentPath(path);
+			//System.out.println(path);
+			try {
+			path.get(0);
+			toMake.add(path.toArray(new String[path.size()]));
+			
+			}catch(Exception e) {
+				
+			}
+			
+		}
+		//For all the ones we need to make if it hasn't been made make it
+		for(int i=toMake.size()-1;i>=0;i--) {
+			ArrayList<String> lis =  new ArrayList<String>(Arrays.asList(toMake.get(i)));
+			if(!this.isCont(lis)) {
+				this.writeContainer(this.listTourl(lis));
+			}
+		}
+		if(!this.itemExists(this.urlToList(url))) {
+		this.writeContainer(url);
+		}
+		
+		
+	}
+	
+	/**  Write an Element and forces the Write (Creates parents)
+	 * @param url Url
+	 * @param value Value
+	 * 
+	 * */
+	public void writeForcedElement(String url,Object value) {
+		ArrayList<String> path = this.urlToList(url);
+		ArrayList<String[]> toMake = new ArrayList<String[]>();
+		while(path!=null) {
+			path = this.getParentPath(path);
+			//System.out.println(path);
+			try {
+			path.get(0);
+			toMake.add(path.toArray(new String[path.size()]));
+			
+			}catch(Exception e) {
+				
+			}
+			
+		}
+		//For all the ones we need to make if it hasn't been made make it
+		for(int i=toMake.size()-1;i>=0;i--) {
+			ArrayList<String> lis =  new ArrayList<String>(Arrays.asList(toMake.get(i)));
+			if(!this.isCont(lis)) {
+				this.writeContainer(this.listTourl(lis));
+			}
+		}
+		if(!this.itemExists(this.urlToList(url))) {
+		this.writeElement(url, value);
+		}
+		
+		
+		
+	}
+	/** Returns true if found in the doc
+	 * @param path Path
+	 * @return true or false
+	 * */
+	public boolean itemExists(ArrayList<String> path) {
+		return XMLRW.itemExists(getXml(), path.toArray(new String[path.size()]));
+		
+	}
+	
+	
+	public ArrayList<String> getParentPath(String url){
+		ArrayList<String> parent = this.urlToList(url);
+		try {
+		parent.remove(parent.size()-1);
+		return parent;
+		}catch(Exception e) {
+			return null;
+		}
+	}
+	
+	public ArrayList<String> getParentPath(ArrayList<String> path){
+		try {
+		path.remove(path.size()-1);
+		return path;
+		}catch(Exception e) {
+			return null;
+		}
+	}
+	/** Get the parent Url
+	 * @param url Url
+	 * @return parent url
+	 * */
+	public String getParentUrl(String url) {
+		boolean container = false;
+		if(url.endsWith("/")) {
+			container = true;
+		}
+		String s = this.listTourl(this.getParentPath(url));
+		if(container&&!s.endsWith("/")) {
+			s+="/";
+		}
+		
+		if(s!=null) {
+			return s;
+		}else {
+			return null;
+		}
+	}
+	/** Get the parent Url
+	 * @param path path
+	 * @return parent url
+	 * */
+	public String getParentUrl(ArrayList<String> path) {
+		String s = this.listTourl(this.getParentPath(path));
+		if(s!=null) {
+			return s;
+		}else {
+			return null;
+		}
+	}
+	
+	/** Changes the specified Element
+	 * 
+	 * */
+	public void changeElement(String url,Object value) {
+		if(!url.startsWith(XMLMap.URLStart)) {
+			url = XMLMap.URLStart+url;
+		}
+		this.getAllValues().remove(url);
+		this.getAllValues().put(url, value.toString());
+		ArrayList<String> p = this.urlToList(url);
+		if(p.size()!=1) {
+			XMLRW.changeElement(getXml(),p.toArray(new String[p.size()]),value);
+
+		}else {
+			XMLRW.changeTopLevelElement(getXml(), p.get(0), value);
+		}
+		
+	}
+	
+	public void removeContainer(String url) {
+		if(!url.startsWith(XMLMap.URLStart)) {
+			url = XMLMap.URLStart+url;
+		}
+		for(int i=0;i<this.getAllURLS().size();i++) {
+			if(this.getAllURLS().get(i).contains(url)) {
+				this.getAllURLS().remove(i);
+				i=0;
+			}
+		}
+		ArrayList<String> keys = new ArrayList<String>(this.fullMap.keySet());
+		for(int i=0;i<keys.size();i++) {
+			if(keys.get(i).contains(url)) {
+				this.fullMap.remove(keys.get(i));
+				i=0;
+			}
+		}
+		
+		if(this.itemExists(this.urlToList(url))) {
+			ArrayList<String> p = this.urlToList(url);
+			if(p.size()==1) {
+				dunemask.util.xml.XMLRW.removeTopContainer(getXml(), p.get(0));
+			}else {
+				
+				XMLRW.removeContainer(getXml(),p.toArray(new String[p.size()]));
+			}
+		}
+		
+
+	}
+	
+	public void removeElement(String url) {
+		if(!url.startsWith(XMLMap.URLStart)) {
+			url = XMLMap.URLStart+url;
+		}
+			this.getAllURLS().remove(url);
+		if(this.isElement(this.urlToList(url))) {
+			this.getAllValues().remove(url);
+		}
+		if(this.itemExists(this.urlToList(url))) {
+			ArrayList<String> p = this.urlToList(url);
+			if(p.size()==1) {
+				dunemask.util.xml.XMLRW.removeTopElement(getXml(), p.get(0));
+			}else {
+				
+				XMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
+			}
+		}
+		
+
+	}
+	
+	/** Write an Element
+	 * @param url Url
+	 * @param value Value
+	 * 
+	 * */
+	public void writeElement(String url,Object value) {
+		ArrayList<String> parent;
+		if(url==null) {
+			parent = new ArrayList<String>(Arrays.asList(new String[] {url}));
+		}else {
+			if(!url.contains(URLStart)) {
+				url = URLStart + url;
+			}
+		parent = this.urlToList(url);
+
+		}
+		if(url.endsWith("/")) {
+			url=url.substring(0,url.length()-1);
+		}
+		
+		if(parent.size()==1) {
+			if(!this.itemExists(parent)) {
+			XMLRW.addTopLevelElement(getXml(), parent.get(0), value);
+			}else {
+				
+			}
+		}else {
+			try {
+				if(this.isCont(url)){
+					throw new DMXMLException("TRIED TO WRITE ELEMENT USING CONTAINER FUNCTION");
+				}
+			}catch (Exception e) {
+				throw new DMXMLException("TRIED TO WRITE ELEMENT USING CONTAINER FUNCTION (This is probably triggered because a parent element doesn't work Try to use the forcebuild method instead)");
+			}
+			try {
+				if(!this.isElement(this.urlToList(url))) {
+					
+				}
+			}catch (Exception e) {
+				throw new DMXMLException("Boom");
+			}
+			
+			
+			
+		ArrayList<String> p = new ArrayList<String>(parent);
+		p.remove(p.size()-1);
+		
+			if(!this.itemExists(this.urlToList(url))) {
+				XMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),value);
+			}
+		}
+		addurl(url);
+		this.addValue(url, String.valueOf(value));
+	}
+	/** Write a Container
+	 * @param url Url
+	 * @param value Value
+	 * 
+	 * */
+	public void writeContainer(String url) {
+		ArrayList<String> parent;
+		if(url==null) {
+			parent = new ArrayList<String>(Arrays.asList(new String[] {url}));
+		}else {
+			if(!url.contains(URLStart)) {
+				url = URLStart + url;
+			}
+			
+			if(!url.endsWith("/")) {
+				url+="/";
+
+			}
+			String tryelm = url.substring(0,url.length()-1);
+
+			if(this.isElement(this.urlToList(tryelm))) {
+				System.err.println("Object "+tryelm +" is Element");
+				return;
+			}
+			
+			
+		parent = this.urlToList(url);
+			
+		}
+	
+		if(parent.size()==1) {
+			if(!this.itemExists(parent)) {
+			XMLRW.addTopLevelElement(getXml(), parent.get(0), XMLRW.CONTAINER);
+			}else {
+				
+			}
+		}else {
+			try {
+				if(!this.isCont(this.getParentUrl(url))){
+					throw new DMXMLException("TRIED TO WRITE CONTAINER  USING ELEMENT FUNCTION");
+				}
+				}catch (Exception e) {
+					System.err.println("Tried to make container @"+this.getParentUrl(url));
+					throw new DMXMLException("TRIED TO WRITE CONTAINER USING ELEMENT FUNCTION (This is probably triggered because a parent element doesn't work Try to use the forcebuild method instead)");
+				}
+			ArrayList<String> p = new ArrayList<String>(parent);
+			p.remove(p.size()-1);
+			try {
+				if(!this.itemExists(this.urlToList(url))) {
+					XMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),XMLRW.CONTAINER);
+				}
+			}catch(RuntimeException e) {
+				String tryelm = url.substring(0,url.length()-1);
+				System.err.println("Object "+tryelm +" is Element or Doesn't Exist");
+				
+			}
+		}
+		addurl(url);
+	}
+	
+	/** Get the parent from the url
+	 * @param url URL
+	 * @return null if no parent else the parent;
+	 * */
+	public String getParent(String url) {
+		ArrayList<String> parent = this.urlToList(url);
+		try {
+		return parent.get(parent.size()-2);
+		}catch(ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
+	}
+	/**
+	 * */
+	public String getParent(ArrayList<String> parent) {
+		try {
+		return parent.get(parent.size()-2);
+		}catch(ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
+	}
+	
+	
+	
+	/** Create an XML with the specified Body
+	 * @param file File
+	 * @param body Body Tag
+	 * 
+	 */
+	public XMLMap(File file,String body) {
 		this.setXml(file);
-		ha =  new ArrayListState();
-		holder = new ArrayList<String>();
+		setAllURLS(new ArrayList<String>());
+		XMLRW.newXMLFile(file, body);
+		addurl(XMLMap.URLStart+body);
+		this.fullMap = new HashMap<String,String>();
+
+	}
+	
+	/** Returns all the sub Urls of the parent container
+	 * @param url Parent Url (Container)
+	 * @return ArrayList of sub elements or null
+	 * 
+	 * */
+	public ArrayList<String> getSubURLS(String url){
+		if(!url.startsWith(XMLMap.URLStart)) {
+			url = XMLMap.URLStart+url;
+		}
+		if(!this.isCont(url)) {
+			throw new DMXMLException("URL IS ELEMENT NOT CONTAINER");
+		}
+		
+		ArrayList<String> match = new ArrayList<String>();
+		ArrayList<String> keys = new ArrayList<String>(this.fullMap.keySet());
+		for(int i=0;i<keys.size();i++) {
+			if(this.getParentUrl(keys.get(i)).equals(url)) {
+				match.add(keys.get(i));
+			}else {
+			}
+		}
+		try {
+			match.get(0);
+			
+		}catch(Exception e) {
+			match = null;
+		}
+		
+		
+		
+		
+		
+		return match;
+	}
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	private XMLMap(File file) {
+		this.xmlurl = new ArrayList<String>();
+		this.fullMap = new HashMap<String,String>();
+		this.setXml(file);
+	}
+
+
+	/** Load XML
+	 * @param file File
+	 * @param body Body Tag
+	 * @return 
+	 * 
+	 */
+	public static XMLMap ParseDXMLMap(File file) {
+		XMLMap m = null;
+		m = parseXML(file);
+		
+		return m;
+
+	}
+	
+
+
+	/**
+	 * @param file 
+	 * @return 
+	 * 
+	 */
+	private static XMLMap parseXML(File file) {
 		int size = RW.readAll(file).length;
 		ArrayList<String> allTop = new ArrayList<String>();
 		for(int i=0;i<size;i++) {
-			String x = OXMLRW.getTopLayerComponent(getXml(), i)[0];
+			String x = XMLRW.getTopLayerComponent(file, i)[0];
 			if(!allTop.contains(x)) {
 				allTop.add(x);
 			}
 		}
+		XMLMap map = new XMLMap(file);
+		ArrayList<ArrayList<String>> lis = new ArrayList<ArrayList<String>>();
 		for(int i=0;i<allTop.size();i++) {
-			if(OXMLRW.hasUID(getXml(), new String[] {allTop.get(i)})) {
-				this.mapContainerUID(null, allTop.get(i), OXMLRW.getUID(getXml(), new String[] {allTop.get(i)}));
-			}else {
-				this.mapContainer(null, allTop.get(i));
+			ArrayList<String> tmp = new ArrayList<String>();
+			tmp.add(allTop.get(i));
+			lis.addAll(getAllSub(file,tmp));
+			tmp.removeAll(tmp);
+			map.addurl(XMLMap.URLStart+allTop.get(i));
+			
+		}
+
+		map.setXml(file);
+		for(int i=0;i<lis.size();i++) {
+			map.addurl(listTourl(file,lis.get(i)));
+			if(!map.isCont(lis.get(i))) {
+				map.addValue(listTourl(file,lis.get(i)), map.getvalue(lis.get(i)));
 			}
-			map(new ArrayList<String>(Arrays.asList(new String[] {allTop.get(i)})));
+		}
+		
+		
+		return map;
+	}
+	
+	
+	
+	
+
+	/**
+	 * @param arrayList 
+	 * @return
+	 */
+	public String getvalue(ArrayList<String> path) {
+		if(path.size()==1) {
+			return XMLRW.getTopLevelElement(getXml(), path.get(0));
+		}else {
+			return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
+		}
+	}
+	/**
+	 * @param arrayList 
+	 * @return
+	 */
+	public String getvalue(String url) {
+		ArrayList<String> path = this.urlToList(url);
+		if(path.size()==1) {
+			return XMLRW.getTopLevelElement(getXml(), path.get(0));
+		}else {
+			return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
+		}
+	}
+
+
+	/**
+	 * @param allTop
+	 */
+	private static ArrayList<ArrayList<String>> getAllSub(File xml,ArrayList<String> path) {
+		ArrayList<ArrayList<String>> flist = new ArrayList<ArrayList<String>>();
+		HashMap<String, ArrayList<String>> sub = XMLRW.getSubElementsAndContainers(xml, path.toArray(new String[path.size()])).getMap();
+		ArrayList<String> subKey = new ArrayList<String>(sub.keySet());
+		for( int i=0;i<subKey.size();i++) {
+			ArrayList<String> p = sub.get(subKey.get(i));
+			if(!XMLRW.isElement(xml, p.toArray(new String[p.size()]))) {
+				flist.addAll(getAllSub(xml, p));
+			}
+				flist.add(p);
+			
+		}
+		return flist;
+	}
+	
+	private void addurl(String url) {
+		if(!url.startsWith(XMLMap.URLStart)) {
+			throw new DMXMLException("INVALID url");
+		}else {
+			this.getAllURLS().add(url);
 			
 		}
 		
-		
-		holder.removeAll(holder);
-		//map(tmp);
-		
 	}
-
-	/** Remove an element
-	 * @param state State
+	/** Add all urls
+	 * @param urls to be added
 	 * 
 	 * */
-	public void removeElement(String uid) {
-		ha.removeState(uid);
-	}
-	/** Adds Element to xml doc
-	 * @param name Name for Container
-	 * @param parent Parent Path
-	 * @param value Object to be stored in xml
-	 * 
-	 * 
-	 * */
-	public void addElementWithUID(String name,ArrayList<String> parent,Object value,String uid) {
-		holder.removeAll(holder);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, name);
-		holder.removeAll(holder);
-		OXMLRW.addElementWithUID(getXml(), parent.toArray(new String[parent.size()]), name,value,uid);
-		
-		
-	}
-	
-	
-	
-	/** Adds Container to xml doc
-	 * @param name Name for Container
-	 * @param parent Parent Path
-	 * 
-	 * 
-	 * */
-	public void addContainerWithUID(String name,ArrayList<String> parent,String uid) {
-		holder.removeAll(holder);
-		OXMLRW.addElementWithUID(getXml(), parent.toArray(new String[parent.size()]), name, OXMLRW.CONTAINER, uid);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, uid);
-		lastUid=uid;
-		holder.removeAll(holder);
-		
-	}
-
-	/** Get Element Value by Path
-	 * 
-	 **/
-	public String getValueByPath(ArrayList<String> path) {
-		return OXMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
-		
-	}
-	
-	
-	/** Get Element Value by UID
-	 * 
-	 **/
-	public String getValueByUID(String uid) {
-		return OXMLRW.getValueByUID(getXml(), uid);
-		
-	}
-	
-	/** Works for now
-	 * 
-	 * */
-	private void map(ArrayList<String> full) {
-		ArrayList<String> chain = ha.getState(lastUid);
-		//0 is top
-		for(int i=1;i<full.size();i++) {
-			ParentBuilder.init(getXml(),chain);
-			String tmp = full.get(i);
-			if(tmp.contains(" UID=")) {
-				int ind2 = tmp.indexOf(" UID=");
-				tmp = tmp.substring(0,ind2);
-			}
-			ParentBuilder.addPiece(tmp);
-			if(OXMLRW.isElement(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
-				if(OXMLRW.hasUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
-					mapElementUID(chain,full.get(i),OXMLRW.getUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
-				}
-				mapElement(chain,full.get(i));
-			}else {
-				if(OXMLRW.hasUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
-					mapContainerUID(chain,full.get(i),OXMLRW.getUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
-				}
-				mapContainer(chain,full.get(i));
-				map(chain);
+	public void addAllurl(ArrayList<String> urls) {
+		for(int i=0;i<urls.size();i++) {
+			if(!urls.get(i).startsWith(XMLMap.URLStart)) {
+				throw new DMXMLException("INVALID url @ Index:"+i+" Whose value is: "+ urls.get(i));
 			}
 		}
-		
-	}
-	private void mapContainerUID(ArrayList<String> parent,String name,String uid) {
-		holder.removeAll(holder);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, uid);
-		lastUid=name;
-		holder.removeAll(holder);
-	}
-	private void mapElementUID(ArrayList<String> parent,String name,String uid) {
-		holder.removeAll(holder);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, uid);
-		holder.removeAll(holder);
-	}
-	private void mapContainer(ArrayList<String> parent,String name) {
-		holder.removeAll(holder);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, name);
-		lastUid=name;
-		holder.removeAll(holder);
-	}
-	private void mapElement(ArrayList<String> parent,String name) {
-		holder.removeAll(holder);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, name);
-		holder.removeAll(holder);
-	}
-	
-	/** Create new XML file 
-	 * @param xml File
-	 * @param body Body Container
-	 * 
-	 * */
-	public XMLMap(File xml,String body) {
-		this.setXml(xml);
-		ha =  new ArrayListState();
-		holder = new ArrayList<String>();
-		lastUid = body;
-		holder.add(body);
-		ha.addState(holder, body);
-		holder.removeAll(holder);
-		OXMLRW.newXMLFile(xml, body);
-	}
-	public String getUid(ArrayList<String> path) {
-		return OXMLRW.getUID(getXml(), path.toArray(new String[path.size()]));
-	}
-	
-	
-	/** Get Components of the XML Map under the parent
-	 * @param parent Parent Path
-	 * @return list of Sub Components
-	 * 
-	 * */
-	public HashMap<String, ArrayList<String>> getSubComponents(ArrayList<String> parent){
-		return OXMLRW.getSubElementsAndContainers(getXml(), parent.toArray(new String[parent.size()])).getMap();
-	}
-	
-	
-	/** Adds Container to xml doc
-	 * @param name List of container names
-	 * @param parent Parent Path
-	 * 
-	 * 
-	 * */
-	public void addContainers(ArrayList<String> name,ArrayList<String> parent) {
-		for(int i=0;i<name.size();i++) {
-			addContainer(name.get(i),parent);
-		}
-		
-	}
-	/** Adds Container to xml doc
-	 * @param name List of container names
-	 * @param parent Parent Path
-	 * @param state List of states that can be called later
-	 * 
-	 * 
-	 * */
-	public void addContainers(ArrayList<String> name,ArrayList<String> parent,ArrayList<String> uid) {
-		for(int i=0;i<name.size();i++) {
-			addContainerWithUID(name.get(i),parent,uid.get(i));
-		}
+			this.getAllURLS().addAll(urls);
 
-		
 	}
-	/** Adds Container to xml doc
-	 * @param name List of container names
-	 * @param parent Parent Path
+	/** Add all urls
+	 * @param urls to be added
 	 * 
-	 * 
-	 * */
-	//public void addElement(String name,ArrayList<String> parent,Object value) {
-	public void addElements(ArrayList<String> name,ArrayList<String> parent,ArrayList<String> value) {
-		for(int i=0;i<name.size();i++) {
-			addElement(name.get(i),parent,value.get(i));
-		}
-		
-	}
-	/** Adds Elements to xml doc
-	 * @param name List of container names
-	 * @param parent Parent Path
-	 * @param state List of states that can be called later
-	 * @param value Value list
-	 * 
-	 * */
-	//public void addElement(String name,ArrayList<String> parent,String state,Object value) {
-	public void addElements(ArrayList<String> name,ArrayList<String> parent,ArrayList<String> state,ArrayList<String> value) {
-		for(int i=0;i<name.size();i++) {
-			addElement(name.get(i),parent,state.get(i),value.get(i));
-		}
-
-		
-	}
-	/** @param element Hashmap of elements
-	 * @param parent Parent Path
-	 * @param state List of state names
-	 * 
-	 * */
-	public void addElements(HashMap<String,Object> element,ArrayList<String> parent) {
-		String[] keys = element.keySet().toArray(new String[element.keySet().size()]);
-		for(int i=0;i<element.keySet().size();i++) {
-			addElement(keys[i],parent,keys[i],element.get(keys[i]));
-		}
-	}
-	/** Add Eleemnts to xml doc 
-	 * @param element Hashmap of elements <Element,Value>
-	 * @param parent Parent Path
-	 * @param uid List of state names
-	 * 
-	 * */
-	public void addElements(HashMap<String,Object> element,ArrayList<String> parent,ArrayList<String> uid) {
-		String[] keys = element.keySet().toArray(new String[element.keySet().size()]);
-		for(int i=0;i<element.keySet().size();i++) {
-			addElementWithUID(keys[i],parent,element.get(keys[i]),uid.get(i));
-		}
-
-		
-	}
-	public HashMap<String,ArrayList<String>> getDirectSubComponents(ArrayList<String> path) {
-		ArrayListState st =  OXMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()]));
-		return st.getMap();
-	}
-	
-	
-	/** Adds Container to xml doc
-	 * @param name Name for Container
-	 * @param parent Parent Path
 	 * 
 	 * 
 	 * */
-	public void addContainer(String name,ArrayList<String> parent) {
-		holder.removeAll(holder);
-		OXMLRW.addElementContainer(getXml(), parent.toArray(new String[parent.size()]), name);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, name);
-		lastUid=name;
-		holder.removeAll(holder);
-		
-	}
-	/**
-	 * */
-	public void addTopElement(String name,Object value) {
-		OXMLRW.addTopLevelElement(getXml(), name, value);
-		holder.add(name);
-		ha.addState(holder, name);
-		lastUid=name;
-		holder.removeAll(holder);
-	}
-	public void addTopElementWithUID(String name,Object value,String uid) {
-		OXMLRW.addTopLevelElementWithUID(getXml(), name, value,uid);
-		holder.add(name);
-		ha.addState(holder, uid);
-		lastUid=name;
-		holder.removeAll(holder);
-	}
-	
-	
-	public void addTopContainer(String name) {
-		OXMLRW.addTopLevelElement(getXml(), name, OXMLRW.CONTAINER);
-		holder.add(name);
-		ha.addState(holder, name);
-		lastUid=name;
-		holder.removeAll(holder);
-	}
-	public void addTopContainerWithUID(String name,String uid) {
-		OXMLRW.addTopLevelElementWithUID(getXml(), name, OXMLRW.CONTAINER,uid);
-		holder.add(name);
-		ha.addState(holder, uid);
-		lastUid=name;
-		holder.removeAll(holder);
-	}
-	
-	
-	
-	/** Get Value from Element
-	 * 
-	 * */
-	public String getElementFromDoc(ArrayList<String> path) {
-		for(int i=0;i<path.size();i++) {
-			String tmp = path.get(i);
-			if(tmp.contains(" UID=")) {
-				int index = tmp.indexOf(" UID=");
-				path.set(i,tmp.substring(0, index));
+	public void addAllurl(String[] urls) {
+		for(int i=0;i<urls.length;i++) {
+			if(!urls[i].startsWith(XMLMap.URLStart)) {
+				throw new DMXMLException("INVALID url @ Index:"+i+" Whose value is: "+ urls[i]);
 			}
 		}
-		
-		
-		String tmp = OXMLRW.getElementValue(this.getXml(), path.toArray(new String[path.size()]));
-		return tmp;
+			this.getAllURLS().addAll(Arrays.asList(urls));
+
 	}
-	
-	/** Get Values from all sub elements in a container
-	 * 
-	 * 
-	public ArrayList<String> getElementsFromDoc(ArrayList<String> path) {
-		
-		return OXMLRW.getElementsValues(this.getXml(), path.toArray(new String[path.size()]));
-	}*/
-	
-	/** @param path Path
-	 * @return Wether it's a container or not
-	 * 
-	 **/
-	public boolean isContainer(ArrayList<String> path) {
-		if(OXMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
-			return false;
-		}else {
-			return true;
-		}
-	}
-	/** @param path Path
-	 * @return Wether it's an element or not
-	 * 
-	 **/
-	public boolean isElement(ArrayList<String> path) {
-		if(OXMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
+	public boolean isElement(ArrayList<String> path) { 
+		try {
+		if(XMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
 			return !false;
 		}else {
 			return !true;
 		}
+		}catch(Exception e) {
+			return false;
+		}
 	}
 	
-	/** Get Values from all sub Sub Components
-	 * @param path to top
-	 * @return Hashmap of elements and keys WARNING!!(Uses Hashmap, Duplicates WILL BE OVERWIRTTEN)
-	 * 
-	 *  
-	 */
-	public HashMap<String, ArrayList<String>> getAllSubComponents(ArrayList<String> path) {
-		ArrayListState fList = new ArrayListState();
-		HashMap<String, ArrayList<String>> sub = OXMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()])).getMap();
-		ArrayList<String> subKey = new ArrayList<String>(sub.keySet());
-		for( int i=0;i<subKey.size();i++) {
-			ArrayList<String> p = sub.get(subKey.get(i));
-			if(this.isContainer(p)) {
-				fList.merge(this.getAllSubComponents(p));
-			}
-			if(OXMLRW.hasUID(getXml(), p.toArray(new String[p.size()]))) {
-				String uid = OXMLRW.getUID(getXml(), p.toArray(new String[p.size()]));
-				fList.addState(p, uid);
-			}else {
-				fList.addState(p, subKey.get(i));
-			}
-			
-			
-			
+	public boolean isCont(ArrayList<String> path) { 
+		try {
+		if(XMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
+			return false;
+		}else {
+			return true;
+		}
+		}catch(Exception e) {
+			return false;
+		}
+	}
+	
+	
+	
+	public boolean isCont(String url) {
+		if(url.endsWith("/")) {
+			return true;
+		}else{
+			return false;
 		}
 		
-		return fList.getMap();
-	}
-
-	
-	
-	public ArrayList<String> getParent(ArrayList<String> child){
-		child.remove(child.size()-1);
-		return child;
 		
 	}
 	
 	
-	
-	
-	/** Adds Element to xml doc
-	 * @param name Name for Container
-	 * @param parent Parent Path
-	 * @param value Object to be stored in xml
-	 * 
-	 * 
-	 * */
-	public void addElement(String name,ArrayList<String> parent,Object value) {
-		holder.removeAll(holder);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, name);
-		holder.removeAll(holder);
-		OXMLRW.addElement(getXml(), parent.toArray(new String[parent.size()]), name,value);
-		
-		
-	}
-	/** Returns the arraylist by the last state that was indexed
-	 * */
-	public ArrayList<String> lastParent(){
-		return this.getParentByState(this.getLastState());
-		
-	}
-	
-	/** Adds Element to xml doc
-	 * @param name Name for Container
-	 * @param parent Parent Path
-	 * @param state State that can be called later
-	 * @param value Object to be stored in xml
-	 * 
-	 * 
-	 * */
-	public void addElement(String name,ArrayList<String> parent,String uid,Object value) {
-		holder.removeAll(holder);
-		if(parent!=null){holder.addAll(parent);}
-		holder.add(name);
-		ha.addState(holder, uid);
-		holder.removeAll(holder);
-		OXMLRW.addElement(getXml(), parent.toArray(new String[parent.size()]), name,value);
-	}
-	
-	
-	/** Get an attribute from xml map based on the state, (not from doc but map) 
-	 * @param state State called
-	 * 
-	 * */
-	public ArrayList<String> getParentByState(String uid){
-			if(ha.getState(uid)==null) {
-			throw new RuntimeException("Invalid State");
+	public ArrayList<String> urlToList(String dxmlurl){
+		ArrayList<String> tmp = new ArrayList<String>();
+		dxmlurl = dxmlurl.replace(XMLMap.URLStart, "");
+		String full = dxmlurl;
+		for(int i=0;i<full.length();i++) {
+			String c = String.valueOf(full.charAt(i));
+			if(c.equals("/")) {
+				tmp.add(full.substring(0, i));
+				full=full.replace(full.substring(0, i+1), "");
+				i=0;
+			}else {
 			}
-		return ha.getState(uid);
+		}
+	
+		if(!this.isCont(dxmlurl)) {
+			tmp.add(full);
+		}
+		
+		return tmp;
+		
+	}
+	public String listTourl(ArrayList<String> list){
+		String val = XMLMap.URLStart;
+		//GET to last one
+		for(int i=0;i<list.size()-1;i++) {
+			val+=list.get(i)+"/";
+		}
+		boolean cont = this.isCont(list);
+		if(cont) {
+			val+= list.get(list.size()-1)+"/";
+			
+		}else {
+			val+= list.get(list.size()-1);
+		}
+
+		return val;
+		
+	}
+	private static String	listTourl(File file,ArrayList<String> list){
+		String val = XMLMap.URLStart;
+		for(int i=0;i<list.size()-1;i++) {
+			val+=list.get(i)+"/";
+		}
+		boolean cont = !(XMLRW.isElement(file, list.toArray(new String[list.size()])));
+		if(cont) {
+			val+= list.get(list.size()-1)+"/";
+		}else {
+			val+= list.get(list.size()-1);
+		}
+		
+		
+		return val;
+		
+	}
+	/** Does not "Add to doc" only index it
+	 * 
+	 * */
+	private void addValue(String url,String value) {
+		this.fullMap.put(url, value);
+		
 	}
 	
-	
-	
-	/**
-	 * @return the ha
-	 */
-	public ArrayListState getHa() {
-		return ha;
-	}
-
-	/**
-	 * @param ha the ha to set
-	 */
-	public void setHa(ArrayListState ha) {
-		this.ha = ha;
-	}
-
-
-
 
 	/**
 	 * @return the xml
@@ -525,6 +686,7 @@ public class XMLMap {
 
 
 
+
 	/**
 	 * @param xml the xml to set
 	 */
@@ -532,64 +694,28 @@ public class XMLMap {
 		this.xml = xml;
 	}
 
+
 	/**
-	 * @return the lastState
+	 * @return the xmlurl
 	 */
-	public String getLastState() {
-		return lastUid;
+	public ArrayList<String> getAllURLS() {
+		return xmlurl;
 	}
 
 	/**
-	 * @param lastState the lastState to set
+	 * @param xmlurl the xmlurl to set
 	 */
-	public void setLastState(String lastuid) {
-		this.lastUid = lastuid;
+	public void setAllURLS(ArrayList<String> xmlurl) {
+		this.xmlurl = xmlurl;
 	}
+
 	/**
-	 * @return the lastUid
+	 * @return the fullMap
 	 */
-	public String getLastUid() {
-		return lastUid;
+	public HashMap<String, String> getAllValues() {
+		return fullMap;
 	}
-	/**
-	 * @param lastUid the lastUid to set
-	 */
-	public void setLastUid(String lastUid) {
-		this.lastUid = lastUid;
-	}
-	public static class ParentBuilder{
-		public static ArrayList<String> p;
-		public static File xml;
-		
-		public static void addPiece(String level) {
-			p.add(level);
-		}
-		public static void setParent(ArrayList<String> parent) {
-			p = new ArrayList<String>();
-			reset();
-			p.addAll(parent);
-		}
-		public static ArrayList<String> getParent() {
-			return p;
-		}
-		
-		public static void init(File xml,ArrayList<String> parent) {
-			ParentBuilder.xml = xml;
-			p = new ArrayList<String>();
-			reset();
-			p.addAll(parent);
-		}
-		public static void init(File xml) {
-			ParentBuilder.xml = xml;
-			p = new ArrayList<String>();
-			reset();
-		}
-		public static void reset() {
-			p.removeAll(p);
-		}
-		
-		
-		
-		
-	}
+
+
+
 }
