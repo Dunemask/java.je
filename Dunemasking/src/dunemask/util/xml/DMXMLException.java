@@ -1,7 +1,7 @@
 /**
  * 
  */
-package xmltest;
+package dunemask.util.xml;
 
 /**
  * @author dunemask

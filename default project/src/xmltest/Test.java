@@ -6,6 +6,7 @@ package xmltest;
 import java.io.File;
 import java.util.ArrayList;
 
+import dunemask.util.xml.DXMLMap;
 import dunemask.util.xml.XMLRW;
 
 /**
