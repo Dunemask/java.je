@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import dunemask.util.RW;
-import dunemask.util.xml.XMLRW;
+import dunemask.util.xml.DXMLRW;
 public class DXMLMap {
 	/***Version*/
     final static double version = 5.8;
@@ -113,7 +113,7 @@ public class DXMLMap {
 	 * @return true or false
 	 * */
 	public boolean itemExists(ArrayList<String> path) {
-		return XMLRW.itemExists(getXml(), path.toArray(new String[path.size()]));
+		return DXMLRW.itemExists(getXml(), path.toArray(new String[path.size()]));
 		
 	}
 	
@@ -180,10 +180,10 @@ public class DXMLMap {
 		this.getAllValues().put(url, value.toString());
 		ArrayList<String> p = this.urlToList(url);
 		if(p.size()!=1) {
-			XMLRW.changeElement(getXml(),p.toArray(new String[p.size()]),value);
+			DXMLRW.changeElement(getXml(),p.toArray(new String[p.size()]),value);
 
 		}else {
-			XMLRW.changeTopLevelElement(getXml(), p.get(0), value);
+			DXMLRW.changeTopLevelElement(getXml(), p.get(0), value);
 		}
 		
 	}
@@ -197,10 +197,10 @@ public class DXMLMap {
 		}
 		ArrayList<String> p = this.urlToList(url);
 		if(p.size()==1) {
-			XMLRW.removeTopLevelElement(getXml(), p.get(0));
+			dunemask.util.xml.DXMLRW.removeTopElement(getXml(), p.get(0));
 		}else {
 			
-			XMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
+			DXMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
 		}
 		
 
@@ -225,7 +225,7 @@ public class DXMLMap {
 		
 		if(parent.size()==1) {
 			if(!this.itemExists(parent)) {
-			XMLRW.addTopLevelElement(getXml(), parent.get(0), value);
+			DXMLRW.addTopLevelElement(getXml(), parent.get(0), value);
 			}else {
 				
 			}
@@ -251,7 +251,7 @@ public class DXMLMap {
 		p.remove(p.size()-1);
 		
 			if(!this.itemExists(this.urlToList(url))) {
-				XMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),value);
+				DXMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),value);
 			}
 		}
 		addurl(url);
@@ -280,7 +280,7 @@ public class DXMLMap {
 	
 		if(parent.size()==1) {
 			if(!this.itemExists(parent)) {
-			XMLRW.addTopLevelElement(getXml(), parent.get(0), XMLRW.CONTAINER);
+			DXMLRW.addTopLevelElement(getXml(), parent.get(0), DXMLRW.CONTAINER);
 			}else {
 				
 			}
@@ -296,7 +296,7 @@ public class DXMLMap {
 			ArrayList<String> p = new ArrayList<String>(parent);
 			p.remove(p.size()-1);
 			if(!this.itemExists(this.urlToList(url))) {
-				XMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),XMLRW.CONTAINER);
+				DXMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),DXMLRW.CONTAINER);
 			}
 		}
 		addurl(url);
@@ -335,7 +335,7 @@ public class DXMLMap {
 		this.setXml(file);
 		createXML();
 		setAllURLS(new ArrayList<String>());
-		XMLRW.newXMLFile(file, body);
+		DXMLRW.newXMLFile(file, body);
 		addurl(DXMLMap.URLStart+body);
 		this.fullMap = new HashMap<String,String>();
 
@@ -384,7 +384,7 @@ public class DXMLMap {
 		int size = RW.readAll(file).length;
 		ArrayList<String> allTop = new ArrayList<String>();
 		for(int i=0;i<size;i++) {
-			String x = XMLRW.getTopLayerComponent(file, i)[0];
+			String x = DXMLRW.getTopLayerComponent(file, i)[0];
 			if(!allTop.contains(x)) {
 				allTop.add(x);
 			}
@@ -422,9 +422,9 @@ public class DXMLMap {
 	 */
 	public String getvalue(ArrayList<String> path) {
 		if(path.size()==1) {
-			return XMLRW.getTopLevelElement(getXml(), path.get(0));
+			return DXMLRW.getTopLevelElement(getXml(), path.get(0));
 		}else {
-			return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
+			return DXMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
 		}
 	}
 	/**
@@ -434,9 +434,9 @@ public class DXMLMap {
 	public String getvalue(String url) {
 		ArrayList<String> path = this.urlToList(url);
 		if(path.size()==1) {
-			return XMLRW.getTopLevelElement(getXml(), path.get(0));
+			return DXMLRW.getTopLevelElement(getXml(), path.get(0));
 		}else {
-			return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
+			return DXMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
 		}
 	}
 
@@ -446,11 +446,11 @@ public class DXMLMap {
 	 */
 	private static ArrayList<ArrayList<String>> getAllSub(File xml,ArrayList<String> path) {
 		ArrayList<ArrayList<String>> flist = new ArrayList<ArrayList<String>>();
-		HashMap<String, ArrayList<String>> sub = XMLRW.getSubElementsAndContainers(xml, path.toArray(new String[path.size()])).getMap();
+		HashMap<String, ArrayList<String>> sub = DXMLRW.getSubElementsAndContainers(xml, path.toArray(new String[path.size()])).getMap();
 		ArrayList<String> subKey = new ArrayList<String>(sub.keySet());
 		for( int i=0;i<subKey.size();i++) {
 			ArrayList<String> p = sub.get(subKey.get(i));
-			if(!XMLRW.isElement(xml, p.toArray(new String[p.size()]))) {
+			if(!DXMLRW.isElement(xml, p.toArray(new String[p.size()]))) {
 				flist.addAll(getAllSub(xml, p));
 			}
 				flist.add(p);
@@ -498,7 +498,7 @@ public class DXMLMap {
 	}
 	public boolean isElement(ArrayList<String> path) { 
 		try {
-		if(XMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
+		if(DXMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
 			return !false;
 		}else {
 			return !true;
@@ -510,7 +510,7 @@ public class DXMLMap {
 	
 	public boolean isCont(ArrayList<String> path) { 
 		try {
-		if(XMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
+		if(DXMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
 			return false;
 		}else {
 			return true;
@@ -576,7 +576,7 @@ public class DXMLMap {
 		for(int i=0;i<list.size()-1;i++) {
 			val+=list.get(i)+"/";
 		}
-		boolean cont = !(XMLRW.isElement(file, list.toArray(new String[list.size()])));
+		boolean cont = !(DXMLRW.isElement(file, list.toArray(new String[list.size()])));
 		if(cont) {
 			val+= list.get(list.size()-1)+"/";
 		}else {

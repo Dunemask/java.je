@@ -8,17 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import dunemask.util.xml.DXMLMap;
-import dunemask.util.xml.XMLRW;
 
 /**
  * @author dunemask
  *
  */
-public class Test {
-
-	/**
-	 * @param args
-	 */
+public class Other {
 	public static void main(String[] args) {
 		File file = new File(System.getProperty("user.home")+"/Desktop/tmp.xml");
 		//DXMLMap mp = DXMLMap.ParseDXMLMap(file);
@@ -36,7 +31,6 @@ public class Test {
 		mp.changeElement("Cover/Sheets/Purple", "Egyptian Cotten");
 		mp.changeElement("Cover/Sheets/Purple", "Purple");
 		mp.writeForcedElement("Other/Things/Only/For/The/Coolest/People", "Potat");
-		System.out.println("What The");
 		mp.removeElement("Cookie");
 		HashMap<String, String> full = mp.getAllValues();
 		ArrayList<String> key = new ArrayList<String>(full.keySet());
@@ -59,5 +53,4 @@ public class Test {
 			}
 		}
 	}
-
 }

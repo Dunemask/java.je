@@ -17,7 +17,7 @@ import dunemask.util.StringUtil;
  * @author dunemask
  *
  */
-public class XMLRW {
+public class DXMLRW {
 	/***Version*/
     final static double version = 5.8;
     /** No Body for newXMLFile
@@ -57,7 +57,7 @@ public class XMLRW {
     	
     	if(element.contains("UID=")) {
     		//System.out.println("True");
-    		element = XMLRW.removeUID(element);
+    		element = DXMLRW.removeUID(element);
     	}
     	//System.out.println("OUT:"+element);
     	
@@ -79,7 +79,7 @@ public class XMLRW {
     
     
     /** Creates a File in the specified location, (handles parent folders)
-     * <p>Gives it a body as well, if no body is needed then use {@link dunemask.util.xml.XMLRW#NOBODY} For the arg</p>
+     * <p>Gives it a body as well, if no body is needed then use {@link dunemask.util.xml.DXMLRW#NOBODY} For the arg</p>
      * @param file File
      * @param body Body Element
      * 
@@ -104,7 +104,7 @@ public class XMLRW {
     	for(int i=0;i<lines.length;i++) {
     		//If Not Element container
     		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
-    			if(lines[i].contains(XMLRW.element(element))) {
+    			if(lines[i].contains(DXMLRW.element(element))) {
     				ret = lines[i];
     				i=lines.length;
     			}
@@ -128,7 +128,7 @@ public class XMLRW {
     	for(int i=0;i<lines.length;i++) {
     		//If Not Element container
     		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
-    			if(lines[i].contains(XMLRW.element(element))) {
+    			if(lines[i].contains(DXMLRW.element(element))) {
     				tl = i+1; //Started at 0 when it starts at 1
     				i=lines[i].length();
     			}
@@ -137,30 +137,11 @@ public class XMLRW {
     	if(tl==0) {
     		System.err.println("Item:"+element+" Does not Exist!");
     	}
-    	String text = XMLRW.element(element)+newValue+XMLRW.closeElement(element);
+    	String text = DXMLRW.element(element)+newValue+DXMLRW.closeElement(element);
     	RW.write(file, text, tl);
     	
     }
-    
-    public static void removeTopLevelElement(File file,String element) {
-    	String[] lines = RW.readAll(file);
-    	int tl =0;
-    	for(int i=0;i<lines.length;i++) {
-    		//If Not Element container
-    		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
-    			if(lines[i].contains(XMLRW.element(element))) {
-    				tl = i+1; //Started at 0 when it starts at 1
-    				i=lines[i].length();
-    			}
-    		}
-    	}
-    	if(tl==0) {
-    		System.err.println("Item:"+element+" Does not Exist!");
-    	}
-    	System.out.println("Boom:"+tl);
-    	RW.write(file, " ", tl);
-    	
-    }
+
     
     
     
@@ -172,11 +153,11 @@ public class XMLRW {
     public static void addTopLevelElement(File file,String element,Object value) {
     	String[] lines = RW.readAll(file);
     	int l = lines.length;
-    	if(value.equals(XMLRW.CONTAINER)) {
-    		RW.write(file, XMLRW.element(element), l+1);
-    		RW.write(file, XMLRW.closeElement(element), l+2);
+    	if(value.equals(DXMLRW.CONTAINER)) {
+    		RW.write(file, DXMLRW.element(element), l+1);
+    		RW.write(file, DXMLRW.closeElement(element), l+2);
     	}else {
-    		RW.write(file, XMLRW.element(element)+value+XMLRW.closeElement(element), l+1);
+    		RW.write(file, DXMLRW.element(element)+value+DXMLRW.closeElement(element), l+1);
     	}
     	
     }
@@ -191,11 +172,11 @@ public class XMLRW {
     public static void addTopLevelElementWithUID(File file,String element,Object value,String uid) {
     	String[] lines = RW.readAll(file);
     	int l = lines.length;
-    	if(element.equals(XMLRW.CONTAINER)) {
-    		RW.write(file, XMLRW.element(element), l+1);
-    		RW.write(file, XMLRW.closeElement(element), l+2);
+    	if(element.equals(DXMLRW.CONTAINER)) {
+    		RW.write(file, DXMLRW.element(element), l+1);
+    		RW.write(file, DXMLRW.closeElement(element), l+2);
     	}else {
-    		RW.write(file, XMLRW.element(element+" UID="+uid)+value+XMLRW.closeElement(element), l+1);
+    		RW.write(file, DXMLRW.element(element+" UID="+uid)+value+DXMLRW.closeElement(element), l+1);
     	}
     	
     }
@@ -298,13 +279,13 @@ public class XMLRW {
      * 
      * */
     public static void changeElement(File file,String[] parentElementChain,Object value) {
-    	if(XMLRW.itemExists(file, parentElementChain)) {
+    	if(DXMLRW.itemExists(file, parentElementChain)) {
     		int low=0,high=FileUtil.linesInFile(file);
         	int tabs =0;
         	if(parentElementChain!=null) {
     	    	for(int i=0;i<parentElementChain.length;i++) {
     	    		String element = parentElementChain[i];
-    	    		element = XMLRW.ripElement(element);
+    	    		element = DXMLRW.ripElement(element);
     	    		int tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
     	    		int thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
     	    		low=tlow;
@@ -320,7 +301,7 @@ public class XMLRW {
         	}
         	String element = parentElementChain[parentElementChain.length-1];
         	//Sequential
-        	RW.write(file, tab+XMLRW.element(element)+value+XMLRW.closeElement(element), high);
+        	RW.write(file, tab+DXMLRW.element(element)+value+DXMLRW.closeElement(element), high);
     	}else {
     		throw new RuntimeException("NOBEUENO! IT DON'T EXIST!");
     	}
@@ -341,7 +322,7 @@ public class XMLRW {
     	if(parentElementChain!=null) {
 	    	for(int i=0;i<parentElementChain.length;i++) {
 	    		String element = parentElementChain[i];
-	    		element = XMLRW.ripElement(element);
+	    		element = DXMLRW.ripElement(element);
 	    		int tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
 	    		int thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
 	    		low=tlow;
@@ -426,7 +407,7 @@ public class XMLRW {
     	if(parentElementChain!=null) {
 	    	for(int i=0;i<parentElementChain.length;i++) {
 	    		String element = parentElementChain[i];
-	    		element = XMLRW.ripElement(element);
+	    		element = DXMLRW.ripElement(element);
 	    		String se = element(element);
 	    		String ce = closeElement(element);
 	    		se = se.substring(0, se.length()-1);
@@ -522,8 +503,8 @@ public class XMLRW {
     		ArrayList<String> tmp = new ArrayList<String>();
     		tmp.addAll(fullArch);
     		tmp.add(cont.get(i));
-    		if(XMLRW.isElement(file, tmp.toArray(new String[tmp.size()]))) {
-    		vals.add(XMLRW.getElementValue(file, tmp.toArray(new String[tmp.size()])));
+    		if(DXMLRW.isElement(file, tmp.toArray(new String[tmp.size()]))) {
+    		vals.add(DXMLRW.getElementValue(file, tmp.toArray(new String[tmp.size()])));
     		}
     	}
 		return vals;
@@ -536,9 +517,9 @@ public class XMLRW {
     	for(int i=0;i<lines.length;i++) {
     		//If Not Element container
     		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
-	    		if(!XMLRW.isElement(file, new String[] {lines[i]})) {
+	    		if(!DXMLRW.isElement(file, new String[] {lines[i]})) {
 	    			ret = lines[i];
-	    			ret = XMLRW.ripElement(ret);
+	    			ret = DXMLRW.ripElement(ret);
 	    			count--;
 	    		}
 	    		if(count==0) {
@@ -568,7 +549,7 @@ public class XMLRW {
     	if(parentElementChain!=null) {
 	    	for(int i=0;i<parentElementChain.length;i++) {
 	    		String element = parentElementChain[i];
-	    		element = XMLRW.ripElement(element);
+	    		element = DXMLRW.ripElement(element);
 	    		String se = element(element);
 	    		String ce = closeElement(element);
 	    		se = se.substring(0, se.length()-1);
@@ -612,15 +593,15 @@ public class XMLRW {
     					uid=  full.substring(endIndexOfUID);
     				}
     			}else {//Else doesnt have uid
-    				uid = XMLRW.ripElement(full);
+    				uid = DXMLRW.ripElement(full);
     			}
-    			full = XMLRW.ripElement(full);
+    			full = DXMLRW.ripElement(full);
     			if(map.getMap().containsKey(uid)) {
     			int r =	new Random().nextInt(Integer.MAX_VALUE);
     			uid+=String.valueOf(r);
     			}
     			
-    	    	full = XMLRW.ripElement(full);
+    	    	full = DXMLRW.ripElement(full);
 	    		//System.out.println("Call:"+full);
     			ArrayList<String> tmp = new ArrayList<String>();
     			tmp.addAll(par);
@@ -700,7 +681,7 @@ public class XMLRW {
     		String element = parentElementChain[i];
     		int tlow;
     		int thigh;
-    		element = XMLRW.ripElement(element);
+    		element = DXMLRW.ripElement(element);
     		tlow = FileUtil.containsInDocumentBounds(file,element(element).substring(0, element.length()), low, high);
     		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
     		
@@ -763,7 +744,7 @@ public class XMLRW {
     	int low=0,high=FileUtil.linesInFile(file);
     	for(int i=0;i<parentElementChain.length;i++) {
     		String element = parentElementChain[i];
-    		element = XMLRW.ripElement(element);
+    		element = DXMLRW.ripElement(element);
     		//System.out.println(element);
     		int tlow; int thigh;
     		try {
@@ -803,7 +784,7 @@ public class XMLRW {
     	int low=0,high=FileUtil.linesInFile(file);
     	for(int i=0;i<parentElementChain.length;i++) {
     		String element = parentElementChain[i];
-    		element = XMLRW.ripElement(element);
+    		element = DXMLRW.ripElement(element);
     		//System.out.println(element);
     		int tlow; int thigh;
     		try {
@@ -851,8 +832,7 @@ public class XMLRW {
     		return false;
     	}
     }
-    
-    
+   
     /** Tests if directed path has UID
      * @param file XML doc
      * @param parentElementChain Hiarchy down to the element to be added
@@ -862,7 +842,7 @@ public class XMLRW {
     	int low=0,high=FileUtil.linesInFile(file);
     	for(int i=0;i<parentElementChain.length;i++) {
     		String element = parentElementChain[i];
-    		element = XMLRW.ripElement(element);
+    		element = DXMLRW.ripElement(element);
     		int tlow;
     		int thigh;
     		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
@@ -883,6 +863,18 @@ public class XMLRW {
     		return null;
     	}
     }
+public static void other(File file,String s) {
+	
+}
+    
+	/**
+	 * @param xml
+	 * @param string
+	 */
+	public static void removeTopElement(File xml, String string) {
+		// TODO Auto-generated method stub
+		
+	}
     
 	
 	
