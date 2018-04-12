@@ -149,8 +149,15 @@ public class DXMLMap {
 	}
 	
 	public void changeElement(String url,Object value) {
+		this.getAllValues().put(url, value.toString());
 		ArrayList<String> p = this.urlToList(url);
-		XMLRW.changeElement(getXml(),p.toArray(new String[p.size()]),value);
+		if(p.size()!=1) {
+			XMLRW.changeElement(getXml(),p.toArray(new String[p.size()]),value);
+
+		}else {
+			XMLRW.changeTopLevelElement(getXml(), p.get(0), value);
+		}
+		
 	}
 	public void removeElement(String url) {
 		ArrayList<String> p = this.urlToList(url);
@@ -206,7 +213,7 @@ public class DXMLMap {
 			}
 		}
 		addurl(url);
-		this.addValue(url, value.toString());
+		this.addValue(url, String.valueOf(value));
 	}
 	/** Write a Container
 	 * @param url Url
@@ -286,6 +293,9 @@ public class DXMLMap {
 		this.setXml(file);
 		createXML();
 		setAllURLS(new ArrayList<String>());
+		XMLRW.newXMLFile(file, body);
+		addurl(DXMLMap.URLStart+body);
+		this.fullMap = new HashMap<String,String>();
 
 	}
 	

@@ -19,7 +19,8 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		File file = new File(System.getProperty("user.home")+"/Desktop/tmp.xml");
-		DXMLMap mp = DXMLMap.ParseDXMLMap(file);
+		//DXMLMap mp = DXMLMap.ParseDXMLMap(file);
+		DXMLMap mp = new DXMLMap(new File(System.getProperty("user.home")+"/Desktop/otmp.xml"),"Master");
 		//mp.tmp();
 		//mp.writeForcedElement("File/Asdf/Cookie", "Potato");
 		//mp.writeElement("File/Asdf/potato", "asdf");
@@ -28,7 +29,15 @@ public class Test {
 		//mp.writeContainer("Amazing/Purple/Green/Orange");
 		//mp.writeForcedElement("Cookie", "Just The best");
 		mp.writeElement("Cookie", "Just yes");
-		System.out.println(mp.getvalue("asdfsadfasdf"));
+		mp.changeElement("Cookie", "No");
+		mp.writeForcedElement("Cover/Sheets/Purple", "Flanel");
+		mp.changeElement("Cover/Sheets/Purple", "Egyptian Cotten");
+		mp.changeElement("Cover/Sheets/Purple", "Purple");
+		System.out.println(mp.getvalue("Cookie"));
+		ArrayList<String> urls = mp.getAllURLS();
+		for(int i=0;i<urls.size();i++) {
+			System.out.println(urls.get(i));
+		}
 		//mp.writeElement("Amazing/Purple/Green/Orange/Cookie", "Pink");
 		//mp.changeElement("Cookie","Greatest");
 		
