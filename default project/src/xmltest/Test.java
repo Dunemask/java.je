@@ -27,7 +27,9 @@ public class Test {
 		//mp.writeForcedContainer("Amazing/Purple/Green/Orange");
 		//mp.writeContainer("Amazing/Purple/Green/Orange");
 		//mp.writeForcedElement("Cookie", "Just The best");
-		mp.writeElement("Amazing/Purple/Green/Orange/Cookie", "Pink");
+		mp.writeElement("Cookie", "Just yes");
+		System.out.println(mp.getvalue("asdfsadfasdf"));
+		//mp.writeElement("Amazing/Purple/Green/Orange/Cookie", "Pink");
 		//mp.changeElement("Cookie","Greatest");
 		
 		ArrayList<String> url = mp.getAllURLS();

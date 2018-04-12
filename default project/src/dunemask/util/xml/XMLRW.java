@@ -93,6 +93,36 @@ public class XMLRW {
     	}
     	
     }
+    /** @param file File
+     * @param element Element
+     * @param value Value XMLRW.container for container
+     * @return 
+     * 
+     * */
+    public static String getTopLevelElement(File file,String element) {
+    	String ret = "";
+    	String[] lines = RW.readAll(file);
+    	for(int i=0;i<lines.length;i++) {
+    		//If Not Element container
+    		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
+    			if(lines[i].contains(XMLRW.element(element))) {
+    				ret = lines[i];
+    				i=lines.length;
+    			}
+    		}
+    	}
+    	String full = ret;
+    	if(full!=null&&full!="") {
+    	full = full.replaceFirst("<", "");
+    	int ind1 = full.indexOf(">");
+    	int ind2 = full.indexOf("<");
+    	 return full.substring(ind1+1, ind2);
+    	}else {
+    		return null;
+    	}
+    	
+    	
+    }
     
     /** @param file File
      * @param element Element

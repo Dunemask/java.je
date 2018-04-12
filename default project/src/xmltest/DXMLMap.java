@@ -175,15 +175,19 @@ public class DXMLMap {
 		}
 		
 		if(parent.size()==1) {
+			if(!this.itemExists(parent)) {
 			XMLRW.addTopLevelElement(getXml(), parent.get(0), value);
+			}else {
+				
+			}
 		}else {
-			//try {
+			try {
 				if(this.isCont(url)){
 					throw new DMXMLException("TRIED TO WRITE ELEMENT USING CONTAINER FUNCTION");
 				}
-			//}catch (Exception e) {
-			//	throw new DMXMLException("TRIED TO WRITE ELEMENT USING CONTAINER FUNCTION (This is probably triggered because a parent element doesn't work Try to use the forcebuild method instead)");
-			//}
+			}catch (Exception e) {
+				throw new DMXMLException("TRIED TO WRITE ELEMENT USING CONTAINER FUNCTION (This is probably triggered because a parent element doesn't work Try to use the forcebuild method instead)");
+			}
 			try {
 				if(!this.isElement(this.urlToList(url))) {
 					
@@ -196,6 +200,7 @@ public class DXMLMap {
 			
 		ArrayList<String> p = new ArrayList<String>(parent);
 		p.remove(p.size()-1);
+		
 			if(!this.itemExists(this.urlToList(url))) {
 				XMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),value);
 			}
@@ -225,7 +230,11 @@ public class DXMLMap {
 		}
 	
 		if(parent.size()==1) {
+			if(!this.itemExists(parent)) {
 			XMLRW.addTopLevelElement(getXml(), parent.get(0), XMLRW.CONTAINER);
+			}else {
+				
+			}
 		}else {
 			try {
 				if(!this.isCont(this.getParentUrl(url))){
@@ -360,14 +369,23 @@ public class DXMLMap {
 	 * @return
 	 */
 	public String getvalue(ArrayList<String> path) {
-		return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
+		if(path.size()==1) {
+			return XMLRW.getTopLevelElement(getXml(), path.get(0));
+		}else {
+			return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
+		}
 	}
 	/**
 	 * @param arrayList 
 	 * @return
 	 */
 	public String getvalue(String url) {
-		return this.getvalue(this.urlToList(url));
+		ArrayList<String> path = this.urlToList(url);
+		if(path.size()==1) {
+			return XMLRW.getTopLevelElement(getXml(), path.get(0));
+		}else {
+			return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
+		}
 	}
 
 
