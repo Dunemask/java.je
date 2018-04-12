@@ -187,6 +187,28 @@ public class DXMLMap {
 		}
 		
 	}
+	
+	public void removeContainer(String url) {
+		if(!url.startsWith(DXMLMap.URLStart)) {
+			url = DXMLMap.URLStart+url;
+		}
+			this.getAllURLS().remove(url);
+		if(this.isElement(this.urlToList(url))) {
+			this.getAllValues().remove(url);
+		}
+		if(this.itemExists(this.urlToList(url))) {
+			ArrayList<String> p = this.urlToList(url);
+			if(p.size()==1) {
+				dunemask.util.xml.DXMLRW.removeTopContainer(getXml(), p.get(0));
+			}else {
+				
+				DXMLRW.removeContainer(getXml(),p.toArray(new String[p.size()]));
+			}
+		}
+		
+
+	}
+	
 	public void removeElement(String url) {
 		if(!url.startsWith(DXMLMap.URLStart)) {
 			url = DXMLMap.URLStart+url;
@@ -272,10 +294,19 @@ public class DXMLMap {
 			if(!url.contains(URLStart)) {
 				url = URLStart + url;
 			}
+			
 			if(!url.endsWith("/")) {
 				url+="/";
 
 			}
+			String tryelm = url.substring(0,url.length()-1);
+
+			if(this.isElement(this.urlToList(tryelm))) {
+				System.err.println("Object "+tryelm +" is Element");
+				return;
+			}
+			
+			
 		parent = this.urlToList(url);
 			
 		}
@@ -297,8 +328,14 @@ public class DXMLMap {
 				}
 			ArrayList<String> p = new ArrayList<String>(parent);
 			p.remove(p.size()-1);
-			if(!this.itemExists(this.urlToList(url))) {
-				DXMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),DXMLRW.CONTAINER);
+			try {
+				if(!this.itemExists(this.urlToList(url))) {
+					DXMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),DXMLRW.CONTAINER);
+				}
+			}catch(RuntimeException e) {
+				String tryelm = url.substring(0,url.length()-1);
+				System.err.println("Object "+tryelm +" is Element or Doesn't Exist");
+				
 			}
 		}
 		addurl(url);

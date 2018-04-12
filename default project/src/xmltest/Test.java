@@ -24,9 +24,21 @@ public class Test {
 		File ot = new File(System.getProperty("user.home")+"/Desktop/otmp.xml");
 		//DXMLMap mp = DXMLMap.ParseDXMLMap(file);
 		//DXMLMap mp =  new DXMLMap(ot,"None");
-		DXMLMap mp =  DXMLMap.ParseDXMLMap(ot);
-		mp.removeElement("Cover/Sheets/Purple");
-	
+		DXMLMap mp =  new DXMLMap(file,"Body");
+		mp.writeContainer("Top");
+		mp.writeElement("Top/Master", "Branch");
+		HashMap<String, String> map = mp.getAllValues();
+		ArrayList<String> keys = new ArrayList<String>(map.keySet());
+		//System.out.println(mp.getAllURLS().contains(keys.get(0)));
+		//System.out.println(keys);
+		//System.out.println(mp.getAllURLS());
+		mp.removeElement("Top/Master");
+		mp.writeForcedContainer("Top/Master/Cookie/");
+		mp.removeContainer("Top");
+		mp = DXMLMap.ParseDXMLMap(file);
+		mp.writeForcedContainer("ChickenScratch/Amazing/Ninja");
+		mp.removeContainer("ChickenScratch/Amazing/");
+		
 		//mp.tmp();
 		//mp.writeForcedElement("File/Asdf/Cookie", "Potato");
 		//mp.writeElement("File/Asdf/potato", "asdf");

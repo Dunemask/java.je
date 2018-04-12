@@ -308,7 +308,47 @@ public class DXMLRW {
     	
 
     }
-    
+    /** Removes a element in the XML Doc
+     * @param file XML File
+     * @param parentElementChain Hiarchy down to the element to be added
+     * @param newElement Name of new Element
+     * @param value Value for new Element
+     * 
+     * */
+    public static void removeContainer(File file,String[] parentElementChain) {
+    	String[] lines = RW.readAll(file);
+    	int low=0,high=FileUtil.linesInFile(file);
+    	if(parentElementChain!=null) {
+	    	for(int i=0;i<parentElementChain.length;i++) {
+	    		String element = parentElementChain[i];
+	    		element = DXMLRW.ripElement(element);
+	    		int tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+	    		int thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		low=tlow;
+	    		high=thigh;
+	    	}
+    	}
+    	//high = high;
+    	String[] tmp = lines;
+    	//System.out.println((low-1)+","+(high-1));
+
+    	for(int i=low-1;i<high;i++) {
+    		
+    		//System.out.println("Rmv:"+tmp[i]+"@"+i);
+    		tmp[i]=null;
+    	}
+    	ArrayList<String> al = new ArrayList<String>();
+    	for(int i=0;i<tmp.length;i++) {
+    		if(tmp[i]!=null) {
+    			al.add(tmp[i]);
+    		}
+    	}
+    	
+    	file.delete();
+    	ArrayList<String> fin = new ArrayList<String>(al);
+    	RW.writeAll(file, fin.toArray(new String[fin.size()]));
+    	//Sequential
+    }
     
     /** Removes a element in the XML Doc
      * @param file XML File
@@ -334,6 +374,7 @@ public class DXMLRW {
     	ArrayList<String> al = new ArrayList<String>(Arrays.asList(lines));
     	al.remove(high-1);
     	ArrayList<String> fin = new ArrayList<String>(al);
+    	file.delete();
     	RW.writeAll(file, fin.toArray(new String[fin.size()]));
     	//Sequential
     }
@@ -863,6 +904,56 @@ public class DXMLRW {
     	}
     }
 
+	/**
+	 * @param file
+	 * @param element
+	 */
+	public static void removeTopContainer(File file, String element) {
+		String[] lines = RW.readAll(file);
+    	int tl =0;
+    	int th = 0;
+    	for(int i=0;i<lines.length;i++) {
+    		//If Not Element container
+    		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
+    			if(lines[i].contains(DXMLRW.element(element))) {
+    				tl = i; //Started at 0 when it starts at 1
+    				//i=lines[i].length();
+    			}
+    			if(lines[i].contains(DXMLRW.closeElement(element))) {
+    				th = i; //Started at 0 when it starts at 1
+    				//i=lines[i].length();
+    			}
+    		}
+    	}
+    	if(tl==0||th==0) {
+    		System.err.println("Item:"+element+" Does not Exist!");
+    	}else {
+    		tl++;
+    		th++;
+    		String[] tmp = lines;
+        	//System.out.println((low-1)+","+(high-1));
+
+        	for(int i=tl-1;i<th;i++) {
+        		
+        		//System.out.println("Rmv:"+tmp[i]+"@"+i);
+        		tmp[i]=null;
+        	}
+        	ArrayList<String> al = new ArrayList<String>();
+        	for(int i=0;i<tmp.length;i++) {
+        		if(tmp[i]!=null) {
+        			al.add(tmp[i]);
+        		}
+        	}
+        	
+        	file.delete();
+        	ArrayList<String> fin = new ArrayList<String>(al);
+        	
+        	file.delete();
+        	RW.write(file,fin.toArray(new String[fin.size()]), 0);
+    	}
+    	
+		
+	}
     
 	/**
 	 * @param file
