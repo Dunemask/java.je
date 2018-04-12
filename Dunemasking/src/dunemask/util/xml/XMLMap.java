@@ -10,6 +10,10 @@ import java.util.HashMap;
 
 import dunemask.util.RW;
 import dunemask.util.xml.XMLRW;
+/** Simple tool for writing and reading DXML's
+ *  This may or may not work for other xmls
+ * 
+ * */
 public class XMLMap {
 	/***Version*/
     final static double version = 5.8;
@@ -72,7 +76,7 @@ public class XMLMap {
 		//For all the ones we need to make if it hasn't been made make it
 		for(int i=toMake.size()-1;i>=0;i--) {
 			ArrayList<String> lis =  new ArrayList<String>(Arrays.asList(toMake.get(i)));
-			if(!this.isCont(lis)||!this.itemExists(lis)) {
+			if(!this.isContByDoc(lis)||!this.itemExists(lis)) {
 				this.writeContainer(this.listTourl(lis));
 			}
 		}
@@ -106,7 +110,7 @@ public class XMLMap {
 		//For all the ones we need to make if it hasn't been made make it
 		for(int i=toMake.size()-1;i>=0;i--) {
 			ArrayList<String> lis =  new ArrayList<String>(Arrays.asList(toMake.get(i)));
-			if(!this.isCont(lis)) {
+			if(!this.isContByDoc(lis)) {
 				this.writeContainer(this.listTourl(lis));
 			}
 		}
@@ -233,7 +237,7 @@ public class XMLMap {
 			url = XMLMap.URLStart+url;
 		}
 			this.getAllURLS().remove(url);
-		if(this.isElement(this.urlToList(url))) {
+		if(this.isElementByDoc(this.urlToList(url))) {
 			this.getAllValues().remove(url);
 		}
 		if(this.itemExists(this.urlToList(url))) {
@@ -241,9 +245,7 @@ public class XMLMap {
 			if(p.size()==1) {
 				dunemask.util.xml.XMLRW.removeTopElement(getXml(), p.get(0));
 			}else {
-				System.out.println("4325345");
 				XMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
-				System.out.println("asfdasdf");
 			}
 		}
 		
@@ -285,7 +287,7 @@ public class XMLMap {
 				throw new DMXMLException("TRIED TO WRITE ELEMENT USING CONTAINER FUNCTION (This is probably triggered because a parent element doesn't work Try to use the forcebuild method instead)");
 			}
 			try {
-				if(!this.isElement(this.urlToList(url))) {
+				if(!this.isElementByDoc(this.urlToList(url))) {
 					
 				}
 			}catch (Exception e) {
@@ -297,16 +299,19 @@ public class XMLMap {
 		ArrayList<String> p = new ArrayList<String>(parent);
 		p.remove(p.size()-1);
 		
+		try {
 			if(!this.itemExists(this.urlToList(url))) {
 				XMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),value);
 			}
+		}catch(Exception e) {
+			throw new DMXMLException("Element "+url+" Could not be written");
+		}
 		}
 		addurl(url);
 		this.addValue(url, String.valueOf(value));
 	}
 	/** Write a Container
 	 * @param url Url
-	 * @param value Value
 	 * 
 	 * */
 	public void writeContainer(String url) {
@@ -324,7 +329,7 @@ public class XMLMap {
 			}
 			String tryelm = url.substring(0,url.length()-1);
 
-			if(this.isElement(this.urlToList(tryelm))) {
+			if(this.isElementByDoc(this.urlToList(tryelm))) {
 				System.err.println("Object "+tryelm +" is Element");
 				throw new DMXMLException("Item Doesn't Exist");
 			}
@@ -376,15 +381,6 @@ public class XMLMap {
 			return null;
 		}
 	}
-	/**
-	 * */
-	public String getParent(ArrayList<String> parent) {
-		try {
-		return parent.get(parent.size()-2);
-		}catch(ArrayIndexOutOfBoundsException e) {
-			return null;
-		}
-	}
 	
 	
 	
@@ -402,7 +398,7 @@ public class XMLMap {
 
 	}
 	
-	/** Returns all the sub Urls of the parent container
+	/** Returns all the sub Urls of the parent container (Only Direct Level Below)
 	 * @param url Parent Url (Container)
 	 * @return ArrayList of sub elements or null
 	 * 
@@ -452,8 +448,7 @@ public class XMLMap {
 
 	/** Load XML
 	 * @param file File
-	 * @param body Body Tag
-	 * @return 
+	 * @return for Parsing DXML
 	 * 
 	 */
 	public static XMLMap ParseDXMLMap(File file) {
@@ -494,8 +489,8 @@ public class XMLMap {
 		map.setXml(file);
 		for(int i=0;i<lis.size();i++) {
 			map.addurl(listTourl(file,lis.get(i)));
-			if(!map.isCont(lis.get(i))) {
-				map.addValue(listTourl(file,lis.get(i)), map.getvalue(lis.get(i)));
+			if(!map.isContByDoc(lis.get(i))) {
+				map.addValue(listTourl(file,lis.get(i)), map.getValueFromXML(lis.get(i)));
 			}
 		}
 		
@@ -508,16 +503,19 @@ public class XMLMap {
 	
 
 	/**
-	 * @param arrayList 
+	 * @deprecated
+	 * Rip Directly from
+	 * @param path 
 	 * @return
 	 */
-	public String getvalue(ArrayList<String> path) {
+	public String getValueFromXML(ArrayList<String> path) {
 		if(path.size()==1) {
 			return XMLRW.getTopLevelElement(getXml(), path.get(0));
 		}else {
 			return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
 		}
 	}
+	
 	/**
 	 * @param arrayList 
 	 * @return
@@ -563,7 +561,7 @@ public class XMLMap {
 	 * @param urls to be added
 	 * 
 	 * */
-	public void addAllurl(ArrayList<String> urls) {
+/*	public void addAllurl(ArrayList<String> urls) {
 		for(int i=0;i<urls.size();i++) {
 			if(!urls.get(i).startsWith(XMLMap.URLStart)) {
 				throw new DMXMLException("INVALID url @ Index:"+i+" Whose value is: "+ urls.get(i));
@@ -571,14 +569,14 @@ public class XMLMap {
 		}
 			this.getAllURLS().addAll(urls);
 
-	}
+	}*/
 	/** Add all urls
 	 * @param urls to be added
 	 * 
 	 * 
 	 * 
 	 * */
-	public void addAllurl(String[] urls) {
+/*	public void addAllurl(String[] urls) {
 		for(int i=0;i<urls.length;i++) {
 			if(!urls[i].startsWith(XMLMap.URLStart)) {
 				throw new DMXMLException("INVALID url @ Index:"+i+" Whose value is: "+ urls[i]);
@@ -586,8 +584,12 @@ public class XMLMap {
 		}
 			this.getAllURLS().addAll(Arrays.asList(urls));
 
-	}
-	public boolean isElement(ArrayList<String> path) { 
+	}*/
+	/** Scans doc for element and returns if it's an element
+	 * @param path Path
+	 * @return isElement
+	 * */
+	public boolean isElementByDoc(ArrayList<String> path) { 
 		try {
 		if(XMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
 			return !false;
@@ -598,8 +600,11 @@ public class XMLMap {
 			return false;
 		}
 	}
-	
-	public boolean isCont(ArrayList<String> path) { 
+	/** Scans doc for container and returns if it's a container
+	 * @param path Path
+	 * @return isContainer
+	 * */
+	public boolean isContByDoc(ArrayList<String> path) { 
 		try {
 		if(XMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
 			return false;
@@ -612,7 +617,11 @@ public class XMLMap {
 	}
 	
 	
-	
+	/** Tests if a URL is a container
+	 * @param url URL
+	 * @return isContainer
+	 * 
+	 * */
 	public boolean isCont(String url) {
 		if(url.endsWith("/")) {
 			return true;
@@ -624,6 +633,10 @@ public class XMLMap {
 	}
 	
 	
+	/** Returns url in list form 
+	 * @param url
+	 * @return list form of the url
+	 * */
 	public ArrayList<String> urlToList(String dxmlurl){
 		ArrayList<String> tmp = new ArrayList<String>();
 		dxmlurl = dxmlurl.replace(XMLMap.URLStart, "");
@@ -645,13 +658,18 @@ public class XMLMap {
 		return tmp;
 		
 	}
+	/** List to url
+	 * @param list Elemenet
+	 * @return DXML string
+	 * 
+	 * */
 	public String listTourl(ArrayList<String> list){
 		String val = XMLMap.URLStart;
 		//GET to last one
 		for(int i=0;i<list.size()-1;i++) {
 			val+=list.get(i)+"/";
 		}
-		boolean cont = this.isCont(list);
+		boolean cont = this.isContByDoc(list);
 		if(cont) {
 			val+= list.get(list.size()-1)+"/";
 			
@@ -725,7 +743,59 @@ public class XMLMap {
 	public HashMap<String, String> getAllValues() {
 		return fullMap;
 	}
+	/** Use for externalling editing lists/urls
+	 * 
+	 * */
+	static class URLMagic {
+		
+		
+		/** Returns url in list form 
+		 * @param url
+		 * @return list form of the url
+		 * */
+		public static ArrayList<String> urlToList(String dxmlurl){
+			ArrayList<String> tmp = new ArrayList<String>();
+			dxmlurl = dxmlurl.replace(XMLMap.URLStart, "");
+			String full = dxmlurl;
+			for(int i=0;i<full.length();i++) {
+				String c = String.valueOf(full.charAt(i));
+				if(c.equals("/")) {
+					tmp.add(full.substring(0, i));
+					full=full.replace(full.substring(0, i+1), "");
+					i=0;
+				}else {
+				}
+			}
+		
+			if(!dxmlurl.endsWith("/")) {
+				tmp.add(full);
+			}
+			
+			return tmp;
+			
+		}
+		/** List to url
+		 * @param list Elemenet
+		 * @return DXML string
+		 * 
+		 * */
+		public static String listTourl(ArrayList<String> list,boolean container){
+			String val = XMLMap.URLStart;
+			//GET to last one
+			for(int i=0;i<list.size()-1;i++) {
+				val+=list.get(i)+"/";
+			}
+			if(container) {
+				val+= list.get(list.size()-1)+"/";
+				
+			}else {
+				val+= list.get(list.size()-1);
+			}
 
+			return val;
+			
+		}
+	}
 
 
 }
