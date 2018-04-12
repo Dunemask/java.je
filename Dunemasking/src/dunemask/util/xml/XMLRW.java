@@ -74,7 +74,9 @@ public class XMLRW {
     	return elm;
     	
     }
-    
+    public static void tmp() {
+    	System.out.println("taco");
+    }
     
     
     
@@ -358,6 +360,7 @@ public class XMLRW {
      * 
      * */
     public static void removeElement(File file,String[] parentElementChain) {
+    	System.out.println("Reached This");
     	String[] lines = RW.readAll(file);
     	int low=0,high=FileUtil.linesInFile(file);
     	if(parentElementChain!=null) {
@@ -372,6 +375,8 @@ public class XMLRW {
     	}
     	
     	ArrayList<String> al = new ArrayList<String>(Arrays.asList(lines));
+    	System.out.println(al.get(high-1));
+    	System.out.println("asdf");
     	al.remove(high-1);
     	ArrayList<String> fin = new ArrayList<String>(al);
     	file.delete();

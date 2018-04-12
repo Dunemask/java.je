@@ -23,6 +23,11 @@ public class XMLMap {
 		
 		
 	}
+	/** Return Keyset in ArrayList
+	 * */
+	public ArrayList<String> valKeySet(){
+		return new ArrayList<String>(this.getAllValues().keySet());
+	}
 	
 	
 	/** Get Value from the indexer not the doc
@@ -31,7 +36,11 @@ public class XMLMap {
 	 * 
 	 * */
 	public String pullValue(String url) {
-		return this.fullMap.get(url);
+		if(!url.startsWith(XMLMap.URLStart)) {
+			url = XMLMap.URLStart+url;
+		}
+
+		return 	this.fullMap.get(url);
 		
 	}
 	
@@ -63,7 +72,7 @@ public class XMLMap {
 		//For all the ones we need to make if it hasn't been made make it
 		for(int i=toMake.size()-1;i>=0;i--) {
 			ArrayList<String> lis =  new ArrayList<String>(Arrays.asList(toMake.get(i)));
-			if(!this.isCont(lis)) {
+			if(!this.isCont(lis)||!this.itemExists(lis)) {
 				this.writeContainer(this.listTourl(lis));
 			}
 		}
@@ -232,8 +241,9 @@ public class XMLMap {
 			if(p.size()==1) {
 				dunemask.util.xml.XMLRW.removeTopElement(getXml(), p.get(0));
 			}else {
-				
+				System.out.println("4325345");
 				XMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
+				System.out.println("asfdasdf");
 			}
 		}
 		
@@ -316,7 +326,7 @@ public class XMLMap {
 
 			if(this.isElement(this.urlToList(tryelm))) {
 				System.err.println("Object "+tryelm +" is Element");
-				return;
+				throw new DMXMLException("Item Doesn't Exist");
 			}
 			
 			
