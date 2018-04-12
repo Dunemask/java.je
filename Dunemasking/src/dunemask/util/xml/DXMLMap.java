@@ -23,7 +23,24 @@ public class DXMLMap {
 		
 		
 	}
-	/** Write an Element
+	
+	
+	/** Get Value from the indexer not the doc
+	 * @param url
+	 * @return String
+	 * 
+	 * */
+	public String pullValue(String url) {
+		return this.fullMap.get(url);
+		
+	}
+	
+	
+	
+	
+	
+	
+	/** Write a Container and forces the Write (Creates parents)
 	 * @param url Url
 	 * @param value Value
 	 * 
@@ -57,7 +74,7 @@ public class DXMLMap {
 		
 	}
 	
-	/** Write an Element
+	/**  Write an Element and forces the Write (Creates parents)
 	 * @param url Url
 	 * @param value Value
 	 * 
@@ -91,6 +108,10 @@ public class DXMLMap {
 		
 		
 	}
+	/** Returns true if found in the doc
+	 * @param path Path
+	 * @return true or false
+	 * */
 	public boolean itemExists(ArrayList<String> path) {
 		return XMLRW.itemExists(getXml(), path.toArray(new String[path.size()]));
 		
@@ -148,7 +169,14 @@ public class DXMLMap {
 		}
 	}
 	
+	/** Changes the specified Element
+	 * 
+	 * */
 	public void changeElement(String url,Object value) {
+		if(!url.startsWith(DXMLMap.URLStart)) {
+			url = DXMLMap.URLStart+url;
+		}
+		this.getAllValues().remove(url);
 		this.getAllValues().put(url, value.toString());
 		ArrayList<String> p = this.urlToList(url);
 		if(p.size()!=1) {
@@ -160,8 +188,22 @@ public class DXMLMap {
 		
 	}
 	public void removeElement(String url) {
+		if(!url.startsWith(DXMLMap.URLStart)) {
+			url = DXMLMap.URLStart+url;
+		}
+			this.getAllURLS().remove(url);
+		if(this.isElement(this.urlToList(url))) {
+			this.getAllValues().remove(url);
+		}
 		ArrayList<String> p = this.urlToList(url);
-		XMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
+		if(p.size()==1) {
+			XMLRW.removeTopLevelElement(getXml(), p.get(0));
+		}else {
+			
+			XMLRW.removeElement(getXml(),p.toArray(new String[p.size()]));
+		}
+		
+
 	}
 	
 	/** Write an Element

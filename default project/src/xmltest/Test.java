@@ -5,6 +5,7 @@ package xmltest;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import dunemask.util.xml.DXMLMap;
 import dunemask.util.xml.XMLRW;
@@ -34,11 +35,19 @@ public class Test {
 		mp.writeForcedElement("Cover/Sheets/Purple", "Flanel");
 		mp.changeElement("Cover/Sheets/Purple", "Egyptian Cotten");
 		mp.changeElement("Cover/Sheets/Purple", "Purple");
-		System.out.println(mp.getvalue("Cookie"));
-		ArrayList<String> urls = mp.getAllURLS();
+		mp.writeForcedElement("Other/Things/Only/For/The/Coolest/People", "Potat");
+		mp.removeElement("Cookie");
+		HashMap<String, String> full = mp.getAllValues();
+		ArrayList<String> key = new ArrayList<String>(full.keySet());
+		for(int i=0;i<key.size();i++) {
+			System.out.println(full.get(key.get(i)));
+			
+		}
+		//System.out.println(mp.getvalue("Cookie"));
+		/*ArrayList<String> urls = mp.getAllURLS();
 		for(int i=0;i<urls.size();i++) {
 			System.out.println(urls.get(i));
-		}
+		}*/
 		//mp.writeElement("Amazing/Purple/Green/Orange/Cookie", "Pink");
 		//mp.changeElement("Cookie","Greatest");
 		

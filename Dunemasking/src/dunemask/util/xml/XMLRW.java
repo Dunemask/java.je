@@ -142,6 +142,26 @@ public class XMLRW {
     	
     }
     
+    public static void removeTopLevelElement(File file,String element) {
+    	String[] lines = RW.readAll(file);
+    	int tl =0;
+    	for(int i=0;i<lines.length;i++) {
+    		//If Not Element container
+    		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
+    			if(lines[i].contains(XMLRW.element(element))) {
+    				tl = i+1; //Started at 0 when it starts at 1
+    				i=lines[i].length();
+    			}
+    		}
+    	}
+    	if(tl==0) {
+    		System.err.println("Item:"+element+" Does not Exist!");
+    	}
+    	System.out.println("Boom:"+tl);
+    	RW.write(file, " ", tl);
+    	
+    }
+    
     
     
     /** @param file File
@@ -328,7 +348,6 @@ public class XMLRW {
 	    		high=thigh;
 	    	}
     	}
-    	
     	//Sequential
     	if(low+1==high) {
     		RW.write(file, "", high);
