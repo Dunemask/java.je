@@ -35,7 +35,7 @@ public class XMLMap {
 		holder.add(body);
 		ha.addState(holder, uid);
 		holder.removeAll(holder);
-		XMLRW.newXMLFile(xml, body);
+		OXMLRW.newXMLFile(xml, body);
 	}
 	/** Used For Loading Existing Xml files
 	 * @param file XML doc location
@@ -48,14 +48,14 @@ public class XMLMap {
 		int size = RW.readAll(file).length;
 		ArrayList<String> allTop = new ArrayList<String>();
 		for(int i=0;i<size;i++) {
-			String x = XMLRW.getTopLayerComponent(getXml(), i)[0];
+			String x = OXMLRW.getTopLayerComponent(getXml(), i)[0];
 			if(!allTop.contains(x)) {
 				allTop.add(x);
 			}
 		}
 		for(int i=0;i<allTop.size();i++) {
-			if(XMLRW.hasUID(getXml(), new String[] {allTop.get(i)})) {
-				this.mapContainerUID(null, allTop.get(i), XMLRW.getUID(getXml(), new String[] {allTop.get(i)}));
+			if(OXMLRW.hasUID(getXml(), new String[] {allTop.get(i)})) {
+				this.mapContainerUID(null, allTop.get(i), OXMLRW.getUID(getXml(), new String[] {allTop.get(i)}));
 			}else {
 				this.mapContainer(null, allTop.get(i));
 			}
@@ -89,7 +89,7 @@ public class XMLMap {
 		holder.add(name);
 		ha.addState(holder, name);
 		holder.removeAll(holder);
-		XMLRW.addElementWithUID(getXml(), parent.toArray(new String[parent.size()]), name,value,uid);
+		OXMLRW.addElementWithUID(getXml(), parent.toArray(new String[parent.size()]), name,value,uid);
 		
 		
 	}
@@ -104,7 +104,7 @@ public class XMLMap {
 	 * */
 	public void addContainerWithUID(String name,ArrayList<String> parent,String uid) {
 		holder.removeAll(holder);
-		XMLRW.addElementWithUID(getXml(), parent.toArray(new String[parent.size()]), name, XMLRW.CONTAINER, uid);
+		OXMLRW.addElementWithUID(getXml(), parent.toArray(new String[parent.size()]), name, OXMLRW.CONTAINER, uid);
 		if(parent!=null){holder.addAll(parent);}
 		holder.add(name);
 		ha.addState(holder, uid);
@@ -117,7 +117,7 @@ public class XMLMap {
 	 * 
 	 **/
 	public String getValueByPath(ArrayList<String> path) {
-		return XMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
+		return OXMLRW.getElementValue(getXml(), path.toArray(new String[path.size()]));
 		
 	}
 	
@@ -126,7 +126,7 @@ public class XMLMap {
 	 * 
 	 **/
 	public String getValueByUID(String uid) {
-		return XMLRW.getValueByUID(getXml(), uid);
+		return OXMLRW.getValueByUID(getXml(), uid);
 		
 	}
 	
@@ -144,14 +144,14 @@ public class XMLMap {
 				tmp = tmp.substring(0,ind2);
 			}
 			ParentBuilder.addPiece(tmp);
-			if(XMLRW.isElement(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
-				if(XMLRW.hasUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
-					mapElementUID(chain,full.get(i),XMLRW.getUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
+			if(OXMLRW.isElement(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
+				if(OXMLRW.hasUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
+					mapElementUID(chain,full.get(i),OXMLRW.getUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
 				}
 				mapElement(chain,full.get(i));
 			}else {
-				if(XMLRW.hasUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
-					mapContainerUID(chain,full.get(i),XMLRW.getUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
+				if(OXMLRW.hasUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()]))) {
+					mapContainerUID(chain,full.get(i),OXMLRW.getUID(this.getXml(), ParentBuilder.p.toArray(new String[ParentBuilder.p.size()])));
 				}
 				mapContainer(chain,full.get(i));
 				map(chain);
@@ -203,10 +203,10 @@ public class XMLMap {
 		holder.add(body);
 		ha.addState(holder, body);
 		holder.removeAll(holder);
-		XMLRW.newXMLFile(xml, body);
+		OXMLRW.newXMLFile(xml, body);
 	}
 	public String getUid(ArrayList<String> path) {
-		return XMLRW.getUID(getXml(), path.toArray(new String[path.size()]));
+		return OXMLRW.getUID(getXml(), path.toArray(new String[path.size()]));
 	}
 	
 	
@@ -216,7 +216,7 @@ public class XMLMap {
 	 * 
 	 * */
 	public HashMap<String, ArrayList<String>> getSubComponents(ArrayList<String> parent){
-		return XMLRW.getSubElementsAndContainers(getXml(), parent.toArray(new String[parent.size()])).getMap();
+		return OXMLRW.getSubElementsAndContainers(getXml(), parent.toArray(new String[parent.size()])).getMap();
 	}
 	
 	
@@ -300,7 +300,7 @@ public class XMLMap {
 		
 	}
 	public HashMap<String,ArrayList<String>> getDirectSubComponents(ArrayList<String> path) {
-		ArrayListState st =  XMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()]));
+		ArrayListState st =  OXMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()]));
 		return st.getMap();
 	}
 	
@@ -313,7 +313,7 @@ public class XMLMap {
 	 * */
 	public void addContainer(String name,ArrayList<String> parent) {
 		holder.removeAll(holder);
-		XMLRW.addElementContainer(getXml(), parent.toArray(new String[parent.size()]), name);
+		OXMLRW.addElementContainer(getXml(), parent.toArray(new String[parent.size()]), name);
 		if(parent!=null){holder.addAll(parent);}
 		holder.add(name);
 		ha.addState(holder, name);
@@ -324,14 +324,14 @@ public class XMLMap {
 	/**
 	 * */
 	public void addTopElement(String name,Object value) {
-		XMLRW.addTopLevelElement(getXml(), name, value);
+		OXMLRW.addTopLevelElement(getXml(), name, value);
 		holder.add(name);
 		ha.addState(holder, name);
 		lastUid=name;
 		holder.removeAll(holder);
 	}
 	public void addTopElementWithUID(String name,Object value,String uid) {
-		XMLRW.addTopLevelElementWithUID(getXml(), name, value,uid);
+		OXMLRW.addTopLevelElementWithUID(getXml(), name, value,uid);
 		holder.add(name);
 		ha.addState(holder, uid);
 		lastUid=name;
@@ -340,14 +340,14 @@ public class XMLMap {
 	
 	
 	public void addTopContainer(String name) {
-		XMLRW.addTopLevelElement(getXml(), name, XMLRW.CONTAINER);
+		OXMLRW.addTopLevelElement(getXml(), name, OXMLRW.CONTAINER);
 		holder.add(name);
 		ha.addState(holder, name);
 		lastUid=name;
 		holder.removeAll(holder);
 	}
 	public void addTopContainerWithUID(String name,String uid) {
-		XMLRW.addTopLevelElementWithUID(getXml(), name, XMLRW.CONTAINER,uid);
+		OXMLRW.addTopLevelElementWithUID(getXml(), name, OXMLRW.CONTAINER,uid);
 		holder.add(name);
 		ha.addState(holder, uid);
 		lastUid=name;
@@ -369,7 +369,7 @@ public class XMLMap {
 		}
 		
 		
-		String tmp = XMLRW.getElementValue(this.getXml(), path.toArray(new String[path.size()]));
+		String tmp = OXMLRW.getElementValue(this.getXml(), path.toArray(new String[path.size()]));
 		return tmp;
 	}
 	
@@ -378,7 +378,7 @@ public class XMLMap {
 	 * 
 	public ArrayList<String> getElementsFromDoc(ArrayList<String> path) {
 		
-		return XMLRW.getElementsValues(this.getXml(), path.toArray(new String[path.size()]));
+		return OXMLRW.getElementsValues(this.getXml(), path.toArray(new String[path.size()]));
 	}*/
 	
 	/** @param path Path
@@ -386,7 +386,7 @@ public class XMLMap {
 	 * 
 	 **/
 	public boolean isContainer(ArrayList<String> path) {
-		if(XMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
+		if(OXMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
 			return false;
 		}else {
 			return true;
@@ -397,7 +397,7 @@ public class XMLMap {
 	 * 
 	 **/
 	public boolean isElement(ArrayList<String> path) {
-		if(XMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
+		if(OXMLRW.isElement(getXml(), path.toArray(new String[path.size()]))) {
 			return !false;
 		}else {
 			return !true;
@@ -412,15 +412,15 @@ public class XMLMap {
 	 */
 	public HashMap<String, ArrayList<String>> getAllSubComponents(ArrayList<String> path) {
 		ArrayListState fList = new ArrayListState();
-		HashMap<String, ArrayList<String>> sub = XMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()])).getMap();
+		HashMap<String, ArrayList<String>> sub = OXMLRW.getSubElementsAndContainers(getXml(), path.toArray(new String[path.size()])).getMap();
 		ArrayList<String> subKey = new ArrayList<String>(sub.keySet());
 		for( int i=0;i<subKey.size();i++) {
 			ArrayList<String> p = sub.get(subKey.get(i));
 			if(this.isContainer(p)) {
 				fList.merge(this.getAllSubComponents(p));
 			}
-			if(XMLRW.hasUID(getXml(), p.toArray(new String[p.size()]))) {
-				String uid = XMLRW.getUID(getXml(), p.toArray(new String[p.size()]));
+			if(OXMLRW.hasUID(getXml(), p.toArray(new String[p.size()]))) {
+				String uid = OXMLRW.getUID(getXml(), p.toArray(new String[p.size()]));
 				fList.addState(p, uid);
 			}else {
 				fList.addState(p, subKey.get(i));
@@ -457,7 +457,7 @@ public class XMLMap {
 		holder.add(name);
 		ha.addState(holder, name);
 		holder.removeAll(holder);
-		XMLRW.addElement(getXml(), parent.toArray(new String[parent.size()]), name,value);
+		OXMLRW.addElement(getXml(), parent.toArray(new String[parent.size()]), name,value);
 		
 		
 	}
@@ -482,7 +482,7 @@ public class XMLMap {
 		holder.add(name);
 		ha.addState(holder, uid);
 		holder.removeAll(holder);
-		XMLRW.addElement(getXml(), parent.toArray(new String[parent.size()]), name,value);
+		OXMLRW.addElement(getXml(), parent.toArray(new String[parent.size()]), name,value);
 	}
 	
 	

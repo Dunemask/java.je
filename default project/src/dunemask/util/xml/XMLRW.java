@@ -6,6 +6,8 @@ package dunemask.util.xml;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
+
 import dunemask.objects.ArrayListState;
 import dunemask.util.FileUtil;
 import dunemask.util.RW;
@@ -217,6 +219,42 @@ public class XMLRW {
     	
     }*/
     
+    /** Removes a element in the XML Doc
+     * @param file XML File
+     * @param parentElementChain Hiarchy down to the element to be added
+     * @param newElement Name of new Element
+     * @param value Value for new Element
+     * 
+     * */
+    public static void changeElement(File file,String[] parentElementChain,Object value) {
+    	if(XMLRW.itemExists(file, parentElementChain)) {
+    		int low=0,high=FileUtil.linesInFile(file);
+        	int tabs =0;
+        	if(parentElementChain!=null) {
+    	    	for(int i=0;i<parentElementChain.length;i++) {
+    	    		String element = parentElementChain[i];
+    	    		element = XMLRW.ripElement(element);
+    	    		int tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
+    	    		int thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    	    		low=tlow;
+    	    		high=thigh;
+    	    		tabs++;
+    	    	}
+        	}
+        	System.out.println("HIgh:"+high);
+        	String tab = "";
+        	for(int i=0;i<tabs;i++) {
+        		tab+=StringUtil.tab;
+        	}
+        	String element = parentElementChain[parentElementChain.length-1];
+        	//Sequential
+        	RW.write(file, tab+XMLRW.element(element)+value+XMLRW.closeElement(element), high);
+    	}else {
+    		throw new RuntimeException("NOBEUENO! IT DON'T EXIST!");
+    	}
+    	
+
+    }
     
     
     /** Removes a element in the XML Doc
@@ -238,6 +276,7 @@ public class XMLRW {
 	    		high=thigh;
 	    	}
     	}
+    	
     	//Sequential
     	if(low+1==high) {
     		RW.write(file, "", high);
@@ -316,15 +355,18 @@ public class XMLRW {
     	if(parentElementChain!=null) {
 	    	for(int i=0;i<parentElementChain.length;i++) {
 	    		String element = parentElementChain[i];
+	    		element = XMLRW.ripElement(element);
+	    		String se = element(element);
+	    		String ce = closeElement(element);
+	    		se = se.substring(0, se.length()-1);
 	    		int tlow;
 	    		int thigh;
 	    		try {
-	    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
-	    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		tlow = FileUtil.findInDocumentBounds(file,se, low, high);
+	    		thigh = FileUtil.findInDocumentBounds(file,ce, low, high);
 	    		}catch(RuntimeException e) {
-	    			String op = element(element);
-	    			tlow = FileUtil.containsInDocumentBounds(file,op.substring(0,element.length()-1), low, high);
-	        		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+		    		tlow = FileUtil.containsInDocumentBounds(file,se, low, high);
+		    		thigh = FileUtil.containsInDocumentBounds(file,ce, low, high);
 	    		}
 	    		low=tlow;
 	    		high=thigh;
@@ -456,11 +498,19 @@ public class XMLRW {
 	    	for(int i=0;i<parentElementChain.length;i++) {
 	    		String element = parentElementChain[i];
 	    		element = XMLRW.ripElement(element);
+	    		String se = element(element);
+	    		String ce = closeElement(element);
+	    		se = se.substring(0, se.length()-1);
+	    		//System.out.println(element);
 	    		int tlow;
 	    		int thigh;
-	    		tlow = FileUtil.containsInDocumentBounds(file,element(element).substring(0, element.length()-1), low, high);
-	    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
-
+	    		try {
+	    		tlow = FileUtil.findInDocumentBounds(file,se, low, high);
+	    		thigh = FileUtil.findInDocumentBounds(file,ce, low, high);
+	    		}catch(RuntimeException e) {
+		    		tlow = FileUtil.containsInDocumentBounds(file,se, low, high);
+		    		thigh = FileUtil.containsInDocumentBounds(file,ce, low, high);
+	    		}
 	    		low=tlow;
 	    		high=thigh;
 	    		tabs++;
@@ -494,7 +544,10 @@ public class XMLRW {
     				uid = XMLRW.ripElement(full);
     			}
     			full = XMLRW.ripElement(full);
-    			
+    			if(map.getMap().containsKey(uid)) {
+    			int r =	new Random().nextInt(Integer.MAX_VALUE);
+    			uid+=String.valueOf(r);
+    			}
     			
     	    	full = XMLRW.ripElement(full);
 	    		//System.out.println("Call:"+full);
@@ -630,6 +683,45 @@ public class XMLRW {
     	int ind2 = full.indexOf("<");
     	return full.substring(ind1+1, ind2);
     }
+    /** Tests if directed path is element
+     * @param file XML doc
+     * @param parentElementChain Hiarchy down to the element to be added
+     * @return if Directed Path is element, assuming path is accurate
+     * */
+    public static boolean itemExists(File file,String[] parentElementChain) {
+    	int low=0,high=FileUtil.linesInFile(file);
+    	for(int i=0;i<parentElementChain.length;i++) {
+    		String element = parentElementChain[i];
+    		element = XMLRW.ripElement(element);
+    		//System.out.println(element);
+    		int tlow; int thigh;
+    		try {
+	    		String se = element(element);
+	    		String ce = closeElement(element);
+	    		se = se.substring(0, se.length()-1);
+	    		try {
+	    		tlow = FileUtil.findInDocumentBounds(file,se, low, high);
+	    		thigh = FileUtil.findInDocumentBounds(file,ce, low, high);
+	    		}catch(RuntimeException e) {
+		    		tlow = FileUtil.containsInDocumentBounds(file,se, low, high);
+		    		thigh = FileUtil.containsInDocumentBounds(file,ce, low, high);
+	    		}
+    		}catch(java.lang.RuntimeException e) {
+					return false;
+    		}
+    		
+    		low=tlow;
+    		high=thigh;
+    	}
+    	return true;
+    }
+    
+    
+    
+    
+    
+    
+    
     
     /** Tests if directed path is element
      * @param file XML doc
@@ -641,13 +733,23 @@ public class XMLRW {
     	for(int i=0;i<parentElementChain.length;i++) {
     		String element = parentElementChain[i];
     		element = XMLRW.ripElement(element);
+    		//System.out.println(element);
     		int tlow; int thigh;
     		try {
-	    	tlow = FileUtil.containsInDocumentBounds(file,element(element).substring(0, element.length()), low, high);
-	    	thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+	    		String se = element(element);
+	    		String ce = closeElement(element);
+	    		se = se.substring(0, se.length()-1);
+	    		try {
+	    		tlow = FileUtil.findInDocumentBounds(file,se, low, high);
+	    		thigh = FileUtil.findInDocumentBounds(file,ce, low, high);
+	    		}catch(RuntimeException e) {
+		    		tlow = FileUtil.containsInDocumentBounds(file,se, low, high);
+		    		thigh = FileUtil.containsInDocumentBounds(file,ce, low, high);
+	    		}
     		}catch(java.lang.RuntimeException e) {
-    			System.err.println("Could Not Find:"+element);
-    			return false;
+					throw new RuntimeException("Could Not Find:"+element);
+
+    			//return false;
     		}
     		
     		low=tlow;
@@ -692,7 +794,7 @@ public class XMLRW {
     		element = XMLRW.ripElement(element);
     		int tlow;
     		int thigh;
-    		tlow = FileUtil.containsInDocumentBounds(file,element(element).substring(0, element.length()-1), low, high);
+    		tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
     		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
     		
     		
