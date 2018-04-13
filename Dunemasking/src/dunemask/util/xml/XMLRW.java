@@ -722,9 +722,16 @@ public class XMLRW {
     		String element = parentElementChain[i];
     		int tlow;
     		int thigh;
-    		element = XMLRW.ripElement(element);
-    		tlow = FileUtil.containsInDocumentBounds(file,element(element).substring(0, element.length()), low, high);
-    		thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    		String se = element(element);
+    		String ce = closeElement(element);
+    		se = se.substring(0, se.length()-1);
+    		try {
+    		tlow = FileUtil.findInDocumentBounds(file,se, low, high);
+    		thigh = FileUtil.findInDocumentBounds(file,ce, low, high);
+    		}catch(RuntimeException e) {
+	    		tlow = FileUtil.containsInDocumentBounds(file,se, low, high);
+	    		thigh = FileUtil.containsInDocumentBounds(file,ce, low, high);
+    		}
     		
     		low=tlow;
     		high=thigh;
