@@ -14,19 +14,14 @@ import javafx.scene.media.MediaPlayer;
  */
 public class DMediaPlayer {
 
-	private MediaPlayer mediaPlayer;
-	private CountDownLatch envLatch;
-	/**
-	 * 
-	 */
-	public DMediaPlayer() {
-	}
+	private static MediaPlayer mediaPlayer;
+	private static CountDownLatch envLatch;
 	
 	
 	
 	
 	
-	public void init() {
+	public static void init() {
 		envLatch = new CountDownLatch(1);
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
@@ -42,12 +37,12 @@ public class DMediaPlayer {
 			e.printStackTrace();
 		}
 	}
-	public void setMedia(File file) {
+	public static void setMedia(File file) {
 		Media sound = new Media(file.toURI().toString());
 		mediaPlayer = new MediaPlayer(sound);
 	}
 	
-	public void setMedia(String string) {
+	public static void setMedia(String string) {
 		Media sound = new Media(string);
 		mediaPlayer = new MediaPlayer(sound);
 	}
@@ -56,14 +51,14 @@ public class DMediaPlayer {
 	/**
 	 * @return the mediaPlayer
 	 */
-	public MediaPlayer getMediaPlayer() {
+	public static MediaPlayer getMediaPlayer() {
 		return mediaPlayer;
 	}
 	/**
 	 * @param mediaPlayer the mediaPlayer to set
 	 */
-	public void setMediaPlayer(MediaPlayer mediaPlayer) {
-		this.mediaPlayer = mediaPlayer;
+	public static void setMediaPlayer(MediaPlayer mediaPlayer) {
+		DMediaPlayer.mediaPlayer = mediaPlayer;
 	}
 
 
@@ -75,7 +70,7 @@ public class DMediaPlayer {
 	/**
 	 * @return the envLatch
 	 */
-	public CountDownLatch getEnvLatch() {
+	public static CountDownLatch getEnvLatch() {
 		return envLatch;
 	}
 
@@ -87,8 +82,8 @@ public class DMediaPlayer {
 	/**
 	 * @param envLatch the envLatch to set
 	 */
-	public void setEnvLatch(CountDownLatch envLatch) {
-		this.envLatch = envLatch;
+	public static void setEnvLatch(CountDownLatch envLatch) {
+		DMediaPlayer.envLatch = envLatch;
 	}
 
 
