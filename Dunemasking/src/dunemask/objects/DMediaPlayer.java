@@ -16,6 +16,7 @@ public class DMediaPlayer {
 
 	private static MediaPlayer mediaPlayer;
 	private static CountDownLatch envLatch;
+	private static Media playingMedia;
 	
 	
 	
@@ -38,13 +39,13 @@ public class DMediaPlayer {
 		}
 	}
 	public static void setMedia(File file) {
-		Media sound = new Media(file.toURI().toString());
-		mediaPlayer = new MediaPlayer(sound);
+		DMediaPlayer.setPlayingMedia(new Media(file.toURI().toString()));
+		mediaPlayer = new MediaPlayer(DMediaPlayer.playingMedia);
 	}
 	
 	public static void setMedia(String string) {
-		Media sound = new Media(string);
-		mediaPlayer = new MediaPlayer(sound);
+		DMediaPlayer.setPlayingMedia(new Media(string));
+		mediaPlayer = new MediaPlayer(DMediaPlayer.playingMedia);
 	}
 	
 	
@@ -84,6 +85,18 @@ public class DMediaPlayer {
 	 */
 	public static void setEnvLatch(CountDownLatch envLatch) {
 		DMediaPlayer.envLatch = envLatch;
+	}
+	/**
+	 * @return the playingMedia
+	 */
+	public static Media getPlayingMedia() {
+		return playingMedia;
+	}
+	/**
+	 * @param playingMedia the playingMedia to set
+	 */
+	public static void setPlayingMedia(Media playingMedia) {
+		DMediaPlayer.playingMedia = playingMedia;
 	}
 
 
