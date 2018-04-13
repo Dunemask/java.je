@@ -489,7 +489,6 @@ public class XMLMap {
 		map.setXml(file);
 		for(int i=0;i<lis.size();i++) {
 			map.addurl(listTourl(file,lis.get(i)));
-			System.out.println(XMLRW.isElement(file, lis.get(i).toArray(new String[lis.get(i).size()])));
 			if(!map.isContByDoc(lis.get(i))) {
 				map.addValue(listTourl(file,lis.get(i)), map.getValueFromXML(lis.get(i)));
 			}
