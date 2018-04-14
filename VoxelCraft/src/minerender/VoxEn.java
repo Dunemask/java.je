@@ -20,6 +20,7 @@ public class VoxEn {
 	int density = 0;
 	int siz = 1;
 	int timer=0;
+	String name;
 	public float breaktime=0;
 	public ArrayList<Block> blks= new ArrayList<Block>();
 	public Block getBlock(int bl) {
@@ -38,6 +39,13 @@ public class VoxEn {
 		addBlock("Wood",4,4,5,5,5,5,true,true,10);
 		addBlock("Leaves",7,7,7,7,7,7,true,true,3);
 		addBlock("Bricks",9,9,9,9,9,9,true,true,10);
+		addBlock("Red",11,11,11,11,11,11,true,true,1);
+		addBlock("Orange",12,12,12,12,12,12,true,true,1);
+		addBlock("Yellow",13,13,13,13,13,13,true,true,1);
+		addBlock("Green",14,14,14,14,14,14,true,true,1);
+		addBlock("Cyan",15,15,15,15,15,15,true,true,1);
+		addBlock("Blue",16,16,16,16,16,16,true,true,1);
+		addBlock("Magenta",17,17,17,17,17,17,true,true,10);
 	}
 	
 	
@@ -46,7 +54,7 @@ public class VoxEn {
 	HashMap<Float,Vector3> hmm = new HashMap<Float,Vector3>();
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
-	public ImageReader[] imgas = new ImageReader[11];
+	public ImageReader[] imgas = new ImageReader[18];
 	ImageReader selecc = new ImageReader("src/resources/selecc.png");
 	ImageReader crunch = new ImageReader("src/resources/brk.png");
 
@@ -56,7 +64,7 @@ public class VoxEn {
 	byte[][][] VoxData;
 	byte[][][] SunLight;
 	VoxGen vg;
-	public VoxEn(Vector3 vcam,int xsiz, int ysiz, int zsiz,int type) {
+	public VoxEn(Vector3 vcam,int xsiz, int ysiz, int zsiz,int type,String name) {
 		//SET STUFFSSSS
 		this.initializeBlock();
 		vg = new VoxGen(this);

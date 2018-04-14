@@ -28,9 +28,9 @@ public class VoxelCt extends JPanel{
 	public JFrame frame;
 
 	int buildref = 0;
-	public VoxelCt() {
+	public VoxelCt(VoxEn voxen) {
 		System.out.print("HI");
-		ven = new VoxEn(new Vector3(25,25,55),50,50,50,1);
+		ven = voxen;
 		JPanel f = this;
 		f.setVisible(true);
 		f.setBackground(Color.black);
@@ -132,7 +132,7 @@ public class VoxelCt extends JPanel{
 					ven.breaktime=0;
 				}
 				if(rmousedown&&buildref==0) {
-					ven.setBlockOut(2);
+					ven.setBlockOut(ven.hotbar[ven.selected]);
 					buildref =3;
 				}
 				if(ven.breaktime>0)
@@ -140,6 +140,14 @@ public class VoxelCt extends JPanel{
 				if(ven.breaktime<0) {
 					ven.breaktime=0;
 					ven.setBlock(0);
+				}
+				if(mouseswoosh!=0) {
+					ven.selected-=mouseswoosh;
+					if(ven.selected<0)
+						ven.selected = 8;
+					if(ven.selected>8)
+						ven.selected = 0;
+					mouseswoosh = 0;
 				}
 				if(buildref>0&&ven.breaktime==0)
 					buildref--;
@@ -149,7 +157,14 @@ public class VoxelCt extends JPanel{
 					inv.setVisible(true);
 					}
 				}else {
-				if(key.Output()[69]==1) {
+					
+				if(einv ==1 && key.Output()[69]==0) {
+					einv=2;
+				}
+				if(einv ==2 && key.Output()[69]==1) {
+					einv=3;
+				}
+				if(einv ==3 && key.Output()[69]==0) {
 					einv=0;
 					inv.setVisible(false);
 				}

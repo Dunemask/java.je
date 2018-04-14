@@ -131,7 +131,7 @@ public class FilePanel extends JPanel {
 				}
 				if(btnAdd.getText()=="Create New World") {
 					create.setVisible(false);
-					VoxEn vex = new VoxEn(new Vector3(60,60,70),120,120,70,1);
+					VoxEn vex = new VoxEn(new Vector3(60,60,70),120,120,70,1,jtf.getText());
 					FileControl.SaveFileAsXML(vex, jtf.getText());
 					
 					
@@ -153,8 +153,9 @@ public class FilePanel extends JPanel {
 		File files = new File(System.getProperty("user.home")+"/Documents/Saves/");
 		if(!files.exists()) {
 			new File(System.getProperty("user.home")+"/Documents/Saves").mkdirs();
-			VoxEn vex = new VoxEn(new Vector3(60,60,70),120,120,70,1);
+			VoxEn vex = new VoxEn(new Vector3(60,60,70),120,120,70,1,"Firstworld");
 			FileControl.SaveFileAsXML(vex, "Firstworld");
+			ven = vex;
 		}
 		
 		File[] fs = (files.listFiles());
@@ -165,12 +166,20 @@ public class FilePanel extends JPanel {
 		
 	}
 	public void start(int world){
+		if(!list.isSelectionEmpty()) {
+			System.out.println(list.getSelectedValue().toString());
+			
+		ven = FileControl.LoadFileXML(list.getSelectedValue().toString());	
+		
 		this.setVisible(false);
-		VoxelCt vct = new VoxelCt();
+		
+		VoxelCt vct = new VoxelCt(ven);
 		Minecraft.loadWorld(vct);
 		//this.getParent());
 		//this.getParent().removeAll();
 		this.getParent().remove(this);
+		
+		}
 	}
 	public void refreshlm() {
 		lm.removeAllElements();
