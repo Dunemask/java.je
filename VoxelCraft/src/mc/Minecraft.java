@@ -39,7 +39,7 @@ public class Minecraft {
 		set = new Settings();
 		mb = new MainBack();
 		fp = new FilePanel();
-		SoundEngine.handle("block_place");
+		SoundEngine.handle("click");
 		SoundEngine.start(SoundEngine.title);
 		cf = new JFrame();
 		cp= new JPanel(null);

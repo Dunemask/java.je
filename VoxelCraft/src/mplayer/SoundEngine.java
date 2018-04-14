@@ -111,7 +111,7 @@ public class SoundEngine {
 					e1.printStackTrace();
 				}
 				//Play
-				long waitTime =Math.round(m.getDuration().toMillis());
+				long waitTime =(int)m.getDuration().toMillis()+1;
 				CountDownLatch latch = new CountDownLatch(1);
 				try {
 					latch.await(waitTime, TimeUnit.MILLISECONDS);
@@ -163,7 +163,7 @@ public class SoundEngine {
 					e1.printStackTrace();
 				}
 				//Play
-				long waitTime =Math.round(m.getDuration().toMillis());
+				long waitTime =(int)m.getDuration().toMillis()+1;
 				CountDownLatch latch = new CountDownLatch(1);
 				try {
 					latch.await(waitTime, TimeUnit.MILLISECONDS);
