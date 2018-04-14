@@ -75,40 +75,54 @@ public class FilePanel extends JPanel {
 			}
 			
 		});
+		
+		//Delete Button
+		JButton deleteBtn = new JButton("Delete");
+		deleteBtn.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+		deleteBtn.setAlignmentX(0.5f);
+		deleteBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(!list.isSelectionEmpty()) {
+					delAction();
+				}
+				
+			}
+			
+		});
+		//Play
+		
 		JButton btnPlay = new JButton("PLAY");
+		btnPlay.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+		btnPlay.setAlignmentX(CENTER_ALIGNMENT);
+		//btnPlay.setForeground(Color.BLACK);
+		//btnPlay.setBackground(Color.GRAY);
+		add(btnPlay);
+		btnPlay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				SoundEngine.handle("click");
+				start(list.getSelectedIndex());
+			}
+		});
+		add(deleteBtn);
 		list.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				btnPlay.setText(list.getSelectedValue()+"--PLAY");
+				deleteBtn.setText(list.getSelectedValue()+"--Delete");
 				
 			}
 			
 		});
-		btnPlay.setFont(new Font("Century Gothic", Font.PLAIN, 30));
-		btnPlay.setAlignmentX(CENTER_ALIGNMENT);
 		JButton btnAdd =new JButton("New");
-		JButton deleteBtn = new JButton("Delete");
-		deleteBtn.setFont(new Font("Century Gothic", Font.PLAIN, 30));
-		deleteBtn.setAlignmentX(0.5f);
-		add(deleteBtn);
+		
+
+		
 		btnAdd.setFont(new Font("Century Gothic", Font.PLAIN, 30));
 		btnAdd.setAlignmentX(CENTER_ALIGNMENT);
-		//btnPlay.setForeground(Color.BLACK);
-		//btnPlay.setBackground(Color.GRAY);
-		add(btnPlay);
-		
-				JButton back = new JButton("Back");
-				back.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						SoundEngine.handle("click");
-						Minecraft.goToMain();
-					}
-				});
-				
-				back.setFont(new Font("Century Gothic", Font.PLAIN, 30));
-				back.setAlignmentX(0.5f);
-				add(back);
 		add(btnAdd);
 		JPanel create = new JPanel();
 		create.setVisible(false);
@@ -122,19 +136,26 @@ public class FilePanel extends JPanel {
 		JTextField jy = new JTextField("120");
 		JTextField jz = new JTextField("120");
 		JLabel l3 = new JLabel("Like");
+		
+				JButton back = new JButton("Back");
+				back.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						SoundEngine.handle("click");
+						Minecraft.goToMain();
+					}
+				});
+				
+				back.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+				back.setAlignmentX(0.5f);
+				add(back);
 		create.add(jtf);
 		create.add(l1);
 		create.add(jx);
 		create.add(jy);
 		create.add(jz);
 		add(create);
-		btnPlay.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				SoundEngine.handle("click");
-				start(list.getSelectedIndex());
-			}
-		});
+		
+		
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -184,9 +205,22 @@ public class FilePanel extends JPanel {
 		}
 		
 	}
+	/**
+	 * 
+	 */
+	protected void delAction() {
+		int ind = list.getSelectedIndex();
+		list.remove(ind);
+		String s = list.getSelectedValue().toString();
+		File file = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+s+".xml");
+		file.delete();
+		this.repaint();
+		this.revalidate();
+		
+	}
 	public void start(int world){
 		if(!list.isSelectionEmpty()) {
-			System.out.println(list.getSelectedValue().toString());
+			System.out.println("World:"+list.getSelectedValue().toString());
 			
 		ven = FileControl.LoadFileXML(list.getSelectedValue().toString());	
 		
