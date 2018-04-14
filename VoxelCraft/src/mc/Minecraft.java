@@ -31,6 +31,7 @@ public class Minecraft {
 	public static MainBack mb;
 	public static FilePanel fp;
 	public static VoxelCt vx;
+	public static int renderVal=130;
 	/**
 	 * @param args
 	 */

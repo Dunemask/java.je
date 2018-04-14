@@ -5,13 +5,15 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import mc.Minecraft;
+
 public class VoxPanel extends JPanel{
 	public VoxEn env =null;
-	public int res = getWidth()/140+1;
+	public int res = getWidth()/Minecraft.renderVal+1;
 	int border = 6;
 	//Paints the image to do whatever you want
 	public void paint(Graphics g) {
-		res = getWidth()/140+1;
+		res = getWidth()/Minecraft.renderVal+1;
 		//System.out.println("PPaint");
 		g.fillRect(0, 0, getWidth(), getHeight());
 		BufferedImage img = RendImage();
