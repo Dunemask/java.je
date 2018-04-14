@@ -1,15 +1,14 @@
 package minemain;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import minerender.Inventory;
@@ -17,7 +16,7 @@ import minerender.Vector3;
 import minerender.VoxEn;
 import minerender.VoxPanel;
 
-public class VoxelCt extends JPanel{
+public class VoxelCt extends JFrame{
 	static VoxEn ven;
 	static KeyList key;
 	public static boolean mousedown;
@@ -25,18 +24,16 @@ public class VoxelCt extends JPanel{
 	public static int mouseswoosh;
 	public int escape = 0;
 	int einv = 0;
-	public JFrame frame;
 
 	int buildref = 0;
 	public VoxelCt() {
 		System.out.print("HI");
 		ven = new VoxEn(new Vector3(25,25,55),50,50,50,1);
-		JPanel f = this;
+		JFrame f = this;
 		f.setVisible(true);
-		f.setBackground(Color.black);
-		//f.setLocationRelativeTo(null);
-		//f.setSize(600,600);
-		f.setLayout(null);
+		f.setLocationRelativeTo(null);
+		f.setSize(600,600);
+		//f.setLayout(null);
 		f.setEnabled(true);
 		f.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
@@ -81,30 +78,33 @@ public class VoxelCt extends JPanel{
 		 f.addKeyListener(key);
 		    f.setFocusable(true);
 		    f.requestFocus();
-	//	f.setAlwaysOnTop(true);
+		f.setAlwaysOnTop(true);
 		
 		Inventory inv= new Inventory(50,50,100,100, ven);
 		f.add(inv);
 		inv.setVisible(false);
 		
+		
+		
+		
+		
 		VoxPanel vp = new VoxPanel();
 		vp.setBackground(Color.black);
 		vp.SetEnv(ven);
 		vp.setVisible(true);
-		vp.setBounds(0,0,600,600);
+		//vp.setBounds(0,0,600,600);
 		f.add(vp);
+		//JLabel jl = new JLabel("AAAH");
+		//jl.setBounds(10,10,100,100);
+		//f.add(jl);
 		f.repaint();
 		f.revalidate();
-		//System.out.println(f.getParent());
-		//frame = (JFrame) f.getParent().getParent().getParent();
-
 		Timer timer = new Timer(30,new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//System.out.println(f.getParent().getParent().getParent().getParent());
-				ven.mx =vp.getWidth()/2+f.getParent().getParent().getParent().getParent().getLocation().x;
-				ven.my =vp.getHeight()/2+f.getParent().getParent().getParent().getParent().getLocation().y;
+				ven.mx =vp.getWidth()/2+f.getLocation().x;
+				ven.my =vp.getHeight()/2+f.getLocation().y;
 				inv.setBounds(30, 30, f.getWidth()-60, f.getHeight()-60);
 				try {
 					Thread.sleep(30);
@@ -112,9 +112,6 @@ public class VoxelCt extends JPanel{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				f.requestFocus();
-				
-				vp.setSize(f.getWidth(), f.getHeight());
 				f.repaint();
 				vp.repaint();
 				if(einv==0) {
@@ -143,6 +140,7 @@ public class VoxelCt extends JPanel{
 				}
 				if(buildref>0&&ven.breaktime==0)
 					buildref--;
+				System.out.println("YOLO"+buildref+"   "+ven.breaktime);
 				
 				if(key.Output()[69]==1) {
 					einv=1;
