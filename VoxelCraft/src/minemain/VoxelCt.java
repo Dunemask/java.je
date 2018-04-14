@@ -30,11 +30,14 @@ public class VoxelCt extends JPanel{
 	int einv = 0;
 	public JFrame frame;
 	public static Vector3 vel;
+	public int mode =1;
+	int flymode=0;
+	int flytime=0;
 	int buildref = 0;
 	Timer timer;
 	public VoxelCt(VoxEn voxen) {
 		vel = new Vector3(0,0,0);
-		System.out.print("HI");
+		//System.out.print("HI");
 		ven = voxen;
 		JPanel f = this;
 		f.setVisible(true);
@@ -127,13 +130,41 @@ public class VoxelCt extends JPanel{
 					Minecraft.goToSelect();
 					//System.exit(0);
 				}
-				f.requestFocus();
+				
 				
 				vp.setSize(f.getWidth(), f.getHeight());
 				f.repaint();
 				vp.repaint();
+				f.requestFocus();
 				if(einv==0) {
-				Walk();
+				
+					if (mode==0){
+						Walk();
+					}else {
+						if (flymode==0) {
+							Move();
+						}
+						if(flymode==1) {
+							Walk();
+						}
+						if(key.Output()[32]==1&&flytime==0) {
+							flytime=1;
+						}
+						if(key.Output()[32]==0&&flytime>0) {
+							flytime++;
+						}
+						if(key.Output()[32]==1&&flytime>1) {
+							flymode=(flymode+1)%2;
+							flytime=-1;
+						}
+						if(flytime>10) {
+							flytime=-1;
+						}
+						if(flytime==-1&&key.Output()[32]==0) {
+							flytime=0;
+						}
+						
+					}
 				
 				if(key.Output()[27]==1) {
 		    		escape=1;
@@ -141,23 +172,29 @@ public class VoxelCt extends JPanel{
 				if(mousedown&&buildref==0) {
 					ven.breaktime=8;
 					//ven.setBlock(0);
-					buildref =3;
+					buildref =2;
 				}
 				if(!mousedown) {
 					ven.breaktime=0;
 				}
 				if(rmousedown&&buildref==0) {
 					ven.setBlockOut(ven.hotbar[ven.selected]);
-					buildref =3;
+					buildref =2;
 				}
+				if(mode==0) {
 				if(ven.breaktime>0)
-				ven.breaktime-=4.0f/(ven.getBlock(ven.GetSelecID()-1).getBreakTime());
+				ven.breaktime-=3.9f/(ven.getBlock(ven.GetSelecID()-1).getBreakTime());
 				if(ven.breaktime<0) {
 					ven.breaktime=0;
 					ven.setBlock(0);
 				}
+				}else {
+					if(ven.breaktime==8)
+					ven.setBlock(0);
+					ven.breaktime=0;
+				}
 				if(mouseswoosh!=0) {
-					ven.selected-=mouseswoosh;
+					ven.selected+=mouseswoosh;
 					if(ven.selected<0)
 						ven.selected = 8;
 					if(ven.selected>8)
@@ -193,6 +230,7 @@ public class VoxelCt extends JPanel{
 	}
 	public static void Move() {
 		float spd=0.5f;
+		vel.z =1;
 		ven.MouseCam();
 		if(key.Output()[87]==1)
 		ven.MoveCam(Vector3.foreward(spd).rotate(ven.rx, "z"));
@@ -221,13 +259,13 @@ public class VoxelCt extends JPanel{
 		ven.MoveCam(new Vector3(vel.rotate(ven.rx, "z").x,0,0));
 		ven.MoveCam(new Vector3(0,vel.rotate(ven.rx, "z").y,0));
 		if(ven.MoveCam(new Vector3(0,0,vel.z))) {
-			vel.z-=0.2;
+			vel.z-=0.3;
 		}else {
-			vel.z=0;
+			vel.z=-0.1f;
 			if(key.Output()[32]==1)
-				vel.z=1;
+				vel.z=0.8f;
 		}
-		
+		vel.z *=0.9f;
 		vel.x *=0.5f;
 		vel.y *=0.5f;
 		//if(key.Output()[32]==1)
