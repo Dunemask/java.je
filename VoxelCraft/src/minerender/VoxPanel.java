@@ -7,10 +7,11 @@ import javax.swing.JPanel;
 
 public class VoxPanel extends JPanel{
 	public VoxEn env =null;
-	public int res = 4;
+	public int res = getWidth()/150+1;
 	int border = 6;
 	//Paints the image to do whatever you want
 	public void paint(Graphics g) {
+		res = getWidth()/150+1;
 		//System.out.println("PPaint");
 		g.fillRect(0, 0, getWidth(), getHeight());
 		BufferedImage img = RendImage();
