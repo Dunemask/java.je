@@ -71,7 +71,7 @@ public class Inventory extends JPanel{
 					jl.setAlignmentX(Component.CENTER_ALIGNMENT);
 					jl.setFont(new Font("Serif", Font.PLAIN, 12));
 					int img = ven.getBlock(index).image[2];
-					ImageIcon i = new ImageIcon("src/resources/blocks/img"+img+".png");
+					ImageIcon i = new ImageIcon(FileUtil.getResourceURL("resources/blocks/img"+img+".png"));
 					JLabel imgicon = new JLabel(i);
 					imgicon.setAlignmentX(CENTER_ALIGNMENT);
 					jp.add(imgicon);
