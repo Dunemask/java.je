@@ -55,7 +55,7 @@ public class Settings extends JPanel {
 
 		setLayout(null);
 		
-		volLabel = new JLabel("Volume");
+		volLabel = new JLabel("Volume "+PlaySound.vol*100);
 		volLabel.setForeground(Color.WHITE);
 		volLabel.setBackground(Color.DARK_GRAY);
 		volLabel.setBounds(242, 24, 84, 32);
@@ -72,6 +72,8 @@ public class Settings extends JPanel {
 				double rv = (double)volSlider.getValue()/(double)volSlider.getMaximum();
 				PlaySound.vol=rv;
 				DMediaPlayer.getMediaPlayer().setVolume(PlaySound.vol);
+				volLabel.setText("Volume "+PlaySound.vol*100);
+				repRev();
 				
 			}});
 		back.addActionListener(new ActionListener() {
@@ -98,7 +100,7 @@ public class Settings extends JPanel {
     	volSlider.setBounds(vsx,vsy,vsw,vsh);
     	int lbx=(int) (vsx+(vsw/2)-(volLabel.getPreferredSize().getWidth()/2));
     	volLabel.setBounds(lbx, lby,(int) volLabel.getPreferredSize().getWidth(),(int)volLabel.getPreferredSize().getHeight());
-		renLabel = new JLabel("Render");
+		renLabel = new JLabel("Render "+Minecraft.renderVal);
 		renLabel.setForeground(Color.WHITE);
 		renLabel.setBackground(Color.DARK_GRAY);
 		renLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
@@ -116,6 +118,8 @@ public class Settings extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				Minecraft.renderVal= renslider.getValue();
+				renLabel.setText("Render "+Minecraft.renderVal);
+				renSliderChanged();
 			}});
 		add(renslider);
 		this.add(renLabel);
@@ -123,6 +127,25 @@ public class Settings extends JPanel {
 	}
 
 	
+	/**
+	 * 
+	 */
+	protected void repRev() {
+		this.repaint();
+		this.revalidate();
+		
+	}
+
+
+	/**
+	 * 
+	 */
+	protected void renSliderChanged() {
+		this.repRev();
+		
+	}
+
+
 	/**
 	 * 
 	 */
