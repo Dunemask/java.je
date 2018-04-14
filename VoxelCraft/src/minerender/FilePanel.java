@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
@@ -26,7 +28,6 @@ import javax.swing.event.ListSelectionListener;
 import mc.Minecraft;
 import minemain.VoxelCt;
 import mplayer.SoundEngine;
-import javax.swing.JToggleButton;
 /**
  * This Is in charge of the panel that manages the world files.
  * @author Roberts
@@ -84,7 +85,7 @@ public class FilePanel extends JPanel {
 		
 		//Delete Button
 		JButton deleteBtn = new JButton("Delete");
-		deleteBtn.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+		deleteBtn.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 		deleteBtn.setAlignmentX(0.5f);
 		deleteBtn.addActionListener(new ActionListener() {
 
@@ -98,13 +99,15 @@ public class FilePanel extends JPanel {
 			
 		});
 		//Play
+		JPanel panel = new JPanel();
+		add(panel);
+		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JButton btnPlay = new JButton("PLAY");
-		btnPlay.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+		btnPlay.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 		btnPlay.setAlignmentX(CENTER_ALIGNMENT);
 		//btnPlay.setForeground(Color.BLACK);
 		//btnPlay.setBackground(Color.GRAY);
-		add(btnPlay);
 		btnPlay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -112,7 +115,8 @@ public class FilePanel extends JPanel {
 				start(list.getSelectedIndex());
 			}
 		});
-		add(deleteBtn);
+		panel.add(deleteBtn);
+		panel.add(btnPlay);
 		list.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -127,9 +131,8 @@ public class FilePanel extends JPanel {
 		
 
 		
-		btnAdd.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+		btnAdd.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 		btnAdd.setAlignmentX(CENTER_ALIGNMENT);
-		add(btnAdd);
 		JPanel create = new JPanel();
 		create.setVisible(false);
 		create.setBackground(Color.LIGHT_GRAY);
@@ -151,9 +154,9 @@ public class FilePanel extends JPanel {
 					}
 				});
 				
-				back.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+				back.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 				back.setAlignmentX(0.5f);
-				add(back);
+				panel.add(back);
 		create.add(jtf);
 		create.add(l1);
 		create.add(jx);
@@ -165,8 +168,10 @@ public class FilePanel extends JPanel {
 		create.add(tglbtnSuperflat);
 		
 		creative = new JToggleButton("Creative");
-		create.add(creative);
-		
+		creative.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		panel.add(creative);
+		panel.add(btnAdd);
+
 		
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
@@ -204,7 +209,8 @@ public class FilePanel extends JPanel {
 					}
 				if(btnAdd.getText()=="Create New World2") {
 					btnAdd.setText("Create New World");
-					}
+					btnAdd.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+				}
 			}
 			
 		});
