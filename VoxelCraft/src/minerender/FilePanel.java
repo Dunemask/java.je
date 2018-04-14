@@ -25,6 +25,7 @@ import javax.swing.event.ListSelectionListener;
 
 import mc.Minecraft;
 import minemain.VoxelCt;
+import mplayer.SoundEngine;
 
 public class FilePanel extends JPanel {
 	DefaultListModel lm = new DefaultListModel();
@@ -92,6 +93,17 @@ public class FilePanel extends JPanel {
 		//btnPlay.setForeground(Color.BLACK);
 		//btnPlay.setBackground(Color.GRAY);
 		add(btnPlay);
+		
+				JButton back = new JButton("Back");
+				back.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						SoundEngine.handle("click");
+						Minecraft.goToMain();
+					}
+				});
+				back.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+				back.setAlignmentX(0.5f);
+				add(back);
 		add(btnAdd);
 		JPanel create = new JPanel();
 		create.setVisible(false);
@@ -114,12 +126,14 @@ public class FilePanel extends JPanel {
 		btnPlay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				SoundEngine.handle("click");
 				start(list.getSelectedIndex());
 			}
 		});
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				SoundEngine.handle("click");
 				if(btnAdd.getText()=="New") {
 					jtf.setText("____Untitled____");
 				create.setVisible(true);
