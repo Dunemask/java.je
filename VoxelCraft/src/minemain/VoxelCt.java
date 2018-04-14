@@ -29,10 +29,11 @@ public class VoxelCt extends JPanel{
 	public int escape = 0;
 	int einv = 0;
 	public JFrame frame;
-
+	public static Vector3 vel;
 	int buildref = 0;
 	Timer timer;
 	public VoxelCt(VoxEn voxen) {
+		vel = new Vector3(0,0,0);
 		System.out.print("HI");
 		ven = voxen;
 		JPanel f = this;
@@ -132,7 +133,7 @@ public class VoxelCt extends JPanel{
 				f.repaint();
 				vp.repaint();
 				if(einv==0) {
-				Move();
+				Walk();
 				
 				if(key.Output()[27]==1) {
 		    		escape=1;
@@ -205,5 +206,33 @@ public class VoxelCt extends JPanel{
 			ven.MoveCam(Vector3.upward(spd));
 		if(key.Output()[16]==1)
 			ven.MoveCam(Vector3.downward(spd));
+	}
+	public static void Walk() {
+		float spd=0.2f;
+		ven.MouseCam();
+		if(key.Output()[87]==1)
+			vel.x+=spd;
+		if(key.Output()[83]==1)
+			vel.x-=spd;
+		if(key.Output()[68]==1)
+			vel.y+=spd;
+		if(key.Output()[65]==1)
+			vel.y-=spd;
+		ven.MoveCam(new Vector3(vel.rotate(ven.rx, "z").x,0,0));
+		ven.MoveCam(new Vector3(0,vel.rotate(ven.rx, "z").y,0));
+		if(ven.MoveCam(new Vector3(0,0,vel.z))) {
+			vel.z-=0.2;
+		}else {
+			vel.z=0;
+			if(key.Output()[32]==1)
+				vel.z=1;
+		}
+		
+		vel.x *=0.5f;
+		vel.y *=0.5f;
+		//if(key.Output()[32]==1)
+			//ven.MoveCam(Vector3.upward(spd));
+		//if(key.Output()[16]==1)
+			//ven.MoveCam(Vector3.downward(spd));
 	}
 }
