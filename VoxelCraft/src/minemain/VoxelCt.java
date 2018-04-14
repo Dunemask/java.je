@@ -35,8 +35,9 @@ public class VoxelCt extends JPanel{
 	int flytime=0;
 	int buildref = 0;
 	Timer timer;
-	public VoxelCt(VoxEn voxen) {
+	public VoxelCt(VoxEn voxen,int Mode) {
 		vel = new Vector3(0,0,0);
+		mode=Mode;
 		//System.out.print("HI");
 		ven = voxen;
 		JPanel f = this;

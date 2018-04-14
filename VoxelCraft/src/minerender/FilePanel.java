@@ -26,6 +26,7 @@ import javax.swing.event.ListSelectionListener;
 import mc.Minecraft;
 import minemain.VoxelCt;
 import mplayer.SoundEngine;
+import javax.swing.JToggleButton;
 /**
  * This Is in charge of the panel that manages the world files.
  * @author Roberts
@@ -36,6 +37,7 @@ public class FilePanel extends JPanel {
 	JList list = new JList(lm);
 	VoxEn ven;
 	JFrame frm;
+	JToggleButton creative;
 	Border raised = BorderFactory.createRaisedSoftBevelBorder();
 	Border lowered = BorderFactory.createLoweredBevelBorder();
 	public Border cool= BorderFactory.createCompoundBorder(raised,lowered);
@@ -159,6 +161,12 @@ public class FilePanel extends JPanel {
 		create.add(jz);
 		add(create);
 		
+		JToggleButton tglbtnSuperflat = new JToggleButton("Superflat");
+		create.add(tglbtnSuperflat);
+		
+		creative = new JToggleButton("Creative");
+		create.add(creative);
+		
 		
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
@@ -175,7 +183,14 @@ public class FilePanel extends JPanel {
 				}
 				if(btnAdd.getText()=="Create New World") {
 					create.setVisible(false);
-					VoxEn vex = new VoxEn(new Vector3(60,60,100),120,120,70,1,jtf.getText());
+					boolean flat = tglbtnSuperflat.isSelected();
+					int i;
+					if(flat) {
+						i=2;
+					}else {
+						i=1;
+					}
+					VoxEn vex = new VoxEn(new Vector3(Integer.parseInt(jx.getText())/2,Integer.parseInt(jy.getText())/2,Integer.parseInt(jz.getText())),Integer.parseInt(jx.getText()),Integer.parseInt(jy.getText()),Integer.parseInt(jz.getText()),i,jtf.getText());
 					FileControl.SaveFileAsXML(vex, jtf.getText());
 					
 					
@@ -231,8 +246,9 @@ public class FilePanel extends JPanel {
 		ven = FileControl.LoadFileXML(list.getSelectedValue().toString());	
 		
 		this.setVisible(false);
-		
-		VoxelCt vct = new VoxelCt(ven);
+		int cret;
+		if(creative.isSelected()) {cret =1;}else {cret=0;}
+		VoxelCt vct = new VoxelCt(ven,cret);
 		Minecraft.loadWorld(vct);
 		//this.getParent());
 		//this.getParent().removeAll();
