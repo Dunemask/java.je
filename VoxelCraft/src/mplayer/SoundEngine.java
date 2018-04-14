@@ -24,9 +24,14 @@ public class SoundEngine {
 	
 	
 	public static void handle(String type) {
+		Sound s;
 		switch(type) {
 		case "click":
-			Sound s  =SoundHandler.loadSong("/etc/click");
+			s  =SoundHandler.loadSong("/etc/click");
+			PlaySound.playOverSound(s);
+			break;
+		case "block_place":
+			 s  =SoundHandler.loadSong("/etc/block_place");
 			PlaySound.playOverSound(s);
 			break;
 	

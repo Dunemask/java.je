@@ -86,7 +86,6 @@ public class PlaySound {
 				rp = rp.substring(0, rp.length()-1);
 		
 			}
-
 			URL url = FileUtil.getResourceURL("resources/sounds/"+rp);
 			URI ur = new URI(url.toString().replace(" ", "%20"));
 			DMediaPlayer.setMedia(ur.toString());

@@ -62,6 +62,14 @@
 			<Album>Minecraft</Album>
 			<RelPath>/etc/click.mp3</RelPath>
 		</click>
+		<block_place>
+			<ID>126442</ID>
+			<Title>126442</Title>
+			<Song>file:/C:/Users/Dunemask/Documents/GitHub/java.je/VoxelCraft/bin/resources/sounds/etc/block_place.mp3</Song>
+			<Artist>Minecraft</Artist>
+			<Album>block_place</Album>
+			<RelPath>/etc/block_place.mp3</RelPath>
+		</block_place>
 	</etc>
 	<game>
 		<Game (1)>
