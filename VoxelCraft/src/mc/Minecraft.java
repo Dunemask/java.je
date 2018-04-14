@@ -56,6 +56,8 @@ public class Minecraft {
 	}
 	public static void loadWorld(VoxelCt vix)
 	{
+		SoundEngine.stop(SoundEngine.title);
+		SoundEngine.start(SoundEngine.game);
 		vx = vix;
 		Point p = cf.getLocationOnScreen();
 		Dimension siz = cf.getSize();
