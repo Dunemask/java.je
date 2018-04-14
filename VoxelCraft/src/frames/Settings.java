@@ -35,6 +35,8 @@ public class Settings extends JPanel {
 	 */
 	private static final long serialVersionUID = 7743473342320749215L;
 	private static JSlider volSlider;
+	private static JSlider renslider;
+	private static JLabel renLabel;
 	private static JLabel volLabel;
 	private static JButton back=new JButton("Back");
 	private static final double volSliderPerc=.15;
@@ -83,8 +85,41 @@ public class Settings extends JPanel {
 		
 		back.setBounds(volSlider.getX(), this.getHeight()-pbch, volSlider.getWidth(),pbch);
 		add(back);
+		
+		
 		add(volLabel);
 		add(volSlider);
+    	int lby = pbch;
+    	
+        int vsx = (int) (this.getWidth()*Settings.volSliderPerc);
+    	int vsy = (int) lby+pbch;
+    	int vsw = (int) (this.getWidth()-(2*this.getWidth()*Settings.volSliderPerc));
+    	int vsh = pbch;
+    	volSlider.setBounds(vsx,vsy,vsw,vsh);
+    	int lbx=(int) (vsx+(vsw/2)-(volLabel.getPreferredSize().getWidth()/2));
+    	volLabel.setBounds(lbx, lby,(int) volLabel.getPreferredSize().getWidth(),(int)volLabel.getPreferredSize().getHeight());
+		renLabel = new JLabel("Render");
+		renLabel.setForeground(Color.WHITE);
+		renLabel.setBackground(Color.DARK_GRAY);
+		renLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		//renLabel.setBounds(volLabel.getX(),volLabel.getY()+2*pbch,volLabel.getWidth(), volLabel.getHeight());
+    	renLabel.setBounds(lbx, lby+2*pbch,(int) renLabel.getPreferredSize().getWidth(),(int)renLabel.getPreferredSize().getHeight());
+		renslider = new JSlider();
+		renslider.setMaximum(180);
+		renslider.setMinimum(100);
+		renslider.setValue(Minecraft.renderVal);
+		renslider.setForeground(Color.DARK_GRAY);
+		renslider.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		renslider.setBounds(volSlider.getX(), volSlider.getY()+2*pbch, volSlider.getWidth(), volSlider.getHeight());
+		renslider.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				Minecraft.renderVal= renslider.getValue();
+				
+			}});
+		add(renslider);
+		this.add(renLabel);
 		
 	}
 
@@ -137,7 +172,8 @@ public class Settings extends JPanel {
 			    	int lbx=(int) (vsx+(vsw/2)-(volLabel.getPreferredSize().getWidth()/2));
 			    	volLabel.setBounds(lbx, lby,(int) volLabel.getPreferredSize().getWidth(),(int)volLabel.getPreferredSize().getHeight());
 			    	back.setBounds(vsx, this.getHeight()-pbch, vsw,pbch);
-			    	
+					renslider.setBounds(volSlider.getX(),volSlider.getY()+2*pbch , volSlider.getWidth(), volSlider.getHeight());
+					renLabel.setBounds(lbx, lby+2*pbch,(int) renLabel.getPreferredSize().getWidth(),(int)renLabel.getPreferredSize().getHeight());
 			    	this.repaint();
 			        this.revalidate();
 				}catch(Exception exc) {
@@ -145,6 +181,4 @@ public class Settings extends JPanel {
 				}
 		
 	}
-
-
 }
