@@ -23,8 +23,8 @@ public class VoxEn {
 	int density = 0;
 	int siz = 1;
 	int timer=0;
-	int blocklength=13;
-	int imglength=18;
+	int blocklength=16;
+	int imglength=21;
 	private String name;
 	public float breaktime=0;
 	public ArrayList<Block> blks= new ArrayList<Block>();
@@ -55,8 +55,8 @@ public class VoxEn {
 		addBlock("Dirt",0,0,0,0,0,0,true,true,5);
 		addBlock("Grass",0,2,3,3,3,3,true,true,5);
 		//addBlock("Dirt",0,0,0,0,0,0,true,true);
-		addBlock("Stone",1,1,1,1,1,1,true,true,22);
-		addBlock("Wood",4,4,5,5,5,5,true,true,10);
+		addBlock("Stone",1,1,1,1,1,1,true,true,15);
+		addBlock("Wood",4,4,5,5,5,5,true,true,8);
 		addBlock("Leaves",7,7,7,7,7,7,true,true,3);
 		addBlock("Bricks",9,9,9,9,9,9,true,true,10);
 		addBlock("Red",11,11,11,11,11,11,true,true,1);
@@ -65,7 +65,10 @@ public class VoxEn {
 		addBlock("Green",14,14,14,14,14,14,true,true,1);
 		addBlock("Cyan",15,15,15,15,15,15,true,true,1);
 		addBlock("Blue",16,16,16,16,16,16,true,true,1);
-		addBlock("Magenta",17,17,17,17,17,17,true,true,10);
+		addBlock("Magenta",17,17,17,17,17,17,true,true,1);
+		addBlock("Glass",20,20,20,20,20,20,true,false,1);
+		addBlock("Rock",18,18,18,18,18,18,true,true,12);
+		addBlock("Bedrock",19,19,19,19,19,19,true,true,1000);
 	}
 	
 	
@@ -203,7 +206,7 @@ public class VoxEn {
 		val2= Integer.parseInt(str[4]);
 		side = str[3];
 		//WATER RENDERRRRRRRRRRR
-		if(!blks.get(val2).opaque) {
+		if(val2>0&&!blks.get(val2-1).opaque) {
 			float hite = (float)(0.3+0.2*Math.sin(2*findub[0]+0.03*timer)+0.1*Math.cos(2*findub[1]+0.01*timer));
 			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0) ),false,val2,-1);
 			float mag2 = Float.parseFloat(str[5]);
@@ -213,21 +216,26 @@ public class VoxEn {
 			findub[2] = Float.parseFloat(str[2]);
 			val2= Integer.parseInt(str[4]);
 			side = str[3];
-			if(val2==7&&Float.parseFloat(str[5])<mag2) {
+			
+			if(x==0&&y==0) {
+				sel.x=(int)findub[0];
+				sel.y=(int)findub[1];
+				sel.z=(int)findub[2];
+				seld=side;
+			}
+			
+			if(!blks.get(val2-1).opaque&&Float.parseFloat(str[5])<mag2) {
 			int[] kil = GetColo(side,bright,findub,val2);
 			tint=kil[0];}
-			str = GetSquare(Voxels,ve,campos,false,7,-1);
+			str = GetSquare(Voxels,ve,campos,false,val2,-1);
 			findub[0] = Float.parseFloat(str[0]);
 			findub[1] = Float.parseFloat(str[1]);
 			findub[2] = Float.parseFloat(str[2]);
 			val2= Integer.parseInt(str[4]);
 			side = str[3];
 			tintamount=1-0.3f/(1+0.1f*Float.parseFloat(str[5]));
-		}
-		if(side=="none") {
-			blue=255;
-			red=125;
-			green=170;
+		}else {
+		
 			//String[] str2 = GetSquare(airs, Vector3.scalmultiply(ve, (float)(1.0/16)),Vector3.scalmultiply(campos, (float)(1.0/16)),true);
 		//for(Entry<Float, Vector3> flt :hmm.entrySet()) {
 			//b2-=50;
@@ -239,7 +247,6 @@ public class VoxEn {
 			//red=(int)flt.getValue().z*50;
 			//System.out.print((flt.getValue().z+" + "+(flt.getKey())+"   "));
 		//}
-		}
 		//System.out.println("" +xx +" " + yy+ " " + zz +" s");
 		/*Voxels = null;
 		Voxels = Chnks[xx][yy][zz].StorChunk;
@@ -257,7 +264,12 @@ public class VoxEn {
 			sel.y=(int)findub[1];
 			sel.z=(int)findub[2];
 			seld=side;
-		}
+		}}
+		if(side=="none") {
+			blue=255;
+			red=125;
+			green=170;
+			}
 		if(side!="none") {
 		int[] kil = GetColo(side,bright,findub,val2);
 				pix=kil[0];
@@ -356,7 +368,7 @@ public class VoxEn {
 		}
 		if(side!="none") {
 			int[][] tdata=null;
-			if(blks.get(val2-1).opaque) {
+			if(true) {
 				tdata = imgas[blks.get(val2-1).image[ssd]].imagedat[0];
 			}/*else{
 				tdata = imgas[blkrndr[val2-1][ssd]].imagedat[(timer/blkrndr[val2-1][6])%imgas[blkrndr[val2-1][ssd]].imagedat.length];

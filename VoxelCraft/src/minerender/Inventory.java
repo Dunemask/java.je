@@ -49,6 +49,7 @@ public class Inventory extends JPanel{
 			//scroll.setAlignmentX(CENTER_ALIGNMENT);
 		this.add(scroll, BorderLayout.CENTER);
 		this.add(hotbar,BorderLayout.CENTER);
+		hotbar.setSelectedIndex(0);
 		//	this.add(list);
 		list.setPreferredSize(new Dimension(100,1000));
 		//list.setSize(100,1000);	
@@ -137,6 +138,7 @@ public class Inventory extends JPanel{
 		this.add(scroll, BorderLayout.CENTER);
 		this.add(hotbar,BorderLayout.CENTER);
 		//	this.add(list);
+		hotbar.setSelectedIndex(0);
 		list.setPreferredSize(new Dimension(100,1000));
 		//list.setSize(100,1000);	
 		list.setVisibleRowCount(-1);
