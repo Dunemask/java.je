@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import dunemask.util.FileUtil;
+import mplayer.SoundEngine;
 
 public class VoxEn {
 	public Vector3 campos;
@@ -22,13 +23,15 @@ public class VoxEn {
 	int density = 0;
 	int siz = 1;
 	int timer=0;
+	int blocklength=13;
+	int imglength=18;
 	private String name;
 	public float breaktime=0;
 	public ArrayList<Block> blks= new ArrayList<Block>();
 	public Block getBlock(int bl) {
 		return blks.get(bl);
 	}
-	public int[] inventory = new int[13];
+	public int[] inventory = new int[blocklength];
 	
 	/**
 	 * @return the name
@@ -71,7 +74,7 @@ public class VoxEn {
 	HashMap<Float,Vector3> hmm = new HashMap<Float,Vector3>();
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
-	public ImageReader[] imgas = new ImageReader[18];
+	public ImageReader[] imgas = new ImageReader[imglength];
 	ImageReader selecc = new ImageReader(FileUtil.getResourceURL("resources/selecc.png"));
 	ImageReader crunch = new ImageReader(FileUtil.getResourceURL("resources/brk.png"));
 
@@ -200,11 +203,11 @@ public class VoxEn {
 		val2= Integer.parseInt(str[4]);
 		side = str[3];
 		//WATER RENDERRRRRRRRRRR
-		if(val2==7) {
+		if(!blks.get(val2).opaque) {
 			float hite = (float)(0.3+0.2*Math.sin(2*findub[0]+0.03*timer)+0.1*Math.cos(2*findub[1]+0.01*timer));
-			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0) ),false,7,-1);
+			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0) ),false,val2,-1);
 			float mag2 = Float.parseFloat(str[5]);
-			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,hite) ),false,0,7);
+			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0) ),false,0,val2);
 			findub[0] = Float.parseFloat(str[0]);
 			findub[1] = Float.parseFloat(str[1]);
 			findub[2] = Float.parseFloat(str[2]);
@@ -635,12 +638,20 @@ public class VoxEn {
 			return -128;
 			} 
 	}
-	public void setBlock(int block) {
+	public void setBlock(int block,boolean give) {
 		Vector3 v3 = sel;
 		//Chnks[(int)v3.x/16][(int)v3.y/16][(int)v3.z/16].StorChunk[(int)v3.x%16][(int)v3.y%16][(int)v3.z%16] = (byte)block;
+		if(give) {
+			if(inventory[Voxels[(int)v3.x][(int)v3.y][(int)v3.z]-1]<9999) {
+				inventory[Voxels[(int)v3.x][(int)v3.y][(int)v3.z]-1]++;
+				Voxels[(int)v3.x][(int)v3.y][(int)v3.z] = (byte)block;
+			}
+		}else {
+		
 		Voxels[(int)v3.x][(int)v3.y][(int)v3.z] = (byte)block;
+		}
 	}
-	public void setBlockOut(int block) {
+	public void setBlockOut(int block,boolean take) {
 		int dx=0;
 		int dy=0;
 		int dz=0;
@@ -664,9 +675,19 @@ public class VoxEn {
 			!((int)sel.x+dx==(int)(campos.x+0.4)&&(int)sel.y+dy==(int)(campos.y-0.4)&&(int)sel.z+dz==(int)(campos.z-1.4))&&
 			!((int)sel.x+dx==(int)(campos.x-0.4)&&(int)sel.y+dy==(int)(campos.y-0.4)&&(int)sel.z+dz==(int)(campos.z-1.4))&&
 			!((int)sel.x+dx==(int)(campos.x)&&(int)sel.y+dy==(int)(campos.y)&&(int)sel.z+dz==(int)(campos.z+.4))){
-			Vector3 v3 = Vector3.add(sel, new Vector3(dx,dy,dz));
+			
+				Vector3 v3 = Vector3.add(sel, new Vector3(dx,dy,dz));
+				if(take) {
+				if(inventory[block-1]>0) {
+					SoundEngine.handle("block_place");
+				Voxels[(int)v3.x][(int)v3.y][(int)v3.z] = (byte)block;
+				inventory[block-1]--;
+				}
+				}else {
+					SoundEngine.handle("block_place");
+					Voxels[(int)v3.x][(int)v3.y][(int)v3.z] = (byte)block;
+				}
 		//Chnks[(int)v3.x/16][(int)v3.y/16][(int)v3.z/16].StorChunk[(int)v3.x%16][(int)v3.y%16][(int)v3.z%16] = (byte)block;
-			Voxels[(int)v3.x][(int)v3.y][(int)v3.z] = (byte)block;
 			}
 		}
 		}catch(ArrayIndexOutOfBoundsException e) {

@@ -90,8 +90,12 @@ public class VoxelCt extends JPanel{
 		    f.setFocusable(true);
 		    f.requestFocus();
 	//	f.setAlwaysOnTop(true);
-		
-		Inventory inv= new Inventory(50,50,100,100, ven);
+		    Inventory inv;
+		    if(mode==1) {
+		inv= new Inventory(ven);
+		}else {
+		inv= new Inventory(ven,1);
+		}
 		f.add(inv);
 		inv.setVisible(false);
 		
@@ -179,7 +183,12 @@ public class VoxelCt extends JPanel{
 					ven.breaktime=0;
 				}
 				if(rmousedown&&buildref==0) {
-					ven.setBlockOut(ven.hotbar[ven.selected]);
+					if(mode==0) {
+					ven.setBlockOut(ven.hotbar[ven.selected],true);
+					}else {
+						ven.setBlockOut(ven.hotbar[ven.selected],false);
+
+					}
 					buildref =2;
 				}
 				if(mode==0) {
@@ -187,11 +196,11 @@ public class VoxelCt extends JPanel{
 				ven.breaktime-=3.9f/(ven.getBlock(ven.GetSelecID()-1).getBreakTime());
 				if(ven.breaktime<0) {
 					ven.breaktime=0;
-					ven.setBlock(0);
+					ven.setBlock(0,true);
 				}
 				}else {
 					if(ven.breaktime==8)
-					ven.setBlock(0);
+					ven.setBlock(0,false);
 					ven.breaktime=0;
 				}
 				if(mouseswoosh!=0) {

@@ -229,10 +229,10 @@ public class FilePanel extends JPanel {
 	 */
 	protected void delAction() {
 		int ind = list.getSelectedIndex();
-		list.remove(ind);
 		String s = list.getSelectedValue().toString();
 		File file = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+s+".xml");
 		file.delete();
+		refreshlm();
 		this.repaint();
 		this.revalidate();
 		
