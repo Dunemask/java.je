@@ -9,19 +9,17 @@ public abstract class Test {
 	public static void main(String[] args) {
 		JFrame f=new JFrame();
 		f.setVisible(true);
-		f.setSize(900,900);
+		f.setSize(600,600);
 		f.setTitle("TEST");
 		f.setLocationRelativeTo(null);
 		f.setEnabled(true);
 		//f.setLayout(null);
-		//FilePanel fp = new FilePanel();
-		//f.getContentPane().add(fp);
+		FilePanel fp = new FilePanel();
+
+		f.getContentPane().add(fp);
 		//VoxelCt vct = new VoxelCt();
 		//System.out.print("SDFJIOJWEIOFEWFHEFUIHIUHEFUIHUIEOFH");
 		//f=vct;
-		VoxelCt c = new VoxelCt();
-		f.add(c);
-		
 		f.repaint();
 		f.revalidate();
 			
