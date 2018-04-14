@@ -11,8 +11,8 @@ public class FileControl {
 		xml.writeElement("world/position/x", vex.campos.x);
 		xml.writeElement("world/position/y", vex.campos.y);
 		xml.writeElement("world/position/z", vex.campos.z);
-		xml.writeElement("world/dx", vex.Voxels[0].length);
-		xml.writeElement("world/dy", vex.Voxels[0][0].length);
+		xml.writeElement("world/dx", vex.Voxels.length);
+		xml.writeElement("world/dy", vex.Voxels[0].length);
 		xml.writeElement("world/data", Voxes);
 	}
 	/** @param s Save Name
