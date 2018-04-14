@@ -98,7 +98,7 @@ public class Settings extends JPanel {
     	volSlider.setBounds(vsx,vsy,vsw,vsh);
     	int lbx=(int) (vsx+(vsw/2)-(volLabel.getPreferredSize().getWidth()/2));
     	volLabel.setBounds(lbx, lby,(int) volLabel.getPreferredSize().getWidth(),(int)volLabel.getPreferredSize().getHeight());
-		renLabel = new JLabel("Render");
+		renLabel = new JLabel("Render "+Minecraft.renderVal);
 		renLabel.setForeground(Color.WHITE);
 		renLabel.setBackground(Color.DARK_GRAY);
 		renLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
@@ -116,6 +116,8 @@ public class Settings extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				Minecraft.renderVal= renslider.getValue();
+				renLabel.setText("Render "+Minecraft.renderVal);
+				renSliderChanged();
 			}});
 		add(renslider);
 		this.add(renLabel);
@@ -123,6 +125,16 @@ public class Settings extends JPanel {
 	}
 
 	
+	/**
+	 * 
+	 */
+	protected void renSliderChanged() {
+	this.repaint();
+	this.revalidate();
+		
+	}
+
+
 	/**
 	 * 
 	 */
