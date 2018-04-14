@@ -181,6 +181,7 @@ static public int[][][] Array1Dto3D(int[] dra, int sx, int sy){
 		i[j%sx][(j/sx)%sy][j/(sx*sy)] = dra[j];
 	}
 	return i;
+	
 }
 static public byte[][][] Array1Dto3Db(int[] dra, int sx, int sy){
 	byte[][][] i = new byte[sx][sy][dra.length/(sx*sy)];
