@@ -5,6 +5,8 @@ package mc;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -44,6 +46,7 @@ public class Minecraft {
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cf.setTitle("Minecraft - Java.JE");
 		cf.setVisible(true);
+		listenHandle();
 		cp=mb;
 		cf.setLocationRelativeTo(null);
 		cf.add(cp);
@@ -54,6 +57,7 @@ public class Minecraft {
 		//goToSettings();
 
 	}
+
 	public static void loadWorld(VoxelCt vix)
 	{
 		SoundEngine.stop(SoundEngine.title);
@@ -68,6 +72,7 @@ public class Minecraft {
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cf.setTitle("Minecraft - Java.JE");
 		cf.setVisible(true);
+		listenHandle();
 		cp=vx;
 		cf.setLocation(p);
 		cf.setSize(siz);
@@ -88,6 +93,7 @@ public class Minecraft {
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cf.setTitle("Minecraft - Java.JE");
 		cf.setVisible(true);
+		listenHandle();
 		cp=fp;
 		cf.setLocation(p);
 		cf.setSize(siz);
@@ -111,6 +117,7 @@ public class Minecraft {
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cf.setTitle("Minecraft - Java.JE");
 		cf.setVisible(true);
+		listenHandle();
 		cp=set;
 		cf.setLocation(p);
 		cf.setSize(siz);
@@ -119,20 +126,7 @@ public class Minecraft {
 		cf.revalidate();
 		
 	}
-	/** Only Sets Visible size etc
-	 * 
-	 */
-	private static void frameinit() {
-		JFrame f = new JFrame();
-		cf.setLocationRelativeTo(null);
-		cf.setSize(600, 600);
-		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cf.setTitle("Minecraft - Java.JE");
-		cf.setVisible(true);
-		//cf.add(new JLabel("Tmp"));
-		
-		
-	}
+
 	
 	/**
 	 *  Main Menu Panel Call
@@ -148,10 +142,60 @@ public class Minecraft {
 		cf.setTitle("Minecraft - Java.JE");
 		cf.setVisible(true);
 		cf.setLocation(p);
+		listenHandle();
 		cf.setSize(siz);
 		cf.add(cp);
 		cf.repaint();
 		cf.revalidate();
+		
+	}
+	/**
+	 * 
+	 */
+	private static void listenHandle() {
+		cf.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				System.exit(0);
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				System.exit(0);
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}});
 		
 	}
 
