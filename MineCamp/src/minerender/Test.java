@@ -15,19 +15,14 @@ public abstract class Test {
 		f.setEnabled(true);
 		//f.setLayout(null);
 		FilePanel fp = new FilePanel();
+
 		f.getContentPane().add(fp);
 		//VoxelCt vct = new VoxelCt();
 		//System.out.print("SDFJIOJWEIOFEWFHEFUIHIUHEFUIHUIEOFH");
 		//f=vct;
 		f.repaint();
 		f.revalidate();
-		
-		
-		
-		
-		
-		
-		
+			
 		/*VoxEn e = new VoxEn(new Vector3(0,3,5),20,20,20,1);
 		File f = new File(System.getProperty("user.home")+"/Desktop/tmp.xml");
 		XMLMap test = new XMLMap(f,"FIOJ");
