@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -216,6 +217,19 @@ public class FilePanel extends JPanel {
 					//jtf.setText("Untitled");
 					btnAdd.setText("New");
 					refreshlm();
+					ListModel mod = list.getModel();
+					int wanted = -1;
+					for(int c=0;c<mod.getSize();c++) {
+						if(mod.getElementAt(c).toString().equals(jtf.getText())) {
+							wanted=c;
+						}
+					}
+					if(wanted==-1) {
+						System.out.println("Fail");
+					}else {
+						list.setSelectedIndex(wanted);
+					}
+					
 					//System.out.println("JSDF");
 					repaint();
 					revalidate();
