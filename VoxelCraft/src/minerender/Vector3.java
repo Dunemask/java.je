@@ -1,6 +1,10 @@
 package minerender;
 
-
+/**Multi-Purpose Voxel Math
+ * 
+ * @author Roberts
+ *
+ */
 public class Vector3 {
 	public float x;
 	public float y;

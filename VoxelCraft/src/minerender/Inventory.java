@@ -21,7 +21,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import dunemask.util.FileUtil;
-
+/**
+ * Control of the inventory that has all of the blocks...
+ * @author Roberts
+ *
+ */
 public class Inventory extends JPanel{
 	VoxEn ven;
 	Border raised = BorderFactory.createRaisedSoftBevelBorder();
@@ -31,6 +35,10 @@ public class Inventory extends JPanel{
 	public DefaultListModel hb = new DefaultListModel();
 	private final JList list = new JList(lm);
 	private final JList hotbar = new JList(hb);
+	
+	/**
+	 * Uses JLists and JScrollPanes to get the job done...
+	 */
 	public Inventory(int x, int y, int sx, int sy, VoxEn v) {
 		ven = v;	
 		this.setBounds(x,y,sx,sy);
@@ -112,7 +120,7 @@ public class Inventory extends JPanel{
 			hotbar.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 			hotbar.setVisibleRowCount(1);
 			scroll.setSize(100,100);
-
+			//Creates the lists
 			for(x=0;x<ven.blks.size();x++) {
 				lm.addElement(""+x);
 			}
@@ -120,8 +128,4 @@ public class Inventory extends JPanel{
 				hb.addElement(""+x);
 			}
 	}
-	public void addBoxes(int boxes) {
-		
-	}
-
 }
