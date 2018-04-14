@@ -13,10 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import mc.Minecraft;
+import minerender.FileControl;
 import minerender.Inventory;
 import minerender.Vector3;
 import minerender.VoxEn;
 import minerender.VoxPanel;
+import mplayer.SoundEngine;
 
 public class VoxelCt extends JPanel{
 	static VoxEn ven;
@@ -29,6 +31,7 @@ public class VoxelCt extends JPanel{
 	public JFrame frame;
 
 	int buildref = 0;
+	Timer timer;
 	public VoxelCt(VoxEn voxen) {
 		System.out.print("HI");
 		ven = voxen;
@@ -67,7 +70,6 @@ public class VoxelCt extends JPanel{
 					mousedown = true;
 				if(e.getButton()==3)
 					rmousedown = true;
-				System.out.print("SDFJOJ");
 				
 			}
 			@Override
@@ -99,11 +101,11 @@ public class VoxelCt extends JPanel{
 		//System.out.println(f.getParent());
 		//frame = (JFrame) f.getParent().getParent().getParent();
 
-		Timer timer = new Timer(30,new ActionListener() {
+		timer= new Timer(30,new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ven.campos.print();
+				//ven.campos.print();
 				
 				//System.out.println(f.getParent().getParent().getParent().getParent());
 				ven.mx =vp.getWidth()/2+f.getParent().getParent().getParent().getParent().getLocation().x;
@@ -116,8 +118,13 @@ public class VoxelCt extends JPanel{
 					e.printStackTrace();
 				}
 				if(key.Output()[27]==1) {
-					System.out.println("Escaping");
-					System.exit(0);
+					System.out.println(ven.getName());
+					FileControl.SaveFileAsXML(ven, ven.getName());
+					SoundEngine.stop(SoundEngine.game);
+					SoundEngine.start(SoundEngine.title);
+					timer.stop();
+					Minecraft.goToSelect();
+					//System.exit(0);
 				}
 				f.requestFocus();
 				

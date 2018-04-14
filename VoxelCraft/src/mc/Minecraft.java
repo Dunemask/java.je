@@ -94,7 +94,7 @@ public class Minecraft {
 		cf.setTitle("Minecraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
-		cp=fp;
+		cp= new FilePanel();
 		cf.setLocation(p);
 		cf.setSize(siz);
 		cf.add(cp);

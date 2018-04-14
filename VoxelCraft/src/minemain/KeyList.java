@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyList implements KeyListener{
 	
-	int[] keypre = new int[300];
+	int[] keypre = new int[600];
 	public KeyList() {
 		
 	}

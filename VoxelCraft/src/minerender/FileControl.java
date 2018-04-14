@@ -26,7 +26,7 @@ public class FileControl {
 		int sizx = Integer.parseInt(xml.pullValue("world/dx"));
 		int sizy =Integer.parseInt(xml.pullValue("world/dy"));
 		byte[][][] c = FileControl.Array1Dto3Db(FileControl.LoadArray(ds),sizx,sizy);
-		return new VoxEn(v3,c);
+		return new VoxEn(v3,c,s);
 		
 	}
 	static public String SaveArray(int[] array) {

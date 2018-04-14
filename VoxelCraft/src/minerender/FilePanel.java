@@ -88,6 +88,10 @@ public class FilePanel extends JPanel {
 		btnPlay.setFont(new Font("Century Gothic", Font.PLAIN, 30));
 		btnPlay.setAlignmentX(CENTER_ALIGNMENT);
 		JButton btnAdd =new JButton("New");
+		JButton deleteBtn = new JButton("Delete");
+		deleteBtn.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+		deleteBtn.setAlignmentX(0.5f);
+		add(deleteBtn);
 		btnAdd.setFont(new Font("Century Gothic", Font.PLAIN, 30));
 		btnAdd.setAlignmentX(CENTER_ALIGNMENT);
 		//btnPlay.setForeground(Color.BLACK);
@@ -101,6 +105,7 @@ public class FilePanel extends JPanel {
 						Minecraft.goToMain();
 					}
 				});
+				
 				back.setFont(new Font("Century Gothic", Font.PLAIN, 30));
 				back.setAlignmentX(0.5f);
 				add(back);

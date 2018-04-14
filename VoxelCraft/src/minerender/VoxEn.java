@@ -22,13 +22,27 @@ public class VoxEn {
 	int density = 0;
 	int siz = 1;
 	int timer=0;
-	String name;
+	private String name;
 	public float breaktime=0;
 	public ArrayList<Block> blks= new ArrayList<Block>();
 	public Block getBlock(int bl) {
 		return blks.get(bl);
 	}
 	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public void addBlock(String name, int a, int b, int c, int d, int f, int g,boolean tan,boolean vis,int bt) {
 		int[] i = {a,b,c,d,f,g};
 		blks.add(new Block(tan, vis, i , name ,bt));
@@ -68,6 +82,7 @@ public class VoxEn {
 	VoxGen vg;
 	public VoxEn(Vector3 vcam,int xsiz, int ysiz, int zsiz,int type,String name) {
 		//SET STUFFSSSS
+		this.name=name;
 		this.initializeBlock();
 		vg = new VoxGen(this);
 		Voxels = new byte[xsiz][ysiz][zsiz];
@@ -91,7 +106,8 @@ public class VoxEn {
 			imgas[i] = new ImageReader(FileUtil.getResourceURL("resources/blocks/img"+i+".png"));
 		}
 	}
-	public VoxEn(Vector3 vcam,byte[][][] vol) {
+	public VoxEn(Vector3 vcam,byte[][][] vol,String name) {
+		this.name = name;
 		//SET STUFFSSSS
 		this.initializeBlock();
 		vg = new VoxGen(this);
