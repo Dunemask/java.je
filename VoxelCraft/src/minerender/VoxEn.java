@@ -8,6 +8,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import dunemask.util.FileUtil;
+
 public class VoxEn {
 	public Vector3 campos;
 	public int mx = 0;
@@ -55,8 +57,8 @@ public class VoxEn {
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
 	public ImageReader[] imgas = new ImageReader[18];
-	ImageReader selecc = new ImageReader("src/resources/selecc.png");
-	ImageReader crunch = new ImageReader("src/resources/brk.png");
+	ImageReader selecc = new ImageReader(FileUtil.getResourceURL("resources/selecc.png"));
+	ImageReader crunch = new ImageReader(FileUtil.getResourceURL("resources/brk.png"));
 
 	//VoxChunk[][][] Chnks = new VoxChunk[3][3][3];
 	//byte[][][] airs = new byte[Chnks.length][Chnks[0].length][Chnks[0][0].length];
@@ -86,7 +88,7 @@ public class VoxEn {
 		//getimages
 		//resetHills(1, 4);
 		for(int i = 0;i<imgas.length;i++) {
-			imgas[i] = new ImageReader("src/resources/blocks/img"+i+".png");
+			imgas[i] = new ImageReader(FileUtil.getResourceURL("resources/blocks/img"+i+".png"));
 		}
 	}
 	public VoxEn(Vector3 vcam,byte[][][] vol) {
@@ -99,13 +101,13 @@ public class VoxEn {
 		campos=vcam;
 		
 		for(int i = 0;i<imgas.length;i++) {
-			imgas[i] = new ImageReader("src/resources/blocks/img"+i+".png");
+			imgas[i] = new ImageReader(FileUtil.getResourceURL("resources/blocks/img"+i+".png"));
 		}
 	}
 	/*public VoxEn(Vector3 vcam,File f) {
 		//SET STUFFSSSS
 		int sizexxx=Integer.parseInt(FileStuff.ReadLine(f, 1));
-		int sizeyyy=Integer.parseInt(FileStuff.ReadLine(f, 2));
+		int sizeyyy=Integer.parseInt(FileStuff.ReadLine(f, 2));)
 		int sizezzz=Integer.parseInt(FileStuff.ReadLine(f, 3));
 		campos = vcam;
 		campos.x=Float.parseFloat(FileStuff.ReadLine(f, 4));

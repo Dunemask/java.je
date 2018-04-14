@@ -4,6 +4,7 @@ package minerender;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -30,6 +31,43 @@ public class ImageReader {
 		f = new File(image);
 		try {
 			img= ImageIO.read(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int width= img.getWidth();
+		int height = img.getHeight();
+		imagedat = new int[height/width][width][width];
+		rawdat = new int[height/width][width*width];
+		for(int y=0;y<height;y++) {
+			for(int x=0;x<width;x++) {
+				imagedat[y/width][x][y%width]=img.getRGB(x,y);
+				rawdat[y/width][(y%width)*width+x]=img.getRGB(x, y);
+			}
+		}
+	}
+	public ImageReader(File f) {
+		BufferedImage img=null;
+		try {
+			img= ImageIO.read(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int width= img.getWidth();
+		int height = img.getHeight();
+		imagedat = new int[height/width][width][width];
+		rawdat = new int[height/width][width*width];
+		for(int y=0;y<height;y++) {
+			for(int x=0;x<width;x++) {
+				imagedat[y/width][x][y%width]=img.getRGB(x,y);
+				rawdat[y/width][(y%width)*width+x]=img.getRGB(x, y);
+			}
+		}
+	}
+	
+	public ImageReader(URL url) {
+		BufferedImage img=null;
+		try {
+			img= ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

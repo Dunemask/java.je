@@ -15,6 +15,9 @@ public class FileControl {
 		xml.writeElement("world/dy", vex.Voxels[0][0].length);
 		xml.writeElement("world/data", Voxes);
 	}
+	/** @param s Save Name
+	 * 
+	 * */
 	public static VoxEn LoadFileXML(String s) {
 		File file = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+s+".xml");
 		XMLMap xml = XMLMap.ParseDXMLMap(file);

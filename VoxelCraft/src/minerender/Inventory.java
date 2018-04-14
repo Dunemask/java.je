@@ -20,6 +20,8 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import dunemask.util.FileUtil;
+
 public class Inventory extends JPanel{
 	VoxEn ven;
 	Border raised = BorderFactory.createRaisedSoftBevelBorder();
@@ -95,7 +97,7 @@ public class Inventory extends JPanel{
 						jl.setForeground(Color.BLUE);
 					}
 					int img = ven.getBlock(ven.hotbar[index]-1).image[2];
-					ImageIcon i = new ImageIcon("src/resources/blocks/img"+img+".png");
+					ImageIcon i = new ImageIcon(FileUtil.getResourceURL("resources/blocks/img"+img+".png"));
 					JLabel imgicon = new JLabel(i);
 					imgicon.setAlignmentX(CENTER_ALIGNMENT);
 					jp.add(imgicon);

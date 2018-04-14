@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import mc.Minecraft;
 import minerender.Inventory;
 import minerender.Vector3;
 import minerender.VoxEn;
@@ -114,6 +115,10 @@ public class VoxelCt extends JPanel{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				if(key.Output()[27]==1) {
+					System.out.println("Escaping");
+					System.exit(0);
+				}
 				f.requestFocus();
 				
 				vp.setSize(f.getWidth(), f.getHeight());
@@ -151,6 +156,8 @@ public class VoxelCt extends JPanel{
 						ven.selected = 0;
 					mouseswoosh = 0;
 				}
+				
+				
 				if(buildref>0&&ven.breaktime==0)
 					buildref--;
 				
