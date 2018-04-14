@@ -1,0 +1,164 @@
+<Sounds>
+	<ambient>
+	</ambient>
+	<player>
+	</player>
+	<title>
+		<menu1>
+			<ID>000003</ID>
+			<Title>menu1</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/title/menu1.mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/title/menu1.mp3</RelPath>
+		</menu1>
+		<menu2>
+			<ID>000004</ID>
+			<Title>menu2</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/title/menu2.mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/title/menu2.mp3</RelPath>
+		</menu2>
+		<menu3>
+			<ID>000005</ID>
+			<Title>menu3</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/title/menu3.mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/title/menu3.mp3</RelPath>
+		</menu3>
+		<menu4>
+			<ID>000006</ID>
+			<Title>menu4</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/title/menu4.mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/title/menu4.mp3</RelPath>
+		</menu4>
+	</title>
+	<etc>
+		<Test>
+			<ID>000001</ID>
+			<Title>Give Me A Sign</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/etc/Give%20Me%20A%20Sign.mp3</Song>
+			<Artist>Breaking Benjamen</Artist>
+			<Album>Dear Agony</Album>
+			<RelPath>/etc/Give Me A Sign.mp3</RelPath>
+		</Test>
+		<Angels Fall>
+			<ID>000002</ID>
+			<Title>Angels Fall</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/etc/Angels%20Fall.mp3</Song>
+			<Artist>Breaking Benjamen</Artist>
+			<Album>Unknown Album</Album>
+			<RelPath>/etc/Angels Fall.mp3</RelPath>
+		</Angels Fall>
+		<click>
+			<ID>000008</ID>
+			<Title>menu4</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/etc/click.mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/etc/click.mp3</RelPath>
+		</click>
+	</etc>
+	<game>
+		<Game (1)>
+			<ID>0000081</ID>
+			<Title>Game (1)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(1).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (1).mp3</RelPath>
+		</Game (1)>
+		<Game (2)>
+			<ID>0000082</ID>
+			<Title>Game (2)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(2).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (2).mp3</RelPath>
+		</Game (2)>
+		<Game (3)>
+			<ID>0000083</ID>
+			<Title>Game (3)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(3).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (3).mp3</RelPath>
+		</Game (3)>
+		<Game (4)>
+			<ID>0000084</ID>
+			<Title>Game (4)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(4).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (4).mp3</RelPath>
+		</Game (4)>
+		<Game (5)>
+			<ID>0000085</ID>
+			<Title>Game (5)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(5).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (5).mp3</RelPath>
+		</Game (5)>
+		<Game (6)>
+			<ID>0000086</ID>
+			<Title>Game (6)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(6).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (6).mp3</RelPath>
+		</Game (6)>
+		<Game (7)>
+			<ID>0000087</ID>
+			<Title>Game (7)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(7).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (7).mp3</RelPath>
+		</Game (7)>
+		<Game (8)>
+			<ID>0000088</ID>
+			<Title>Game (8)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(8).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (8).mp3</RelPath>
+		</Game (8)>
+		<Game (9)>
+			<ID>0000089</ID>
+			<Title>Game (9)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(9).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (9).mp3</RelPath>
+		</Game (9)>
+		<Game (10)>
+			<ID>00000810</ID>
+			<Title>Game (10)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(10).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (10).mp3</RelPath>
+		</Game (10)>
+		<Game (11)>
+			<ID>00000811</ID>
+			<Title>Game (11)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(11).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (11).mp3</RelPath>
+		</Game (11)>
+		<Game (12)>
+			<ID>00000812</ID>
+			<Title>Game (12)</Title>
+			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/game/Game%20(12).mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/game/Game (12).mp3</RelPath>
+		</Game (12)>
+	</game>
+</Sounds>
