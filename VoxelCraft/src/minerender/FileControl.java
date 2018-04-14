@@ -2,7 +2,12 @@ package minerender;
 
 import java.io.File;
 import dunemask.util.xml.XMLMap;
+//File Control, Controls the saving and loading of worlds in the file...
 public class FileControl {
+	/**Saves the file as an XML
+	 * @param vex
+	 * @param name
+	 */
 	public static void SaveFileAsXML(VoxEn vex, String name) {
 		String Voxes = FileControl.SaveArray(FileControl.Array3Dto1D(vex.Voxels));
 		File f = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+name+".xml");
@@ -15,7 +20,9 @@ public class FileControl {
 		xml.writeElement("world/dy", vex.Voxels[0].length);
 		xml.writeElement("world/data", Voxes);
 	}
-	/** @param s Save Name
+	/** Loads a world from an XML file.
+	 * Do not use the .xml in the string.
+	 * @param s Save Name
 	 * 
 	 * */
 	public static VoxEn LoadFileXML(String s) {
@@ -29,6 +36,10 @@ public class FileControl {
 		return new VoxEn(v3,c,s);
 		
 	}
+	/**Compiles an array into a String...
+	 * @param Array
+	 * @return String
+	 */
 	static public String SaveArray(int[] array) {
 		String s = array.length +";";
 		int c=0;
@@ -48,6 +59,10 @@ public class FileControl {
 		s+=tmp+","+selected+";";
 		return s;
 	}
+	/** Loads the array from the String...
+	 * @param String
+	 * @return array
+	 */
 	static public int[] LoadArray(String s) {
 		String[] ltmp = s.split(";");
 		int[] i = new int[Integer.parseInt(ltmp[0])];
@@ -61,6 +76,10 @@ public class FileControl {
 		}
 		return i;
 	}
+	/**Converts a 3D Array to a 1D Array
+	 * @param Array
+	 * @return Array
+	 */
 	static public int[] Array3Dto1D(byte[][][] dra) {
 		int[] i = new int[dra.length*dra[0].length*dra[0][0].length];
 		for(int j = 0; j<i.length;j++) {
@@ -68,6 +87,12 @@ public class FileControl {
 		}
 		return i ;
 	}
+	/**Converts a 1D Array to a 3D Array...
+	 * @param 1D Array
+	 * @param Size in X
+	 * @param Size in Y
+	 * @return
+	 */
 	static public byte[][][] Array1Dto3Db(int[] dra, int sx, int sy){
 		byte[][][] i = new byte[sx][sy][dra.length/(sx*sy)];
 		for(int j = 0; j< dra.length; j++) {

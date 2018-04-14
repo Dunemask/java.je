@@ -1,5 +1,5 @@
 package minerender;
-
+//Block class, it stores all of the properties of each block type...
 public class Block {
 	boolean tangible;
 	public boolean isTangible() {
