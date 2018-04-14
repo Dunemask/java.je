@@ -131,7 +131,7 @@ public class FilePanel extends JPanel {
 				}
 				if(btnAdd.getText()=="Create New World") {
 					create.setVisible(false);
-					VoxEn vex = new VoxEn(new Vector3(60,60,70),120,120,70,1,jtf.getText());
+					VoxEn vex = new VoxEn(new Vector3(60,60,100),120,120,70,1,jtf.getText());
 					FileControl.SaveFileAsXML(vex, jtf.getText());
 					
 					
@@ -150,10 +150,10 @@ public class FilePanel extends JPanel {
 			
 		});
 		
-		File files = new File(System.getProperty("user.home")+"/Documents/Saves/");
+		File files = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/");
 		if(!files.exists()) {
-			new File(System.getProperty("user.home")+"/Documents/Saves").mkdirs();
-			VoxEn vex = new VoxEn(new Vector3(60,60,70),120,120,70,1,"Firstworld");
+			new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves").mkdirs();
+			VoxEn vex = new VoxEn(new Vector3(60,60,100),120,120,70,1,"Firstworld");
 			FileControl.SaveFileAsXML(vex, "Firstworld");
 			ven = vex;
 		}
@@ -183,7 +183,7 @@ public class FilePanel extends JPanel {
 	}
 	public void refreshlm() {
 		lm.removeAllElements();
-		File files = new File(System.getProperty("user.home")+"/Documents/Saves");
+		File files = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves");
 		File[] fs = (files.listFiles());
 
 		for(int x=0;x<fs.length;x++) {

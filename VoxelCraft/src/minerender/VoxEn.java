@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class VoxEn {
-	Vector3 campos;
+	public Vector3 campos;
 	public int mx = 0;
 	public int my = 0;
 	public float rx = 0;

@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -44,6 +45,8 @@ public class Inventory extends JPanel{
 		list.setPreferredSize(new Dimension(100,1000));
 		//list.setSize(100,1000);	
 		list.setVisibleRowCount(-1);
+		JButton jb = new JButton("Save");
+		//jb.addActionListener("Saves");
 		list.addListSelectionListener(new ListSelectionListener() {
 			
 			@Override

@@ -41,7 +41,7 @@ public class VoxelCt extends JPanel{
 		f.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				mouseswoosh = e.getWheelRotation();
-				System.out.print("SDFJIO");
+				//System.out.print("SDFJIO");
 			}
 		});
 		f.addMouseListener(new MouseListener() {
@@ -102,6 +102,8 @@ public class VoxelCt extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				ven.campos.print();
+				
 				//System.out.println(f.getParent().getParent().getParent().getParent());
 				ven.mx =vp.getWidth()/2+f.getParent().getParent().getParent().getParent().getLocation().x;
 				ven.my =vp.getHeight()/2+f.getParent().getParent().getParent().getParent().getLocation().y;

@@ -5,7 +5,7 @@ import dunemask.util.xml.XMLMap;
 public class FileControl {
 	public static void SaveFileAsXML(VoxEn vex, String name) {
 		String Voxes = FileControl.SaveArray(FileControl.Array3Dto1D(vex.Voxels));
-		File f = new File(System.getProperty("user.home")+"/Documents/Saves/"+name+".xml");
+		File f = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+name+".xml");
 		XMLMap xml = new XMLMap(f,"world");
 		xml.writeContainer("world/position/");
 		xml.writeElement("world/position/x", vex.campos.x);
@@ -16,7 +16,7 @@ public class FileControl {
 		xml.writeElement("world/data", Voxes);
 	}
 	public static VoxEn LoadFileXML(String s) {
-		File file = new File(System.getProperty("user.home")+"/Documents/Saves/"+s+".xml");
+		File file = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+s+".xml");
 		XMLMap xml = XMLMap.ParseDXMLMap(file);
 		Vector3 v3 = new Vector3(Float.parseFloat(xml.pullValue("world/position/x")),Float.parseFloat(xml.pullValue("world/position/y")),Float.parseFloat(xml.pullValue("world/position/z")));
 		String ds = xml.pullValue("world/data");
