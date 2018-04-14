@@ -28,6 +28,7 @@ import javax.swing.event.ListSelectionListener;
 import mc.Minecraft;
 import minemain.VoxelCt;
 import mplayer.SoundEngine;
+import javax.swing.UIManager;
 /**
  * This Is in charge of the panel that manages the world files.
  * @author Roberts
@@ -85,6 +86,8 @@ public class FilePanel extends JPanel {
 		
 		//Delete Button
 		JButton deleteBtn = new JButton("Delete");
+		deleteBtn.setForeground(Color.BLACK);
+		deleteBtn.setBackground(Color.LIGHT_GRAY);
 		deleteBtn.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 		deleteBtn.setAlignmentX(0.5f);
 		deleteBtn.addActionListener(new ActionListener() {
@@ -104,6 +107,8 @@ public class FilePanel extends JPanel {
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JButton btnPlay = new JButton("PLAY");
+		btnPlay.setForeground(Color.BLACK);
+		btnPlay.setBackground(Color.LIGHT_GRAY);
 		btnPlay.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 		btnPlay.setAlignmentX(CENTER_ALIGNMENT);
 		//btnPlay.setForeground(Color.BLACK);
@@ -115,8 +120,8 @@ public class FilePanel extends JPanel {
 				start(list.getSelectedIndex());
 			}
 		});
-		panel.add(deleteBtn);
 		panel.add(btnPlay);
+		panel.add(deleteBtn);
 		list.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -128,6 +133,8 @@ public class FilePanel extends JPanel {
 			
 		});
 		JButton btnAdd =new JButton("New");
+		btnAdd.setForeground(Color.BLACK);
+		btnAdd.setBackground(Color.LIGHT_GRAY);
 		
 
 		
@@ -147,6 +154,8 @@ public class FilePanel extends JPanel {
 		JLabel l3 = new JLabel("Like");
 		
 				JButton back = new JButton("Back");
+				back.setForeground(Color.BLACK);
+				back.setBackground(Color.LIGHT_GRAY);
 				back.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						SoundEngine.handle("click");
@@ -165,9 +174,13 @@ public class FilePanel extends JPanel {
 		add(create);
 		
 		JToggleButton tglbtnSuperflat = new JToggleButton("Superflat");
+		tglbtnSuperflat.setForeground(Color.BLACK);
+		tglbtnSuperflat.setBackground(Color.LIGHT_GRAY);
 		create.add(tglbtnSuperflat);
 		
 		creative = new JToggleButton("Creative");
+		creative.setForeground(Color.BLACK);
+		creative.setBackground(Color.LIGHT_GRAY);
 		creative.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 		panel.add(creative);
 		panel.add(btnAdd);

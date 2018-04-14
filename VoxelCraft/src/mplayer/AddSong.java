@@ -34,12 +34,12 @@ public class AddSong {
 	 */
 	private static String write(boolean write) {
 		if(write) {
-		String uid="126442";
-		String path = "resources/sounds/etc/block_place.mp3";
-		Sound s = new Sound(uid, FileUtil.getResource(path), uid, "block_place","Minecraft", "/etc/block_place.mp3");
-		SoundHandler.editXML(s, "/etc/block_place/");
+		String uid="126742";
+		String path = "resources/sounds/etc/block_break.mp3";
+		Sound s = new Sound(uid, FileUtil.getResource(path), "block_Break","Minecraft","Dunemask", "/etc/block_break.mp3");
+		SoundHandler.editXML(s, "/etc/block_break/");
 		}
-		return "/etc/block_place/";
+		return "/etc/block_break/";
 		
 	}
 

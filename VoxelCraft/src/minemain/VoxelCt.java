@@ -192,8 +192,22 @@ public class VoxelCt extends JPanel{
 					buildref =2;
 				}
 				if(mode==0) {
-				if(ven.breaktime>0)
-				ven.breaktime-=3.9f/(ven.getBlock(ven.GetSelecID()-1).getBreakTime());
+				if(ven.breaktime>0) {
+				int time = (ven.getBlock(ven.GetSelecID()-1).getBreakTime());
+				for(int i=0;i<3;i++) {
+					try {
+						Thread.sleep(time/3);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					SoundEngine.handle("block_break");
+					
+				}
+				ven.breaktime-=3.9f/time;
+				
+				
+				
+				}
 				if(ven.breaktime<0) {
 					ven.breaktime=0;
 					ven.setBlock(0,true);

@@ -34,6 +34,10 @@ public class SoundEngine {
 			 s  =SoundHandler.loadSong("/etc/block_place");
 			PlaySound.playOverSound(s);
 			break;
+		case "block_break":
+			 s  =SoundHandler.loadSong("/etc/block_break");
+			PlaySound.playOverSound(s,0.05);
+			break;
 	
 		default:
 			

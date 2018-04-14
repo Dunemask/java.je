@@ -70,6 +70,14 @@
 			<Album>block_place</Album>
 			<RelPath>/etc/block_place.mp3</RelPath>
 		</block_place>
+		<block_break>
+			<ID>126742</ID>
+			<Title>block_Break</Title>
+			<Song>file:/C:/Users/Dunemask/Documents/GitHub/java.je/VoxelCraft/bin/resources/sounds/etc/block_break.mp3</Song>
+			<Artist>Dunemask</Artist>
+			<Album>Minecraft</Album>
+			<RelPath>/etc/block_break.mp3</RelPath>
+		</block_break>
 	</etc>
 	<game>
 		<Game (1)>

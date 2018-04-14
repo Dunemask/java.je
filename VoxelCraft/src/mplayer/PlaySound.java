@@ -64,7 +64,46 @@ public class PlaySound {
 	}
 	
 	
-	
+	/** Plays a sound and doesn't blow up playing sounds
+	 * @param sound Sound
+	 * 
+	 * */
+	public static MediaPlayer playOverSound(Sound sound,double volume) {
+		init();
+		try {
+			String rp = sound.getSoundsRelPath();
+			if(String.valueOf(rp.charAt(0)).equals("/")) {
+				rp = rp.replaceFirst("/", "");
+			}
+			if(rp.endsWith("/")) {
+				rp = rp.substring(0, rp.length()-1);
+		
+			}
+
+			URL url = FileUtil.getResourceURL("resources/sounds/"+rp);
+			URI ur = new URI(url.toString().replace(" ", "%20"));
+			Media m = new Media(ur.toString());
+			MediaPlayer mp = new MediaPlayer(m);
+			mp.setVolume(volume);
+			new Thread(new Runnable(){
+
+				@Override
+				public void run() {
+					mp.play();
+					
+				}
+				
+			}).start(); 
+			return mp;
+			
+		} catch (URISyntaxException e) {
+			System.err.println("MEDIA DON'T EXIST -DM");
+			e.printStackTrace();
+			return null;
+
+		}
+
+	}
 	
 	
 	
