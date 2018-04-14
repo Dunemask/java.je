@@ -19,6 +19,8 @@ public class FileControl {
 		xml.writeElement("world/dx", vex.Voxels.length);
 		xml.writeElement("world/dy", vex.Voxels[0].length);
 		xml.writeElement("world/data", Voxes);
+		String se = FileControl.SaveArray(vex.inventory);
+		xml.writeElement("world/inventory", se);
 	}
 	/** Loads a world from an XML file.
 	 * Do not use the .xml in the string.
@@ -33,7 +35,9 @@ public class FileControl {
 		int sizx = Integer.parseInt(xml.pullValue("world/dx"));
 		int sizy =Integer.parseInt(xml.pullValue("world/dy"));
 		byte[][][] c = FileControl.Array1Dto3Db(FileControl.LoadArray(ds),sizx,sizy);
-		return new VoxEn(v3,c,s);
+		VoxEn sol = new VoxEn(v3,c,s);
+		sol.setinventory(FileControl.LoadArray(xml.pullValue("world/inventory")));
+		return sol;
 		
 	}
 	/**Compiles an array into a String...

@@ -23,7 +23,7 @@ public class VoxEn {
 	int density = 0;
 	int siz = 1;
 	int timer=0;
-	int blocklength=16;
+	static int blocklength=16;
 	int imglength=21;
 	private String name;
 	public float breaktime=0;
@@ -31,8 +31,10 @@ public class VoxEn {
 	public Block getBlock(int bl) {
 		return blks.get(bl);
 	}
-	public int[] inventory = new int[blocklength];
-	
+	public static int[] inventory = new int[blocklength];
+	public static void setinventory(int[] inte) {
+		inventory = inte;
+	}
 	/**
 	 * @return the name
 	 */
