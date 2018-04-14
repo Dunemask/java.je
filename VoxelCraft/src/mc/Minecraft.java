@@ -8,9 +8,11 @@ import java.awt.Point;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import dunemask.util.FileUtil;
 import frames.MainBack;
 import frames.Settings;
 import minemain.VoxelCt;
@@ -45,12 +47,14 @@ public class Minecraft {
 		cp= new JPanel(null);
 		cf.setSize(600, 600);
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cf.setTitle("Minecraft - Java.JE");
+		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
 		cp=mb;
 		cf.setLocationRelativeTo(null);
 		cf.add(cp);
+		String urlPath = "resources/mainmenu/Voxelcraft.png";
+		cf.setIconImage(new ImageIcon(FileUtil.getResourceURL(urlPath)).getImage());
 		cp.repaint();
 		cp.revalidate();
 		cf.repaint();
@@ -71,7 +75,7 @@ public class Minecraft {
 		cf.setContentPane(f.getContentPane());
 		cp= new JPanel(null);
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cf.setTitle("Minecraft - Java.JE");
+		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
 		cp=vx;
@@ -92,7 +96,7 @@ public class Minecraft {
 		cf.setContentPane(f.getContentPane());
 		cp= new JPanel(null);
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cf.setTitle("Minecraft - Java.JE");
+		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
 		cp= new FilePanel();
@@ -116,7 +120,7 @@ public class Minecraft {
 		cf.setContentPane(f.getContentPane());
 		cp= new JPanel(null);
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cf.setTitle("Minecraft - Java.JE");
+		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
 		cp=set;
@@ -140,7 +144,7 @@ public class Minecraft {
 		cp=mb;
 		cf.setContentPane(f.getContentPane());
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cf.setTitle("Minecraft - Java.JE");
+		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		cf.setLocation(p);
 		listenHandle();
