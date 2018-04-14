@@ -226,7 +226,7 @@ public class FilePanel extends JPanel {
 
 	public void start(int world){
 		if(!list.isSelectionEmpty()) {
-			//System.out.println("World:"+list.getSelectedValue().toString());
+			System.out.println("World:"+list.getSelectedValue().toString());
 			
 		ven = FileControl.LoadFileXML(list.getSelectedValue().toString());	
 		

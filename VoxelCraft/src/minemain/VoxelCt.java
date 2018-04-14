@@ -33,6 +33,7 @@ public class VoxelCt extends JPanel{
 	int buildref = 0;
 	Timer timer;
 	public VoxelCt(VoxEn voxen) {
+		System.out.print("HI");
 		ven = voxen;
 		JPanel f = this;
 		f.setVisible(true);
@@ -117,7 +118,7 @@ public class VoxelCt extends JPanel{
 					e.printStackTrace();
 				}
 				if(key.Output()[27]==1) {
-					//System.out.println(ven.getName());
+					System.out.println(ven.getName());
 					FileControl.SaveFileAsXML(ven, ven.getName());
 					SoundEngine.stop(SoundEngine.game);
 					SoundEngine.start(SoundEngine.title);

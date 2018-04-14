@@ -116,6 +116,7 @@ public class Settings extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				Minecraft.renderVal= renslider.getValue();
+				
 			}});
 		add(renslider);
 		this.add(renLabel);
