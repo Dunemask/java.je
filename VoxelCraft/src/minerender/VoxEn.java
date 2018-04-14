@@ -28,6 +28,7 @@ public class VoxEn {
 	public Block getBlock(int bl) {
 		return blks.get(bl);
 	}
+	public int[] inventory = new int[13];
 	
 	/**
 	 * @return the name
