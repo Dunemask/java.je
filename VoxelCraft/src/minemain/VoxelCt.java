@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -127,13 +128,28 @@ public class VoxelCt extends JPanel{
 					e.printStackTrace();
 				}
 				if(key.Output()[27]==1) {
-					System.out.println(ven.getName());
 					FileControl.SaveFileAsXML(ven, ven.getName());
 					SoundEngine.stop(SoundEngine.game);
 					SoundEngine.start(SoundEngine.title);
 					timer.stop();
 					Minecraft.goToSelect();
 					//System.exit(0);
+				}
+				if(key.Output()[KeyEvent.VK_UP]==1) {
+					Minecraft.renderVal++;
+					System.out.println(Minecraft.renderVal);
+				}
+				if(key.Output()[KeyEvent.VK_DOWN]==1) {
+					Minecraft.renderVal--;
+					System.out.println(Minecraft.renderVal);
+				}
+				if(key.Output()[73]==1) {//I//TODO
+					VoxEn.fovc+=.001f;
+					System.out.println(VoxEn.fovc);
+				}
+				if(key.Output()[79]==1) {//O//TODO
+					VoxEn.fovc-=.001f;
+					System.out.println(VoxEn.fovc);
 				}
 				
 				

@@ -17,7 +17,7 @@ public class VoxEn {
 	public int my = 0;
 	public float rx = 0;
 	public float ry = 0;
-	float fovc = 0.015f;
+	public static float fovc = 0.015f;
 	int viewdist=3000;
 	int trydist=50;
 	int density = 0;

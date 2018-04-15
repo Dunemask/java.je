@@ -40,6 +40,7 @@ public class Settings extends JPanel {
 	private static JLabel volLabel;
 	private static JButton back=new JButton("Back");
 	private static final double volSliderPerc=.15;
+	private static int renderMax = 300;
 
 	/**
 	 * 
@@ -107,7 +108,7 @@ public class Settings extends JPanel {
 		//renLabel.setBounds(volLabel.getX(),volLabel.getY()+2*pbch,volLabel.getWidth(), volLabel.getHeight());
     	renLabel.setBounds(lbx, lby+2*pbch,(int) renLabel.getPreferredSize().getWidth(),(int)renLabel.getPreferredSize().getHeight());
 		renslider = new JSlider();
-		renslider.setMaximum(180);
+		renslider.setMaximum(renderMax);
 		renslider.setMinimum(100);
 		renslider.setValue(Minecraft.renderVal);
 		renslider.setForeground(Color.DARK_GRAY);
