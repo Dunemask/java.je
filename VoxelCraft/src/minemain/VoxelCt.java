@@ -138,7 +138,7 @@ public class VoxelCt extends JPanel{
 		//System.out.println(this.getParent());
 		//frame = (JFrame) this.getParent().getParent().getParent();
 
-		timer= new Timer(30,new ActionListener() {
+		timer= new Timer(10,new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

@@ -3,10 +3,13 @@
  */
 package mplayer;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import dunemask.util.FileUtil;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -98,7 +101,25 @@ public class SoundEngine {
 				while(titleRun) {
 				String song = Sound.menuSong[r.nextInt(4)];
 				Sound s = SoundHandler.loadSong(song);
-				Media m = PlaySound.playSound(s);	
+				Media m = null;
+				try {
+					String rp = s.getSoundsRelPath();
+					if(String.valueOf(rp.charAt(0)).equals("/")) {
+						rp = rp.replaceFirst("/", "");
+					}
+					if(rp.endsWith("/")) {
+						rp = rp.substring(0, rp.length()-1);
+				
+					}
+					
+					URL url = FileUtil.getResourceURL("resources/sounds/"+rp);
+					URI ur = new URI(url.toString().replace(" ", "%20"));
+					m = new Media(ur.toString());
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+				
 				MediaPlayer tmp = new MediaPlayer(m);
 				CountDownLatch pReady = new CountDownLatch(1);
 				tmp.setOnReady(()->{
@@ -111,6 +132,7 @@ public class SoundEngine {
 					e1.printStackTrace();
 				}
 				//Play
+				PlaySound.playSound(s);
 				long waitTime =(int)m.getDuration().toMillis()+1;
 				CountDownLatch latch = new CountDownLatch(1);
 				try {
@@ -142,6 +164,11 @@ public class SoundEngine {
 	 * 
 	 */
 	private static void gameEngine() {
+		try {
+		throw new RuntimeException();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		new Thread ( new Runnable() {
 
 			@Override
@@ -149,8 +176,27 @@ public class SoundEngine {
 				Random r = new Random();
 				while(gameRun) {
 				String song = Sound.gameSong()[r.nextInt(Sound.gameSong().length)];
+				System.out.println(song);
 				Sound s = SoundHandler.loadSong(song);
-				Media m = PlaySound.playSound(s);	
+				Media m = null;
+				try {
+					String rp = s.getSoundsRelPath();
+					if(String.valueOf(rp.charAt(0)).equals("/")) {
+						rp = rp.replaceFirst("/", "");
+					}
+					if(rp.endsWith("/")) {
+						rp = rp.substring(0, rp.length()-1);
+				
+					}
+					
+					URL url = FileUtil.getResourceURL("resources/sounds/"+rp);
+					URI ur = new URI(url.toString().replace(" ", "%20"));
+					m = new Media(ur.toString());
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+				
 				MediaPlayer tmp = new MediaPlayer(m);
 				CountDownLatch pReady = new CountDownLatch(1);
 				tmp.setOnReady(()->{

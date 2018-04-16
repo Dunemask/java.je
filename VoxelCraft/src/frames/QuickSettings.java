@@ -56,7 +56,7 @@ public class QuickSettings extends JPanel {
 
 		setLayout(null);
 		
-		volLabel = new JLabel("Volume "+PlaySound.vol*100);
+		volLabel = new JLabel("Volume "+(int)(PlaySound.vol*100));
 		volLabel.setForeground(Color.WHITE);
 		volLabel.setBackground(Color.DARK_GRAY);
 		volLabel.setBounds(242, 24, 84, 32);
@@ -73,7 +73,7 @@ public class QuickSettings extends JPanel {
 				double rv = (double)volSlider.getValue()/(double)volSlider.getMaximum();
 				PlaySound.vol=rv;
 				DMediaPlayer.getMediaPlayer().setVolume(PlaySound.vol);
-				volLabel.setText("Volume "+PlaySound.vol*100);
+				volLabel.setText("Volume "+(int)(PlaySound.vol*100));
 				repRev();
 				
 			}});
