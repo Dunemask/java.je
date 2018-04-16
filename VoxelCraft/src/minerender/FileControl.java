@@ -11,17 +11,18 @@ public class FileControl {
 	public static void SaveFileAsXML(VoxEn vex, String name) {
 		String Voxes = FileControl.SaveArray(FileControl.Array3Dto1D(vex.Voxels));
 		File f = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+name+".xml");
-		XMLMap xml = new XMLMap(f,"world");
-		xml.writeContainer("world/position/");
-		xml.writeElement("world/position/x", vex.campos.x);
-		xml.writeElement("world/position/y", vex.campos.y);
-		xml.writeElement("world/position/z", vex.campos.z);
-		xml.writeElement("world/dx", vex.Voxels.length);
-		xml.writeElement("world/dy", vex.Voxels[0].length);
-		xml.writeElement("world/data", Voxes);
+		currentXML = new XMLMap(f,"world");
+		currentXML.writeContainer("world/position/");
+		currentXML.writeElement("world/position/x", vex.campos.x);
+		currentXML.writeElement("world/position/y", vex.campos.y);
+		currentXML.writeElement("world/position/z", vex.campos.z);
+		currentXML.writeElement("world/dx", vex.Voxels.length);
+		currentXML.writeElement("world/dy", vex.Voxels[0].length);
+		currentXML.writeElement("world/data", Voxes);
 		String se = FileControl.SaveArray(vex.inventory);
-		xml.writeElement("world/inventory", se);
+		currentXML.writeElement("world/inventory", se);
 	}
+	public static XMLMap currentXML;
 	/** Loads a world from an XML file.
 	 * Do not use the .xml in the string.
 	 * @param s Save Name
@@ -29,14 +30,14 @@ public class FileControl {
 	 * */
 	public static VoxEn LoadFileXML(String s) {
 		File file = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+s+".xml");
-		XMLMap xml = XMLMap.ParseDXMLMap(file);
-		Vector3 v3 = new Vector3(Float.parseFloat(xml.pullValue("world/position/x")),Float.parseFloat(xml.pullValue("world/position/y")),Float.parseFloat(xml.pullValue("world/position/z")));
-		String ds = xml.pullValue("world/data");
-		int sizx = Integer.parseInt(xml.pullValue("world/dx"));
-		int sizy =Integer.parseInt(xml.pullValue("world/dy"));
+		currentXML = XMLMap.ParseDXMLMap(file);
+		Vector3 v3 = new Vector3(Float.parseFloat(currentXML.pullValue("world/position/x")),Float.parseFloat(currentXML.pullValue("world/position/y")),Float.parseFloat(currentXML.pullValue("world/position/z")));
+		String ds = currentXML.pullValue("world/data");
+		int sizx = Integer.parseInt(currentXML.pullValue("world/dx"));
+		int sizy =Integer.parseInt(currentXML.pullValue("world/dy"));
 		byte[][][] c = FileControl.Array1Dto3Db(FileControl.LoadArray(ds),sizx,sizy);
 		VoxEn sol = new VoxEn(v3,c,s);
-		sol.setinventory(FileControl.LoadArray(xml.pullValue("world/inventory")));
+		sol.setinventory(FileControl.LoadArray(currentXML.pullValue("world/inventory")));
 		return sol;
 		
 	}

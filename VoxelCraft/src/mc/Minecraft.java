@@ -3,17 +3,22 @@
  */
 package mc;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import dunemask.util.FileUtil;
 import frames.MainBack;
+import frames.QuickMenuHandler;
 import frames.Settings;
 import minemain.VoxelCt;
 import minerender.FilePanel;
@@ -34,6 +39,7 @@ public class Minecraft {
 	public static FilePanel fp;
 	public static VoxelCt vx;
 	public static int renderVal=130;
+	public static String currentWorldName;
 	/**
 	 * @param args
 	 */
@@ -78,6 +84,7 @@ public class Minecraft {
 		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
+		Minecraft.currentWorldName = vx.getName();
 		cp=vx;
 		cf.setLocation(p);
 		cf.setSize(siz);
@@ -132,6 +139,9 @@ public class Minecraft {
 		
 	}
 
+	public static void test() {
+		
+	}
 	
 	/**
 	 *  Main Menu Panel Call
@@ -201,6 +211,54 @@ public class Minecraft {
 				// TODO Auto-generated method stub
 				
 			}});
+		
+	}
+	public static void goToVox() {
+		Point p = cf.getLocationOnScreen();
+		Dimension siz = cf.getSize();
+		//cf.dispose();
+		JFrame f = new JFrame();
+		cf.setContentPane(f.getContentPane());
+		cp= new JPanel(null);
+		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cf.setTitle("Voxelcraft - Java.JE");
+		cf.setVisible(true);
+		listenHandle();
+		cp=vx;
+		cf.setLocation(p);
+		cf.setSize(siz);
+		cf.add(cp);
+		cf.repaint();
+		cf.revalidate();
+	}
+	
+	
+	/** Quick Menu Popup
+	 * 
+	 */
+	public static void quickMenu() {
+		//SoundEngine.stop(SoundEngine.game);
+		//SoundEngine.start(SoundEngine.title);
+		Point p = cf.getLocationOnScreen();
+		Dimension siz = cf.getSize();
+		//cf.dispose();
+		/*JFrame f = new JFrame();
+		cf.setContentPane(f.getContentPane());
+		cp= new JPanel(null);
+		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cf.setTitle("Voxelcraft - Java.JE");
+		cf.setVisible(true);
+		listenHandle();*/
+		cp.add(QuickMenuHandler.getMenu(), 1);
+		cf.setLocation(p);
+		cf.setSize(siz);
+		cf.add(cp);
+		cf.repaint();
+		cf.revalidate();
+
+		
+		
+		
 		
 	}
 

@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -22,9 +23,23 @@ import minerender.VoxPanel;
 import mplayer.SoundEngine;
 
 public class VoxelCt extends JPanel{
-	static VoxEn ven;
+	private static  Inventory inv;
+	private VoxPanel vp;
+	private VoxEn ven;
 	static KeyList key;
 	public static boolean mousedown;
+	/**
+	 * @return the vp
+	 */
+	public VoxPanel getVp() {
+		return vp;
+	}
+	/**
+	 * @param vp the vp to set
+	 */
+	public void setVp(VoxPanel vp) {
+		this.vp = vp;
+	}
 	public static boolean rmousedown;
 	public static int mouseswoosh;
 	public int escape = 0;
@@ -41,20 +56,20 @@ public class VoxelCt extends JPanel{
 		mode=Mode;
 		//System.out.print("HI");
 		ven = voxen;
-		JPanel f = this;
-		f.setVisible(true);
-		f.setBackground(Color.black);
-		//f.setLocationRelativeTo(null);
-		//f.setSize(600,600);
-		f.setLayout(null);
-		f.setEnabled(true);
-		f.addMouseWheelListener(new MouseWheelListener() {
+		//JPanel f = this;
+		this.setVisible(true);
+		this.setBackground(Color.black);
+		//this.setLocationRelativeTo(null);
+		//this.setSize(600,600);
+		this.setLayout(null);
+		this.setEnabled(true);
+		this.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				mouseswoosh = e.getWheelRotation();
 				//System.out.print("SDFJIO");
 			}
 		});
-		f.addMouseListener(new MouseListener() {
+		this.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent arg0) {
 				// TODO Auto-generated method stub
@@ -87,188 +102,205 @@ public class VoxelCt extends JPanel{
 			}
 		});
 		key =new KeyList();
-		 f.addKeyListener(key);
-		    f.setFocusable(true);
-		    f.requestFocus();
-	//	f.setAlwaysOnTop(true);
-		    Inventory inv;
+		 this.addKeyListener(key);
+		    this.setFocusable(true);
+		    this.requestFocus();
+	//	this.setAlwaysOnTop(true);
+		   
 		    if(mode==1) {
 		inv= new Inventory(ven);
 		}else {
 		inv= new Inventory(ven,1);
 		}
-		f.add(inv);
+		this.add(inv);
 		inv.setVisible(false);
 		
-		VoxPanel vp = new VoxPanel();
+		vp = new VoxPanel();
 		vp.setBackground(Color.black);
 		vp.SetEnv(ven);
 		vp.setVisible(true);
 		vp.setBounds(0,0,600,600);
-		f.add(vp);
-		f.repaint();
-		f.revalidate();
-		//System.out.println(f.getParent());
-		//frame = (JFrame) f.getParent().getParent().getParent();
+		this.add(vp);
+		this.repaint();
+		this.revalidate();
+		//System.out.println(this.getParent());
+		//frame = (JFrame) this.getParent().getParent().getParent();
 
 		timer= new Timer(30,new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//ven.campos.print();
-				
-				//System.out.println(f.getParent().getParent().getParent().getParent());
-				ven.mx =vp.getWidth()/2+f.getParent().getParent().getParent().getParent().getLocation().x;
-				ven.my =vp.getHeight()/2+f.getParent().getParent().getParent().getParent().getLocation().y;
-				inv.setBounds(30, 30, f.getWidth()-60, f.getHeight()-60);
-				try {
-					Thread.sleep(30);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if(key.Output()[27]==1) {
-					FileControl.SaveFileAsXML(ven, ven.getName());
-					SoundEngine.stop(SoundEngine.game);
-					SoundEngine.start(SoundEngine.title);
-					timer.stop();
-					Minecraft.goToSelect();
-					//System.exit(0);
-				}
-				if(key.Output()[KeyEvent.VK_UP]==1) {
-					Minecraft.renderVal++;
-					System.out.println(Minecraft.renderVal);
-				}
-				if(key.Output()[KeyEvent.VK_DOWN]==1) {
-					Minecraft.renderVal--;
-					System.out.println(Minecraft.renderVal);
-				}
-				if(key.Output()[73]==1) {//I//TODO
-					VoxEn.fovc+=.001f;
-					System.out.println(VoxEn.fovc);
-				}
-				if(key.Output()[79]==1) {//O//TODO
-					VoxEn.fovc-=.001f;
-					System.out.println(VoxEn.fovc);
-				}
-				
-				
-				vp.setSize(f.getWidth(), f.getHeight());
-				f.repaint();
-				vp.repaint();
-				f.requestFocus();
-				if(einv==0) {
-				
-					if (mode==0){
-						Walk();
-					}else {
-						if (flymode==0) {
-							Move();
-						}
-						if(flymode==1) {
-							Walk();
-						}
-						if(key.Output()[32]==1&&flytime==0) {
-							flytime=1;
-						}
-						if(key.Output()[32]==0&&flytime>0) {
-							flytime++;
-						}
-						if(key.Output()[32]==1&&flytime>1) {
-							flymode=(flymode+1)%2;
-							flytime=-1;
-						}
-						if(flytime>10) {
-							flytime=-1;
-						}
-						if(flytime==-1&&key.Output()[32]==0) {
-							flytime=0;
-						}
-						
-					}
-				
-				if(key.Output()[27]==1) {
-		    		escape=1;
-		    	}
-				if(mousedown&&buildref==0) {
-					ven.breaktime=8;
-					//ven.setBlock(0);
-					buildref =2;
-				}
-				if(!mousedown) {
-					ven.breaktime=0;
-				}
-				if(rmousedown&&buildref==0) {
-					if(mode==0) {
-					ven.setBlockOut(ven.hotbar[ven.selected],true);
-					}else {
-						ven.setBlockOut(ven.hotbar[ven.selected],false);
-
-					}
-					buildref =2;
-				}
-				if(mode==0) {
-				if(ven.breaktime>0) {
-				int time = (ven.getBlock(ven.GetSelecID()-1).getBreakTime());
-				for(int i=0;i<2;i++) {
-					try {
-						Thread.sleep(time/2);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					SoundEngine.handle("block_break");
-					
-				}
-				ven.breaktime-=3.9f/time;
-				
-				
-				
-				}
-				if(ven.breaktime<0) {
-					ven.breaktime=0;
-					ven.setBlock(0,true);
-				}
-				}else {
-					if(ven.breaktime==8)
-					ven.setBlock(0,false);
-					ven.breaktime=0;
-				}
-				if(mouseswoosh!=0) {
-					ven.selected+=mouseswoosh;
-					if(ven.selected<0)
-						ven.selected = 8;
-					if(ven.selected>8)
-						ven.selected = 0;
-					mouseswoosh = 0;
-				}
-				
-				
-				if(buildref>0&&ven.breaktime==0)
-					buildref--;
-				
-				if(key.Output()[69]==1) {
-					einv=1;
-					inv.setVisible(true);
-					}
-				}else {
-					
-				if(einv ==1 && key.Output()[69]==0) {
-					einv=2;
-				}
-				if(einv ==2 && key.Output()[69]==1) {
-					einv=3;
-				}
-				if(einv ==3 && key.Output()[69]==0) {
-					einv=0;
-					inv.setVisible(false);
-				}
-				}
+			timerCode();
 				
 			}});
 		timer.start();
 
 	}
-	public static void Move() {
+	/**
+	 * 
+	 */
+	protected void timerCode() {
+		//ven.campos.print();
+		
+		//System.out.println(this.getParent().getParent().getParent().getParent());
+		ven.mx =vp.getWidth()/2+this.getTopLevelAncestor().getLocation().x;
+		ven.my =vp.getHeight()/2+this.getTopLevelAncestor().getLocation().y;
+		inv.setBounds(30, 30, this.getWidth()-60, this.getHeight()-60);
+		try {
+			Thread.sleep(30);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(key.Output()[27]==1) {//Esc
+			escMenu();
+			
+			//timer.stop();
+			//Minecraft.goToSelect();
+			//System.exit(0);
+		}
+		if(key.Output()[KeyEvent.VK_UP]==1) {
+			Minecraft.renderVal++;
+			System.out.println(Minecraft.renderVal);
+		}
+		if(key.Output()[KeyEvent.VK_DOWN]==1) {
+			Minecraft.renderVal--;
+			System.out.println(Minecraft.renderVal);
+		}
+		if(key.Output()[73]==1) {//I//TODO
+			VoxEn.fovc+=.001f;
+			System.out.println(VoxEn.fovc);
+		}
+		if(key.Output()[79]==1) {//O//TODO
+			VoxEn.fovc-=.001f;
+			System.out.println(VoxEn.fovc);
+		}
+		
+		
+		vp.setSize(this.getWidth(), this.getHeight());
+		this.repaint();
+		vp.repaint();
+		this.requestFocus();
+		if(einv==0) {
+		
+			if (mode==0){
+				Walk();
+			}else {
+				if (flymode==0) {
+					Move();
+				}
+				if(flymode==1) {
+					Walk();
+				}
+				if(key.Output()[32]==1&&flytime==0) {
+					flytime=1;
+				}
+				if(key.Output()[32]==0&&flytime>0) {
+					flytime++;
+				}
+				if(key.Output()[32]==1&&flytime>1) {
+					flymode=(flymode+1)%2;
+					flytime=-1;
+				}
+				if(flytime>10) {
+					flytime=-1;
+				}
+				if(flytime==-1&&key.Output()[32]==0) {
+					flytime=0;
+				}
+				
+			}
+		
+		if(key.Output()[27]==1) {
+    		escape=1;
+    	}
+		if(mousedown&&buildref==0) {
+			ven.breaktime=8;
+			//ven.setBlock(0);
+			buildref =2;
+		}
+		if(!mousedown) {
+			ven.breaktime=0;
+		}
+		if(rmousedown&&buildref==0) {
+			if(mode==0) {
+			ven.setBlockOut(ven.hotbar[ven.selected],true);
+			}else {
+				ven.setBlockOut(ven.hotbar[ven.selected],false);
+
+			}
+			buildref =2;
+		}
+		if(mode==0) {
+			if(ven.breaktime>0) {
+			int time = (ven.getBlock(ven.GetSelecID()-1).getBreakTime());
+			for(int i=0;i<2;i++) {
+				try {
+					Thread.sleep(time/2);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				SoundEngine.handle("block_break");
+				
+			}
+		ven.breaktime-=3.9f/time;
+		
+		
+		
+		}
+		if(ven.breaktime<0) {
+			ven.breaktime=0;
+			ven.setBlock(0,true);
+		}
+		}else {
+			if(ven.breaktime==8)
+			ven.setBlock(0,false);
+			ven.breaktime=0;
+		}
+		if(mouseswoosh!=0) {
+			ven.selected+=mouseswoosh;
+			if(ven.selected<0)
+				ven.selected = 8;
+			if(ven.selected>8)
+				ven.selected = 0;
+			mouseswoosh = 0;
+		}
+		
+		
+		if(buildref>0&&ven.breaktime==0)
+			buildref--;
+		
+		if(key.Output()[69]==1) {
+			einv=1;
+			inv.setVisible(true);
+			}
+		}else {
+			
+		if(einv ==1 && key.Output()[69]==0) {
+			einv=2;
+		}
+		if(einv ==2 && key.Output()[69]==1) {
+			einv=3;
+		}
+		if(einv ==3 && key.Output()[69]==0) {
+			einv=0;
+			inv.setVisible(false);
+		}
+		}
+		
+	}
+	/**
+	 * 
+	 */
+	protected void escMenu() {
+		timer.stop();
+		FileControl.SaveFileAsXML(ven, ven.getName());
+		Minecraft.quickMenu();
+		
+		
+		
+	}
+	public void Move() {
 		float spd=0.5f;
 		vel.z =1;
 		ven.MouseCam();
@@ -285,7 +317,7 @@ public class VoxelCt extends JPanel{
 		if(key.Output()[16]==1)
 			ven.MoveCam(Vector3.downward(spd));
 	}
-	public static void Walk() {
+	public void Walk() {
 		float spd=0.2f;
 		ven.MouseCam();
 		if(key.Output()[87]==1)
