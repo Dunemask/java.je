@@ -4,17 +4,22 @@
 package frames;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import mc.Minecraft;
+import minemain.VoxelCt;
+import minerender.VoxEn;
 
 /**
  * @author dunemask
@@ -37,7 +42,9 @@ public class QuickMenuHandler {
 	
 	private static JPanel tlc;
 	private static JButton btnResume;
-	private static Graphics voxG;
+	private static JLabel back= new JLabel();
+//	private static Graphics voxG;
+	private static BufferedImage awtImage;
 	/**
 	 * @return
 	 */
@@ -45,7 +52,10 @@ public class QuickMenuHandler {
 		double offset = .2;
 		int cw = Minecraft.cf.getWidth();
 		int ch = Minecraft.cf.getHeight();
-		voxG = Minecraft.vx.getGraphics();
+		
+		awtImage = new BufferedImage(cw, ch, BufferedImage.TYPE_INT_RGB);
+		VoxelCt tvox = Minecraft.vx;
+		tvox.paintAll(awtImage.getGraphics());
 		btnResume = new JButton("Resume");
 		btnResume.setBackground(Color.DARK_GRAY);
 		btnResume.setForeground(Color.WHITE);
@@ -69,6 +79,14 @@ public class QuickMenuHandler {
 		tlc.setOpaque(false);
 		tlc.setSize(cw, ch);
 		tlc.add(btnResume);
+		back.setBounds(0, 0, cw, ch);
+		ImageIcon imgico = new ImageIcon(awtImage);
+				Image img = imgico.getImage();
+		Image dimg = img.getScaledInstance(back.getWidth(), back.getHeight(),
+		        Image.SCALE_SMOOTH);
+		imgico = new ImageIcon(dimg);
+		back.setIcon(imgico);
+		tlc.add(back);
 		
 		tlc.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -85,7 +103,9 @@ public class QuickMenuHandler {
 	 * 
 	 */
 	protected static void resume() {
-	
+		VoxEn ven = Minecraft.vx.getVen();
+		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode);
+		Minecraft.loadWorld(vct);
 		
 	}
 
@@ -101,7 +121,14 @@ public class QuickMenuHandler {
 		int ch = Minecraft.cf.getHeight();
 		System.out.println("Resized");
 		btnResume.setBounds(center(cw,ch,offset,7,0,20));
-		Minecraft.loadWorld(Minecraft.vx);
+		//back.setBounds(0, 0, cw, ch);
+		ImageIcon imgico = new ImageIcon(awtImage);
+				Image img = imgico.getImage();
+		Image dimg = img.getScaledInstance(cw, ch,
+		        Image.SCALE_SMOOTH);
+		imgico = new ImageIcon(dimg);
+		back.setIcon(imgico);
+	
 		
 	}
 

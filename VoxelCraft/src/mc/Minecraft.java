@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
@@ -249,7 +250,13 @@ public class Minecraft {
 		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();*/
-		cp.add(QuickMenuHandler.getMenu(), 1);
+		JPanel men = QuickMenuHandler.getMenu();
+		/*cp.add(men,1);
+		ComponentListener[] compList = men.getComponentListeners();
+		for(int i=0;i<compList.length;i++){
+			cp.addComponentListener(compList[i]);
+		}*/
+		cp = men;
 		cf.setLocation(p);
 		cf.setSize(siz);
 		cf.add(cp);

@@ -45,6 +45,18 @@ public class VoxelCt extends JPanel{
 	public int escape = 0;
 	int einv = 0;
 	public JFrame frame;
+	/**
+	 * @return the ven
+	 */
+	public VoxEn getVen() {
+		return ven;
+	}
+	/**
+	 * @param ven the ven to set
+	 */
+	public void setVen(VoxEn ven) {
+		this.ven = ven;
+	}
 	public static Vector3 vel;
 	public int mode =1;
 	int flymode=0;
