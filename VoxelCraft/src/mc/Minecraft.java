@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import dunemask.util.FileUtil;
 import frames.MainBack;
 import frames.QuickMenuHandler;
+import frames.QuickSettings;
 import frames.Settings;
 import minemain.VoxelCt;
 import minerender.FilePanel;
@@ -37,6 +38,7 @@ public class Minecraft {
 	public static JPanel cp;
 	public static Settings set;
 	public static MainBack mb;
+	public static QuickSettings qs;
 	public static FilePanel fp;
 	public static VoxelCt vx;
 	public static int renderVal=130;
@@ -48,6 +50,8 @@ public class Minecraft {
 		set = new Settings();
 		mb = new MainBack();
 		fp = new FilePanel();
+		qs = new QuickSettings();
+		
 		SoundEngine.handle("click");
 		SoundEngine.start(SoundEngine.title);
 		cf = new JFrame();
@@ -214,7 +218,7 @@ public class Minecraft {
 			}});
 		
 	}
-	public static void goToVox() {
+	public static void quickSettings() {
 		Point p = cf.getLocationOnScreen();
 		Dimension siz = cf.getSize();
 		//cf.dispose();
@@ -225,13 +229,19 @@ public class Minecraft {
 		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
-		cp=vx;
+		cp=qs;
 		cf.setLocation(p);
 		cf.setSize(siz);
 		cf.add(cp);
 		cf.repaint();
 		cf.revalidate();
+		
+		
+		
+		
 	}
+	
+	
 	
 	
 	/** Quick Menu Popup
@@ -251,12 +261,11 @@ public class Minecraft {
 		cf.setVisible(true);
 		listenHandle();*/
 		JPanel men = QuickMenuHandler.getMenu();
-		/*cp.add(men,1);
+		cp.add(men,0);
 		ComponentListener[] compList = men.getComponentListeners();
 		for(int i=0;i<compList.length;i++){
 			cp.addComponentListener(compList[i]);
-		}*/
-		cp = men;
+		}
 		cf.setLocation(p);
 		cf.setSize(siz);
 		cf.add(cp);

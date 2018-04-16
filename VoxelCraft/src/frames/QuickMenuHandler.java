@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import mc.Minecraft;
 import minemain.VoxelCt;
 import minerender.VoxEn;
+import mplayer.SoundEngine;
 
 /**
  * @author dunemask
@@ -42,6 +43,7 @@ public class QuickMenuHandler {
 	
 	private static JPanel tlc;
 	private static JButton btnResume;
+	private static JButton btnQuick;
 	private static JLabel back= new JLabel();
 //	private static Graphics voxG;
 	private static BufferedImage awtImage;
@@ -52,10 +54,11 @@ public class QuickMenuHandler {
 		double offset = .2;
 		int cw = Minecraft.cf.getWidth();
 		int ch = Minecraft.cf.getHeight();
-		
+		if(awtImage==null) {
 		awtImage = new BufferedImage(cw, ch, BufferedImage.TYPE_INT_RGB);
 		VoxelCt tvox = Minecraft.vx;
 		tvox.paintAll(awtImage.getGraphics());
+		}
 		btnResume = new JButton("Resume");
 		btnResume.setBackground(Color.DARK_GRAY);
 		btnResume.setForeground(Color.WHITE);
@@ -76,9 +79,33 @@ public class QuickMenuHandler {
 			}
 			
 		});
+		btnQuick = new JButton("Settings");
+		btnQuick.setBackground(Color.DARK_GRAY);
+		btnQuick.setForeground(Color.WHITE);
+		tlc = new JPanel(null);
+		/*int rx = (int) (Minecraft.cf.getWidth()*offset);
+		int rw = (int) (Minecraft.cf.getWidth()-2*offset*Minecraft.cf.getWidth());
+    	int vsy = (int) compch;
+    	int vsw = (int) (Minecraft.cf.getWidth()-(2*Minecraft.cf.getWidth()*offset));
+    	int vsh = compch;*/
+    	//btnQuick.setBounds(rx,vsy,vsw,vsh);
+		btnQuick.setBounds(center(cw,ch,offset,7,1,40));
+		btnQuick.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				quick();
+				
+			}
+			
+		});
+		
+	
+		
 		tlc.setOpaque(false);
 		tlc.setSize(cw, ch);
 		tlc.add(btnResume);
+		tlc.add(btnQuick);
 		back.setBounds(0, 0, cw, ch);
 		ImageIcon imgico = new ImageIcon(awtImage);
 				Image img = imgico.getImage();
@@ -94,6 +121,18 @@ public class QuickMenuHandler {
             }
         });
 		return tlc;
+	}
+
+
+
+
+	/**
+	 * 
+	 */
+	protected static void quick() {
+		SoundEngine.handle("click");
+		Minecraft.quickSettings();
+		
 	}
 
 
@@ -119,9 +158,11 @@ public class QuickMenuHandler {
 		double offset = .2;
 		int cw = Minecraft.cf.getWidth();
 		int ch = Minecraft.cf.getHeight();
+		tlc.setSize(cw, ch);
 		System.out.println("Resized");
 		btnResume.setBounds(center(cw,ch,offset,7,0,20));
-		//back.setBounds(0, 0, cw, ch);
+		btnQuick.setBounds(center(cw,ch,offset,7,1,40));
+		back.setBounds(0, 0, cw, ch);
 		ImageIcon imgico = new ImageIcon(awtImage);
 				Image img = imgico.getImage();
 		Image dimg = img.getScaledInstance(cw, ch,
