@@ -34,8 +34,40 @@ public class Settings extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7743473342320749215L;
-	private static JSlider volSlider;
-	private static JSlider renslider;
+	private JSlider volSlider;
+	private JSlider renslider;
+	/**
+	 * @return the volSlider
+	 */
+	public JSlider getVolSlider() {
+		return volSlider;
+	}
+
+
+	/**
+	 * @param volSlider the volSlider to set
+	 */
+	public void setVolSlider(JSlider volSlider) {
+		this.volSlider = volSlider;
+	}
+
+
+	/**
+	 * @return the renslider
+	 */
+	public JSlider getRenslider() {
+		return renslider;
+	}
+
+
+	/**
+	 * @param renslider the renslider to set
+	 */
+	public void setRenslider(JSlider renslider) {
+		this.renslider = renslider;
+	}
+
+
 	private static JLabel renLabel;
 	private static JLabel volLabel;
 	private static JButton back=new JButton("Back");

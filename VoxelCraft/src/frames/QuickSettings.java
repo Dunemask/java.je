@@ -34,8 +34,8 @@ public class QuickSettings extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7743473342320749215L;
-	private static JSlider volSlider;
-	private static JSlider renslider;
+	private JSlider volSlider;
+	private JSlider renslider;
 	private static JLabel renLabel;
 	private static JLabel volLabel;
 	private static JButton back=new JButton("Back");
@@ -160,14 +160,7 @@ public class QuickSettings extends JPanel {
 	}
 
 
-	/**
-	 * @return
-	 */
-	private String volCalc() {
-		double vol = PlaySound.vol;
-		vol=vol*100;
-		return String.valueOf(vol);
-	}
+
 
 
 	/**
@@ -176,9 +169,7 @@ public class QuickSettings extends JPanel {
 	protected void resized(ComponentEvent e) {
 		//Goes through and changes each component to fit the parent somewhat
 				try {
-			    	Component c = (Component)e.getSource();
 			        // This is only called when the user releases the mouse button.
-			    	BackPanel tmp = new BackPanel(FileUtil.getResourceURL("resources/mainmenu/panorama_3.png"),c.getWidth(),c.getHeight());
 			    	//double ofset = c.getWidth()*this.pbXOffSetPercent;
 			    	int pbch = this.getHeight()/10;
 			    	QuickSettings.volLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
@@ -203,5 +194,37 @@ public class QuickSettings extends JPanel {
 					
 				}
 		
+	}
+
+
+	/**
+	 * @return the volSlider
+	 */
+	public JSlider getVolSlider() {
+		return volSlider;
+	}
+
+
+	/**
+	 * @param volSlider the volSlider to set
+	 */
+	public void setVolSlider(JSlider volSlider) {
+		this.volSlider = volSlider;
+	}
+
+
+	/**
+	 * @return the renslider
+	 */
+	public JSlider getRenslider() {
+		return renslider;
+	}
+
+
+	/**
+	 * @param renslider the renslider to set
+	 */
+	public void setRenslider(JSlider renslider) {
+		this.renslider = renslider;
 	}
 }

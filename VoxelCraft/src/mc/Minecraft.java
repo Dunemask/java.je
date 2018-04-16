@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
@@ -25,6 +27,8 @@ import frames.Settings;
 import minemain.VoxelCt;
 import minerender.FilePanel;
 import minerender.VoxEn;
+import minerender.VoxPanel;
+import mplayer.PlaySound;
 import mplayer.SoundEngine;
 
 /**
@@ -142,6 +146,8 @@ public class Minecraft {
 		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
+		set.getRenslider().setValue(Minecraft.renderVal);
+		set.getVolSlider().setValue((int) (PlaySound.vol*100));
 		cp=set;
 		cf.setLocation(p);
 		cf.setSize(siz);
@@ -236,6 +242,8 @@ public class Minecraft {
 		cf.setTitle("Voxelcraft - Java.JE");
 		cf.setVisible(true);
 		listenHandle();
+		qs.getRenslider().setValue(Minecraft.renderVal);
+		qs.getVolSlider().setValue((int) (PlaySound.vol*100));
 		cp=qs;
 		cf.setLocation(p);
 		cf.setSize(siz);
@@ -259,6 +267,9 @@ public class Minecraft {
 			qm = new QuickMenu(Minecraft.vx);
 			
 		}else {
+			if(cp==Minecraft.vx) {
+				qm.reset();
+			}
 			qm.redraw(Minecraft.vx);
 		}
 		Point p = cf.getLocationOnScreen();
