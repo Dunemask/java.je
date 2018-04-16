@@ -306,7 +306,6 @@ public class VoxelCt extends JPanel{
 	 */
 	protected void escMenu() {
 		timer.stop();
-		FileControl.SaveFileAsXML(ven, ven.getName());
 		Minecraft.quickMenu();
 		
 		
