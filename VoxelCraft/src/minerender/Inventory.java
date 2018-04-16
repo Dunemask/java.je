@@ -78,7 +78,7 @@ public class Inventory extends JPanel{
 					jl.setAlignmentX(Component.CENTER_ALIGNMENT);
 					jl.setFont(new Font("Serif", Font.PLAIN, 12));
 					int img = ven.getBlock(index).image[2];
-					ImageIcon i = new ImageIcon(FileUtil.getResourceURL("resources/blocks/img"+img+".png"));
+					ImageIcon i = new ImageIcon(FileControl.blockHandle(img));
 					JLabel imgicon = new JLabel(i);
 					imgicon.setAlignmentX(CENTER_ALIGNMENT);
 					jp.add(imgicon);
@@ -104,7 +104,7 @@ public class Inventory extends JPanel{
 						jl.setForeground(Color.BLUE);
 					}
 					int img = ven.getBlock(ven.hotbar[index]-1).image[2];
-					ImageIcon i = new ImageIcon(FileUtil.getResourceURL("resources/blocks/img"+img+".png"));
+					ImageIcon i = new ImageIcon(FileControl.blockHandle(img));
 					JLabel imgicon = new JLabel(i);
 					imgicon.setAlignmentX(CENTER_ALIGNMENT);
 					jp.add(imgicon);
@@ -166,7 +166,7 @@ public class Inventory extends JPanel{
 					jl.setAlignmentX(Component.CENTER_ALIGNMENT);
 					jl.setFont(new Font("Serif", Font.PLAIN, 12));
 					int img = ven.getBlock(index).image[2];
-					ImageIcon i = new ImageIcon(FileUtil.getResourceURL("resources/blocks/img"+img+".png"));
+					ImageIcon i = new ImageIcon(FileControl.blockHandle(img));
 					JLabel imgicon = new JLabel(i);
 					imgicon.setAlignmentX(CENTER_ALIGNMENT);
 					jp.add(imgicon);
@@ -192,7 +192,7 @@ public class Inventory extends JPanel{
 						jl.setForeground(Color.BLUE);
 					}
 					int img = ven.getBlock(ven.hotbar[index]-1).image[2];
-					ImageIcon i = new ImageIcon(FileUtil.getResourceURL("resources/blocks/img"+img+".png"));
+					ImageIcon i = new ImageIcon(FileControl.blockHandle(img));
 					JLabel imgicon = new JLabel(i);
 					imgicon.setAlignmentX(CENTER_ALIGNMENT);
 					jp.add(imgicon);

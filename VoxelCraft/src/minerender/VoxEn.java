@@ -112,7 +112,7 @@ public class VoxEn {
 		//getimages
 		//resetHills(1, 4);
 		for(int i = 0;i<imgas.length;i++) {
-			imgas[i] = new ImageReader(FileUtil.getResourceURL("resources/blocks/img"+i+".png"));
+			imgas[i] = new ImageReader(FileControl.blockHandle(i));
 		}
 	}
 	public VoxEn(Vector3 vcam,byte[][][] vol,String name) {
@@ -126,7 +126,7 @@ public class VoxEn {
 		campos=vcam;
 		
 		for(int i = 0;i<imgas.length;i++) {
-			imgas[i] = new ImageReader(FileUtil.getResourceURL("resources/blocks/img"+i+".png"));
+			imgas[i] = new ImageReader(FileControl.blockHandle(i));
 		}
 	}
 	/*public VoxEn(Vector3 vcam,File f) {

@@ -1,6 +1,9 @@
 package minerender;
 
 import java.io.File;
+import java.net.URL;
+
+import dunemask.util.FileUtil;
 import dunemask.util.xml.XMLMap;
 //File Control, Controls the saving and loading of worlds in the file...
 public class FileControl {
@@ -81,6 +84,22 @@ public class FileControl {
 		}
 		return i;
 	}
+	
+	private static XMLMap blox;
+	/** Pulls value Yes jason yer numbers still work ^^
+	 * 
+	 * */
+	public static URL blockHandle(int blocknum) {
+		if(blox==null) {
+			blox=XMLMap.ParseDXMLMap(FileUtil.getResource("resources/blocks/block.xml"));
+		}
+		//System.out.println("resources/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");
+		return FileUtil.getResourceURL("resources/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");
+		
+	}
+	
+	
+	
 	/**Converts a 3D Array to a 1D Array
 	 * @param Array
 	 * @return Array
