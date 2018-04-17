@@ -311,46 +311,57 @@ public class VoxelCt extends JPanel{
 	public void Move() {
 		float spd=0.5f;
 		vel.z =1;
-		ven.MouseCam();
-		if(key.Output()[87]==1)
-		ven.MoveCam(Vector3.foreward(spd).rotate(ven.rx, "z"));
-		if(key.Output()[83]==1)
-			ven.MoveCam(Vector3.backward(spd).rotate(ven.rx, "z"));
-		if(key.Output()[68]==1)
-			ven.MoveCam(Vector3.rightward(spd).rotate(ven.rx, "z"));
-		if(key.Output()[65]==1)
-			ven.MoveCam(Vector3.leftward(spd).rotate(ven.rx, "z"));
-		if(key.Output()[32]==1)
-			ven.MoveCam(Vector3.upward(spd));
-		if(key.Output()[16]==1)
-			ven.MoveCam(Vector3.downward(spd));
+		if(Minecraft.cf.isFocused()) {//I
+			ven.MouseCam();
+			if(key.Output()[87]==1)
+				ven.MoveCam(Vector3.foreward(spd).rotate(ven.rx, "z"));
+				if(key.Output()[83]==1)
+					ven.MoveCam(Vector3.backward(spd).rotate(ven.rx, "z"));
+				if(key.Output()[68]==1)
+					ven.MoveCam(Vector3.rightward(spd).rotate(ven.rx, "z"));
+				if(key.Output()[65]==1)
+					ven.MoveCam(Vector3.leftward(spd).rotate(ven.rx, "z"));
+				if(key.Output()[32]==1)
+					ven.MoveCam(Vector3.upward(spd));
+				if(key.Output()[16]==1)
+					ven.MoveCam(Vector3.downward(spd));
+		}else {
+			this.escMenu();
+		}
+
 	}
 	public void Walk() {
 		float spd=0.2f;
-		ven.MouseCam();
-		if(key.Output()[87]==1)
-			vel.x+=spd;
-		if(key.Output()[83]==1)
-			vel.x-=spd;
-		if(key.Output()[68]==1)
-			vel.y+=spd;
-		if(key.Output()[65]==1)
-			vel.y-=spd;
-		ven.MoveCam(new Vector3(vel.rotate(ven.rx, "z").x,0,0));
-		ven.MoveCam(new Vector3(0,vel.rotate(ven.rx, "z").y,0));
-		if(ven.MoveCam(new Vector3(0,0,vel.z))) {
-			vel.z-=0.3;
+		if(Minecraft.cf.isFocused()) {
+			ven.MouseCam();
+			if(key.Output()[87]==1)
+				vel.x+=spd;
+			if(key.Output()[83]==1)
+				vel.x-=spd;
+			if(key.Output()[68]==1)
+				vel.y+=spd;
+			if(key.Output()[65]==1)
+				vel.y-=spd;
+			ven.MoveCam(new Vector3(vel.rotate(ven.rx, "z").x,0,0));
+			ven.MoveCam(new Vector3(0,vel.rotate(ven.rx, "z").y,0));
+			if(ven.MoveCam(new Vector3(0,0,vel.z))) {
+				vel.z-=0.3;
+			}else {
+				vel.z=-0.1f;
+				if(key.Output()[32]==1)
+					vel.z=0.8f;
+			}
+			vel.z *=0.9f;
+			vel.x *=0.5f;
+			vel.y *=0.5f;
+			
+			//if(key.Output()[32]==1)
+				//ven.MoveCam(Vector3.upward(spd));
+			//if(key.Output()[16]==1)
+				//ven.MoveCam(Vector3.downward(spd));
 		}else {
-			vel.z=-0.1f;
-			if(key.Output()[32]==1)
-				vel.z=0.8f;
+			this.escMenu();
 		}
-		vel.z *=0.9f;
-		vel.x *=0.5f;
-		vel.y *=0.5f;
-		//if(key.Output()[32]==1)
-			//ven.MoveCam(Vector3.upward(spd));
-		//if(key.Output()[16]==1)
-			//ven.MoveCam(Vector3.downward(spd));
+		
 	}
 }

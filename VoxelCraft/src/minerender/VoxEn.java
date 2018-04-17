@@ -629,8 +629,8 @@ public class VoxEn {
 			if(ry<0) {
 				ry = 0;
 			}
-			if(ry>3.1415) {
-				ry = 3.1415f;
+			if(ry>Math.PI) {
+				ry = (float) Math.PI;
 			}
 			r.mouseMove(mx, my);
 		} catch (AWTException e) {
