@@ -22,8 +22,8 @@ public class VoxEn {
 	int density = 0;
 	int siz = 1;
 	int timer=0;
-	int blocklength=16;
-	int imglength=21;
+	int blocklength=17;
+	int imglength=22;
 	private String name;
 	public float breaktime=0;
 	public ArrayList<Block> blks= new ArrayList<Block>();
@@ -72,7 +72,7 @@ public class VoxEn {
 		addBlock("Blue",16,16,16,16,16,16,true,true,1);
 		addBlock("Magenta",17,17,17,17,17,17,true,true,1);
 		addBlock("Glass",20,20,20,20,20,20,true,false,1);
-		//addBlock("Light_Gray_Stained_Glass",21,21,21,21,21,21,true,false,1);
+		addBlock("Light_Gray_Stained_Glass",21,21,21,21,21,21,true,false,1);
 		addBlock("Rock",18,18,18,18,18,18,true,true,12);
 		addBlock("Bedrock",19,19,19,19,19,19,true,true,1000);
 	}
