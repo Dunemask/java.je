@@ -164,11 +164,11 @@ public class SoundEngine {
 	 * 
 	 */
 	private static void gameEngine() {
-		try {
+		/*try {
 		throw new RuntimeException();
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		new Thread ( new Runnable() {
 
 			@Override
@@ -176,7 +176,7 @@ public class SoundEngine {
 				Random r = new Random();
 				while(gameRun) {
 				String song = Sound.gameSong()[r.nextInt(Sound.gameSong().length)];
-				System.out.println(song);
+				//System.out.println(song);
 				Sound s = SoundHandler.loadSong(song);
 				Media m = null;
 				try {
@@ -208,6 +208,8 @@ public class SoundEngine {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
+				//System.out.println("PLaying:"+m.getDuration());
+				PlaySound.playSound(s);
 				//Play
 				long waitTime =(int)m.getDuration().toMillis()+1;
 				CountDownLatch latch = new CountDownLatch(1);
@@ -219,7 +221,7 @@ public class SoundEngine {
 				
 
 				try {
-					Thread.sleep(r.nextInt(SoundEngine.titleWaitTime));
+					Thread.sleep(r.nextInt(SoundEngine.gameWaitTime));
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

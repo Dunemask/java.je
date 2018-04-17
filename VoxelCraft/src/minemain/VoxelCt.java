@@ -244,7 +244,7 @@ public class VoxelCt extends JPanel{
 			buildref =2;
 		}
 		if(mode==0) {
-			if(ven.breaktime>0) {
+			if(ven.breaktime>0&&ven.getBlock(ven.GetSelecID()-1)!=null) {
 			int time = (ven.getBlock(ven.GetSelecID()-1).getBreakTime());
 			for(int i=0;i<2;i++) {
 				try {

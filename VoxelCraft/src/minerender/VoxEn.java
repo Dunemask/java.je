@@ -29,7 +29,11 @@ public class VoxEn {
 	public float breaktime=0;
 	public ArrayList<Block> blks= new ArrayList<Block>();
 	public Block getBlock(int bl) {
+		try {
 		return blks.get(bl);
+		}catch(Exception e) {
+			return null;
+		}
 	}
 	public static int[] inventory = new int[blocklength];
 	public static void setinventory(int[] inte) {
@@ -192,7 +196,7 @@ public class VoxEn {
 		int b2 = 0;
 		byte bright=127;
 		String side= "none";
-		float mag = viewdist;
+		//float mag = viewdist;
 		Vector3 ve = new Vector3(0,0,-viewdist).rotate(Math.sqrt(x*x+y*y)*fovc,"x").rotate(Math.atan2(y, x), "z");
 		ve = ve.rotate(ry, "y").rotate(rx, "z");
 		float[] findub = new float[7];
@@ -209,7 +213,7 @@ public class VoxEn {
 		side = str[3];
 		//WATER RENDERRRRRRRRRRR
 		if(val2>0&&!blks.get(val2-1).opaque) {
-			float hite = (float)(0.3+0.2*Math.sin(2*findub[0]+0.03*timer)+0.1*Math.cos(2*findub[1]+0.01*timer));
+			//float hite = (float)(0.3+0.2*Math.sin(2*findub[0]+0.03*timer)+0.1*Math.cos(2*findub[1]+0.01*timer));
 			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0) ),false,val2,-1);
 			float mag2 = Float.parseFloat(str[5]);
 			str = GetSquare(Voxels,ve,Vector3.add(campos, new Vector3(0,0,0) ),false,0,val2);
