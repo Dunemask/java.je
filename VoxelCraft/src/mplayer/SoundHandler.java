@@ -6,7 +6,7 @@ package mplayer;
 import java.io.File;
 
 import dunemask.util.FileUtil;
-import dunemask.util.xml.XMLMap;
+import dunemask.util.xml.RuneMap;
 
 /**
  * @author Dunemask
@@ -21,9 +21,9 @@ public class SoundHandler {
 	 * */
 	public static Sound loadSong(String relPath) {
 		if(Sound.index==null) {
-			 Sound.index=XMLMap.ParseDXMLMap(FileUtil.getResource("resources/sounds/Index.xml"));
+			 Sound.index=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/sounds/Index.xml"));
 		}
-		XMLMap index = Sound.index;
+		RuneMap index = Sound.index;
 		String rp = relPath;
 		if(String.valueOf(relPath.charAt(0)).equals("/")) {
 			rp = rp.replaceFirst("/", "");
@@ -55,11 +55,11 @@ public class SoundHandler {
 			rp = rp.substring(0, rp.length()-1);
 	
 		}
-		XMLMap index = null;
+		RuneMap index = null;
 		if(Sound.index!=null) {
 			 index = Sound.index;
 		}else {
-			index = XMLMap.ParseDXMLMap(new File("src/resources/sounds/Index.xml"));
+			index = RuneMap.ParseDXMLMap(new File("src/resources/sounds/Index.xml"));
 		}
 		
 		index.writeContainer("Sounds/ambient/");
@@ -75,7 +75,7 @@ public class SoundHandler {
 		index.writeElement("Sounds/"+rp+"/Album", s.getAlbum());
 		index.writeElement("Sounds/"+rp+"/RelPath", s.getSoundsRelPath());
 		//Write Both
-		index = XMLMap.ParseDXMLMap(new File("bin/resources/sounds/Index.xml"));
+		index = RuneMap.ParseDXMLMap(new File("bin/resources/sounds/Index.xml"));
 		index.writeContainer("Sounds/ambient/");
 		index.writeContainer("Sounds/player/");
 		index.writeContainer("Sounds/title/");

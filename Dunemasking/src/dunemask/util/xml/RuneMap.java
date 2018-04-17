@@ -14,7 +14,7 @@ import dunemask.util.xml.XMLRW;
  *  This may or may not work for other xmls
  * 
  * */
-public class XMLMap {
+public class RuneMap {
 	/***Version*/
     final static double version = 5.8;
     static final String URLStart = "$DXML$:/";
@@ -40,8 +40,8 @@ public class XMLMap {
 	 * 
 	 * */
 	public String pullValue(String url) {
-		if(!url.startsWith(XMLMap.URLStart)) {
-			url = XMLMap.URLStart+url;
+		if(!url.startsWith(RuneMap.URLStart)) {
+			url = RuneMap.URLStart+url;
 		}
 
 		return 	this.fullMap.get(url);
@@ -186,8 +186,8 @@ public class XMLMap {
 	 * 
 	 * */
 	public void changeElement(String url,Object value) {
-		if(!url.startsWith(XMLMap.URLStart)) {
-			url = XMLMap.URLStart+url;
+		if(!url.startsWith(RuneMap.URLStart)) {
+			url = RuneMap.URLStart+url;
 		}
 		this.getAllValues().remove(url);
 		this.getAllValues().put(url, value.toString());
@@ -202,8 +202,8 @@ public class XMLMap {
 	}
 	
 	public void removeContainer(String url) {
-		if(!url.startsWith(XMLMap.URLStart)) {
-			url = XMLMap.URLStart+url;
+		if(!url.startsWith(RuneMap.URLStart)) {
+			url = RuneMap.URLStart+url;
 		}
 		for(int i=0;i<this.getAllURLS().size();i++) {
 			if(this.getAllURLS().get(i).contains(url)) {
@@ -233,8 +233,8 @@ public class XMLMap {
 	}
 	
 	public void removeElement(String url) {
-		if(!url.startsWith(XMLMap.URLStart)) {
-			url = XMLMap.URLStart+url;
+		if(!url.startsWith(RuneMap.URLStart)) {
+			url = RuneMap.URLStart+url;
 		}
 			this.getAllURLS().remove(url);
 		if(this.isElementByDoc(this.urlToList(url))) {
@@ -389,11 +389,11 @@ public class XMLMap {
 	 * @param body Body Tag
 	 * 
 	 */
-	public XMLMap(File file,String body) {
+	public RuneMap(File file,String body) {
 		this.setXml(file);
 		setAllURLS(new ArrayList<String>());
 		XMLRW.newXMLFile(file, body);
-		addurl(XMLMap.URLStart+body);
+		addurl(RuneMap.URLStart+body);
 		this.fullMap = new HashMap<String,String>();
 
 	}
@@ -404,8 +404,8 @@ public class XMLMap {
 	 * 
 	 * */
 	public ArrayList<String> getSubURLS(String url){
-		if(!url.startsWith(XMLMap.URLStart)) {
-			url = XMLMap.URLStart+url;
+		if(!url.startsWith(RuneMap.URLStart)) {
+			url = RuneMap.URLStart+url;
 		}
 		if(!this.isCont(url)) {
 			throw new DMXMLException("URL IS ELEMENT NOT CONTAINER");
@@ -439,7 +439,7 @@ public class XMLMap {
 	/**
 	 * 
 	 */
-	private XMLMap(File file) {
+	private RuneMap(File file) {
 		this.xmlurl = new ArrayList<String>();
 		this.fullMap = new HashMap<String,String>();
 		this.setXml(file);
@@ -451,8 +451,8 @@ public class XMLMap {
 	 * @return for Parsing DXML
 	 * 
 	 */
-	public static XMLMap ParseDXMLMap(File file) {
-		XMLMap m = null;
+	public static RuneMap ParseDXMLMap(File file) {
+		RuneMap m = null;
 		m = parseXML(file);
 		
 		return m;
@@ -466,7 +466,7 @@ public class XMLMap {
 	 * @return 
 	 * 
 	 */
-	private static XMLMap parseXML(File file) {
+	private static RuneMap parseXML(File file) {
 		int size = RW.readAll(file).length;
 		ArrayList<String> allTop = new ArrayList<String>();
 		for(int i=0;i<size;i++) {
@@ -475,14 +475,14 @@ public class XMLMap {
 				allTop.add(x);
 			}
 		}
-		XMLMap map = new XMLMap(file);
+		RuneMap map = new RuneMap(file);
 		ArrayList<ArrayList<String>> lis = new ArrayList<ArrayList<String>>();
 		for(int i=0;i<allTop.size();i++) {
 			ArrayList<String> tmp = new ArrayList<String>();
 			tmp.add(allTop.get(i));
 			lis.addAll(getAllSub(file,tmp));
 			tmp.removeAll(tmp);
-			map.addurl(XMLMap.URLStart+allTop.get(i));
+			map.addurl(RuneMap.URLStart+allTop.get(i));
 			
 		}
 
@@ -549,7 +549,7 @@ public class XMLMap {
 	}
 	
 	private void addurl(String url) {
-		if(!url.startsWith(XMLMap.URLStart)) {
+		if(!url.startsWith(RuneMap.URLStart)) {
 			throw new DMXMLException("INVALID url");
 		}else {
 			this.getAllURLS().add(url);
@@ -639,7 +639,7 @@ public class XMLMap {
 	 * */
 	public ArrayList<String> urlToList(String dxmlurl){
 		ArrayList<String> tmp = new ArrayList<String>();
-		dxmlurl = dxmlurl.replace(XMLMap.URLStart, "");
+		dxmlurl = dxmlurl.replace(RuneMap.URLStart, "");
 		String full = dxmlurl;
 		for(int i=0;i<full.length();i++) {
 			String c = String.valueOf(full.charAt(i));
@@ -664,7 +664,7 @@ public class XMLMap {
 	 * 
 	 * */
 	public String listTourl(ArrayList<String> list){
-		String val = XMLMap.URLStart;
+		String val = RuneMap.URLStart;
 		//GET to last one
 		for(int i=0;i<list.size()-1;i++) {
 			val+=list.get(i)+"/";
@@ -681,7 +681,7 @@ public class XMLMap {
 		
 	}
 	private static String	listTourl(File file,ArrayList<String> list){
-		String val = XMLMap.URLStart;
+		String val = RuneMap.URLStart;
 		for(int i=0;i<list.size()-1;i++) {
 			val+=list.get(i)+"/";
 		}
@@ -755,7 +755,7 @@ public class XMLMap {
 		 * */
 		public static ArrayList<String> urlToList(String dxmlurl){
 			ArrayList<String> tmp = new ArrayList<String>();
-			dxmlurl = dxmlurl.replace(XMLMap.URLStart, "");
+			dxmlurl = dxmlurl.replace(RuneMap.URLStart, "");
 			String full = dxmlurl;
 			for(int i=0;i<full.length();i++) {
 				String c = String.valueOf(full.charAt(i));
@@ -780,7 +780,7 @@ public class XMLMap {
 		 * 
 		 * */
 		public static String listTourl(ArrayList<String> list,boolean container){
-			String val = XMLMap.URLStart;
+			String val = RuneMap.URLStart;
 			//GET to last one
 			for(int i=0;i<list.size()-1;i++) {
 				val+=list.get(i)+"/";

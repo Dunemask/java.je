@@ -6,14 +6,14 @@ package mplayer;
 import java.io.File;
 import java.util.ArrayList;
 
-import dunemask.util.xml.XMLMap;
+import dunemask.util.xml.RuneMap;
 
 /**
  * @author Dunemask
  *
  */
 public class Sound {
-	public static XMLMap index;
+	public static RuneMap index;
 	/**Relpath to be called for loadsound*/
 	public static final String[] menuSong = new String[] {"/title/menu4","/title/menu3","/title/menu2","/title/menu1"};
 	/**@return arraylist of game songs called in loadsound*/

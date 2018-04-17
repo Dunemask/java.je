@@ -4,7 +4,7 @@ import java.io.File;
 import java.net.URL;
 
 import dunemask.util.FileUtil;
-import dunemask.util.xml.XMLMap;
+import dunemask.util.xml.RuneMap;
 //File Control, Controls the saving and loading of worlds in the file...
 public class FileControl {
 	/**Saves the file as an XML
@@ -14,7 +14,7 @@ public class FileControl {
 	public static void SaveFileAsXML(VoxEn vex, String name) {
 		String Voxes = FileControl.SaveArray(FileControl.Array3Dto1D(vex.Voxels));
 		File f = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+name+".xml");
-		currentXML = new XMLMap(f,"world");
+		currentXML = new RuneMap(f,"world");
 		currentXML.writeContainer("world/position/");
 		currentXML.writeElement("world/position/x", vex.campos.x);
 		currentXML.writeElement("world/position/y", vex.campos.y);
@@ -25,7 +25,7 @@ public class FileControl {
 		String se = FileControl.SaveArray(vex.inventory);
 		currentXML.writeElement("world/inventory", se);
 	}
-	public static XMLMap currentXML;
+	public static RuneMap currentXML;
 	/** Loads a world from an XML file.
 	 * Do not use the .xml in the string.
 	 * @param s Save Name
@@ -33,7 +33,7 @@ public class FileControl {
 	 * */
 	public static VoxEn LoadFileXML(String s) {
 		File file = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+s+".xml");
-		currentXML = XMLMap.ParseDXMLMap(file);
+		currentXML = RuneMap.ParseDXMLMap(file);
 		Vector3 v3 = new Vector3(Float.parseFloat(currentXML.pullValue("world/position/x")),Float.parseFloat(currentXML.pullValue("world/position/y")),Float.parseFloat(currentXML.pullValue("world/position/z")));
 		String ds = currentXML.pullValue("world/data");
 		int sizx = Integer.parseInt(currentXML.pullValue("world/dx"));
@@ -85,13 +85,13 @@ public class FileControl {
 		return i;
 	}
 	
-	private static XMLMap blox;
+	private static RuneMap blox;
 	/** Pulls value Yes jason yer numbers still work ^^
 	 * 
 	 * */
 	public static URL blockHandle(int blocknum) {
 		if(blox==null) {
-			blox=XMLMap.ParseDXMLMap(FileUtil.getResource("resources/blocks/block.xml"));
+			blox=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/blocks/block.xml"));
 		}
 		//System.out.println("resources/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");
 		return FileUtil.getResourceURL("resources/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");

@@ -5,7 +5,7 @@ package mc;
 
 import java.io.File;
 
-import dunemask.util.xml.XMLMap;
+import dunemask.util.xml.RuneMap;
 
 /**
  * @author Dunemask
@@ -18,7 +18,7 @@ public class BlockAdd {
 	 */
 	public static void main(String[] args) {
 		File block = new File(System.getProperty("user.home")+"/Desktop/block.xml");
-		XMLMap map = new XMLMap(block,"blocks");
+		RuneMap map = new RuneMap(block,"blocks");
 		map.writeElement("blocks/0", "dirt");
 		map.writeElement("blocks/1", "stone");
 		map.writeElement("blocks/2", "grass");

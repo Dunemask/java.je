@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import dunemask.objects.DMediaPlayer;
 import dunemask.util.FileUtil;
-import dunemask.util.xml.XMLMap;
+import dunemask.util.xml.RuneMap;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -160,7 +160,7 @@ public class PlaySound {
 			DMediaPlayer.init();
 			init=true;
 			if(Sound.index==null) {
-				 Sound.index=XMLMap.ParseDXMLMap(FileUtil.getResource("resources/sounds/Index.xml"));
+				 Sound.index=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/sounds/Index.xml"));
 			}
 		}
 		
