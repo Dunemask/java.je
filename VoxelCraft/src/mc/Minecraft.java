@@ -40,7 +40,6 @@ public class Minecraft {
 	public static QuickMenu qm;
 	public static MainBack mb;
 	public static QuickSettings qs;
-	public static Cursor defCursor;
 	public static FilePanel fp;
 	public static VoxelCt vx;
 	public static int renderVal=130;
@@ -72,7 +71,6 @@ public class Minecraft {
 		cp.revalidate();
 		cf.repaint();
 		cf.revalidate();
-		Minecraft.defCursor=cf.getContentPane().getCursor();
 		//goToSettings();
 
 	}
@@ -93,7 +91,7 @@ public class Minecraft {
 		listenHandle();
 		Minecraft.currentWorldName = vx.getName();
 		cp=vx;
-		cf.getContentPane().setCursor(getBlankCurosr());
+		cf.getContentPane().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		cf.setLocation(p);
 		cf.setSize(siz);
 		cf.add(cp);
@@ -295,7 +293,7 @@ public class Minecraft {
 		cp=qm;
 		cf.setLocation(p);
 		cf.setSize(siz);
-		cf.setCursor(defCursor);
+		cf.setCursor(Cursor.getDefaultCursor());
 		cf.add(cp);
 		cf.repaint();
 		cf.revalidate();

@@ -120,6 +120,13 @@ public class Inventory extends JPanel{
 			hotbar.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 			hotbar.setVisibleRowCount(1);
 			scroll.setSize(100,100);
+			/*System.out.println(ven.blks.size());
+			try {
+				throw new Throwable();
+			} catch (Throwable e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}*/
 			//Creates the lists
 			for(int x=0;x<ven.blks.size();x++) {
 				lm.addElement(""+x);
@@ -149,7 +156,12 @@ public class Inventory extends JPanel{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				try {
 				ven.hotbar[hotbar.getSelectedIndex()] = list.getSelectedIndex()+1;
+				}catch(java.lang.IndexOutOfBoundsException exc) {
+					ven.hotbar[ven.selected] = list.getSelectedIndex()+1;
+					//exc.printStackTrace();
+				}
 			}
 			
 		});

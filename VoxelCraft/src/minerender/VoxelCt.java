@@ -1,6 +1,7 @@
 package minerender;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -135,7 +136,7 @@ public class VoxelCt extends JPanel{
 		//System.out.println(this.getParent());
 		//frame = (JFrame) this.getParent().getParent().getParent();
 
-		timer= new Timer(10,new ActionListener() {
+		timer= new Timer(1,new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -282,6 +283,7 @@ public class VoxelCt extends JPanel{
 		if(key.Output()[69]==1) {
 			einv=1;
 			inv.setVisible(true);
+			inv.setCursor(Cursor.getDefaultCursor());
 			}
 		}else {
 			
@@ -325,6 +327,7 @@ public class VoxelCt extends JPanel{
 					ven.MoveCam(Vector3.upward(spd));
 				if(key.Output()[16]==1)
 					ven.MoveCam(Vector3.downward(spd));
+				//this.getVen().campos.print();
 		}else {
 			this.escMenu();
 		}
@@ -348,13 +351,16 @@ public class VoxelCt extends JPanel{
 				vel.z-=0.3;
 			}else {
 				vel.z=-0.1f;
+				
 				if(key.Output()[32]==1)
 					vel.z=0.8f;
 			}
 			vel.z *=0.9f;
 			vel.x *=0.5f;
 			vel.y *=0.5f;
-			
+			if(this.getVen().campos.z<-50) {
+				exceededWorldBounds();
+			}
 			//if(key.Output()[32]==1)
 				//ven.MoveCam(Vector3.upward(spd));
 			//if(key.Output()[16]==1)
@@ -362,6 +368,15 @@ public class VoxelCt extends JPanel{
 		}else {
 			this.escMenu();
 		}
+		
+	}
+	/**
+	 * 
+	 */
+	private void exceededWorldBounds() {
+		System.out.println("Dead Dude!");
+		this.getVen().campos = new Vector3(50,50,150);
+		
 		
 	}
 }

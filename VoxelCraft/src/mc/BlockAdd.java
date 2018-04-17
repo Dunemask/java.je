@@ -40,6 +40,7 @@ public class BlockAdd {
 		map.writeElement("blocks/18", "cobblestone");
 		map.writeElement("blocks/19", "bedrock");
 		map.writeElement("blocks/20", "glass");
+		map.writeElement("blocks/21", "light_gray_stained_glass");
 		
 		
 
