@@ -124,12 +124,13 @@ public class VoxelCt extends JPanel{
 		}
 		this.add(inv);
 		inv.setVisible(false);
-		
+		inv.getHotbar().setSelectedIndex(0);
 		vp = new VoxPanel();
 		vp.setBackground(Color.black);
 		vp.SetEnv(ven);
 		vp.setVisible(true);
 		vp.setBounds(0,0,600,600);
+		
 		this.add(vp);
 		this.repaint();
 		this.revalidate();
@@ -271,8 +272,10 @@ public class VoxelCt extends JPanel{
 			ven.selected+=mouseswoosh;
 			if(ven.selected<0)
 				ven.selected = 8;
+				inv.getHotbar().setSelectedIndex(ven.selected);
 			if(ven.selected>8)
 				ven.selected = 0;
+				inv.getHotbar().setSelectedIndex(ven.selected);
 			mouseswoosh = 0;
 		}
 		

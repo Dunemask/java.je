@@ -91,10 +91,10 @@ public class FileControl {
 	 * */
 	public static URL blockHandle(int blocknum) {
 		if(blox==null) {
-			blox=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/blocks/block.xml"));
+			blox=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/textures/blocks/block.xml"));
 		}
 		//System.out.println("resources/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");
-		return FileUtil.getResourceURL("resources/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");
+		return FileUtil.getResourceURL("resources/textures/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");
 		
 	}
 	

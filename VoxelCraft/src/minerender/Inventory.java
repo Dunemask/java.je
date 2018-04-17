@@ -34,8 +34,33 @@ public class Inventory extends JPanel{
 	public Border cool= BorderFactory.createCompoundBorder(raised,lowered);
 	public DefaultListModel<String> lm = new DefaultListModel<String>();
 	public DefaultListModel<String> hb = new DefaultListModel<String>();
-	private final JList<String> list = new JList<String>(lm);
-	private final JList<String> hotbar = new JList<String>(hb);
+	private JList<String> list = new JList<String>(lm);
+	/**
+	 * @return the list
+	 */
+	public JList<String> getList() {
+		return list;
+	}
+	/**
+	 * @param list the list to set
+	 */
+	public void setList(JList<String> list) {
+		this.list = list;
+	}
+	/**
+	 * @return the hotbar
+	 */
+	public JList<String> getHotbar() {
+		return hotbar;
+	}
+	/**
+	 * @param hotbar the hotbar to set
+	 */
+	public void setHotbar(JList<String> hotbar) {
+		this.hotbar = hotbar;
+	}
+	private JList<String> hotbar = new JList<String>(hb);
+	private int lastSel=0;
 	
 	/**
 	 * Uses JLists and JScrollPanes to get the job done...
@@ -61,7 +86,7 @@ public class Inventory extends JPanel{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				ven.hotbar[hotbar.getSelectedIndex()] = list.getSelectedIndex()+1;
+				valChanged();
 			}
 			
 		});
@@ -156,12 +181,7 @@ public class Inventory extends JPanel{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				try {
-				ven.hotbar[hotbar.getSelectedIndex()] = list.getSelectedIndex()+1;
-				}catch(java.lang.IndexOutOfBoundsException exc) {
-					ven.hotbar[ven.selected] = list.getSelectedIndex()+1;
-					//exc.printStackTrace();
-				}
+				valChanged();
 			}
 			
 		});
@@ -227,5 +247,35 @@ public class Inventory extends JPanel{
 			for(int x=0;x<9;x++) {
 				hb.addElement(""+x);
 			}
+	}
+	/**
+	 * 
+	 */
+	protected void valChanged() {
+		/*if(this.lastSel!=ven.selected) {	
+			hotbar.clearSelection();
+			this.lastSel=ven.selected;
+		}*/
+		try {
+		ven.hotbar[hotbar.getSelectedIndex()] = list.getSelectedIndex()+1;
+		
+		}catch(java.lang.IndexOutOfBoundsException exc) {
+			//System.out.println("Caught");
+			ven.hotbar[ven.selected] = list.getSelectedIndex()+1;
+			//exc.printStackTrace();
+		}
+		
+	}
+	/**
+	 * @return the lastSel
+	 */
+	public int getLastSel() {
+		return lastSel;
+	}
+	/**
+	 * @param lastSel the lastSel to set
+	 */
+	public void setLastSel(int lastSel) {
+		this.lastSel = lastSel;
 	}
 }

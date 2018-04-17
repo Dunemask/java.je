@@ -65,7 +65,7 @@ public class Minecraft {
 		cp=mb;
 		cf.setLocationRelativeTo(null);
 		cf.add(cp);
-		String urlPath = "resources/mainmenu/Voxelcraft.png";
+		String urlPath = "resources/textures/gui/title/Voxelcraft.png";
 		cf.setIconImage(new ImageIcon(FileUtil.getResourceURL(urlPath)).getImage());
 		cp.repaint();
 		cp.revalidate();
@@ -91,7 +91,7 @@ public class Minecraft {
 		listenHandle();
 		Minecraft.currentWorldName = vx.getName();
 		cp=vx;
-		cf.getContentPane().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		cf.getContentPane().setCursor(Minecraft.getBlankCurosr());
 		cf.setLocation(p);
 		cf.setSize(siz);
 		cf.add(cp);

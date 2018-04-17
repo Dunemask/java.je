@@ -48,7 +48,7 @@ public class MainBack extends JPanel{
 	 */
 	public MainBack() {
 		this.setSize(600, 600);
-		this.setBack(this.makeback(FileUtil.getResourceURL("resources/mainmenu/panorama_3.png"),this.getWidth(),this.getHeight()));
+		this.setBack(this.makeback(FileUtil.getResourceURL("resources/textures/gui/title/panorama_3.png"),this.getWidth(),this.getHeight()));
 		this.setLayout(null);
 		this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -107,7 +107,7 @@ public class MainBack extends JPanel{
 		lblMc = new JLabel("mc");
 		lblMc.setBounds(84, 35, 431, 115);
 		
-		ImageIcon imgico = new ImageIcon(FileUtil.getResourceURL("resources/mainmenu/mc.png"));
+		ImageIcon imgico = new ImageIcon(FileUtil.getResourceURL("resources/textures/gui/title/mc.png"));
 		Image img = imgico.getImage();
 		Image dimg = img.getScaledInstance(lblMc.getWidth(), lblMc.getHeight(),
 		        Image.SCALE_SMOOTH);
@@ -141,7 +141,7 @@ public class MainBack extends JPanel{
 	    	Component c = (Component)e.getSource();
 	        // This is only called when the user releases the mouse button.
 	    	//BackPanel tmp = new BackPanel(FileUtil.getResourceURL("resources/mainmenu/panorama_3.png"),c.getWidth(),c.getHeight());
-	    	this.setBack(this.makeback(FileUtil.getResourceURL("resources/mainmenu/panorama_3.png"),this.getWidth(),this.getHeight()));
+	    	this.setBack(this.makeback(FileUtil.getResourceURL("resources/textures/gui/title/panorama_3.png"),this.getWidth(),this.getHeight()));
 	    	this.repaint();
 	    	this.revalidate();
 	    	int btchange =this.getHeight()/30;
@@ -159,7 +159,7 @@ public class MainBack extends JPanel{
 	    	int mcw= (int) (this.getWidth()-2*mcoffset);
 	    	int mch = this.getHeight()/4;
 			lblMc.setBounds(mcx,mcy-btchange-mch,mcw,mch);
-	    	ImageIcon imgico = new ImageIcon(FileUtil.getResourceURL("resources/mainmenu/mc.png"));
+	    	ImageIcon imgico = new ImageIcon(FileUtil.getResourceURL("resources/textures/gui/title/mc.png"));
 			Image img = imgico.getImage();
 			Image dimg = img.getScaledInstance(lblMc.getWidth(), lblMc.getHeight(),
 			        Image.SCALE_SMOOTH);

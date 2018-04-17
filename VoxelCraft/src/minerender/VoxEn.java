@@ -84,8 +84,8 @@ public class VoxEn {
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
 	public ImageReader[] imgas = new ImageReader[imglength];
-	ImageReader selecc = new ImageReader(FileUtil.getResourceURL("resources/selecc.png"));
-	ImageReader crunch = new ImageReader(FileUtil.getResourceURL("resources/brk.png"));
+	ImageReader selecc = new ImageReader(FileUtil.getResourceURL("resources/textures/gui/overlay/selecc.png"));
+	ImageReader crunch = new ImageReader(FileUtil.getResourceURL("resources/textures/gui/overlay/brk.png"));
 
 	//VoxChunk[][][] Chnks = new VoxChunk[3][3][3];
 	//byte[][][] airs = new byte[Chnks.length][Chnks[0].length][Chnks[0][0].length];
