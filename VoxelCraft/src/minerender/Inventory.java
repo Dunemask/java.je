@@ -31,42 +31,6 @@ public class Inventory extends JPanel{
 	VoxEn ven;
 	Border raised = BorderFactory.createRaisedSoftBevelBorder();
 	Border lowered = BorderFactory.createLoweredBevelBorder();
-	/**
-	 * @return the ven
-	 */
-	public VoxEn getVen() {
-		return ven;
-	}
-	/**
-	 * @param ven the ven to set
-	 */
-	public void setVen(VoxEn ven) {
-		this.ven = ven;
-	}
-	/**
-	 * @return the lm
-	 */
-	public DefaultListModel<String> getLm() {
-		return lm;
-	}
-	/**
-	 * @param lm the lm to set
-	 */
-	public void setLm(DefaultListModel<String> lm) {
-		this.lm = lm;
-	}
-	/**
-	 * @return the hb
-	 */
-	public DefaultListModel<String> getHb() {
-		return hb;
-	}
-	/**
-	 * @param hb the hb to set
-	 */
-	public void setHb(DefaultListModel<String> hb) {
-		this.hb = hb;
-	}
 	public Border cool= BorderFactory.createCompoundBorder(raised,lowered);
 	public DefaultListModel<String> lm = new DefaultListModel<String>();
 	public DefaultListModel<String> hb = new DefaultListModel<String>();
@@ -181,6 +145,13 @@ public class Inventory extends JPanel{
 			hotbar.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 			hotbar.setVisibleRowCount(1);
 			scroll.setSize(100,100);
+			/*System.out.println(ven.blks.size());
+			try {
+				throw new Throwable();
+			} catch (Throwable e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}*/
 			//Creates the lists
 			for(int x=0;x<ven.blks.size();x++) {
 				lm.addElement(""+x);
@@ -223,7 +194,7 @@ public class Inventory extends JPanel{
 					jp.setSize(60,60);
 					jp.setLayout(new BoxLayout(jp,BoxLayout.Y_AXIS));
 					jp.setBorder(cool);
-					JLabel jl = new JLabel(ven.getBlock(index).name+": "+ven.inventory[index]) ;//TODO
+					JLabel jl = new JLabel(ven.getBlock(index).name+": "+ven.inventory[index]) ;
 					jl.setSize(50,10);
 					jl.setAlignmentX(Component.CENTER_ALIGNMENT);
 					jl.setFont(new Font("Serif", Font.PLAIN, 12));
