@@ -2,6 +2,7 @@ package minerender;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -144,24 +145,29 @@ public class VoxelCt extends JPanel{
 		}else {
 		inv= new Inventory(ven,1);
 		}
+		    vp = new VoxPanel();
+			vp.setBackground(Color.black);
+			vp.SetEnv(ven);
+			vp.setVisible(true);
+			vp.setBounds(0,0,600,600);    
+		    
+		    
 		 textBar =new JTextField();
-		 th.setSize(600, 600);  
+		 th.setSize(vp.getWidth(), vp.getHeight());  
 		 th.setOpaque(false);
 		 th.add(textBar);
 		 textBar.setVisible(false);
 		 int tbw=th.getWidth();
-		 int tbh=th.getHeight()/9;
-		textBar.setBounds(0, th.getHeight()-2*tbh, tbw, tbh);
+		 textBar.setBackground(Color.DARK_GRAY);
+		 textBar.setForeground(Color.WHITE);
+		// textBar.setOpaque(false);
+		textBar.setBounds(0, vp.getHeight()-120, tbw, 80);
+		 textBar.setFont(new Font("Century Gothic", Font.PLAIN, textBar.getHeight()-40));
 		this.add(th);
 		    
 		this.add(inv);
 		inv.setVisible(false);
 		inv.getHotbar().setSelectedIndex(0);
-		vp = new VoxPanel();
-		vp.setBackground(Color.black);
-		vp.SetEnv(ven);
-		vp.setVisible(true);
-		vp.setBounds(0,0,600,600);
 		int mw = (vp.getWidth()/2)+1;
 		int mh = (vp.getHeight()/2)+1;
 		//System.out.println(mw+","+mh);
@@ -240,6 +246,10 @@ public class VoxelCt extends JPanel{
 		public void keyPressed(KeyEvent arg0) {
 			boolean rel = arg0.getKeyChar()=='\n';
 			if(rel) {
+				command();
+			}
+			if(arg0.getKeyCode()==27) {//Escape
+				textBar.setText("");
 				command();
 			}
 			//textBar.setText(textBar.getText()+arg0.getKeyChar());
@@ -444,6 +454,9 @@ public class VoxelCt extends JPanel{
 	protected void command() {
 		//this.removeKeyListener(tbl);
 		String command = textBar.getText();
+		if(command.equals("")||command.equals(" ")) {
+			command=null;
+		}
 		if(command!=null) {
 			MineCommands.HandleCommand(command);
 		}
@@ -543,18 +556,20 @@ public class VoxelCt extends JPanel{
 	 * */
 	public void changeMode(int mode) {
 		this.mode=mode;
-		DefaultListModel<String> lm = inv.getLm();
-		DefaultListModel<String> hb = inv.getHb();
-		JList<String> hotbar = inv.getHotbar();
+	    this.remove(inv);
 	    if(mode==VoxelCt.Creative) {// Creative
 	    	inv= new Inventory(ven);
 	    	
 	    }else {
 	    	inv= new Inventory(ven,1);
 	    }
-    	inv.setLm(lm);
-    	inv.setHb(hb);
-    	inv.setHotbar(hotbar);
+    	//inv.setLm(lm);
+    	//inv.setHb(hb);
+    	//inv.setHotbar(hotbar);
+	    inv.getHotbar().setSelectedIndex(ven.selected);
+    	inv.setBounds(30, 30, this.getWidth()-60, this.getHeight()-60);
+    	inv.setVisible(false);
+    	this.add(inv,0);
 	}
 	
 	
