@@ -20,9 +20,9 @@ import frames.MainBack;
 import frames.QuickMenu;
 import frames.QuickSettings;
 import frames.Settings;
-import minemain.VoxelCt;
 import minerender.FilePanel;
 import minerender.VoxEn;
+import minerender.VoxelCt;
 import mplayer.PlaySound;
 import mplayer.SoundEngine;
 

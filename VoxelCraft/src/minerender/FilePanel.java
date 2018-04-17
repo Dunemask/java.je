@@ -27,7 +27,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import mc.Minecraft;
-import minemain.VoxelCt;
 import mplayer.SoundEngine;
 /**
  * This Is in charge of the panel that manages the world files.

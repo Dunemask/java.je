@@ -1,4 +1,4 @@
-package minemain;
+package minerender;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

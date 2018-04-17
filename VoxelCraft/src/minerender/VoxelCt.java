@@ -1,4 +1,4 @@
-package minemain;
+package minerender;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -13,10 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import mc.Minecraft;
-import minerender.Inventory;
-import minerender.Vector3;
-import minerender.VoxEn;
-import minerender.VoxPanel;
 import mplayer.SoundEngine;
 
 public class VoxelCt extends JPanel{

@@ -18,9 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import mc.Minecraft;
-import minemain.VoxelCt;
 import minerender.FileControl;
 import minerender.VoxEn;
+import minerender.VoxelCt;
 import mplayer.SoundEngine;
 
 /**
