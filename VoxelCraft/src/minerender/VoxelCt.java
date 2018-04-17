@@ -2,17 +2,27 @@ package minerender;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import dunemask.util.FileUtil;
 import mc.Minecraft;
 import mplayer.SoundEngine;
 
@@ -25,6 +35,8 @@ public class VoxelCt extends JPanel{
 	private VoxPanel vp;
 	private VoxEn ven;
 	static KeyList key;
+	float spd=0.2f;
+	private JLabel crosshair=new JLabel();
 	public static boolean mousedown;
 	/**
 	 * @return the vp
@@ -73,6 +85,7 @@ public class VoxelCt extends JPanel{
 		//this.setSize(600,600);
 		this.setLayout(null);
 		this.setEnabled(true);
+		this.setSize(600, 600);
 		this.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				mouseswoosh = e.getWheelRotation();
@@ -122,6 +135,8 @@ public class VoxelCt extends JPanel{
 		}else {
 		inv= new Inventory(ven,1);
 		}
+		    
+		    
 		this.add(inv);
 		inv.setVisible(false);
 		inv.getHotbar().setSelectedIndex(0);
@@ -130,6 +145,22 @@ public class VoxelCt extends JPanel{
 		vp.SetEnv(ven);
 		vp.setVisible(true);
 		vp.setBounds(0,0,600,600);
+		int mw = (vp.getWidth()/2)+1;
+		int mh = (vp.getHeight()/2)+1;
+		System.out.println(mw+","+mh);
+		int w = 42;
+		int h = 42;
+		this.crosshair.setBounds(mw-w, mh-h, w, h);
+		BufferedImage img = this.resizeImage(FileUtil.getResourceURL("resources/textures/gui/overlay/crosshair.png"), w, h);
+		this.crosshair.setIcon(new ImageIcon(img));
+		this.add(crosshair);
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent e) {
+            	panelResized();
+            }
+			
+		});
+		
 		
 		this.add(vp);
 		this.repaint();
@@ -150,6 +181,46 @@ public class VoxelCt extends JPanel{
 	/**
 	 * 
 	 */
+	protected void panelResized() {
+		vp.setSize(Minecraft.cf.getWidth(), Minecraft.cf.getHeight());
+		int mw = (vp.getWidth()/2)+1;
+		int mh = (vp.getHeight()/2)+1;
+		int w = 42;
+		int h = 42;
+		this.crosshair.setBounds(mw-w, mh-h, w, h);
+		BufferedImage img = this.resizeImage(FileUtil.getResourceURL("resources/textures/gui/overlay/crosshair.png"), w, h);
+		this.crosshair.setIcon(new ImageIcon(img));
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent e) {
+            	panelResized();
+            }
+			
+		});
+		
+	}
+	private BufferedImage resizeImage(URL url,int width,int height) {
+		Image back = new ImageIcon(url).getImage();
+	    BufferedImage bimage = new BufferedImage(back.getWidth(null), back.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	    // Draw the image on to the buffered image
+	    Graphics2D bGr = bimage.createGraphics();
+	    bGr.drawImage(back, 0, 0, null);
+	    bGr.dispose();
+	    
+		BufferedImage resized = new BufferedImage(width, height, bimage.getType());
+		Graphics2D g = resized.createGraphics();
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+		    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g.drawImage(bimage, 0, 0, width, height, 0, 0, bimage.getWidth(),
+		    bimage.getHeight(), null);
+		g.dispose();
+		return resized;
+		
+	}
+	
+	
+	/**
+	 * 
+	 */
 	protected void timerCode() {
 		//ven.campos.print();
 		
@@ -163,13 +234,14 @@ public class VoxelCt extends JPanel{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(key.Output()[27]==1) {//Esc
-			escMenu();
-			
-			//timer.stop();
-			//Minecraft.goToSelect();
-			//System.exit(0);
+		
+		if(key.Output()[17]==1) {
+			spd=0.4f;
+		}else {
+			spd=0.2f;
 		}
+		
+		
 		if(key.Output()[KeyEvent.VK_UP]==1) {
 			Minecraft.renderVal++;
 			System.out.println(Minecraft.renderVal);
@@ -193,7 +265,10 @@ public class VoxelCt extends JPanel{
 		vp.repaint();
 		this.requestFocusInWindow();
 		if(einv==0) {
-		
+			if(key.Output()[27]==1) {//Esc		
+				timer.stop();
+				escMenu();
+			}
 			if (mode==0){
 				Walk();
 			}else {
@@ -286,7 +361,7 @@ public class VoxelCt extends JPanel{
 		if(key.Output()[69]==1) {
 			einv=1;
 			inv.setVisible(true);
-			inv.setCursor(Cursor.getDefaultCursor());
+			this.setCursor(Cursor.getDefaultCursor());
 			}
 		}else {
 			
@@ -296,7 +371,8 @@ public class VoxelCt extends JPanel{
 		if(einv ==2 && key.Output()[69]==1) {
 			einv=3;
 		}
-		if(einv ==3 && key.Output()[69]==0) {
+		if(einv ==3 && (key.Output()[69]==0||key.Output()[27]==1)) {
+			this.setCursor(Minecraft.getBlankCurosr());
 			einv=0;
 			inv.setVisible(false);
 		}
@@ -314,7 +390,7 @@ public class VoxelCt extends JPanel{
 		
 	}
 	public void Move() {
-		float spd=0.5f;
+		spd=0.5f;
 		vel.z =1;
 		if(Minecraft.cf.isFocused()) {//I
 			ven.MouseCam();
@@ -337,7 +413,7 @@ public class VoxelCt extends JPanel{
 
 	}
 	public void Walk() {
-		float spd=0.2f;
+		
 		if(Minecraft.cf.isFocused()) {
 			ven.MouseCam();
 			if(key.Output()[87]==1)
@@ -381,5 +457,17 @@ public class VoxelCt extends JPanel{
 		this.getVen().campos = new Vector3(50,50,150);
 		
 		
+	}
+	/**
+	 * @return the crosshair
+	 */
+	public JLabel getCrosshair() {
+		return crosshair;
+	}
+	/**
+	 * @param crosshair the crosshair to set
+	 */
+	public void setCrosshair(JLabel crosshair) {
+		this.crosshair = crosshair;
 	}
 }
