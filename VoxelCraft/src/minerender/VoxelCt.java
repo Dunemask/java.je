@@ -146,7 +146,7 @@ public class VoxelCt extends JPanel{
 		vp.setVisible(true);
 		vp.setBounds(0,0,600,600);
 		int mw = (vp.getWidth()/2)+1;
-		int mh = (vp.getHeight()/2)+1;
+		int mh = ((vp.getHeight()-vp.getWidth()/9)/2)+1;
 		System.out.println(mw+","+mh);
 		int w = 42;
 		int h = 42;
@@ -184,7 +184,7 @@ public class VoxelCt extends JPanel{
 	protected void panelResized() {
 		vp.setSize(Minecraft.cf.getWidth(), Minecraft.cf.getHeight());
 		int mw = (vp.getWidth()/2)+1;
-		int mh = (vp.getHeight()/2)+1;
+		int mh = ((vp.getHeight()-vp.getWidth()/9)/2)+1;
 		int w = 42;
 		int h = 42;
 		this.crosshair.setBounds(mw-w, mh-h, w, h);
