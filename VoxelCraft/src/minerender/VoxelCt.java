@@ -10,19 +10,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.concurrent.CountDownLatch;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import dunemask.util.FileUtil;
+import mc.MineCommands;
 import mc.Minecraft;
 import mplayer.SoundEngine;
 
@@ -34,7 +41,7 @@ public class VoxelCt extends JPanel{
 	private static  Inventory inv;
 	private VoxPanel vp;
 	private VoxEn ven;
-	static KeyList key;
+	private KeyList key;
 	float spd=0.2f;
 	private JLabel crosshair=new JLabel();
 	public static boolean mousedown;
@@ -73,6 +80,9 @@ public class VoxelCt extends JPanel{
 	int flytime=0;
 	int buildref = 0;
 	Timer timer;
+	/**Text Holder*/
+	private JPanel th = new JPanel(null);
+	private JTextField textBar;
 	public VoxelCt(VoxEn voxen,int Mode) {
 		vel = new Vector3(0,0,0);
 		mode=Mode;
@@ -129,13 +139,20 @@ public class VoxelCt extends JPanel{
 		    this.setFocusable(true);
 		    this.requestFocusInWindow();
 	//	this.setAlwaysOnTop(true);
-		   
-		    if(mode==1) {
+		    if(mode==1) {// Creative
 		inv= new Inventory(ven);
 		}else {
 		inv= new Inventory(ven,1);
 		}
-		    
+		 textBar =new JTextField();
+		 th.setSize(600, 600);  
+		 th.setOpaque(false);
+		 th.add(textBar);
+		 textBar.setVisible(false);
+		 int tbw=th.getWidth();
+		 int tbh=th.getHeight()/9;
+		textBar.setBounds(0, th.getHeight()-2*tbh, tbw, tbh);
+		this.add(th);
 		    
 		this.add(inv);
 		inv.setVisible(false);
@@ -147,7 +164,7 @@ public class VoxelCt extends JPanel{
 		vp.setBounds(0,0,600,600);
 		int mw = (vp.getWidth()/2)+1;
 		int mh = (vp.getHeight()/2)+1;
-		System.out.println(mw+","+mh);
+		//System.out.println(mw+","+mh);
 		int w = 42;
 		int h = 42;
 		this.crosshair.setBounds(mw-w, mh-h, w, h);
@@ -168,7 +185,7 @@ public class VoxelCt extends JPanel{
 		//System.out.println(this.getParent());
 		//frame = (JFrame) this.getParent().getParent().getParent();
 
-		timer= new Timer(1,new ActionListener() {
+		timer= new Timer(30,new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -216,8 +233,36 @@ public class VoxelCt extends JPanel{
 		return resized;
 		
 	}
+	boolean updateMouse = true;
 	
+	KeyListener tbl = new KeyListener() {
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			boolean rel = arg0.getKeyChar()=='\n';
+			if(rel) {
+				command();
+			}
+			//textBar.setText(textBar.getText()+arg0.getKeyChar());
+			textBar.repaint();
+			textBar.revalidate();
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+
+			
+		}
+		
+	};
 	
+	public boolean forceupdate = true;
 	/**
 	 * 
 	 */
@@ -228,17 +273,11 @@ public class VoxelCt extends JPanel{
 		ven.mx =vp.getWidth()/2+this.getTopLevelAncestor().getLocation().x;
 		ven.my =vp.getHeight()/2+this.getTopLevelAncestor().getLocation().y;
 		inv.setBounds(30, 30, this.getWidth()-60, this.getHeight()-60);
-		try {
-			Thread.sleep(30);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		if(key.Output()[17]==1) {
-			spd=0.4f;
+		if(key.Output()[17]==1) {//Sprint
+			spd=0.24f;
 		}else {
-			spd=0.2f;
+			spd=0.12f;
 		}
 		
 		
@@ -258,12 +297,32 @@ public class VoxelCt extends JPanel{
 			this.getVen().fovc-=.001f;
 			System.out.println(this.getVen().fovc);
 		}
+		if(key.Output()[84]==1) {//T PUshed //TODO
+			this.updateMouse=false;
+			this.textBar.setVisible(true);
+			textBar.requestFocusInWindow();
+			this.forceupdate=false;
+			this.setCursor(Cursor.getDefaultCursor());
+			this.removeKeyListener(key);
+			textBar.removeKeyListener(tbl);
+			textBar.addKeyListener(tbl);
+			this.repaint();
+			this.revalidate();
+
+			
+			
+			
+			
+		}
+		
 		
 		
 		vp.setSize(this.getWidth(), this.getHeight());
+		if(this.forceupdate==true) {
+			//System.out.println("Request");
+			this.requestFocusInWindow();
+		}
 		this.repaint();
-		vp.repaint();
-		this.requestFocusInWindow();
 		if(einv==0) {
 			if(key.Output()[27]==1) {//Esc		
 				timer.stop();
@@ -382,6 +441,25 @@ public class VoxelCt extends JPanel{
 	/**
 	 * 
 	 */
+	protected void command() {
+		//this.removeKeyListener(tbl);
+		String command = textBar.getText();
+		if(command!=null) {
+			MineCommands.HandleCommand(command);
+		}
+		this.textBar.setText("");
+		this.setCursor(Minecraft.getBlankCurosr());
+		this.updateMouse=true;
+		this.forceupdate=true;
+		this.textBar.setVisible(false);
+		this.requestFocus();
+		key = new KeyList();
+		this.addKeyListener(key);
+		
+	}
+	/**
+	 * 
+	 */
 	protected void escMenu() {
 		timer.stop();
 		Minecraft.quickMenu();
@@ -392,7 +470,7 @@ public class VoxelCt extends JPanel{
 	public void Move() {
 		spd=0.5f;
 		vel.z =1;
-		if(Minecraft.cf.isFocused()) {//I
+		if(Minecraft.cf.isFocused()&&this.updateMouse==true) {//I
 			ven.MouseCam();
 			if(key.Output()[87]==1)
 				ven.MoveCam(Vector3.foreward(spd).rotate(ven.rx, "z"));
@@ -407,14 +485,13 @@ public class VoxelCt extends JPanel{
 				if(key.Output()[16]==1)
 					ven.MoveCam(Vector3.downward(spd));
 				//this.getVen().campos.print();
-		}else {
+		}else if(!Minecraft.cf.isFocused()){
 			this.escMenu();
 		}
 
 	}
 	public void Walk() {
-		
-		if(Minecraft.cf.isFocused()) {
+		if(Minecraft.cf.isFocused()&&this.updateMouse==true) {
 			ven.MouseCam();
 			if(key.Output()[87]==1)
 				vel.x+=spd;
@@ -444,7 +521,7 @@ public class VoxelCt extends JPanel{
 				//ven.MoveCam(Vector3.upward(spd));
 			//if(key.Output()[16]==1)
 				//ven.MoveCam(Vector3.downward(spd));
-		}else {
+		}else if(!Minecraft.cf.isFocused()){
 			this.escMenu();
 		}
 		
@@ -458,6 +535,29 @@ public class VoxelCt extends JPanel{
 		
 		
 	}
+	
+	public static final int Creative=1;
+	public static final int Survival=0;
+	/** Change mode
+	 * 
+	 * */
+	public void changeMode(int mode) {
+		this.mode=mode;
+		DefaultListModel<String> lm = inv.getLm();
+		DefaultListModel<String> hb = inv.getHb();
+		JList<String> hotbar = inv.getHotbar();
+	    if(mode==VoxelCt.Creative) {// Creative
+	    	inv= new Inventory(ven);
+	    	
+	    }else {
+	    	inv= new Inventory(ven,1);
+	    }
+    	inv.setLm(lm);
+    	inv.setHb(hb);
+    	inv.setHotbar(hotbar);
+	}
+	
+	
 	/**
 	 * @return the crosshair
 	 */
@@ -469,5 +569,17 @@ public class VoxelCt extends JPanel{
 	 */
 	public void setCrosshair(JLabel crosshair) {
 		this.crosshair = crosshair;
+	}
+	/**
+	 * @return the textBar
+	 */
+	public JTextField getTextBar() {
+		return textBar;
+	}
+	/**
+	 * @param textBar the textBar to set
+	 */
+	public void setTextBar(JTextField textBar) {
+		this.textBar = textBar;
 	}
 }

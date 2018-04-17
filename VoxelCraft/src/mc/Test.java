@@ -16,6 +16,11 @@ import javax.swing.JFrame;
 public class Test extends JFrame {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4410393723377530589L;
+
+	/**
 	 * @throws HeadlessException
 	 */
 	public Test() throws HeadlessException {
