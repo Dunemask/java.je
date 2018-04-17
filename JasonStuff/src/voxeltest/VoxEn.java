@@ -48,12 +48,12 @@ public class VoxEn {
 				{13,13,13,13,13,13,0}};
 	//VoxChunk[][][] Chnks = new VoxChunk[3][3][3];
 	//byte[][][] airs = new byte[Chnks.length][Chnks[0].length][Chnks[0][0].length];
-	byte[][][] Voxels;
+	byte[] Voxels;
 	byte[][][] VoxData;
 	byte[][][] SunLight;
 	public VoxEn(Vector3 vcam,int xsiz, int ysiz, int zsiz,int type) {
 		//SET STUFFSSSS
-		Voxels = new byte[xsiz][ysiz][zsiz];
+		Voxels = new byte[xsiz*ysiz*zsiz];
 		 VoxData = new byte[Voxels.length][Voxels[0].length][Voxels[0][0].length];
 		 SunLight = new byte[Voxels.length][Voxels[0].length][Voxels[0][0].length];
 		campos=vcam;
