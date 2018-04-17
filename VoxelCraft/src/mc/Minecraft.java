@@ -4,9 +4,11 @@
 package mc;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -45,6 +47,7 @@ public class Minecraft {
 	public static QuickMenu qm;
 	public static MainBack mb;
 	public static QuickSettings qs;
+	public static Cursor defCursor;
 	public static FilePanel fp;
 	public static VoxelCt vx;
 	public static int renderVal=130;
@@ -76,13 +79,14 @@ public class Minecraft {
 		cp.revalidate();
 		cf.repaint();
 		cf.revalidate();
+		Minecraft.defCursor=cf.getContentPane().getCursor();
 		//goToSettings();
 
 	}
 
 	public static void loadWorld(VoxelCt vix)
 	{
-
+		
 		vx = vix;
 		Point p = cf.getLocationOnScreen();
 		Dimension siz = cf.getSize();
@@ -96,6 +100,7 @@ public class Minecraft {
 		listenHandle();
 		Minecraft.currentWorldName = vx.getName();
 		cp=vx;
+		cf.getContentPane().setCursor(getBlankCurosr());
 		cf.setLocation(p);
 		cf.setSize(siz);
 		cf.add(cp);
@@ -125,6 +130,19 @@ public class Minecraft {
 		
 		
 	}
+	/** Set ContentPane with this
+	 * */
+	public static Cursor getBlankCurosr() {
+		// Transparent 16 x 16 pixel cursor image.
+		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+
+		// Create a new blank cursor.
+		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+		    cursorImg, new Point(0, 0), "blank cursor");
+		return blankCursor;
+	}
+	
+	
 	public static void goToVox() {
 		VoxEn ven = Minecraft.vx.getVen();
 		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode);
@@ -284,6 +302,7 @@ public class Minecraft {
 		cp=qm;
 		cf.setLocation(p);
 		cf.setSize(siz);
+		cf.setCursor(defCursor);
 		cf.add(cp);
 		cf.repaint();
 		cf.revalidate();
