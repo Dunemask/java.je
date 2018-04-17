@@ -4,7 +4,6 @@
 package frames;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +18,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import dunemask.objects.DMediaPlayer;
-import dunemask.util.FileUtil;
 import mc.Minecraft;
 import mplayer.PlaySound;
 import mplayer.SoundEngine;
@@ -192,14 +190,6 @@ public class Settings extends JPanel {
 	}
 
 
-	/**
-	 * @return
-	 */
-	private String volCalc() {
-		double vol = PlaySound.vol;
-		vol=vol*100;
-		return String.valueOf(vol);
-	}
 
 
 	/**
@@ -208,9 +198,7 @@ public class Settings extends JPanel {
 	protected void resized(ComponentEvent e) {
 		//Goes through and changes each component to fit the parent somewhat
 				try {
-			    	Component c = (Component)e.getSource();
 			        // This is only called when the user releases the mouse button.
-			    	BackPanel tmp = new BackPanel(FileUtil.getResourceURL("resources/mainmenu/panorama_3.png"),c.getWidth(),c.getHeight());
 			    	//double ofset = c.getWidth()*this.pbXOffSetPercent;
 			    	int pbch = this.getHeight()/10;
 			    	Settings.volLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));

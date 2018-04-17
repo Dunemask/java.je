@@ -1,7 +1,5 @@
 package minerender;
 
-import minerender.VoxEn;
-
 public class VoxGen {
 	VoxEn v;
 	byte[][][] tree = {

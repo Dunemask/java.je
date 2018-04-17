@@ -10,7 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -19,22 +18,24 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import dunemask.util.FileUtil;
 /**
  * Control of the inventory that has all of the blocks...
  * @author Roberts
  *
  */
 public class Inventory extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	VoxEn ven;
 	Border raised = BorderFactory.createRaisedSoftBevelBorder();
 	Border lowered = BorderFactory.createLoweredBevelBorder();
 	public Border cool= BorderFactory.createCompoundBorder(raised,lowered);
-	public DefaultListModel lm = new DefaultListModel();
-	public DefaultListModel hb = new DefaultListModel();
-	private final JList list = new JList(lm);
-	private final JList hotbar = new JList(hb);
+	public DefaultListModel<String> lm = new DefaultListModel<String>();
+	public DefaultListModel<String> hb = new DefaultListModel<String>();
+	private final JList<String> list = new JList<String>(lm);
+	private final JList<String> hotbar = new JList<String>(hb);
 	
 	/**
 	 * Uses JLists and JScrollPanes to get the job done...
@@ -54,7 +55,7 @@ public class Inventory extends JPanel{
 		list.setPreferredSize(new Dimension(100,1000));
 		//list.setSize(100,1000);	
 		list.setVisibleRowCount(-1);
-		JButton jb = new JButton("Save");
+		//JButton jb = new JButton("Save");
 		//jb.addActionListener("Saves");
 		list.addListSelectionListener(new ListSelectionListener() {
 			
@@ -64,10 +65,10 @@ public class Inventory extends JPanel{
 			}
 			
 		});
-		ListCellRenderer lcr = 		new ListCellRenderer() {
+		ListCellRenderer<Object> lcr = 		new ListCellRenderer<Object>() {
 
 				@Override
-				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 						boolean cellHasFocus) {
 					JPanel jp = new JPanel();
 					jp.setSize(60,60);
@@ -87,10 +88,10 @@ public class Inventory extends JPanel{
 				}
 				
 			};
-			ListCellRenderer hbr = 		new ListCellRenderer() {
+			ListCellRenderer<Object> hbr = 		new ListCellRenderer<Object>() {
 
 				@Override
-				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 						boolean cellHasFocus) {
 					JPanel jp = new JPanel();
 					jp.setSize(60,60);
@@ -142,7 +143,7 @@ public class Inventory extends JPanel{
 		list.setPreferredSize(new Dimension(100,1000));
 		//list.setSize(100,1000);	
 		list.setVisibleRowCount(-1);
-		JButton jb = new JButton("Save");
+		//JButton jb = new JButton("Save");
 		//jb.addActionListener("Saves");
 		list.addListSelectionListener(new ListSelectionListener() {
 			
@@ -152,10 +153,10 @@ public class Inventory extends JPanel{
 			}
 			
 		});
-		ListCellRenderer lcr = 		new ListCellRenderer() {
+		ListCellRenderer<Object> lcr = 		new ListCellRenderer<Object>() {
 
 				@Override
-				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 						boolean cellHasFocus) {
 					JPanel jp = new JPanel();
 					jp.setSize(60,60);
@@ -175,10 +176,10 @@ public class Inventory extends JPanel{
 				}
 				
 			};
-			ListCellRenderer hbr = 		new ListCellRenderer() {
+			ListCellRenderer<Object> hbr = 		new ListCellRenderer<Object>() {
 
 				@Override
-				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 						boolean cellHasFocus) {
 					JPanel jp = new JPanel();
 					jp.setSize(60,60);

@@ -20,8 +20,7 @@ public class Run {
 	 */
 	public static void main(String[] args) {
 		
-		//m=  new MainMenu();
-		String s = Sound.menuSong[3];
+		def();
 	}
 	/**
 	 * 
@@ -31,11 +30,11 @@ public class Run {
 		Sound s = new Sound("000009", FileUtil.getResource("resources/sounds/etc/click.mp3"), 
 				"click", "Minecraft", "Dunemask","/etc/click.mp3");
 		
-		SoundHandler.editXML(s,"/etc/click/");
-		String son = "/etc/click/";
+		//SoundHandler.editXML(s,"/etc/click/");
+		//String son = "/etc/click/";
 		//son = Sound.menuSong[r.nextInt(4)];
-		Sound tmp = SoundHandler.loadSong(son);
-		PlaySound.playSound(tmp);
+		//Sound tmp = SoundHandler.loadSong(son);
+		PlaySound.playSound(s);
 		
 	}
 	public static void write() {

@@ -1,6 +1,5 @@
 package minemain;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,13 +8,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import mc.Minecraft;
-import minerender.FileControl;
 import minerender.Inventory;
 import minerender.Vector3;
 import minerender.VoxEn;
@@ -23,6 +20,10 @@ import minerender.VoxPanel;
 import mplayer.SoundEngine;
 
 public class VoxelCt extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7546821983465423073L;
 	private static  Inventory inv;
 	private VoxPanel vp;
 	private VoxEn ven;
@@ -116,7 +117,7 @@ public class VoxelCt extends JPanel{
 		key =new KeyList();
 		 this.addKeyListener(key);
 		    this.setFocusable(true);
-		    this.requestFocus();
+		    this.requestFocusInWindow();
 	//	this.setAlwaysOnTop(true);
 		   
 		    if(mode==1) {
@@ -180,19 +181,19 @@ public class VoxelCt extends JPanel{
 			System.out.println(Minecraft.renderVal);
 		}
 		if(key.Output()[73]==1) {//I//TODO
-			VoxEn.fovc+=.001f;
-			System.out.println(VoxEn.fovc);
+			this.getVen().fovc+=.001f;
+			System.out.println(this.getVen().fovc);
 		}
 		if(key.Output()[79]==1) {//O//TODO
-			VoxEn.fovc-=.001f;
-			System.out.println(VoxEn.fovc);
+			this.getVen().fovc-=.001f;
+			System.out.println(this.getVen().fovc);
 		}
 		
 		
 		vp.setSize(this.getWidth(), this.getHeight());
 		this.repaint();
 		vp.repaint();
-		this.requestFocus();
+		this.requestFocusInWindow();
 		if(einv==0) {
 		
 			if (mode==0){

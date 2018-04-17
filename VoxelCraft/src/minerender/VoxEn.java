@@ -4,7 +4,6 @@ package minerender;
 import java.awt.AWTException;
 import java.awt.MouseInfo;
 import java.awt.Robot;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,13 +16,13 @@ public class VoxEn {
 	public int my = 0;
 	public float rx = 0;
 	public float ry = 0;
-	public static float fovc = 0.015f;
+	public float fovc = 0.015f;
 	int viewdist=3000;
 	int trydist=50;
 	int density = 0;
 	int siz = 1;
 	int timer=0;
-	static int blocklength=16;
+	int blocklength=16;
 	int imglength=21;
 	private String name;
 	public float breaktime=0;
@@ -35,8 +34,8 @@ public class VoxEn {
 			return null;
 		}
 	}
-	public static int[] inventory = new int[blocklength];
-	public static void setinventory(int[] inte) {
+	public int[] inventory = new int[blocklength];
+	public void setinventory(int[] inte) {
 		inventory = inte;
 	}
 	/**

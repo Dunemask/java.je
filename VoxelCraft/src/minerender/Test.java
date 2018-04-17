@@ -2,8 +2,6 @@ package minerender;
 
 import javax.swing.JFrame;
 
-import minemain.VoxelCt;
-
 public abstract class Test {
 
 	public static void main(String[] args) {

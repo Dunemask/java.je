@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -30,6 +28,12 @@ import mplayer.SoundEngine;
  *
  */
 public class QuickMenu extends JPanel{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8074240448990920678L;
+
 
 	public static Rectangle center(int cw,int ch,double xOffSetlr,int totalComp,int compNumber,int verticalCompOffset) {
 		int compch = ch/totalComp;

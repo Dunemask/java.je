@@ -29,15 +29,18 @@ import javax.swing.event.ListSelectionListener;
 import mc.Minecraft;
 import minemain.VoxelCt;
 import mplayer.SoundEngine;
-import javax.swing.UIManager;
 /**
  * This Is in charge of the panel that manages the world files.
  * @author Roberts
  *
  */
 public class FilePanel extends JPanel {
-	DefaultListModel lm = new DefaultListModel();
-	JList list = new JList(lm);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4812485565177991885L;
+	DefaultListModel<String> lm = new DefaultListModel<String>();
+	JList<String> list = new JList<String>(lm);
 	VoxEn ven;
 	JFrame frm;
 	JToggleButton creative;
@@ -61,9 +64,9 @@ public class FilePanel extends JPanel {
 		
 		
 		
-		list.setCellRenderer(new ListCellRenderer() {
+		list.setCellRenderer(new ListCellRenderer<Object>() {
 			@Override
-			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 					boolean hasFocus) {
 				JPanel jp = new JPanel();
 				jp.setBackground(Color.GRAY);
@@ -152,7 +155,7 @@ public class FilePanel extends JPanel {
 		JTextField jx = new JTextField("120");
 		JTextField jy = new JTextField("120");
 		JTextField jz = new JTextField("120");
-		JLabel l3 = new JLabel("Like");
+		//JLabel l3 = new JLabel("Like");
 		
 				JButton back = new JButton("Back");
 				back.setForeground(Color.BLACK);
@@ -217,7 +220,7 @@ public class FilePanel extends JPanel {
 					//jtf.setText("Untitled");
 					btnAdd.setText("New");
 					refreshlm();
-					ListModel mod = list.getModel();
+					ListModel<String> mod = list.getModel();
 					int wanted = -1;
 					for(int c=0;c<mod.getSize();c++) {
 						if(mod.getElementAt(c).toString().equals(jtf.getText())) {
@@ -261,7 +264,6 @@ public class FilePanel extends JPanel {
 	 * 
 	 */
 	protected void delAction() {
-		int ind = list.getSelectedIndex();
 		String s = list.getSelectedValue().toString();
 		File file = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+s+".xml");
 		file.delete();

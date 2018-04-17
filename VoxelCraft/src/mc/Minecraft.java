@@ -3,21 +3,15 @@
  */
 package mc;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -29,7 +23,6 @@ import frames.Settings;
 import minemain.VoxelCt;
 import minerender.FilePanel;
 import minerender.VoxEn;
-import minerender.VoxPanel;
 import mplayer.PlaySound;
 import mplayer.SoundEngine;
 
