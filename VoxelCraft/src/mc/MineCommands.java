@@ -76,7 +76,11 @@ public class MineCommands {
 			return;
 		}
 		if(command.equalsIgnoreCase("Help")) {
+			try {
 			help(com[1]);
+			}catch(java.lang.ArrayIndexOutOfBoundsException exc) {
+				Minecraft.vx.printText("Help Is Used to demonstrate commands");
+			}
 			return;
 		}
 		if(command.equalsIgnoreCase("setblock")) {
@@ -133,6 +137,16 @@ public class MineCommands {
 			}
 			return;
 		}
+		if(command.equalsIgnoreCase("give")) {
+			int block = Minecraft.vx.getVen().getBlockIdByName(com[1]);
+			Minecraft.vx.getVen().inventory[block-1]+=Integer.parseInt(com[2]);
+			
+			
+			//inventory[Voxels[(int)v3.x][(int)v3.y][(int)v3.z]-1]++;
+			
+		}
+		
+		
 		if(command.equalsIgnoreCase("save")) {
 			CountDownLatch latch = new CountDownLatch(1);
 			new Thread( ()->{

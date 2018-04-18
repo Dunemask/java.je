@@ -24,6 +24,7 @@ public class VoxEn {
 	int timer=0;
 	int blocklength=16;
 	int imglength=21;
+	private int inventorymax = 9999;
 	private String name;
 	public float breaktime=0;
 	public ArrayList<Block> blks= new ArrayList<Block>();
@@ -57,24 +58,24 @@ public class VoxEn {
 		blks.add(new Block(tan, vis, i , name ,bt));
 	}
 	public void initializeBlock() {
-		addBlock("Dirt",0,0,0,0,0,0,true,true,5);
-		addBlock("Grass",0,2,3,3,3,3,true,true,5);
+		addBlock("dirt",0,0,0,0,0,0,true,true,5);
+		addBlock("grass",0,2,3,3,3,3,true,true,5);
 		//addBlock("Dirt",0,0,0,0,0,0,true,true);
-		addBlock("Stone",1,1,1,1,1,1,true,true,15);
-		addBlock("Wood",4,4,5,5,5,5,true,true,8);
-		addBlock("Leaves",7,7,7,7,7,7,true,true,3);
-		addBlock("Bricks",9,9,9,9,9,9,true,true,10);
-		addBlock("Red",11,11,11,11,11,11,true,true,1);
-		addBlock("Orange",12,12,12,12,12,12,true,true,1);
-		addBlock("Yellow",13,13,13,13,13,13,true,true,1);
-		addBlock("Green",14,14,14,14,14,14,true,true,1);
-		addBlock("Cyan",15,15,15,15,15,15,true,true,1);
-		addBlock("Blue",16,16,16,16,16,16,true,true,1);
-		addBlock("Magenta",17,17,17,17,17,17,true,true,1);
-		addBlock("Glass",20,20,20,20,20,20,true,false,1);
+		addBlock("stone",1,1,1,1,1,1,true,true,15);
+		addBlock("wood",4,4,5,5,5,5,true,true,8);
+		addBlock("leaves",7,7,7,7,7,7,true,true,3);
+		addBlock("bricks",9,9,9,9,9,9,true,true,10);
+		addBlock("red",11,11,11,11,11,11,true,true,1);
+		addBlock("orange",12,12,12,12,12,12,true,true,1);
+		addBlock("yellow",13,13,13,13,13,13,true,true,1);
+		addBlock("green",14,14,14,14,14,14,true,true,1);
+		addBlock("cyan",15,15,15,15,15,15,true,true,1);
+		addBlock("blue",16,16,16,16,16,16,true,true,1);
+		addBlock("magenta",17,17,17,17,17,17,true,true,1);
+		addBlock("glass",20,20,20,20,20,20,true,false,1);
 		//addBlock("Light_Gray_Stained_Glass",21,21,21,21,21,21,true,false,1);
-		addBlock("Rock",18,18,18,18,18,18,true,true,12);
-		addBlock("Bedrock",19,19,19,19,19,19,true,true,1000);
+		addBlock("cobblestone",18,18,18,18,18,18,true,true,12);
+		addBlock("bedrock",19,19,19,19,19,19,true,true,1000);
 	}
 	
 	
@@ -675,7 +676,7 @@ public class VoxEn {
 		Vector3 v3 = sel;
 		//Chnks[(int)v3.x/16][(int)v3.y/16][(int)v3.z/16].StorChunk[(int)v3.x%16][(int)v3.y%16][(int)v3.z%16] = (byte)block;
 		if(give) {
-			if(inventory[Voxels[(int)v3.x][(int)v3.y][(int)v3.z]-1]<9999) {
+			if(inventory[Voxels[(int)v3.x][(int)v3.y][(int)v3.z]-1]<inventorymax) {
 				inventory[Voxels[(int)v3.x][(int)v3.y][(int)v3.z]-1]++;
 				Voxels[(int)v3.x][(int)v3.y][(int)v3.z] = (byte)block;
 			}
@@ -684,6 +685,22 @@ public class VoxEn {
 		Voxels[(int)v3.x][(int)v3.y][(int)v3.z] = (byte)block;
 		}
 	}
+	/**@param block
+	 * @return block id or -1 if not found
+	 * */
+	public int getBlockIdByName(String block) {
+		int wanted =0;
+		ArrayList<Block> names = blks;
+		for(int i=0;i<names.size();i++) {
+			if(block.equalsIgnoreCase(names.get(i).getName())) {
+				wanted = i+1;
+				i=names.size();
+			}
+		}
+		return wanted;
+	}
+	
+	
 	public void setBlockOut(int block,boolean take) {
 		int dx=0;
 		int dy=0;
@@ -847,7 +864,7 @@ public void resetHills(float weight, int count){
 		}
 		//Voxels= tmp;
 
-		System.out.println("Done With Hills");
+		//System.out.println("Done With Hills");
 	}
 public void resetFlat(int height, byte block){
 	for(int x = 0; x < Voxels.length; x++) {
@@ -864,7 +881,7 @@ public void resetFlat(int height, byte block){
 	}
 	//Voxels= tmp;
 
-	System.out.println("Done With Hills");
+	//System.out.println("Done With Hills");
 
 }
 

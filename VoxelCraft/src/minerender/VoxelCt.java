@@ -630,13 +630,45 @@ public class VoxelCt extends JPanel{
 	protected String autoFill(String text) {
 		
 		if(countSpaces(text)<=0) {
-			if(StringUtil.containsIgnoreCase(text, "/soun")) {
+			if(StringUtil.containsIgnoreCase(text, "/so")) {
 				return "/soundengine";
 			}
 			if(StringUtil.containsIgnoreCase(text, "/setb")) {
 				return "/setblock";
 			}
+			if(StringUtil.containsIgnoreCase(text, "/fill")) {
+				return "/fill-replace";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/f")) {
+				return "/fill";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/h")) {
+				return "/help";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/g")) {
+				return "/gamemode";
+			}
 			
+		}else if(countSpaces(text)==1) {
+			if(StringUtil.containsIgnoreCase(text, "/soundengine p")) {
+				return "/soundengine play";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/soundengine s")) {
+				return "/soundengine stopall";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/soundengine on")) {
+				return "/soundengine off";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/soundengine off")) {
+				return "/soundengine on";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/soundengine o")) {
+				return "/soundengine on";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/help ")) {
+				String add = autoFill(text.replace("/help ", "/"));
+				return "/help " + add.substring(1, add.length());
+			}
 		}
 		
 		

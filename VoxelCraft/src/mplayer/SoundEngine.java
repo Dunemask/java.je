@@ -58,7 +58,6 @@ public class SoundEngine {
 		}
 	}
 	public static void stop(int engine) {
-		if(run) {
 			switch(engine) {
 			case SoundEngine.title:
 				for(int i=0;i<titleRun.size();i++) {
@@ -90,24 +89,25 @@ public class SoundEngine {
 				System.exit(1);
 				break;
 			}
-		}
+
 	}
 	
 	public static void start(int engine) {
-		
-		switch(engine) {
-		case SoundEngine.title:
-			titleEngine();
-			break;
-		case SoundEngine.game:
-			gameEngine();
-			break;
-		
+		if(run) {
+			switch(engine) {
+			case SoundEngine.title:
+				titleEngine();
+				break;
+			case SoundEngine.game:
+				gameEngine();
+				break;
 			
-		default:
-			System.err.println("Invalid Sound Engine");
-			System.exit(1);
-			break;
+				
+			default:
+				System.err.println("Invalid Sound Engine");
+				System.exit(1);
+				break;
+			}
 		}
 	}
 
