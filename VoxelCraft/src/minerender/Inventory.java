@@ -277,6 +277,14 @@ public class Inventory extends JPanel{
 				hb.addElement(""+x);
 			}
 	}
+	
+	public void setSelectedVal(int block) {
+		ven.hotbar[hotbar.getSelectedIndex()] = block;
+	}
+	public void setVal(int hotbarIndex,int block) {
+		ven.hotbar[hotbarIndex] = block;
+	}
+	
 	/**
 	 * 
 	 */

@@ -42,7 +42,7 @@ public class VoxelCt extends JPanel{
 	 */
 	private static final long serialVersionUID = -7546821983465423073L;
 	private boolean developerMode = false;
-	private static  Inventory inv;
+	private  Inventory inv;
 	private VoxPanel vp;
 	private VoxEn ven;
 	private KeyList key;
@@ -149,6 +149,9 @@ public class VoxelCt extends JPanel{
 					mousedown = true;
 				if(e.getButton()==3)
 					rmousedown = true;
+				if(e.getButton()==2) {
+					middleButtonClicked();
+				}
 				
 			}
 			@Override
@@ -244,6 +247,16 @@ public class VoxelCt extends JPanel{
 			}});
 		timer.start();
 
+	}
+	/**
+	 * 
+	 */
+	protected void middleButtonClicked() {
+		int blocknum = this.ven.getBlock(this.ven.sel);
+		if(blocknum!=0) {
+			this.inv.setSelectedVal(blocknum);
+		}
+		
 	}
 	private JLabel coord = new JLabel();
 	private JLabel lookingat = new JLabel();
@@ -343,6 +356,8 @@ public class VoxelCt extends JPanel{
 					if(spaces==5) {
 						textBar.setText(cur+(int)ven.sel.y+"");
 					}
+				}else if(arg0.getKeyCode()==9) {//Tab again
+					textBar.setText(autoFill(textBar.getText()));
 				}
 			
 				if(arg0.getKeyCode()==KeyEvent.VK_UP) {
@@ -607,6 +622,26 @@ public class VoxelCt extends JPanel{
 		}
 		}
 		
+	}
+	/**
+	 * @param text
+	 * @return
+	 */
+	protected String autoFill(String text) {
+		
+		if(countSpaces(text)<=0) {
+			if(StringUtil.containsIgnoreCase(text, "/soun")) {
+				return "/soundengine";
+			}
+			if(StringUtil.containsIgnoreCase(text, "/setb")) {
+				return "/setblock";
+			}
+			
+		}
+		
+		
+		
+		return text;
 	}
 	/**
 	 * 

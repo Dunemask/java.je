@@ -28,64 +28,68 @@ public class SoundEngine {
 	public static ArrayList<Boolean> gameRun = new ArrayList<Boolean>();
 	/**Only For Stopping!*/
 	public static final int allEngines=2;
+	public static boolean run=true;
 	ArrayList<MediaPlayer> cp = new ArrayList<MediaPlayer>();
 	
 	public static void handle(String type) {
-		Sound s;
-		switch(type) {
-		case "click":
-			s  =SoundHandler.loadSong("/etc/click");
-			PlaySound.playOverSound(s);
-			break;
-		case "block_place":
-			 s  =SoundHandler.loadSong("/etc/block_place");
-			PlaySound.playOverSound(s);
-			break;
-		case "block_break":
-			 s  =SoundHandler.loadSong("/etc/block_break");
-			PlaySound.playOverSound(s,0.05*PlaySound.vol);
-			break;
-	
-		default:
-			
-			System.err.println("Invalid Sound Engine");
-			System.exit(1);
-			break;
+		if(run) {
+			Sound s;
+			switch(type) {
+			case "click":
+				s  =SoundHandler.loadSong("/etc/click");
+				PlaySound.playOverSound(s);
+				break;
+			case "block_place":
+				 s  =SoundHandler.loadSong("/etc/block_place");
+				PlaySound.playOverSound(s);
+				break;
+			case "block_break":
+				 s  =SoundHandler.loadSong("/etc/block_break");
+				PlaySound.playOverSound(s,0.05*PlaySound.vol);
+				break;
 		
+			default:
+				
+				System.err.println("Invalid Sound Engine");
+				System.exit(1);
+				break;
+			
+			}
 		}
 	}
 	public static void stop(int engine) {
-		
-		switch(engine) {
-		case SoundEngine.title:
-			for(int i=0;i<titleRun.size();i++) {
-				titleRun.set(i, false);
-			}
-			tlatch.countDown();
-			break;
-		case SoundEngine.game:
-			for(int i=0;i<gameRun.size();i++) {
-				gameRun.set(i, false);
-			}
-			glatch.countDown();
-			break;
-		case SoundEngine.allEngines:
-			glatch.countDown();
-			for(int i=0;i<titleRun.size();i++) {
-				titleRun.set(i, false);
-			}
-			tlatch.countDown();
-			for(int i=0;i<gameRun.size();i++) {
-				gameRun.set(i, false);
-			}
-			DMediaPlayer.getMediaPlayer().stop();
-			break;
-		
+		if(run) {
+			switch(engine) {
+			case SoundEngine.title:
+				for(int i=0;i<titleRun.size();i++) {
+					titleRun.set(i, false);
+				}
+				tlatch.countDown();
+				break;
+			case SoundEngine.game:
+				for(int i=0;i<gameRun.size();i++) {
+					gameRun.set(i, false);
+				}
+				glatch.countDown();
+				break;
+			case SoundEngine.allEngines:
+				glatch.countDown();
+				for(int i=0;i<titleRun.size();i++) {
+					titleRun.set(i, false);
+				}
+				tlatch.countDown();
+				for(int i=0;i<gameRun.size();i++) {
+					gameRun.set(i, false);
+				}
+				DMediaPlayer.getMediaPlayer().stop();
+				break;
 			
-		default:
-			System.err.println("Invalid Sound Engine");
-			System.exit(1);
-			break;
+				
+			default:
+				System.err.println("Invalid Sound Engine");
+				System.exit(1);
+				break;
+			}
 		}
 	}
 	

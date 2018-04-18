@@ -125,6 +125,12 @@ public class MineCommands {
 					Minecraft.vx.printText("Could Not Play|Find "+com[2]);
 				}
 			}
+			if(com[1].equalsIgnoreCase("off")) {
+				SoundEngine.run=false;
+			}
+			if(com[1].equalsIgnoreCase("on")) {
+				SoundEngine.run=true;
+			}
 			return;
 		}
 		if(command.equalsIgnoreCase("save")) {
