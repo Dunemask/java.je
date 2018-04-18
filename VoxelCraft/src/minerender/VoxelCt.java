@@ -677,7 +677,7 @@ public class VoxelCt extends JPanel{
 	/**
 	 * 
 	 */
-	private void oldMove() {
+	protected void oldMove() {
 		ven.MouseCam();
 		if(key.Output()[87]==1)
 			ven.MoveCam(Vector3.foreward(spd).rotate(ven.rx, "z"));
