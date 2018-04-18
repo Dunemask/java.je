@@ -39,7 +39,7 @@ public class SoundEngine {
 			break;
 		case "block_break":
 			 s  =SoundHandler.loadSong("/etc/block_break");
-			PlaySound.playOverSound(s,0.05);
+			PlaySound.playOverSound(s,0.05*PlaySound.vol);
 			break;
 	
 		default:

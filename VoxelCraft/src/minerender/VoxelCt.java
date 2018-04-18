@@ -240,14 +240,35 @@ public class VoxelCt extends JPanel{
 		
 	}
 	boolean updateMouse = true;
-	
+	int cc=0;
 	KeyListener tbl = new KeyListener() {
 		@Override
 		public void keyPressed(KeyEvent arg0) {
 			boolean rel = arg0.getKeyChar()=='\n';
 			if(rel) {
 				command();
+				cc = MineCommands.commands.size()-1;
 			}
+				if(arg0.getKeyCode()==KeyEvent.VK_UP) {
+					int lastc = cc;
+					try {
+						textBar.setText(MineCommands.getCommand(cc));
+						cc--;
+					}catch(Exception e) {
+						cc = lastc;
+					}
+					
+				}else if(arg0.getKeyCode()==KeyEvent.VK_DOWN) {
+					int lastc = cc;
+					try {
+						cc++;
+						textBar.setText(MineCommands.getCommand(cc));
+					}catch(Exception e) {
+					cc = lastc;
+					}
+				}
+
+			
 			if(arg0.getKeyCode()==27) {//Escape
 				textBar.setText("");
 				command();
@@ -312,7 +333,7 @@ public class VoxelCt extends JPanel{
 			this.textBar.setVisible(true);
 			textBar.requestFocusInWindow();
 			this.forceupdate=false;
-			this.setCursor(Cursor.getDefaultCursor());
+			//this.setCursor(Cursor.getDefaultCursor());
 			this.removeKeyListener(key);
 			textBar.removeKeyListener(tbl);
 			textBar.addKeyListener(tbl);
@@ -324,9 +345,6 @@ public class VoxelCt extends JPanel{
 			
 			
 		}
-		
-		
-		
 		vp.setSize(this.getWidth(), this.getHeight());
 		if(this.forceupdate==true) {
 			//System.out.println("Request");
