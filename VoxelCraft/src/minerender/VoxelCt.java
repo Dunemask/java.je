@@ -341,8 +341,20 @@ public class VoxelCt extends JPanel{
 			this.revalidate();
 
 			
-			
-			
+		}
+		if(key.Output()[47]==1) {//T PUshed //TODO
+			this.updateMouse=false;
+			this.textBar.setVisible(true);
+			textBar.requestFocusInWindow();
+			textBar.setText("/");
+			this.forceupdate=false;
+			//this.setCursor(Cursor.getDefaultCursor());
+			this.removeKeyListener(key);
+			textBar.removeKeyListener(tbl);
+			textBar.addKeyListener(tbl);
+			this.repaint();
+			this.revalidate();
+
 			
 		}
 		vp.setSize(this.getWidth(), this.getHeight());
