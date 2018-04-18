@@ -168,7 +168,9 @@ public class SoundEngine {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				if(titleRun.get(i)) {
 				DMediaPlayer.getMediaPlayer().stop();
+				}
 				try {
 					Thread.sleep(r.nextInt(SoundEngine.titleWaitTime));
 				} catch (InterruptedException e) {
@@ -248,7 +250,9 @@ public class SoundEngine {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				DMediaPlayer.getMediaPlayer().stop();
+				if(gameRun.get(i)) {
+					DMediaPlayer.getMediaPlayer().stop();
+					}
 				try {
 					Thread.sleep(r.nextInt(SoundEngine.gameWaitTime));
 				} catch (InterruptedException e) {
