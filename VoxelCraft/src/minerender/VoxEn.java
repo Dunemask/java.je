@@ -81,6 +81,8 @@ public class VoxEn {
 	public int[] hotbar= {1,2,3,4,5,6,7,8,9};
 	public int selected=0;
 	HashMap<Float,Vector3> hmm = new HashMap<Float,Vector3>();
+	/** Selected Box
+	 * */
 	Vector3 sel = new Vector3(0,0,0);
 	String seld = "";
 	public ImageReader[] imgas = new ImageReader[imglength];
