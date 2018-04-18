@@ -38,14 +38,14 @@
 		</menu4>
 	</title>
 	<etc>
-		<Test>
+		<Give Me A Sign>
 			<ID>000001</ID>
 			<Title>Give Me A Sign</Title>
 			<Song>file:/C:/Users/Dunemask/eclipse-workspace/Code%20Camp%20Player/bin/resources/sounds/etc/Give%20Me%20A%20Sign.mp3</Song>
 			<Artist>Breaking Benjamen</Artist>
 			<Album>Dear Agony</Album>
 			<RelPath>/etc/Give Me A Sign.mp3</RelPath>
-		</Test>
+		</Give Me A Sign>
 		<Angels Fall>
 			<ID>000002</ID>
 			<Title>Angels Fall</Title>

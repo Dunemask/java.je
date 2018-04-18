@@ -658,6 +658,11 @@ public class VoxEn {
 			return -128;
 			} 
 	}
+	public void setBlock(int block,Vector3 loc) {
+		Vector3 v3 = loc;
+		//Chnks[(int)v3.x/16][(int)v3.y/16][(int)v3.z/16].StorChunk[(int)v3.x%16][(int)v3.y%16][(int)v3.z%16] = (byte)block;
+		Voxels[(int)v3.x][(int)v3.y][(int)v3.z] = (byte)block;
+	}
 	public void setBlock(int block,boolean give) {
 		Vector3 v3 = sel;
 		//Chnks[(int)v3.x/16][(int)v3.y/16][(int)v3.z/16].StorChunk[(int)v3.x%16][(int)v3.y%16][(int)v3.z%16] = (byte)block;

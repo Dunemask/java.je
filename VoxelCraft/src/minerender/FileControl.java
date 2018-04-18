@@ -85,7 +85,7 @@ public class FileControl {
 		return i;
 	}
 	
-	private static RuneMap blox;
+	public static RuneMap blox;
 	/** Pulls value Yes jason yer numbers still work ^^
 	 * 
 	 * */

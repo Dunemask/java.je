@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import dunemask.objects.DMediaPlayer;
 import dunemask.util.FileUtil;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -24,6 +25,8 @@ public class SoundEngine {
 	final static int titleWaitTime = 12000;
 	public static boolean titleRun = false;
 	public static boolean gameRun = false;
+	/**Only For Stopping!*/
+	public static final int allEngines=2;
 	
 	
 	public static void handle(String type) {
@@ -55,9 +58,18 @@ public class SoundEngine {
 		switch(engine) {
 		case SoundEngine.title:
 			titleRun=false;
+			tlatch.countDown();
 			break;
 		case SoundEngine.game:
 			gameRun=false;
+			glatch.countDown();
+			break;
+		case SoundEngine.allEngines:
+			glatch.countDown();
+			titleRun=false;
+			tlatch.countDown();
+			gameRun=false;
+			DMediaPlayer.getMediaPlayer().stop();
 			break;
 		
 			
@@ -89,6 +101,9 @@ public class SoundEngine {
 	}
 
 
+	public static CountDownLatch tlatch = new CountDownLatch(1);
+	public static CountDownLatch glatch = new CountDownLatch(1);
+	
 	/**
 	 * 
 	 */
@@ -134,14 +149,16 @@ public class SoundEngine {
 				//Play
 				PlaySound.playSound(s);
 				long waitTime =(int)m.getDuration().toMillis()+1;
-				CountDownLatch latch = new CountDownLatch(1);
+				tlatch = new CountDownLatch(1);
 				try {
-					latch.await(waitTime, TimeUnit.MILLISECONDS);
+					tlatch.await(waitTime, TimeUnit.MILLISECONDS);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
-
+				DMediaPlayer.getMediaPlayer().stop();
+				if(SoundEngine.titleRun==false) {
+					return;
+				}
 				try {
 					Thread.sleep(r.nextInt(SoundEngine.titleWaitTime));
 				} catch (InterruptedException e) {
@@ -212,14 +229,16 @@ public class SoundEngine {
 				PlaySound.playSound(s);
 				//Play
 				long waitTime =(int)m.getDuration().toMillis()+1;
-				CountDownLatch latch = new CountDownLatch(1);
+					glatch = new CountDownLatch(1);
 				try {
-					latch.await(waitTime, TimeUnit.MILLISECONDS);
+					glatch.await(waitTime, TimeUnit.MILLISECONDS);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
-
+				DMediaPlayer.getMediaPlayer().stop();
+				if(SoundEngine.gameRun==false) {
+					return;
+				}
 				try {
 					Thread.sleep(r.nextInt(SoundEngine.gameWaitTime));
 				} catch (InterruptedException e) {

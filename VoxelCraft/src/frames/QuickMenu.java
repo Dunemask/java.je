@@ -173,7 +173,7 @@ public class QuickMenu extends JPanel{
 	protected static void exit() {
 		SoundEngine.handle("click");
 		FileControl.SaveFileAsXML(Minecraft.vx.getVen(), Minecraft.vx.getVen().getName());
-		SoundEngine.stop(SoundEngine.game);
+		SoundEngine.stop(SoundEngine.allEngines);
 		SoundEngine.start(SoundEngine.title);
 		Minecraft.goToSelect();
 	}

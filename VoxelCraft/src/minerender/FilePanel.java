@@ -283,7 +283,7 @@ public class FilePanel extends JPanel {
 		int cret;
 		if(creative.isSelected()) {cret =1;}else {cret=0;}
 		VoxelCt vct = new VoxelCt(ven,cret);
-		SoundEngine.stop(SoundEngine.title);
+		SoundEngine.stop(SoundEngine.allEngines);
 		SoundEngine.start(SoundEngine.game);
 		Minecraft.loadWorld(vct);
 		//this.getParent());

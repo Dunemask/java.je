@@ -106,17 +106,14 @@ public class VoxelCt extends JPanel{
 		this.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 			@Override
 			public void mouseEntered(java.awt.event.MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 			@Override
 			public void mouseExited(java.awt.event.MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 			@Override
@@ -187,6 +184,8 @@ public class VoxelCt extends JPanel{
 		
 		this.add(vp);
 		this.repaint();
+		this.add(coord,1);
+		this.add(lookingat,1);
 		this.revalidate();
 		//System.out.println(this.getParent());
 		//frame = (JFrame) this.getParent().getParent().getParent();
@@ -201,11 +200,14 @@ public class VoxelCt extends JPanel{
 		timer.start();
 
 	}
+	private JLabel coord = new JLabel();
+	private JLabel lookingat = new JLabel();
 	/**
 	 * 
 	 */
 	protected void panelResized() {
 		vp.setSize(Minecraft.cf.getWidth(), Minecraft.cf.getHeight());
+	 th.setSize(vp.getWidth(), vp.getHeight());  
 		int mw = (vp.getWidth()/2)+1;
 		int mh = (vp.getHeight()/2)+1;
 		int w = 42;
@@ -213,12 +215,9 @@ public class VoxelCt extends JPanel{
 		this.crosshair.setBounds(mw-w, mh-h, w, h);
 		BufferedImage img = this.resizeImage(FileUtil.getResourceURL("resources/textures/gui/overlay/crosshair.png"), w, h);
 		this.crosshair.setIcon(new ImageIcon(img));
-		this.addComponentListener(new ComponentAdapter() {
-			public void componentResized(ComponentEvent e) {
-            	panelResized();
-            }
-			
-		});
+		int tbw=th.getWidth();
+		// textBar.setOpaque(false);
+		textBar.setBounds(0, th.getHeight()-120, tbw, 80);
 		
 	}
 	private BufferedImage resizeImage(URL url,int width,int height) {
@@ -292,7 +291,7 @@ public class VoxelCt extends JPanel{
 		}
 		
 	};
-	
+	boolean stats = false;
 	public boolean forceupdate = true;
 	/**
 	 * 
@@ -320,15 +319,15 @@ public class VoxelCt extends JPanel{
 			Minecraft.renderVal--;
 			System.out.println(Minecraft.renderVal);
 		}
-		if(key.Output()[73]==1) {//I//TODO
+		if(key.Output()[73]==1) {//I
 			this.getVen().fovc+=.001f;
 			System.out.println(this.getVen().fovc);
 		}
-		if(key.Output()[79]==1) {//O//TODO
+		if(key.Output()[79]==1) {//O
 			this.getVen().fovc-=.001f;
 			System.out.println(this.getVen().fovc);
 		}
-		if(key.Output()[84]==1) {//T PUshed //TODO
+		if(key.Output()[84]==1) {//T PUshed 
 			this.updateMouse=false;
 			this.textBar.setVisible(true);
 			textBar.requestFocusInWindow();
@@ -339,24 +338,51 @@ public class VoxelCt extends JPanel{
 			textBar.addKeyListener(tbl);
 			this.repaint();
 			this.revalidate();
+			key.Output()[84]=0;
 
 			
 		}
-		if(key.Output()[47]==1) {//T PUshed //TODO
+		if(key.Output()[47]==1) {// / PUshed 
 			this.updateMouse=false;
 			this.textBar.setVisible(true);
 			textBar.requestFocusInWindow();
+			this.forceupdate=false;
+			//this.setCursor(Cursor.getDefaultCursor());
+			this.removeKeyListener(key);
+			textBar.removeKeyListener(tbl);
+			textBar.addKeyListener(tbl);
+			//System.out.println("true");
 			textBar.setText("/");
-			this.forceupdate=false;
-			//this.setCursor(Cursor.getDefaultCursor());
-			this.removeKeyListener(key);
-			textBar.removeKeyListener(tbl);
-			textBar.addKeyListener(tbl);
 			this.repaint();
 			this.revalidate();
+			key.Output()[47]=0;
 
 			
 		}
+		if(key.Output()[114]==1) {
+			stats=!stats;
+			key.Output()[114]=0;
+		}
+
+		if(stats) {
+			String cordText = "X:"+(int)ven.campos.x+"Y:"+(int)ven.campos.z+"Z:"+(int)ven.campos.y;
+			String lookingText = "Looking At: X:"+(int)ven.sel.x+"Y:"+(int)ven.sel.z+"Z:"+(int)ven.sel.y;
+			coord.setFont(new Font("Century Gothic", Font.PLAIN, textBar.getHeight()-40));
+			lookingat.setFont(coord.getFont());
+			coord.setForeground(Color.WHITE);
+			lookingat.setForeground(coord.getForeground());
+			coord.setText(cordText);
+			coord.setSize(coord.getPreferredSize());
+			coord.setLocation(0, 0);
+			lookingat.setText(lookingText);
+			lookingat.setSize(lookingat.getPreferredSize());
+			lookingat.setLocation(0, coord.getHeight());
+		}else {
+			coord.setText(null);
+			lookingat.setText(null);
+		}
+		
+		
 		vp.setSize(this.getWidth(), this.getHeight());
 		if(this.forceupdate==true) {
 			//System.out.println("Request");
