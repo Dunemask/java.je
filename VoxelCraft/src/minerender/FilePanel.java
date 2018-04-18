@@ -282,8 +282,8 @@ public class FilePanel extends JPanel {
 		this.setVisible(false);
 		int cret;
 		if(creative.isSelected()) {cret =1;}else {cret=0;}
-		VoxelCt vct = new VoxelCt(ven,cret);
-		Minecraft.loadWorld(vct);
+		VoxelCt vct = new VoxelCt(ven,cret,false);//Bolean for resume
+		Minecraft.loadWorld(vct,false);
 		//this.getParent());
 		//this.getParent().removeAll();
 		this.getParent().remove(this);

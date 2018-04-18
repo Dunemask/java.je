@@ -146,7 +146,7 @@ public class QuickMenu extends JPanel{
 		        Image.SCALE_SMOOTH);
 		imgico = new ImageIcon(dimg);
 		back.setIcon(imgico);
-		this.add(back);
+		//this.add(back);
 		
 		this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -183,7 +183,7 @@ public class QuickMenu extends JPanel{
 	protected static void resume() {
 		SoundEngine.handle("click");
 		VoxEn ven = Minecraft.vx.getVen();
-		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode);
+		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode,true);
 		Minecraft.loadWorld(vct,true);
 		
 	}

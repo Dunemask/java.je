@@ -13,6 +13,7 @@ import dunemask.util.StringUtil;
 import minerender.Block;
 import minerender.FileControl;
 import minerender.Vector3;
+import minerender.VoxEn;
 import minerender.VoxelCt;
 import mplayer.PlaySound;
 import mplayer.Sound;
@@ -120,6 +121,8 @@ public class MineCommands {
 		}
 		if(command.equalsIgnoreCase("saveas")) {
 			FileControl.SaveFileAsXML(Minecraft.vx.getVen(), com[1]);
+			VoxEn ven = FileControl.LoadFileXML(com[1]);
+			Minecraft.loadVen(ven);
 			return;
 		}
 		if(command.equalsIgnoreCase("tp")||command.equalsIgnoreCase("teleport")) {
@@ -151,7 +154,95 @@ public class MineCommands {
 			Minecraft.vx.getVen().campos.x = x;
 			Minecraft.vx.getVen().campos.y = y;
 			Minecraft.vx.getVen().campos.z = z;
+			return;
 		}
+		
+		if(command.equalsIgnoreCase("fill")) {
+			if(com[1].equalsIgnoreCase("~")) {
+				com[1] = ""+(int)Minecraft.vx.getVen().campos.x;
+			}else if(com[1].contains("~")){
+				com[1] = com[1].replace("~", "");
+				com[1] = ""+(Integer.parseInt(com[1])+(int)Minecraft.vx.getVen().campos.x);
+			}
+			
+			if(com[2].equalsIgnoreCase("~")) {
+				com[2] = ""+(int)Minecraft.vx.getVen().campos.z;
+			}else if(com[2].contains("~")){
+				com[2] = com[2].replace("~", "");
+				com[2] = ""+(Integer.parseInt(com[2])+(int)Minecraft.vx.getVen().campos.z);
+			}
+			if(com[3].equalsIgnoreCase("~")) {
+				com[3] = ""+(int)Minecraft.vx.getVen().campos.y;
+			}else if(com[3].contains("~")){
+				com[3] = com[3].replace("~", "");
+				com[3] = ""+(Integer.parseInt(com[3])+(int)Minecraft.vx.getVen().campos.y);
+			}
+			if(com[4].equalsIgnoreCase("~")) {
+				com[4] = ""+(int)Minecraft.vx.getVen().campos.x;
+			}else if(com[4].contains("~")){
+				com[4] = com[4].replace("~", "");
+				com[4] = ""+(Integer.parseInt(com[4])+(int)Minecraft.vx.getVen().campos.x);
+			}
+			
+			if(com[5].equalsIgnoreCase("~")) {
+				com[5] = ""+(int)Minecraft.vx.getVen().campos.z;
+			}else if(com[5].contains("~")){
+				com[5] = com[5].replace("~", "");
+				com[5] = ""+(Integer.parseInt(com[5])+(int)Minecraft.vx.getVen().campos.z);
+			}
+			if(com[6].equalsIgnoreCase("~")) {
+				com[6] = ""+(int)Minecraft.vx.getVen().campos.y;
+			}else if(com[6].contains("~")){
+				com[6] = com[6].replace("~", "");
+				com[6] = ""+(Integer.parseInt(com[6])+(int)Minecraft.vx.getVen().campos.y);
+			}
+			int x =Integer.parseInt(com[1]);
+			int y = Integer.parseInt(com[3]);
+			int z = Integer.parseInt(com[2]);
+			int x2 =Integer.parseInt(com[4]);
+			int y2 = Integer.parseInt(com[6]);
+			int z2 = Integer.parseInt(com[5]);
+			String block = com[7];
+			int wanted =0;
+			ArrayList<Block> names = Minecraft.vx.getVen().blks;
+			for(int i=0;i<names.size();i++) {
+				if(block.equalsIgnoreCase(names.get(i).getName())) {
+					wanted = i+1;
+					i=names.size();
+				}
+			}
+			fill(x,y,z,x2,y2,z2,wanted);
+			return;
+		}
+		
+	}
+
+
+	/**
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param x2
+	 * @param y2
+	 * @param z2
+	 * @param block
+	 */
+	private static void fill(int x, int y, int z, int x2, int y2, int z2,int block) {
+		for(int i=Math.min(x, x2);i<=Math.max(x, x2);i++) {
+			for(int c=Math.min(y, y2);c<=Math.max(y, y2);c++) {
+				for(int b=Math.min(z, z2);b<=Math.max(z, z2);b++) {
+					Vector3 temp = new Vector3(i,c,b);
+					Minecraft.vx.getVen().setBlock(block,temp);
+					
+				}
+				
+				
+			}
+			
+			
+		}
+		
+		
 		
 	}
 

@@ -7,6 +7,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
@@ -86,7 +87,7 @@ public class Minecraft {
 		cf.setContentPane(f.getContentPane());
 		cp= new JPanel(null);
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cf.setTitle("Voxelcraft - Java.JE");
+		cf.setTitle("Voxelcraft - Java.JE: "+vix.getVen().getName());
 		cf.setVisible(true);
 		listenHandle();
 		Minecraft.currentWorldName = vx.getName();
@@ -136,9 +137,14 @@ public class Minecraft {
 	
 	public static void goToVox() {
 		VoxEn ven = Minecraft.vx.getVen();
-		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode);
+		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode,true);
 		Minecraft.loadWorld(vct,true);
 	}
+	public static void loadVen(VoxEn ven) {
+		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode,true);
+		Minecraft.loadWorld(vct,true);
+	}
+	
 	
 	/** Settings panel call
 	 * 
@@ -287,10 +293,16 @@ public class Minecraft {
 		cf.setContentPane(f.getContentPane());
 		cp= new JPanel(null);
 		cf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cf.setTitle("Voxelcraft - Java.JE");
+		cf.setTitle("Voxelcraft - Java.JE: "+vx.getVen().getName());
 		cf.setVisible(true);
 		listenHandle();
-		cp=qm;
+		vx.add(qm,1);
+		ComponentListener[] listeners = qm.getComponentListeners();
+		for(int i=0;i<listeners.length;i++) {
+		vx.addComponentListener(listeners[i]);
+		}
+		vx.setCursor(Cursor.getDefaultCursor());
+		cp=vx;
 		cf.setLocation(p);
 		cf.setSize(siz);
 		cf.setCursor(Cursor.getDefaultCursor());

@@ -5,6 +5,7 @@ package mplayer;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -23,11 +24,11 @@ public class SoundEngine {
 	final static int gameWaitTime = 16000;
 	final public static int title=0;
 	final static int titleWaitTime = 12000;
-	public static boolean titleRun = false;
-	public static boolean gameRun = false;
+	public static ArrayList<Boolean> titleRun = new ArrayList<Boolean>();
+	public static ArrayList<Boolean> gameRun = new ArrayList<Boolean>();
 	/**Only For Stopping!*/
 	public static final int allEngines=2;
-	
+	ArrayList<MediaPlayer> cp = new ArrayList<MediaPlayer>();
 	
 	public static void handle(String type) {
 		Sound s;
@@ -57,18 +58,26 @@ public class SoundEngine {
 		
 		switch(engine) {
 		case SoundEngine.title:
-			titleRun=false;
+			for(int i=0;i<titleRun.size();i++) {
+				titleRun.set(i, false);
+			}
 			tlatch.countDown();
 			break;
 		case SoundEngine.game:
-			gameRun=false;
+			for(int i=0;i<gameRun.size();i++) {
+				gameRun.set(i, false);
+			}
 			glatch.countDown();
 			break;
 		case SoundEngine.allEngines:
 			glatch.countDown();
-			titleRun=false;
+			for(int i=0;i<titleRun.size();i++) {
+				titleRun.set(i, false);
+			}
 			tlatch.countDown();
-			gameRun=false;
+			for(int i=0;i<gameRun.size();i++) {
+				gameRun.set(i, false);
+			}
 			DMediaPlayer.getMediaPlayer().stop();
 			break;
 		
@@ -84,11 +93,9 @@ public class SoundEngine {
 		
 		switch(engine) {
 		case SoundEngine.title:
-			titleRun=true;
 			titleEngine();
 			break;
 		case SoundEngine.game:
-			gameRun=true;
 			gameEngine();
 			break;
 		
@@ -113,7 +120,9 @@ public class SoundEngine {
 			@Override
 			public void run() {
 				Random r = new Random();
-				while(titleRun) {
+				titleRun.add(true);
+				int i = titleRun.size()-1;
+				while(titleRun.get(i)) {
 				String song = Sound.menuSong[r.nextInt(4)];
 				Sound s = SoundHandler.loadSong(song);
 				Media m = null;
@@ -156,9 +165,6 @@ public class SoundEngine {
 					e.printStackTrace();
 				}
 				DMediaPlayer.getMediaPlayer().stop();
-				if(SoundEngine.titleRun==false) {
-					return;
-				}
 				try {
 					Thread.sleep(r.nextInt(SoundEngine.titleWaitTime));
 				} catch (InterruptedException e) {
@@ -191,7 +197,10 @@ public class SoundEngine {
 			@Override
 			public void run() {
 				Random r = new Random();
-				while(gameRun) {
+				gameRun.add(true);
+				int i = gameRun.size()-1;
+				while(gameRun.get(i)) {
+				
 				String song = Sound.gameSong()[r.nextInt(Sound.gameSong().length)];
 				//System.out.println(song);
 				Sound s = SoundHandler.loadSong(song);
@@ -236,9 +245,6 @@ public class SoundEngine {
 					e.printStackTrace();
 				}
 				DMediaPlayer.getMediaPlayer().stop();
-				if(SoundEngine.gameRun==false) {
-					return;
-				}
 				try {
 					Thread.sleep(r.nextInt(SoundEngine.gameWaitTime));
 				} catch (InterruptedException e) {

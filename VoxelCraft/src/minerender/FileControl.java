@@ -14,6 +14,7 @@ public class FileControl {
 	public static void SaveFileAsXML(VoxEn vex, String name) {
 		String Voxes = FileControl.SaveArray(FileControl.Array3Dto1D(vex.Voxels));
 		File f = new File(System.getProperty("user.home")+"/Documents/VoxelCraft/Saves/"+name+".xml");
+		f.delete();
 		currentXML = new RuneMap(f,"world");
 		currentXML.writeContainer("world/position/");
 		currentXML.writeElement("world/position/x", vex.campos.x);

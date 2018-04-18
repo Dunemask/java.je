@@ -88,7 +88,7 @@ public class VoxelCt extends JPanel{
 	/**Text Holder*/
 	private JPanel th = new JPanel(null);
 	private JTextField textBar;
-	public VoxelCt(VoxEn voxen,int Mode) {
+	public VoxelCt(VoxEn voxen,int Mode,boolean resume) {
 		vel = new Vector3(0,0,0);
 		mode=Mode;
 		//System.out.print("HI");
@@ -143,11 +143,15 @@ public class VoxelCt extends JPanel{
 	//	this.setAlwaysOnTop(true);
 		    if(mode==VoxelCt.Creative) {// Creative
 		    	inv= new Inventory(ven);
+		    	if(!resume) {
 		    	SoundEngine.stop(SoundEngine.allEngines);
 		    	SoundEngine.start(SoundEngine.title);
+		    	}
 		    }else {
+		    	if(!resume) {
 		    	SoundEngine.stop(SoundEngine.allEngines);
 		    	SoundEngine.start(SoundEngine.game);
+		    	}
 		    	inv= new Inventory(ven,1);
 		    }
 		    vp = new VoxPanel();
@@ -198,7 +202,7 @@ public class VoxelCt extends JPanel{
 		//System.out.println(this.getParent());
 		//frame = (JFrame) this.getParent().getParent().getParent();
 
-		timer= new Timer(30,new ActionListener() {
+		timer= new Timer(60,new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -269,7 +273,6 @@ public class VoxelCt extends JPanel{
 			
 				if(arg0.getKeyCode()==9&&textBar.getText().contains("/setblock ")) {//Tab needs to fill
 					int spaces = countSpaces(textBar.getText());
-					System.out.println(spaces);
 					String cur = textBar.getText();
 					if(spaces==0) {
 						textBar.setText(cur+(int)ven.sel.x+"");
@@ -278,6 +281,28 @@ public class VoxelCt extends JPanel{
 						textBar.setText(cur+(int)ven.sel.z+"");
 					}
 					if(spaces==2) {
+						textBar.setText(cur+(int)ven.sel.y+"");
+					}
+				}
+				if(arg0.getKeyCode()==9&&textBar.getText().contains("/fill ")) {//Tab needs to fill
+					int spaces = countSpaces(textBar.getText());
+					String cur = textBar.getText();
+					if(spaces==0) {
+						textBar.setText(cur+(int)ven.sel.x+"");
+					}
+					if(spaces==1) {
+						textBar.setText(cur+(int)ven.sel.z+"");
+					}
+					if(spaces==2) {
+						textBar.setText(cur+(int)ven.sel.y+"");
+					}
+					if(spaces==3) {
+						textBar.setText(cur+(int)ven.sel.x+"");
+					}
+					if(spaces==4) {
+						textBar.setText(cur+(int)ven.sel.z+"");
+					}
+					if(spaces==5) {
 						textBar.setText(cur+(int)ven.sel.y+"");
 					}
 				}
@@ -649,6 +674,7 @@ public class VoxelCt extends JPanel{
 	public void changeMode(int mode) {
 		this.mode=mode;
 	    this.remove(inv);
+	    //System.out.println("Changed Modes");
 	    if(mode==VoxelCt.Creative) {// Creative
 	    	inv= new Inventory(ven);
 	    	SoundEngine.stop(SoundEngine.allEngines);
