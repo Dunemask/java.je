@@ -137,11 +137,15 @@ public class VoxelCt extends JPanel{
 		    this.setFocusable(true);
 		    this.requestFocusInWindow();
 	//	this.setAlwaysOnTop(true);
-		    if(mode==1) {// Creative
-		inv= new Inventory(ven);
-		}else {
-		inv= new Inventory(ven,1);
-		}
+		    if(mode==VoxelCt.Creative) {// Creative
+		    	inv= new Inventory(ven);
+		    	SoundEngine.stop(SoundEngine.allEngines);
+		    	SoundEngine.start(SoundEngine.title);
+		    }else {
+		    	SoundEngine.stop(SoundEngine.allEngines);
+		    	SoundEngine.start(SoundEngine.game);
+		    	inv= new Inventory(ven,1);
+		    }
 		    vp = new VoxPanel();
 			vp.setBackground(Color.black);
 			vp.SetEnv(ven);
@@ -615,8 +619,11 @@ public class VoxelCt extends JPanel{
 	    this.remove(inv);
 	    if(mode==VoxelCt.Creative) {// Creative
 	    	inv= new Inventory(ven);
-	    	
+	    	SoundEngine.stop(SoundEngine.allEngines);
+	    	SoundEngine.start(SoundEngine.title);
 	    }else {
+	    	SoundEngine.stop(SoundEngine.allEngines);
+	    	SoundEngine.start(SoundEngine.game);
 	    	inv= new Inventory(ven,1);
 	    }
     	//inv.setLm(lm);
