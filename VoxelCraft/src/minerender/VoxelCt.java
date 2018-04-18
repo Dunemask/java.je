@@ -19,21 +19,19 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import dunemask.util.FileUtil;
+import dunemask.util.StringUtil;
 import mc.MineCommands;
 import mc.Minecraft;
 import mplayer.SoundEngine;
@@ -43,6 +41,7 @@ public class VoxelCt extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = -7546821983465423073L;
+	private boolean developerMode = false;
 	private static  Inventory inv;
 	private VoxPanel vp;
 	private VoxEn ven;
@@ -79,6 +78,29 @@ public class VoxelCt extends JPanel{
 	public void setVen(VoxEn ven) {
 		this.ven = ven;
 	}
+	public void printText(String text) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				String ctext= display.getText();
+				display.setText(text+"\n"+ctext);
+				try {
+					Thread.sleep(6000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				ctext= display.getText();
+				ctext=StringUtil.replaceLast(ctext, text+"\n", "");
+				display.setText(ctext);
+			}
+			
+		}).start();
+
+		
+	}
+	
+	
 	public static Vector3 vel;
 	public int mode =1;
 	int flymode=0;
@@ -87,6 +109,7 @@ public class VoxelCt extends JPanel{
 	Timer timer;
 	/**Text Holder*/
 	private JPanel th = new JPanel(null);
+	private JTextArea display = new JTextArea();
 	private JTextField textBar;
 	public VoxelCt(VoxEn voxen,int Mode,boolean resume) {
 		vel = new Vector3(0,0,0);
@@ -172,6 +195,16 @@ public class VoxelCt extends JPanel{
 		// textBar.setOpaque(false);
 		textBar.setBounds(0, vp.getHeight()-120, tbw, 80);
 		 textBar.setFont(new Font("Century Gothic", Font.PLAIN, textBar.getHeight()-40));
+		 textBar.setCaretColor(Color.white);
+		 display.setFont(textBar.getFont());
+		 display.setOpaque(false);
+		 display.setForeground(textBar.getForeground());
+		 display.setCursor(Minecraft.getBlankCurosr());
+		 MouseListener[] dml = display.getMouseListeners();
+		 for(int i=0;i<dml.length;i++) {
+			 display.removeMouseListener(dml[i]);
+		 }
+		 this.add(display);
 		this.add(th);
 		    
 		this.add(inv);
@@ -192,7 +225,8 @@ public class VoxelCt extends JPanel{
             }
 			
 		});
-		
+		int dif = Math.abs(mh-textBar.getY())-10;	
+		 display.setBounds(0, textBar.getY()-dif, tbw, dif);
 		
 		this.add(vp);
 		this.repaint();
@@ -206,8 +240,7 @@ public class VoxelCt extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			timerCode();
-				
+				timerCode();
 			}});
 		timer.start();
 
@@ -230,6 +263,11 @@ public class VoxelCt extends JPanel{
 		int tbw=th.getWidth();
 		// textBar.setOpaque(false);
 		textBar.setBounds(0, th.getHeight()-120, tbw, 80);
+		 display.setForeground(textBar.getForeground());
+		 int dif = Math.abs(mh-textBar.getY())-10;
+			
+			
+			 display.setBounds(0, textBar.getY()-dif, tbw, dif);
 		
 	}
 	private BufferedImage resizeImage(URL url,int width,int height) {
@@ -260,7 +298,7 @@ public class VoxelCt extends JPanel{
 	}
 	
 	
-	boolean updateMouse = true;
+	public boolean updateMouse = true;
 	int cc=0;
 	KeyListener tbl = new KeyListener() {
 		@Override
@@ -284,7 +322,7 @@ public class VoxelCt extends JPanel{
 						textBar.setText(cur+(int)ven.sel.y+"");
 					}
 				}
-				if(arg0.getKeyCode()==9&&textBar.getText().contains("/fill ")) {//Tab needs to fill
+				if(arg0.getKeyCode()==9&&(textBar.getText().contains("/fill ")||textBar.getText().contains("/fill-replace "))) {//Tab needs to fill
 					int spaces = countSpaces(textBar.getText());
 					String cur = textBar.getText();
 					if(spaces==0) {
@@ -359,8 +397,12 @@ public class VoxelCt extends JPanel{
 		//ven.campos.print();
 		
 		//System.out.println(this.getParent().getParent().getParent().getParent());
-		ven.mx =vp.getWidth()/2+this.getTopLevelAncestor().getLocation().x;
-		ven.my =vp.getHeight()/2+this.getTopLevelAncestor().getLocation().y;
+		try {
+			ven.mx =vp.getWidth()/2+this.getTopLevelAncestor().getLocation().x;
+			ven.my =vp.getHeight()/2+this.getTopLevelAncestor().getLocation().y;
+		}catch(java.lang.NullPointerException exc)	{
+			
+		}
 		inv.setBounds(30, 30, this.getWidth()-60, this.getHeight()-60);
 		
 		if(key.Output()[17]==1) {//Sprint
@@ -369,22 +411,23 @@ public class VoxelCt extends JPanel{
 			spd=0.12f;
 		}
 		
-		
-		if(key.Output()[KeyEvent.VK_UP]==1) {
-			Minecraft.renderVal++;
-			System.out.println(Minecraft.renderVal);
-		}
-		if(key.Output()[KeyEvent.VK_DOWN]==1) {
-			Minecraft.renderVal--;
-			System.out.println(Minecraft.renderVal);
-		}
-		if(key.Output()[73]==1) {//I
-			this.getVen().fovc+=.001f;
-			System.out.println(this.getVen().fovc);
-		}
-		if(key.Output()[79]==1) {//O
-			this.getVen().fovc-=.001f;
-			System.out.println(this.getVen().fovc);
+		if(this.isDeveloperMode()) {
+			if(key.Output()[KeyEvent.VK_UP]==1) {
+				Minecraft.renderVal++;
+				System.out.println(Minecraft.renderVal);
+			}
+			if(key.Output()[KeyEvent.VK_DOWN]==1) {
+				Minecraft.renderVal--;
+				System.out.println(Minecraft.renderVal);
+			}
+			if(key.Output()[73]==1) {//I
+				this.getVen().fovc+=.001f;
+				System.out.println(this.getVen().fovc);
+			}
+			if(key.Output()[79]==1) {//O
+				this.getVen().fovc-=.001f;
+				System.out.println(this.getVen().fovc);
+			}
 		}
 		if(key.Output()[84]==1) {//T PUshed 
 			this.textBar.setFocusTraversalKeysEnabled(false);
@@ -601,24 +644,54 @@ public class VoxelCt extends JPanel{
 		spd=0.5f;
 		vel.z =1;
 		if(Minecraft.cf.isFocused()&&this.updateMouse==true) {//I
+			//oldMove();
 			ven.MouseCam();
 			if(key.Output()[87]==1)
-				ven.MoveCam(Vector3.foreward(spd).rotate(ven.rx, "z"));
-				if(key.Output()[83]==1)
-					ven.MoveCam(Vector3.backward(spd).rotate(ven.rx, "z"));
-				if(key.Output()[68]==1)
-					ven.MoveCam(Vector3.rightward(spd).rotate(ven.rx, "z"));
-				if(key.Output()[65]==1)
-					ven.MoveCam(Vector3.leftward(spd).rotate(ven.rx, "z"));
-				if(key.Output()[32]==1)
-					ven.MoveCam(Vector3.upward(spd));
-				if(key.Output()[16]==1)
-					ven.MoveCam(Vector3.downward(spd));
+				vel.x+=spd;
+			if(key.Output()[83]==1)
+				vel.x-=spd;
+			if(key.Output()[68]==1)
+				vel.y+=spd;
+			if(key.Output()[65]==1)
+				vel.y-=spd;
+			if(key.Output()[32]==1)
+				ven.MoveCam(Vector3.upward(spd));
+			if(key.Output()[16]==1)
+				ven.MoveCam(Vector3.downward(spd));
+			ven.MoveCam(new Vector3(vel.rotate(ven.rx, "z").x,0,0));
+			ven.MoveCam(new Vector3(0,vel.rotate(ven.rx, "z").y,0));
+			//ven.MoveCam(new Vector3(0,0,vel.rotate(ven.rx, "z").z));
+			
+			vel.z *=0.9f;
+			vel.x *=0.5f;
+			vel.y *=0.5f;
+			if(this.getVen().campos.z<-50) {
+				exceededWorldBounds();
+			}
 				//this.getVen().campos.print();
 		}else if(!Minecraft.cf.isFocused()){
 			this.escMenu();
 		}
 
+	}
+	/**
+	 * 
+	 */
+	private void oldMove() {
+		ven.MouseCam();
+		if(key.Output()[87]==1)
+			ven.MoveCam(Vector3.foreward(spd).rotate(ven.rx, "z"));
+			if(key.Output()[83]==1)
+				ven.MoveCam(Vector3.backward(spd).rotate(ven.rx, "z"));
+			if(key.Output()[68]==1)
+				ven.MoveCam(Vector3.rightward(spd).rotate(ven.rx, "z"));
+			if(key.Output()[65]==1)
+				ven.MoveCam(Vector3.leftward(spd).rotate(ven.rx, "z"));
+			if(key.Output()[32]==1)
+				ven.MoveCam(Vector3.upward(spd));
+			if(key.Output()[16]==1)
+				ven.MoveCam(Vector3.downward(spd));
+		
 	}
 	public void Walk() {
 		if(Minecraft.cf.isFocused()&&this.updateMouse==true) {
@@ -717,5 +790,29 @@ public class VoxelCt extends JPanel{
 	 */
 	public void setTextBar(JTextField textBar) {
 		this.textBar = textBar;
+	}
+	/**
+	 * @return the display
+	 */
+	public JTextArea getDisplay() {
+		return display;
+	}
+	/**
+	 * @param display the display to set
+	 */
+	public void setDisplay(JTextArea display) {
+		this.display = display;
+	}
+	/**
+	 * @return the developerMode
+	 */
+	public boolean isDeveloperMode() {
+		return developerMode;
+	}
+	/**
+	 * @param developerMode the developerMode to set
+	 */
+	public void setDeveloperMode(boolean developerMode) {
+		this.developerMode = developerMode;
 	}
 }

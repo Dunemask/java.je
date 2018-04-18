@@ -4,6 +4,7 @@ package minerender;
 import java.awt.AWTException;
 import java.awt.MouseInfo;
 import java.awt.Robot;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -658,6 +659,14 @@ public class VoxEn {
 			return -128;
 			} 
 	}
+	
+	public int getBlock(Vector3 loc) {
+		Vector3 v3 = loc;
+		byte  b= (Voxels[(int)v3.x][(int)v3.y][(int)v3.z]);
+		int ret = Byte.toUnsignedInt(b);
+		return ret;
+	}
+	
 	public void setBlock(int block,Vector3 loc) {
 		Vector3 v3 = loc;
 		//Chnks[(int)v3.x/16][(int)v3.y/16][(int)v3.z/16].StorChunk[(int)v3.x%16][(int)v3.y%16][(int)v3.z%16] = (byte)block;

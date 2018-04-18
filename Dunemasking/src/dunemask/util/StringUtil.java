@@ -39,7 +39,22 @@ public class StringUtil {
 		return false;
 		}
 	}
-
+	/** @param string String
+	 * @param toReplace String wanted replaced
+	 * @param replacement What will be replaced
+	 * @param return Replaced String or the string if not changed
+	 * 
+	 * */
+	public static String replaceLast(String string, String toReplace, String replacement) {
+	    int pos = string.lastIndexOf(toReplace);
+	    if (pos > -1) {
+	        return string.substring(0, pos)
+	             + replacement
+	             + string.substring(pos + toReplace.length(), string.length());
+	    } else {
+	        return string;
+	    }
+	}
 	/**Returns true if it met the Criterea (Case Sensitive)
 	 * @param text Text being run through excpetions
 	 * @param exceptions List of things that the text cannot contain

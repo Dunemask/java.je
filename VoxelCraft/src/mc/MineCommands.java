@@ -5,6 +5,7 @@ package mc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +14,6 @@ import dunemask.util.StringUtil;
 import minerender.Block;
 import minerender.FileControl;
 import minerender.Vector3;
-import minerender.VoxEn;
 import minerender.VoxelCt;
 import mplayer.PlaySound;
 import mplayer.Sound;
@@ -44,7 +44,7 @@ public class MineCommands {
 		
 		String command = com[0];
 		if(!command.startsWith("/")) {
-			System.out.println(fullCommand);
+			Minecraft.vx.printText(fullCommand);
 			return;
 		}else {
 			command = command.substring(1, command.length());
@@ -63,6 +63,14 @@ public class MineCommands {
 	 * @param command
 	 */
 	private static void trycommand(String[] com, String command) {
+		if(command.equalsIgnoreCase("devmode")) {
+			if(com[1].equalsIgnoreCase("on")) {
+				Minecraft.vx.setDeveloperMode(true);
+			}else if(com[1].equalsIgnoreCase("off")) {
+				Minecraft.vx.setDeveloperMode(false);
+			}
+		}
+		
 		if(command.equalsIgnoreCase("set")) {
 			set(com);
 			return;
@@ -95,7 +103,7 @@ public class MineCommands {
 			}else if(com[1].equalsIgnoreCase("s")){
 				Minecraft.vx.changeMode(VoxelCt.Survival);
 			}else {
-				System.out.println("Invalid Argument");
+				Minecraft.vx.printText("Invalid Argument");
 			}
 			return;
 		}
@@ -109,20 +117,43 @@ public class MineCommands {
 				if(com[2].startsWith("\"")&&com[2].endsWith("\"")) {
 					com[2] = com[2].substring(1, com[2].length()-1);
 				}
-				System.out.println(SoundHandler.loadSong(com[2])+":"+com[2]);
+				try {
+				//System.out.println(SoundHandler.loadSong(com[2])+":"+com[2]);
 				Sound wanted = SoundHandler.loadSong(com[2]);
 				PlaySound.playSound(wanted);
+				}catch(Exception e) {
+					Minecraft.vx.printText("Could Not Play|Find "+com[2]);
+				}
 			}
 			return;
 		}
 		if(command.equalsIgnoreCase("save")) {
+			CountDownLatch latch = new CountDownLatch(1);
+			new Thread( ()->{
 			FileControl.SaveFileAsXML(Minecraft.vx.getVen(), Minecraft.vx.getVen().getName());
+			latch.countDown();
+			}).start();
+			try {
+				latch.await();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			Minecraft.vx.printText("Saved");
 			return;
 		}
 		if(command.equalsIgnoreCase("saveas")) {
+			CountDownLatch latch = new CountDownLatch(1);
+			new Thread( ()->{
 			FileControl.SaveFileAsXML(Minecraft.vx.getVen(), com[1]);
-			VoxEn ven = FileControl.LoadFileXML(com[1]);
-			Minecraft.loadVen(ven);
+			latch.countDown();
+			}).start();
+			try {
+				latch.await();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			Minecraft.vx.printText("Saved as "+com[1]);
 			return;
 		}
 		if(command.equalsIgnoreCase("tp")||command.equalsIgnoreCase("teleport")) {
@@ -157,7 +188,7 @@ public class MineCommands {
 			return;
 		}
 		
-		if(command.equalsIgnoreCase("fill")) {
+		if(command.equalsIgnoreCase("fill")||command.equalsIgnoreCase("fill-replace")) {
 			if(com[1].equalsIgnoreCase("~")) {
 				com[1] = ""+(int)Minecraft.vx.getVen().campos.x;
 			}else if(com[1].contains("~")){
@@ -211,7 +242,20 @@ public class MineCommands {
 					i=names.size();
 				}
 			}
-			fill(x,y,z,x2,y2,z2,wanted);
+			if(command.equalsIgnoreCase("fill")) {
+				fill(x,y,z,x2,y2,z2,wanted);
+			}else {
+				String rep = com[8];
+				int replace = 0;
+				for(int i=0;i<names.size();i++) {
+					if(rep.equalsIgnoreCase(names.get(i).getName())) {
+						replace = i+1;
+						i=names.size();
+					}
+				}
+				replaceFill(x,y,z,x2,y2,z2,wanted,replace);
+				
+			}
 			return;
 		}
 		
@@ -233,6 +277,35 @@ public class MineCommands {
 				for(int b=Math.min(z, z2);b<=Math.max(z, z2);b++) {
 					Vector3 temp = new Vector3(i,c,b);
 					Minecraft.vx.getVen().setBlock(block,temp);
+					
+				}
+				
+				
+			}
+			
+			
+		}
+		
+		
+		
+	}
+	/**
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param x2
+	 * @param y2
+	 * @param z2
+	 * @param block
+	 */
+	private static void replaceFill(int x, int y, int z, int x2, int y2, int z2,int block,int repl) {
+		for(int i=Math.min(x, x2);i<=Math.max(x, x2);i++) {
+			for(int c=Math.min(y, y2);c<=Math.max(y, y2);c++) {
+				for(int b=Math.min(z, z2);b<=Math.max(z, z2);b++) {
+					Vector3 temp = new Vector3(i,c,b);
+					if(Minecraft.vx.getVen().getBlock(temp)==repl) {
+					Minecraft.vx.getVen().setBlock(block,temp);
+					}
 					
 				}
 				
