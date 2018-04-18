@@ -17,7 +17,11 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -242,6 +246,16 @@ public class VoxelCt extends JPanel{
 		return resized;
 		
 	}
+	private static int countSpaces(String str) {
+		List<String> list = new ArrayList<String>();
+		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(str);
+		while (m.find())
+		    list.add(m.group(1));
+		
+		return list.toArray(new String[list.size()]).length-1;
+	}
+	
+	
 	boolean updateMouse = true;
 	int cc=0;
 	KeyListener tbl = new KeyListener() {
@@ -252,6 +266,22 @@ public class VoxelCt extends JPanel{
 				command();
 				cc = MineCommands.commands.size()-1;
 			}
+			
+				if(arg0.getKeyCode()==9&&textBar.getText().contains("/setblock ")) {//Tab needs to fill
+					int spaces = countSpaces(textBar.getText());
+					System.out.println(spaces);
+					String cur = textBar.getText();
+					if(spaces==0) {
+						textBar.setText(cur+(int)ven.sel.x+"");
+					}
+					if(spaces==1) {
+						textBar.setText(cur+(int)ven.sel.z+"");
+					}
+					if(spaces==2) {
+						textBar.setText(cur+(int)ven.sel.y+"");
+					}
+				}
+			
 				if(arg0.getKeyCode()==KeyEvent.VK_UP) {
 					int lastc = cc;
 					try {
@@ -332,6 +362,7 @@ public class VoxelCt extends JPanel{
 			System.out.println(this.getVen().fovc);
 		}
 		if(key.Output()[84]==1) {//T PUshed 
+			this.textBar.setFocusTraversalKeysEnabled(false);
 			this.updateMouse=false;
 			this.textBar.setVisible(true);
 			textBar.requestFocusInWindow();
@@ -347,6 +378,7 @@ public class VoxelCt extends JPanel{
 			
 		}
 		if(key.Output()[47]==1) {// / PUshed 
+			this.textBar.setFocusTraversalKeysEnabled(false);
 			this.updateMouse=false;
 			this.textBar.setVisible(true);
 			textBar.requestFocusInWindow();

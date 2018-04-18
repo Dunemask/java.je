@@ -27,6 +27,7 @@ public class Test extends JFrame {
 		this.setVisible(true);
 		this.setSize(600, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setFocusTraversalKeysEnabled(false);
 		this.addKeyListener(new KeyListener() {
 
 			@Override
