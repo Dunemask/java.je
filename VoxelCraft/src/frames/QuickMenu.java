@@ -184,7 +184,7 @@ public class QuickMenu extends JPanel{
 		SoundEngine.handle("click");
 		VoxEn ven = Minecraft.vx.getVen();
 		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode);
-		Minecraft.loadWorld(vct);
+		Minecraft.loadWorld(vct,true);
 		
 	}
 

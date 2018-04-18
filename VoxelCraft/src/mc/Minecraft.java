@@ -75,7 +75,7 @@ public class Minecraft {
 
 	}
 
-	public static void loadWorld(VoxelCt vix)
+	public static void loadWorld(VoxelCt vix, boolean resume)
 	{
 		
 		vx = vix;
@@ -137,7 +137,7 @@ public class Minecraft {
 	public static void goToVox() {
 		VoxEn ven = Minecraft.vx.getVen();
 		VoxelCt vct = new VoxelCt(ven,Minecraft.vx.mode);
-		Minecraft.loadWorld(vct);
+		Minecraft.loadWorld(vct,true);
 	}
 	
 	/** Settings panel call
