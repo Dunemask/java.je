@@ -265,18 +265,18 @@ public class RuneMap {
 			if(!url.contains(URLStart)) {
 				url = URLStart + url;
 			}
-		parent = this.urlToList(url);
+			parent = this.urlToList(url);
 
 		}
-		if(url.endsWith("/")) {
+			if(url.endsWith("/")) {
 			url=url.substring(0,url.length()-1);
-		}
+			}
 		
 		if(parent.size()==1) {
 			if(!this.itemExists(parent)) {
 			XMLRW.addTopLevelElement(getXml(), parent.get(0), value);
 			}else {
-				
+				XMLRW.changeTopLevelElement(getXml(), parent.get(0), value);
 			}
 		}else {
 			try {
@@ -296,16 +296,18 @@ public class RuneMap {
 			
 			
 			
-		ArrayList<String> p = new ArrayList<String>(parent);
-		p.remove(p.size()-1);
-		
-		try {
-			if(!this.itemExists(this.urlToList(url))) {
-				XMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),value);
+			ArrayList<String> p = new ArrayList<String>(parent);
+			
+			try {
+				if(!this.itemExists(this.urlToList(url))) {
+					p.remove(p.size()-1);
+					XMLRW.addElement(getXml(), p.toArray(new String[p.size()]), parent.get(parent.size()-1),value);
+				}else {
+					XMLRW.changeElement(getXml(), p.toArray(new String[p.size()]),value);
+				}
+			}catch(Exception e) {
+				throw new DMXMLException("Element "+url+" Could not be written. Try Forcing the path");
 			}
-		}catch(Exception e) {
-			throw new DMXMLException("Element "+url+" Could not be written");
-		}
 		}
 		addurl(url);
 		this.addValue(url, String.valueOf(value));

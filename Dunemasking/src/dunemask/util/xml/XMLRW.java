@@ -129,7 +129,7 @@ public class XMLRW {
     		if(lines[i].equals(lines[i].replace(StringUtil.tab, ""))) {
     			if(lines[i].contains(XMLRW.element(element))) {
     				tl = i+1; //Started at 0 when it starts at 1
-    				i=lines[i].length();
+    				i=lines.length;
     			}
     		}
     	}
@@ -285,8 +285,18 @@ public class XMLRW {
     	    	for(int i=0;i<parentElementChain.length;i++) {
     	    		String element = parentElementChain[i];
     	    		element = XMLRW.ripElement(element);
-    	    		int tlow = FileUtil.containsInDocumentBounds(file,element(element), low, high);
-    	    		int thigh = FileUtil.containsInDocumentBounds(file,closeElement(element), low, high);
+    	    		String se = element(element);
+    	    		String ce = closeElement(element);
+    	    		se = se.substring(0, se.length()-1);
+    	    		int tlow;
+    	    		int thigh;
+    	    		try {
+    	    		tlow = FileUtil.findInDocumentBounds(file,se, low, high);
+    	    		thigh = FileUtil.findInDocumentBounds(file,ce, low, high);
+    	    		}catch(RuntimeException e) {
+    		    		tlow = FileUtil.containsInDocumentBounds(file,se, low, high);
+    		    		thigh = FileUtil.containsInDocumentBounds(file,ce, low, high);
+    	    		}
     	    		low=tlow;
     	    		high=thigh;
     	    		tabs++;
@@ -299,7 +309,9 @@ public class XMLRW {
         		tab+=StringUtil.tab;
         	}
         	String element = parentElementChain[parentElementChain.length-1];
+        	//System.out.println(element);
         	//Sequential
+        	//System.out.println("+"+(high+1)+", -"+(high-1));
         	RW.write(file, tab+XMLRW.element(element)+value+XMLRW.closeElement(element), high);
     	}else {
     		throw new RuntimeException("NOBEUENO! IT DON'T EXIST!");
@@ -982,7 +994,7 @@ public class XMLRW {
     	if(tl==0) {
     		System.err.println("Item:"+element+" Does not Exist!");
     	}else {
-    		System.out.println(tl);
+    		//System.out.println(tl);
     		ArrayList<String> al = new ArrayList<String>(Arrays.asList(lines));
         	al.remove(tl);
         	ArrayList<String> fin = new ArrayList<String>(al);
