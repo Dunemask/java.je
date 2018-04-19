@@ -31,8 +31,13 @@ public class ResourceHandler {
 		if(handler.exists()) {
 			handlemap = RuneMap.ParseDXMLMap(handler);
 			//System.out.println(handlemap.pullValue("Handler/blox"));
+			try {
 			blox = FileUtil.getResource(handlemap.pullValue("Handler/blox"));
 			sounds = FileUtil.getResource(handlemap.pullValue("Handler/sounds"));
+			}catch(RuntimeException e){
+				handler.delete();
+				init();
+			}
 		}else {
 			File orig = FileUtil.getResource("resources/handler.xml");
 			FileUtil.writeFile(orig, handler);

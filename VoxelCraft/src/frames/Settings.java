@@ -204,6 +204,8 @@ public class Settings extends JPanel {
 		ResourceHandler.blockmap.writeForcedElement("blocks/texturepath", textures+"/blocks/");
 		ResourceHandler.soundmap.removeElement("Sounds/relpath");
 		ResourceHandler.soundmap.writeForcedElement("Sounds/relpath",  sounds+"/");
+		SoundEngine.stop(SoundEngine.allEngines);
+		SoundEngine.start(SoundEngine.title);
 	}
 
 
