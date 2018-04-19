@@ -5,6 +5,7 @@ import java.net.URL;
 
 import dunemask.util.FileUtil;
 import dunemask.util.xml.RuneMap;
+import mc.ResourceHandler;
 //File Control, Controls the saving and loading of worlds in the file...
 public class FileControl {
 	/**Saves the file as an XML
@@ -85,17 +86,24 @@ public class FileControl {
 		}
 		return i;
 	}
-	
-	public static RuneMap blox;
 	/** Pulls value Yes jason yer numbers still work ^^
 	 * 
 	 * */
 	public static URL blockHandle(int blocknum) {
-		if(blox==null) {
-			blox=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/textures/blocks/block.xml"));
-		}
 		//System.out.println("resources/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");
-		return FileUtil.getResourceURL("resources/textures/blocks/"+blox.pullValue("blocks/"+blocknum)+".png");
+		String pathToBlocks = ResourceHandler.blockmap.pullValue("blocks/texturepath");
+		//System.out.println(ResourceHandler.blockmap.getXml());
+		//System.out.println(pathToBlocks);
+		//System.out.println(FileUtil.getResourceURL(pathToBlocks+ResourceHandler.blockmap.pullValue("blocks/"+blocknum)+".png"));
+		URL url = FileUtil.getResourceURL(pathToBlocks+ResourceHandler.blockmap.pullValue("blocks/"+blocknum)+".png");
+		//System.out.println(url.getPath());
+		if(new File(url.getPath()).exists()) {
+			return url;
+		}else {
+			//System.out.println("boom :( cuz:"+new File(url.toURI().toString()).createNewFile());
+			return FileUtil.getResourceURL("resources/textures/blocks/"+ResourceHandler.blockmap.pullValue("blocks/"+blocknum)+".png");
+		}
+
 		
 	}
 	

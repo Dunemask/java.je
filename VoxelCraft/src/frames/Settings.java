@@ -9,8 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -18,7 +20,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import dunemask.objects.DMediaPlayer;
+import dunemask.util.FileUtil;
+import dunemask.util.xml.RuneMap;
 import mc.Minecraft;
+import mc.ResourceHandler;
 import mplayer.PlaySound;
 import mplayer.SoundEngine;
 
@@ -69,6 +74,7 @@ public class Settings extends JPanel {
 	private static JLabel renLabel;
 	private static JLabel volLabel;
 	private static JButton back=new JButton("Back");
+	private static JButton loadPack = new JButton("Load Resource");
 	private static final double volSliderPerc=.15;
 	private static int renderMax = 300;
 
@@ -119,6 +125,19 @@ public class Settings extends JPanel {
 		back.setBounds(volSlider.getX(), this.getHeight()-pbch, volSlider.getWidth(),pbch);
 		add(back);
 		
+		loadPack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				loadResourcePack();
+				
+			}
+			
+		});
+		loadPack.setForeground(Color.white);
+		loadPack.setBackground(Color.BLACK);
+		loadPack.setBounds(volSlider.getX(), this.getHeight()-2*pbch, volSlider.getWidth(),pbch);
+		add(loadPack);
 		
 		add(volLabel);
 		add(volSlider);
@@ -158,6 +177,36 @@ public class Settings extends JPanel {
 	}
 
 	
+	/**
+	 * 
+	 */
+	protected void loadResourcePack() {
+		JSystemFileChooser jfc = new JSystemFileChooser();
+		jfc.setCurrentDirectory(new File(System.getProperty("user.home")+"/Documents/VoxelCraft/"));
+		jfc.setDialogTitle("Select a Resource Pack Folder");
+		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		jfc.setMultiSelectionEnabled(false);
+		jfc.showOpenDialog(this);
+		File top = jfc.getSelectedFile();
+		RuneMap info = RuneMap.ParseDXMLMap(new File(top.getAbsolutePath()+"\\info.xml"));
+		String textures = FileUtil.filePathFix(top.getAbsolutePath())+"/"+info.pullValue("info/trelpath");
+		ResourceHandler.sounds = new File(top.getAbsolutePath()+"\\sounds.xml");
+		ResourceHandler.soundmap = RuneMap.ParseDXMLMap(ResourceHandler.sounds);
+		ResourceHandler.blox = new File(top.getAbsolutePath()+"\\blocks.xml");
+		ResourceHandler.blockmap = RuneMap.ParseDXMLMap(ResourceHandler.sounds);
+		ResourceHandler.handlemap.writeElement("Handler/sounds", ResourceHandler.sounds);
+		ResourceHandler.handlemap.writeElement("Handler/blox", ResourceHandler.blox);
+		ResourceHandler.init();
+		//System.out.println(ResourceHandler.blockmap.getXml().getAbsolutePath());
+		//System.out.println(textures);
+		String sounds =FileUtil.filePathFix(top.getAbsolutePath())+"/"+info.pullValue("info/srelpath");
+		ResourceHandler.blockmap.removeElement("blocks/texturepath");
+		ResourceHandler.blockmap.writeForcedElement("blocks/texturepath", textures+"/blocks/");
+		ResourceHandler.soundmap.removeElement("Sounds/relpath");
+		ResourceHandler.soundmap.writeForcedElement("Sounds/relpath",  sounds+"/");
+	}
+
+
 	/**
 	 * 
 	 */
@@ -215,6 +264,7 @@ public class Settings extends JPanel {
 			    	int lbx=(int) (vsx+(vsw/2)-(volLabel.getPreferredSize().getWidth()/2));
 			    	volLabel.setBounds(lbx, lby,(int) volLabel.getPreferredSize().getWidth(),(int)volLabel.getPreferredSize().getHeight());
 			    	back.setBounds(vsx, this.getHeight()-pbch, vsw,pbch);
+			    	loadPack.setBounds(vsx,this.getHeight()-2*pbch, vsw,pbch);
 					renslider.setBounds(volSlider.getX(),volSlider.getY()+2*pbch , volSlider.getWidth(), volSlider.getHeight());
 					renLabel.setBounds(lbx, lby+2*pbch,(int) renLabel.getPreferredSize().getWidth(),(int)renLabel.getPreferredSize().getHeight());
 			    	this.repaint();

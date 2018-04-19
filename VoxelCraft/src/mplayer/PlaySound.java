@@ -3,15 +3,16 @@
  */
 package mplayer;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 import dunemask.objects.DMediaPlayer;
 import dunemask.util.FileUtil;
-import dunemask.util.xml.RuneMap;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import mc.ResourceHandler;
 
 /**
  * @author Dunemask
@@ -38,8 +39,19 @@ public class PlaySound {
 				rp = rp.substring(0, rp.length()-1);
 		
 			}
+			String sp = ResourceHandler.soundmap.pullValue("Sounds/relpath");
+			URL url = null;
+			if(sp!=null) {
+				url = FileUtil.getResourceURL(sp+rp);
+			}else {
+				url = FileUtil.getResourceURL("resources/sounds/"+rp);
+			}
+			if(!new File(url.getPath()).exists()) {
+				url = FileUtil.getResourceURL("resources/sounds/"+rp);
+			}
+			
+				
 
-			URL url = FileUtil.getResourceURL("resources/sounds/"+rp);
 			URI ur = new URI(url.toString().replace(" ", "%20"));
 			Media m = new Media(ur.toString());
 			MediaPlayer mp = new MediaPlayer(m);
@@ -81,7 +93,16 @@ public class PlaySound {
 		
 			}
 
-			URL url = FileUtil.getResourceURL("resources/sounds/"+rp);
+			String sp = ResourceHandler.soundmap.pullValue("Sounds/relpath");
+			URL url = null;
+			if(sp!=null) {
+				url = FileUtil.getResourceURL(sp+rp);
+			}else {
+				url = FileUtil.getResourceURL("resources/sounds"+rp);
+			}
+			if(!new File(url.getPath()).exists()) {
+				url = FileUtil.getResourceURL("resources/sounds/"+rp);
+			}
 			URI ur = new URI(url.toString().replace(" ", "%20"));
 			Media m = new Media(ur.toString());
 			MediaPlayer mp = new MediaPlayer(m);
@@ -126,7 +147,19 @@ public class PlaySound {
 				rp = rp.substring(0, rp.length()-1);
 		
 			}
-			URL url = FileUtil.getResourceURL("resources/sounds/"+rp);
+			String sp = ResourceHandler.soundmap.pullValue("Sounds/relpath");
+			URL url = null;
+			if(sp!=null) {
+				url = FileUtil.getResourceURL(sp+rp);
+			}else {
+				System.out.println("Couldn't find:"+rp);
+				url = FileUtil.getResourceURL("resources/sounds/"+rp);
+			}
+			if(!new File(url.getPath()).exists()) {
+				url = FileUtil.getResourceURL("resources/sounds/"+rp);
+			}
+			
+			
 			URI ur = new URI(url.toString().replace(" ", "%20"));
 			DMediaPlayer.setMedia(ur.toString());
 		} catch (URISyntaxException e) {
@@ -160,9 +193,9 @@ public class PlaySound {
 			vol=1.0;
 			DMediaPlayer.init();
 			init=true;
-			if(Sound.index==null) {
-				 Sound.index=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/sounds/Index.xml"));
-			}
+			//if(ResourceHandler.soundmap==null) {
+			//	ResourceHandler.soundmap=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/sounds/Index.xml"));
+			//}
 		}
 		
 	}

@@ -5,8 +5,8 @@ package mplayer;
 
 import java.io.File;
 
-import dunemask.util.FileUtil;
 import dunemask.util.xml.RuneMap;
+import mc.ResourceHandler;
 
 /**
  * @author Dunemask
@@ -20,10 +20,7 @@ public class SoundHandler {
 	 * @return A sound to be played with PlaySound
 	 * */
 	public static Sound loadSong(String relPath) {
-		if(Sound.index==null) {
-			 Sound.index=RuneMap.ParseDXMLMap(FileUtil.getResource("resources/sounds/Index.xml"));
-		}
-		RuneMap index = Sound.index;
+		RuneMap index = ResourceHandler.soundmap;
 		String rp = relPath;
 		if(String.valueOf(relPath.charAt(0)).equals("/")) {
 			rp = rp.replaceFirst("/", "");
@@ -55,12 +52,8 @@ public class SoundHandler {
 			rp = rp.substring(0, rp.length()-1);
 	
 		}
-		RuneMap index = null;
-		if(Sound.index!=null) {
-			 index = Sound.index;
-		}else {
-			index = RuneMap.ParseDXMLMap(new File("src/resources/sounds/Index.xml"));
-		}
+		RuneMap  index = ResourceHandler.soundmap;
+
 		
 		index.writeContainer("Sounds/ambient/");
 		index.writeContainer("Sounds/player/");

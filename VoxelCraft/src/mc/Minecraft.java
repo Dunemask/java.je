@@ -49,11 +49,11 @@ public class Minecraft {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		ResourceHandler.init();
 		set = new Settings();
 		mb = new MainBack();
 		fp = new FilePanel();
 		qs = new QuickSettings();
-		
 		SoundEngine.handle("click");
 		SoundEngine.start(SoundEngine.title);
 		cf = new JFrame();

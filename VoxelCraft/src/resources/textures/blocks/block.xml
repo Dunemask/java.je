@@ -1,4 +1,5 @@
 <blocks>
+	<texturepath>resources/textures/blocks/</texturepath>
 	<0>dirt</0>
 	<1>stone</1>
 	<2>grass</2>
