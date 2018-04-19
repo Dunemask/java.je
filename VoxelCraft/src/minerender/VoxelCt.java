@@ -214,11 +214,11 @@ public class VoxelCt extends JPanel{
 		inv.setVisible(false);
 		inv.getHotbar().setSelectedIndex(0);
 		int mw = (vp.getWidth()/2)+1;
-		int mh = (vp.getHeight()/2)+1;
+		int mh = ((vp.getHeight())/2)+1;
 		//System.out.println(mw+","+mh);
 		int w = 42;
 		int h = 42;
-		this.crosshair.setBounds(mw-w, mh-h, w, h);
+		this.crosshair.setBounds(mw-w, mh-h-vp.getWidth()/18, w, h);
 		BufferedImage img = this.resizeImage(FileUtil.getResourceURL("resources/textures/gui/overlay/crosshair.png"), w, h);
 		this.crosshair.setIcon(new ImageIcon(img));
 		this.add(crosshair);
@@ -267,10 +267,10 @@ public class VoxelCt extends JPanel{
 		vp.setSize(Minecraft.cf.getWidth(), Minecraft.cf.getHeight());
 	 th.setSize(vp.getWidth(), vp.getHeight());  
 		int mw = (vp.getWidth()/2)+1;
-		int mh = (vp.getHeight()/2)+1;
+		int mh = ((vp.getHeight())/2)+1;
 		int w = 42;
 		int h = 42;
-		this.crosshair.setBounds(mw-w, mh-h, w, h);
+		this.crosshair.setBounds(mw-w, mh-h-vp.getWidth()/18, w, h);
 		BufferedImage img = this.resizeImage(FileUtil.getResourceURL("resources/textures/gui/overlay/crosshair.png"), w, h);
 		this.crosshair.setIcon(new ImageIcon(img));
 		int tbw=th.getWidth();

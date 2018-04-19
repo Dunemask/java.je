@@ -28,6 +28,10 @@ public class VoxEn {
 	private String name;
 	public float breaktime=0;
 	public ArrayList<Block> blks= new ArrayList<Block>();
+	Vector3[]  collid = {new Vector3(-.4,-.4,-1.4),new Vector3(-.4,.4,-1.4),new Vector3(.4,.4,-1.4),new Vector3(.4,-.4,-1.4),
+			new Vector3(-.4,-.4,-0.4),new Vector3(-.4,.4,-0.4),new Vector3(.4,.4,-0.4),new Vector3(.4,-.4,-0.4),
+			new Vector3(-.4,-.4,0.2),new Vector3(-.4,.4,0.2),new Vector3(.4,.4,.2),new Vector3(.4,-.4,0.2)};
+	
 	public Block getBlock(int bl) {
 		try {
 		return blks.get(bl);
@@ -606,11 +610,7 @@ public class VoxEn {
 		ry =dy;
 	}
 	public boolean MoveCam(Vector3 v3) {
-		if(Inside(Vector3.add(v3, campos))<1&&Inside(Vector3.add(new Vector3(0,0,.4f), Vector3.add(v3, campos)))<1&&
-				Inside(Vector3.add(new Vector3(-.4f,-.4f,-1.4f), Vector3.add(v3, campos)))<1&&
-				Inside(Vector3.add(new Vector3(.4f,-.4f,-1.4f), Vector3.add(v3, campos)))<1&&
-				Inside(Vector3.add(new Vector3(.4f,.4f,-1.4f), Vector3.add(v3, campos)))<1&&
-				Inside(Vector3.add(new Vector3(-.4f,.4f,-1.4f), Vector3.add(v3, campos)))<1) {
+		if(!insid(Vector3.add(campos, v3), collid)) {
 		campos=Vector3.add(campos, v3);
 		return true;
 		}else {
@@ -618,6 +618,16 @@ public class VoxEn {
 		}
 		
 		
+	}
+	
+	public boolean insid(Vector3 cam, Vector3[] collides) {
+		boolean ins = false;
+		for(int i=0;i<collides.length;i++) {
+			if(	Inside(Vector3.add(collides[i], cam))>0) {
+				ins = true;
+			}
+		}
+		return ins;
 	}
 	public void SetMouse(int xx,int yy) {
 		mx = xx;
