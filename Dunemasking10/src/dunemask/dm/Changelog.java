@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dunemask.dunemasking;
+package dunemask.dm;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,9 +24,9 @@ import dunemask.util.StringUtil;
 
 /**
  * @author karib
- * <p>Main: {@link dunemask.dunemasking.Changelog#main(String[])}</p>
- * <p>Update All Versions: {@link dunemask.dunemasking.Changelog#updateAllVersions()}</p>
- * <p>Print Changelog: {@link dunemask.dunemasking.Changelog#printChangeLog()}</p>
+ * <p>Main: {@link dunemask.dm.Changelog#main(String[])}</p>
+ * <p>Update All Versions: {@link dunemask.dm.Changelog#updateAllVersions()}</p>
+ * <p>Print Changelog: {@link dunemask.dm.Changelog#printChangeLog()}</p>
  */
 public class Changelog {
 	/*@Changelog.java: Tests javadoc version (Only works in ide) and labels with package

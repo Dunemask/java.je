@@ -7,7 +7,7 @@ package dunemask.util.xml;
  * @author dunemask
  *
  */
-public class DMXMLException extends RuntimeException {
+class DMXMLException extends RuntimeException {
 
 	/**
 	 * 

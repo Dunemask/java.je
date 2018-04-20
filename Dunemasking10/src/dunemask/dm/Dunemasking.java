@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dunemask;
+package dunemask.dm;
 
 /**
  * @author dunemask

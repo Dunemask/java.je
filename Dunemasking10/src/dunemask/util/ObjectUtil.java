@@ -14,6 +14,11 @@ import java.util.Random;
  * <p>Write Object: {@link dunemask.util.ObjectUtil#writeObject(File, Object)}</p>
  * <p>Write Object with Custom Extension: {@link dunemask.util.ObjectUtil#writeObject(File, Object, String)}</p>
  **/
+
+/**
+ * @deprecated
+ * Will be removed in a future release
+ * */
 public class ObjectUtil{
 	
 	/***Version*/

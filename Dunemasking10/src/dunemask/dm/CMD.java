@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import dunemask.dunemasking.StreamGobbler;
 import dunemask.util.FileUtil;
 import dunemask.util.RW;
 

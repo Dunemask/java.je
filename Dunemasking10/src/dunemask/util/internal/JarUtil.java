@@ -1,4 +1,4 @@
-package dunemask.util;
+package dunemask.util.internal;
 
 import java.awt.Color;
 import java.io.BufferedInputStream;
@@ -23,14 +23,16 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
+import dunemask.util.FileUtil;
+
 /**
  * Jar Utilities
- * <p>Extract Jar: {@link dunemask.util.JarUtil#extractAll(String, String, String)}</p>
- * <p>Extract Jar With Progress Bar: {@link dunemask.util.JarUtil#extractAllOpenDialog(String, String, String)}</p>
- * <p>Get Jar Program Path: {@link dunemask.util.JarUtil#getProgramPath()}</p>
- * <p>Is jar:  {@link dunemask.util.JarUtil#isJar(String)}</p>
- * <p>List jar Entries: {@link dunemask.util.JarUtil#listJarEntries(File)}</p>
- * <p>Load File From Jar: {@link dunemask.util.JarUtil#loadFileInJar(File, String)}</p>
+ * <p>Extract Jar: {@link dunemask.util.internal.JarUtil#extractAll(String, String, String)}</p>
+ * <p>Extract Jar With Progress Bar: {@link dunemask.util.internal.JarUtil#extractAllOpenDialog(String, String, String)}</p>
+ * <p>Get Jar Program Path: {@link dunemask.util.internal.JarUtil#getProgramPath()}</p>
+ * <p>Is jar:  {@link dunemask.util.internal.JarUtil#isJar(String)}</p>
+ * <p>List jar Entries: {@link dunemask.util.internal.JarUtil#listJarEntries(File)}</p>
+ * <p>Load File From Jar: {@link dunemask.util.internal.JarUtil#loadFileInJar(File, String)}</p>
  * @author Elijah
  **/
 public class JarUtil{

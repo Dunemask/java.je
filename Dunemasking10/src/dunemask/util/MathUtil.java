@@ -12,11 +12,11 @@ public class MathUtil {
 	/***Version*/
     final static double version = 4.5;
 	
-	/**Removes the decimal
+	/**Rips the decimal
 	 * @param doub The double you want the decimal removed from
 	 * @return Returns double with only decimal value
 	 * **/
-	public static double removeDecimal(double doub) {
+	public static double getDecimal(double doub) {
 		
 		return	(doub - (int)doub);
 		

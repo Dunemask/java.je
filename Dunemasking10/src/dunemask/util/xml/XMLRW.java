@@ -17,7 +17,7 @@ import dunemask.util.StringUtil;
  * @author dunemask
  *
  */
-public class XMLRW {
+ class XMLRW {
 	/***Version*/
     final static double version = 5.8;
     /** No Body for newXMLFile

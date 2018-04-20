@@ -1,4 +1,4 @@
-package dunemask.dunemasking;
+package dunemask.dm;
 
 import java.io.File;
 
@@ -7,10 +7,10 @@ import dunemask.util.RW;
 
 /**
  * Handles All Dunemasking Version kinds of things
- * <p>Get Dunemasking Version: {@link dunemask.dunemasking.Version#getVersion()}</p>
- * <p>Get Dunemasking Library Version: {@link dunemask.dunemasking.Version#getLibraryVersion()}</p>
- * <p>Test compatable Version: {@link dunemask.dunemasking.Version#compatableVersion(double)}</p>
- * <p>Tests Dunemasking compatability: {@link dunemask.dunemasking.Version#ProgramSetUp(double)}</p>
+ * <p>Get Dunemasking Version: {@link dunemask.dm.Version#getVersion()}</p>
+ * <p>Get Dunemasking Library Version: {@link dunemask.dm.Version#getLibraryVersion()}</p>
+ * <p>Test compatable Version: {@link dunemask.dm.Version#compatableVersion(double)}</p>
+ * <p>Tests Dunemasking compatability: {@link dunemask.dm.Version#ProgramSetUp(double)}</p>
  * <p>Get Dunemasking Library Version: {}</p>
  */
 public class Version {

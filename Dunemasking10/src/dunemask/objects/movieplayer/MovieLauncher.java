@@ -18,7 +18,8 @@ import java.net.MalformedURLException;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import dunemask.dunemasking.Capture;
+
+import dunemask.dm.Capture;
 import dunemask.util.FileUtil;
 import javafx.application.Application;
 import javafx.application.Platform;

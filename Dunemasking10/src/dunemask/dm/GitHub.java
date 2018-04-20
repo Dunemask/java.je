@@ -8,7 +8,7 @@
  * (To Change This Go To Window > Preferences 
  * > Java > Code Style > Code Templates)
  */
-package dunemask.dunemasking;
+package dunemask.dm;
 
 import java.awt.FileDialog;
 import java.awt.Frame;
