@@ -1,0 +1,25 @@
+<blocks>
+	<0>dirt</0>
+	<1>stone</1>
+	<2>grass</2>
+	<3>grass_side</3>
+	<4>log_top</4>
+	<5>log_side</5>
+	<6>brix</6>
+	<7>leaves</7>
+	<8>leaves_2</8>
+	<9>stone_brick</9>
+	<10>select</10>
+	<11>red</11>
+	<12>orange</12>
+	<13>yellow</13>
+	<14>green</14>
+	<15>sky_blue</15>
+	<16>dark_blue</16>
+	<17>magenta</17>
+	<18>cobblestone</18>
+	<19>bedrock</19>
+	<20>glass</20>
+	<21>light_gray_stained_glass</21>
+	<texturepath>C:/Users/dunemask/Documents/VoxelCraft/resourcepacks/testpack/textures/blocks/</texturepath>
+</blocks>
