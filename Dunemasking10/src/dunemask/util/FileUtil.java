@@ -1,5 +1,6 @@
 package dunemask.util;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -145,7 +146,36 @@ public class FileUtil{
 	}
 
 
-
+	public static int clines(File file) {
+		 int count = -1;
+		 InputStream is = null;
+		try {
+			is = new BufferedInputStream(new FileInputStream(file));
+		        byte[] c = new byte[1024];
+		       
+		        int readChars = 0;
+		        boolean empty = true;
+		        count = 0;
+		        while ((readChars = is.read(c)) != -1) {
+		            empty = false;
+		            for (int i = 0; i < readChars; ++i) {
+		                if (c[i] == '\n') {
+		                    ++count;
+		                }
+		            }
+		        }
+		        return (count == 0 && !empty) ? 1 : count;
+		    } catch (IOException e) {
+				e.printStackTrace();
+		    	return -1;
+			} finally {
+		        try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		    }
+	}
 
 	/**
 	 * Reads the number of lines that are written in the file
