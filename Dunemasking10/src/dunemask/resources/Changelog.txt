@@ -1,0 +1,44 @@
+Dunemasking Ver: 4.5
+dunemask.dm.CMD.java Version: 4.8
+dunemask.dunemasking.Capture.java Version: 4.5
+dunemask.dunemasking.Changelog.java Version: 4.5
+dunemask.dunemasking.GitHub.java Version: 4.5
+dunemask.dunemasking.Setup.java Version: 4.5
+dunemask.dunemasking.Src.java Version: 4.5
+dunemask.dunemasking.StreamGobbler.java Version: 4.5
+dunemask.dunemasking.Version.java Version: 4.5
+dunemask.Dunemasking.java Version: 4.35
+dunemask.objects.ArrayListState.java Version: 5.8
+dunemask.objects.Expression.java Version: 4.5
+dunemask.objects.movieplayer.MovieLauncher.java Version: 7.0
+dunemask.objects.movieplayer.MoviePlayer.java Version: 4.0
+dunemask.objects.MusicPlayer.java Version: 4.5
+dunemask.objects.ScaledImageLabel.java Version: 4.5
+dunemask.objects.StretchIcon.java Version: 4.5
+dunemask.other.StringBasedEncryption.java Version: 4.5
+dunemask.util.AudioUtil.java Version: 4.5
+dunemask.util.FileUtil.java Version: 4.7
+dunemask.util.JarUtil.java Version: 4.7
+dunemask.util.MathUtil.java Version: 4.5
+dunemask.util.MediaUtil.java Version: 4.5
+dunemask.util.ObjectUtil.java Version: 4.5
+dunemask.util.RW.java Version: 4.5
+dunemask.util.StringUtil.java Version: 4.5
+dunemask.util.xml.XMLMap.java Version: 5.8
+dunemask.util.xml.XMLRW.java Version: 5.8
+Additionally:
+@All: Package-Info Are Complete
+
+@RW.java: RW Is the fast version with a clean file function that copies the file 
+	      before reading them off, Clean takes fairly long
+	
+@MeidaPlayer.java: MediaPlayer from (dunemask.objects.MediaPlayer.java) uses
+				   MediaUtil from (dunemask.util.MediaUtil.java) as opposed 
+				   to using AudioUtil (dunemask.util.AudioUtil.java) MediaUtil
+				   uses Deprecated methods that are not reccomended from java
+
+@Changelog.java: Tests javadoc version (Only works in ide) and labels with package
+				 Styling	
+
+Created at: 2018-04-03 15:41
+(Update)

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="677.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <MediaView fx:id="mv" fitHeight="200.0" fitWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <SplitPane fx:id="splitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="56.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-background-color: #000000;" BorderPane.alignment="CENTER">
+        <items>
+            <StackPane fx:id="stackPane" cache="true" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-border-color: #000000; -fx-border-image-width: 0;">
+               <children>
+                  <Slider fx:id="seekSlider" prefHeight="18.0" prefWidth="598.0" style="-fx-background-color: #000000; -fx-border-color: #000000;" />
+               </children>
+            </StackPane>
+          <AnchorPane>
+               <children>
+                  <HBox prefHeight="29.0" prefWidth="598.0" style="-fx-background-color: #232323;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="playButton" mnemonicParsing="false" onAction="#playPause" text="&gt;" />
+                        
+                        <Button mnemonicParsing="false" onAction="#Stop" text="Stop" />
+                        <Button mnemonicParsing="false" onAction="#Fast" text="Faster" />
+                        <Button mnemonicParsing="false" onAction="#resetSpeed" text="Normal" />
+                        <Button mnemonicParsing="false" onAction="#Slow" text="Slower" />
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#Restart" text="&lt;-" />
+                        <Button fx:id="forwardButton" mnemonicParsing="false" onAction="#SkipToEnd" text="-&gt;" />
+                        <Button fx:id="changeMediaButton" mnemonicParsing="false" onAction="#changeMediaWithChooser" text="Change" />
+                        <Button mnemonicParsing="false" onAction="#SkipBehind" text="&lt;&lt;" />
+                        <Button fx:id="repeatButton" mnemonicParsing="false" onAction="#SetOnLoop" text="Repeat" />
+                        <Button mnemonicParsing="false" onAction="#SkipAhead" text="&gt;&gt;" />
+                        <Slider fx:id="volumeSlider" prefHeight="25.0" prefWidth="148.0" style="-fx-background-color: #232323;" />
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </bottom>
+   <left>
+      <VBox fx:id="audBar" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+</BorderPane>

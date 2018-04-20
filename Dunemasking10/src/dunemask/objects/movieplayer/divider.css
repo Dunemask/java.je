@@ -1,0 +1,38 @@
+.split-pane { /* FX theme stylesheet */
+
+-fx-background-insets: 0px, 1px;
+-fx-background-color: #232323;
+-fx-padding: 1px;
+
+}
+
+
+.root { /* FX theme stylesheet */
+
+-fx-box-border: ladder(-fx-color, 20%, black, 30%, derive(-fx-color, -15%));
+
+-fx-color: -fx-base;
+
+-fx-base: #ececec;
+
+-fx-inner-border: 0%, 0%, 0%, 100%, NO_CYCLE, 0%, ladder(-fx-color, 0%, derive(-fx-color, 30%), 40%, derive(-fx-color, 20%), 60%, derive(-fx-color, 25%), 80%, derive(-fx-color, 55%), 90%, derive(-fx-color, 55%), 100%, derive(-fx-color, 75%)), 100%, ladder(-fx-color, 0%, derive(-fx-color, 20%), 20%, derive(-fx-color, 10%), 40%, derive(-fx-color, 5%), 60%, derive(-fx-color, -2%), 100%, derive(-fx-color, -5%));
+
+}
+
+
+
+.split-pane>*.split-pane-divider { /* FX theme stylesheet */
+
+-fx-padding: 0px 0.25em 0px 0.25em;
+
+}
+
+
+
+.split-pane:vertical>*.split-pane-divider { /* FX theme stylesheet */
+
+-fx-background-color: transparent;
+
+-fx-background-insets: 0px, 1px 0px 1px 0px;
+
+}
