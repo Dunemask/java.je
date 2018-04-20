@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 /**
  * Reads And Writes Files
- * <p>Removes any Blank Lines: {@link dunemask.util.RW#cleanFile(File)}</p>
  * <p>Write One Line of Text: {@link dunemask.util.RW#write(File, String, int)}</p>
  * <p>Write Multiple Lines of Text: {@link dunemask.util.RW#write(File, String[], int)}</p>
  * <p>Read One Line of Text From File: {@link dunemask.util.RW#read(File, int)}</p>
@@ -21,8 +20,6 @@ import java.util.Scanner;
  * @author Elijah Dunemask
  **/
 public class RW {
-	/*@RW.java: RW Is the fast version with a clean file function that copies the file 
-    before reading them off, Clean takes fairly long*/
 	/***Version*/
     final static double version = 4.5;
     /**First Line In RW Document starts here*/
@@ -54,7 +51,6 @@ public class RW {
     	newLines.add(text);
     	for(int i=store;i<lines.length;i++) {
     		newLines.add(lines[i]);
-    		//System.out.println(newLines.get(i));
     		store=i;
     	}
     	
@@ -282,76 +278,6 @@ public class RW {
 		// Return the string
 		return text;
 
-	}
-
-	/**
-	 * Cleans the file by removing any and all whitespace
-	 * 
-	 * @param file
-	 *            File to clean
-	 * @deprecated
-	 */
-	public static void cleanFile(File file) {
-		int lines = FileUtil.linesInFile(file);
-		File copy = new File(file.getParent() + "\\Copy.txt");
-		try {
-			copyFile(copy, file);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
-		BufferedWriter bw = null;
-		try {
-			bw = new BufferedWriter(new FileWriter(file));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		for (int i = 1; i <= lines; i++) {
-
-			String text = null;
-			try {
-				text = read(copy, i); //**********************************
-			} catch (NoSuchElementException e) {
-
-				text = "";
-			}
-			if (!text.equals("")) {
-				try {
-					bw.write(text);
-					bw.newLine();
-				} catch (IOException e) {
-
-					e.printStackTrace();
-				}
-
-			}
-
-		}
-		copy.delete(); //******************************
-		try {
-			bw.close();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-
-	}
-
-	
-	private static void copyFile(File copyOfFile, File file) throws IOException {
-    	//Needs File for the number of rows it holds, and also for it to copy that file
-    	String existingFile;
-    	int linesInFile=FileUtil.linesInFile(file);
-    	BufferedWriter bw = new BufferedWriter(new FileWriter(copyOfFile));					//Creates a copy of the document
-    	for(int i =1;i<=linesInFile;i++) {
-    		existingFile=read(file,i).toString();
-    	
-    		bw.write(existingFile);
-    		bw.newLine();
-    		
-    		
-    	}bw.close();
-		
 	}
 
 	
