@@ -23,8 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
-import dunemask.util.FileUtil;
-
 /**
  * Jar Utilities
  * <p>Extract Jar: {@link dunemask.util.internal.JarUtil#extractAll(String, String, String)}</p>
@@ -56,7 +54,7 @@ public class JarUtil{
 	 */
 	public static void extractAllOpenDialog(File jar, String destination) throws IOException {
 		init();
-		destination = FileUtil.fixSpaces(destination).replaceAll("%20", " ");
+		destination = InternalFileUtil.fixSpaces(destination).replaceAll("%20", " ");
 		JarFile jarfile = new JarFile(jar);
 		Enumeration<JarEntry> enu = jarfile.entries();
 		// File file = new File(dir+"\\"+jarName+"_lib\\");
@@ -129,7 +127,7 @@ public class JarUtil{
 	 */
 	public static void extractAllOpenDialog(String dir, String jarName, String resourceFolderName) throws IOException {
 		
-		extractAllOpenDialog(new java.io.File(FileUtil.fixSpaces(dir).replaceAll("%20", " ") + jarName + ".jar"),dir+"\\"+jarName+"_lib\\");
+		extractAllOpenDialog(new java.io.File(InternalFileUtil.fixSpaces(dir).replaceAll("%20", " ") + jarName + ".jar"),dir+"\\"+jarName+"_lib\\");
 	}
 
 	private static void updateScreen(String name, JarEntry je) {
@@ -196,10 +194,10 @@ public class JarUtil{
 	 *             If the jarFile don't exists it's gonna blow up
 	 */
 	public static void extractAll(String dir, String jarName, String resourceFolderName) throws IOException {
-		dir = FileUtil.fixSpaces(dir).replaceAll("%20", " ");
-		jarName = FileUtil.fixSpaces(jarName).replaceAll("%20", " ");
-		resourceFolderName = FileUtil.fixSpaces(resourceFolderName).replaceAll("%20", " ");
-		extractAll(new java.io.File(FileUtil.fixSpaces(dir).replaceAll("%20", " ") + jarName + ".jar"),dir+"\\"+jarName+"_lib\\");
+		dir = InternalFileUtil.fixSpaces(dir).replaceAll("%20", " ");
+		jarName = InternalFileUtil.fixSpaces(jarName).replaceAll("%20", " ");
+		resourceFolderName = InternalFileUtil.fixSpaces(resourceFolderName).replaceAll("%20", " ");
+		extractAll(new java.io.File(InternalFileUtil.fixSpaces(dir).replaceAll("%20", " ") + jarName + ".jar"),dir+"\\"+jarName+"_lib\\");
 	}
 	
 	
@@ -211,7 +209,7 @@ public class JarUtil{
 	 *             If the jarFile don't exists it's gonna blow up
 	 */
 	public static void extractAll(File jar,String destination) throws IOException {
-			destination = FileUtil.fixSpaces(destination).replaceAll("%20", " ");
+			destination = InternalFileUtil.fixSpaces(destination).replaceAll("%20", " ");
 			JarFile jarfile = new JarFile(jar);
 		Enumeration<JarEntry> enu = jarfile.entries();
 		// File file = new File(dir+"\\"+jarName+"_lib\\");
@@ -267,10 +265,10 @@ public class JarUtil{
 	public static boolean isJar(String jarName) {
 		boolean isJar = false;
 		if (jarName.contains(".jar")) {
-			jarName = FileUtil.removeExtension(jarName);
+			jarName = InternalFileUtil.removeExtension(jarName);
 		}
 
-		if (new File(FileUtil.fixSpaces(JarUtil.getProgramPath()).replaceAll("%20", " ") + jarName + ".jar").exists()) {
+		if (new File(InternalFileUtil.fixSpaces(JarUtil.getProgramPath()).replaceAll("%20", " ") + jarName + ".jar").exists()) {
 			
 			isJar = true;
 		}

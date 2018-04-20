@@ -21,6 +21,7 @@ import javax.swing.SwingUtilities;
 
 import dunemask.dm.Capture;
 import dunemask.util.FileUtil;
+import dunemask.util.internal.InternalFileUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -114,7 +115,7 @@ public class MovieLauncher extends Application {
 	public void start(Stage stage) throws Exception {
 		Capture.setUpStreams();
 		
-		FXMLLoader loader = new FXMLLoader(FileUtil.getResource("dunemask/objects/movieplayer/DMPlayer.fxml").toURI().toURL());
+		FXMLLoader loader = new FXMLLoader(InternalFileUtil.getResource("dunemask/objects/movieplayer/DMPlayer.fxml").toURI().toURL());
 		loader.setController(current);
 		  
 		Parent root = loader.load();
@@ -151,7 +152,6 @@ public class MovieLauncher extends Application {
 			try {
 				frame.setIconImage(Toolkit.getDefaultToolkit().getImage(icon.toURI().toURL()));
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		 

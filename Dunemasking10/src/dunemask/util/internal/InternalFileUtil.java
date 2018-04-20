@@ -1,5 +1,4 @@
-package dunemask.util;
-
+package dunemask.util.internal;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +11,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import dunemask.util.RW;
+import dunemask.util.StringUtil;
 /**Dunemasking FileUtil for easy editing and changing of filesv
  * <p>Test In List: {@link dunemask.util.FileUtil#alreadyInFile(File, String)}</p>
  * <p>Remove Extension From File: {@link dunemask.util.FileUtil#removeExtension(String)}</p>
@@ -30,7 +32,7 @@ import java.util.Scanner;
  * 
  * @author Elijah
  * */
-public class FileUtil{
+public class InternalFileUtil{
 	/***Version*/
     final static double version = 4.7;
 	
@@ -44,14 +46,37 @@ public class FileUtil{
 	 * @return Return file from url
 	 * */
     public static File getWebFile(String address) {
-    	File webFile=null;
-
-    	try {
-			webFile = getWebFile(address,File.createTempFile("tmp", null));
-		} catch (IOException e) {
-			e.printStackTrace();
+    	URL url = null;
+		try {
+			url = new URL(InternalFileUtil.fixSpaces(InternalFileUtil.filePathFix(address)));
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
 		}
     	
+    	File webFile=null;
+    	String name = new File(url.getFile()).getName();
+    	String tDir = System.getProperty("java.io.tmpdir");
+    	try {
+    		InputStream in = url.openStream();
+    		webFile = new File(tDir+"/"+name.replace("%20", " "));
+	
+    		OutputStream out = new FileOutputStream(webFile);
+    		int read;
+			byte[] bytes = new byte[1024^4];
+
+			while ((read = in.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+    		
+    		
+    		out.close();
+    		in.close();	
+    		//webFile.deleteOnExit();
+    		
+    		
+    	}catch(IOException e) {
+    		e.printStackTrace();
+    	}
     	return webFile;
     	
     }
@@ -64,7 +89,7 @@ public class FileUtil{
        public static File getWebFile(String address,File file) {
        	URL url = null;
    		try {
-   			url = new URL(FileUtil.filePathFix(address).replace(" ", "%20"));
+   			url = new URL(InternalFileUtil.fixSpaces(InternalFileUtil.filePathFix(address)));
    		} catch (MalformedURLException e1) {
    			e1.printStackTrace();
    		}
@@ -378,7 +403,7 @@ public class FileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int containsIgnoreCaseInDocument(File file, String text) {
-		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		String[] lines = RW.read(file, 1, InternalFileUtil.linesInFile(file));
 		
 		int location = -5;
 		// Start at first line (Not 0 lines in file :P)
@@ -409,7 +434,7 @@ public class FileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int containsIgnoreCaseInDocumentBounds(File file, String text,int low,int high) {
-		String[] lines = RW.read(file, 1, FileUtil.linesInFile(file));
+		String[] lines = RW.read(file, 1, InternalFileUtil.linesInFile(file));
 		
 		if(low>lines.length) {
 			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
@@ -436,7 +461,157 @@ public class FileUtil{
 
 
 	
+	/**
+	 * Get File From relative Location "starts at src folder" Inside src folder
+	 * "resources/README!.txt"; Use that
+	 * 
+	 * @param ResourceDirectory
+	 *            Directory To resource should be relative
+	 * @return Returns the wanted Resource as a url
+	 **/
+	public static  URL getResourceURL(String ResourceDirectory) {
+		if (!ResourceDirectory.startsWith("/")) {
+			//ResourceDirectory = "/" + ResourceDirectory; Add it
+		}else {
+			ResourceDirectory=ResourceDirectory.substring(1, ResourceDirectory.length());
+		}
+		/***(Does Not Need Absolute Referencing now apparently I:)**/
 
+		String resource = InternalFileUtil.filePathFix(ResourceDirectory); // "..\\..\\resources\\"+rm.getPath();
+		//resource = "/resources/track-list.txt";
+		
+		//Create ClassLoader to get resources
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		URL res = null;
+			//Fixes stuffs
+		
+			//This catches if it's a Direct filepath, it should assume IDE path
+			if(resource.substring(1, 2).equals(":")) {
+				try {
+					resource = resource.replace("%20", " ");
+					res = new File(resource).toURI().toURL();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+			//Otherwise have the classloader get the resource
+			}else {
+				
+				res = classLoader.getResource(resource);
+			}
+				//Catch Any Spaces in the name
+				try {
+					res = new URL(res.toString().replace("%20", " "));
+				} catch (Exception e) {
+					System.err.println("Prb don't exist");
+					System.err.println("Try checking your path for:"+ResourceDirectory.toString().replace("%20", " "));
+					e.printStackTrace();
+				}//Close Catch
+				
+			return res;
+	
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Get File From relative Location "starts at src folder" Inside src folder
+	 * "resources/README!.txt"; Use that
+	 * 
+	 * @param ResourceDirectory
+	 *            Directory To resource should be relative
+	 * @return Returns the wanted Resource as a file
+	 **/
+	public static  File getResource(String ResourceDirectory) {
+		File file = null;
+		if (!ResourceDirectory.startsWith("/")) {
+			//ResourceDirectory = "/" + ResourceDirectory; Add it
+		}else {
+			ResourceDirectory=ResourceDirectory.substring(1, ResourceDirectory.length());
+		}
+		/***(Does Not Need Absolute Referencing now apparently I:)**/
+
+		String resource = InternalFileUtil.filePathFix(ResourceDirectory); // "..\\..\\resources\\"+rm.getPath();
+		//resource = "/resources/track-list.txt";
+		
+		//Create ClassLoader to get resources
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		URL res = null;
+			//Fixes stuffs
+		
+			//This catches if it's a Direct filepath, it should assume IDE path
+			if(resource.substring(1, 2).equals(":")) {
+				try {
+					resource = resource.replace("%20", " ");
+					res = new File(resource).toURI().toURL();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+			//Otherwise have the classloader get the resource
+			}else {
+				
+				res = classLoader.getResource(resource);
+			}
+				//Catch Any Spaces in the name
+				try {
+					res = new URL(res.toString().replace("%20", " "));
+				} catch (Exception e) {
+					System.err.println("Prb don't exist");
+					System.err.println("Try checking your path for:"+ResourceDirectory.toString().replace("%20", " "));
+					e.printStackTrace();
+				}//Close Catch
+				
+		if (res.toString().startsWith("jar:")||res.toString().startsWith("rsrc:")) {
+			try {
+				InputStream input = classLoader.getResourceAsStream(resource);
+				file = File.createTempFile("tempfile", ".tmp");
+				OutputStream out = new FileOutputStream(file);
+				int read;
+				byte[] bytes = new byte[1024^3];
+
+				while ((read = input.read(bytes)) != -1) {
+					out.write(bytes, 0, read);
+				}
+				//file.deleteOnExit();
+				out.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		} else {
+			// this will work in IDE, but not from a JAR
+			file = new File(res.getFile());
+		}
+
+		if (file != null && !file.exists()) {
+			throw new RuntimeException("Error: File " + file + " not found!"+"\n"+"From: "+res);
+			
+		}
+		return file;
+
+	}
+	/**Replaces all ' ' with '%20'
+	 * @param path Path of File
+	 * @return String with fixed spacing
+	 */
+	public static String fixSpaces(String path) {
+		return path.replace(" ", "%20");
+			
+
+		
+	}
+	
+	/**Replaces all '%20' with ' '
+	 * @param path Path of File
+	 * @return String with fixed spacing
+	 */
+	public static String fixToSpaces(String path) {
+		return path.replace("%20", " ");
+			
+
+		
+	}
 	
 	/**Get a list of files and folders from a package
 	 * @param dir Starts at src level and works relative from that
@@ -491,7 +666,17 @@ public class FileUtil{
 		return filePath.replace("\\", "/");
 		
 	}
-
+	/**
+	 * Replace all Forward Slashes with back ones
+	 * 
+	 * @param filePath
+	 *            Path To File
+	 * @return String WIth back slahes as opposed to forwardslahes
+	 **/
+	public static String filePathFixReverse(String filePath) {
+		return filePath.replace("/", "\\");
+		
+	}
 
 
 

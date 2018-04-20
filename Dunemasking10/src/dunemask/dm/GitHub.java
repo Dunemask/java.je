@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import dunemask.util.FileUtil;
 import dunemask.util.RW;
+import dunemask.util.internal.InternalFileUtil;
 
 /**
  * @author karib
@@ -267,8 +268,8 @@ public class GitHub {
 			repFolder.mkdirs();
 			System.out.println("Createing Fake Rep In "+repFolder.getAbsolutePath());
 			
-			FileUtil.writeFile(FileUtil.getResource("dunemask/resources/github/Create.bat"), new File(repPath+"Create.bat"));
-			FileUtil.writeFile(FileUtil.getResource("dunemask/resources/github/Push.bat"), new File(repPath+"Push.bat"));
+			FileUtil.writeFile(InternalFileUtil.getResource("dunemask/resources/github/Create.bat"), new File(repPath+"Create.bat"));
+			FileUtil.writeFile(InternalFileUtil.getResource("dunemask/resources/github/Push.bat"), new File(repPath+"Push.bat"));
 			RW.write(new File(repPath+"Create.bat"), "cd "+repPath, 2);
 			RW.write(new File(repPath+"Push.bat"), "cd "+repPath+"tmp/", 2);
 			
