@@ -3,7 +3,6 @@ package dunemask.util;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 /**Dunemasking FileUtil for easy editing and changing of filesv
  * <p>Test In List: {@link dunemask.util.FileUtil#alreadyInFile(File, String)}</p>
  * <p>Remove Extension From File: {@link dunemask.util.FileUtil#removeExtension(String)}</p>
@@ -21,24 +19,13 @@ import java.util.Scanner;
  * <p>Change FilePath Folder Handling: {@link dunemask.util.FileUtil#filePathFix(String)}</p>
  * <p>Find Certain Text In Document: {@link dunemask.util.FileUtil#findInDocument(File, String)}</p>
  * <p>Get SubFiles: {@link dunemask.util.FileUtil#getAllSubFiles(File)}</p>
- * <p>Get Resource: {@link dunemask.util.FileUtil#getResource(String)}</p>
- *  <p>Last Line: {@link dunemask.util.FileUtil#lastLine(File)}</p>
  * <p>Return Next Free Line In File: {@link dunemask.util.FileUtil#nextFreeLine(File)}</p>
  * <p>Get File From URL: {@link dunemask.util.FileUtil#getWebFile(String)}</p>
  * <p>Write File from File: {@link dunemask.util.FileUtil#writeFile(File, File)}</p>
- * <p>Last Index of Text: {@link dunemask.util.FileUtil#lastInstanceOfText(File, String)}}</p>
- * <p>Remove Spaces: {@link dunemask.util.FileUtil#fixSpaces(String)}}</p>
  * 
  * @author Elijah
  * */
 public class FileUtil{
-	/***Version*/
-    final static double version = 4.7;
-	
-  
-    
-    
-    
     /**Get File From Specified URL
 	 * <p>(Web File)</p>
 	 * @param address  address
@@ -146,7 +133,16 @@ public class FileUtil{
 	}
 
 
-	public static int clines(File file) {
+
+
+	/**
+	 * Reads the number of lines that are written in the file
+	 * 
+	 * @param file
+	 *            File whose lines shall be counted
+	 * @return Returns the number of lines in the file or -1 if it blew up
+	 */
+	public static int linesInFile(File file) {
 		 int count = -1;
 		 InputStream is = null;
 		try {
@@ -175,35 +171,6 @@ public class FileUtil{
 					e.printStackTrace();
 				}
 		    }
-	}
-
-	/**
-	 * Reads the number of lines that are written in the file
-	 * 
-	 * @param file
-	 *            File whose lines shall be counted
-	 * @return Returns the number of lines in the file
-	 * @deprecated
-	 */
-	public static int linesInFile(File file) {
-		Scanner fileReader = null;
-		try {
-			fileReader = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			System.out.println("File:"+file+" WAS NOT FOUND!");
-			e.printStackTrace();
-		} // Close Catch Clause
-		/***************************************/
-
-		int i = 0;
-		// While I can still read the file
-		while (fileReader.hasNextLine()) {
-			i = i + 1;
-			fileReader.nextLine();
-		}
-		fileReader.close(); // Close Reader
-	
-		return i;
 
 	}
 
@@ -511,14 +478,14 @@ public class FileUtil{
 	}
 	
 	/**
-	 * Replace all Back Slashes with forward ones
+	 * Replace all back/forward slashes with the system file sepearator
 	 * 
 	 * @param filePath
 	 *            Path To File
 	 * @return String WIth forward slahes as opposed to backslahes
 	 **/
 	public static String filePathFix(String filePath) {
-		return filePath.replace("\\", "/");
+		return filePath.replace("/", "\\").replace("\\", File.separator);
 		
 	}
 

@@ -22,11 +22,6 @@ public class RuneMap {
     private HashMap<String,String> fullMap;
    // private XMLMap map;
 	private File xml;
-	public void tmp() {
-
-		
-		
-	}
 	/** Return Keyset in ArrayList
 	 * */
 	public ArrayList<String> valKeySet(){
