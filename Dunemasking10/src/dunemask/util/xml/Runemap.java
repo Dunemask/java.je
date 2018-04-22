@@ -7,7 +7,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
+/** This is an Interprited form of xml that should only be change/edited
+ * from Dunemasking however is probably externally readable
+ * 
+ * 
  * @author dunemask
  *
  */
@@ -16,7 +19,10 @@ public class Runemap {
 	
 	DXMLMap map;
 	private boolean live = false;
-	
+	/** 'Reads' a {@link Runemap} from a file
+	 * @param runemap 
+	 * 
+	 * */
 	public static Runemap parseRunemap(File runemap) {
 		Runemap map = new Runemap();
 		map.xml = runemap;
@@ -55,7 +61,9 @@ public class Runemap {
 	
 	
 	
-	
+	/** {@linkplain Runemap}
+	 * 
+	 * */
 	public Runemap(File runemap) {
 		this.xml= runemap;
 		runemap.delete();
@@ -65,7 +73,7 @@ public class Runemap {
 		this.fullMap  = new HashMap<String,String>();
 	}
 	
-	public Runemap() {
+	Runemap() {
 		map = new DXMLMap();
 		this.xmlurl =(new ArrayList<String>());
 		this.fullMap  = new HashMap<String,String>();
@@ -75,14 +83,20 @@ public class Runemap {
     private HashMap<String,String> fullMap;
    // private XMLMap map;
 	private File xml;
-	/** Return Keyset in ArrayList
+	/** Return FullMap Keyset in ArrayList
 	 * */
-	public ArrayList<String> valKeySet(){
-		return new ArrayList<String>(this.getAllValues().keySet());
+	public ArrayList<String> valMapKeySet(){
+		return new ArrayList<String>(this.fullMap.keySet());
+	}
+	/** Return FullMap Values in ArrayList
+	 * */
+	public ArrayList<String> valMapValSet(){
+		return new ArrayList<String>(this.fullMap.values());
 	}
 	
 	
-	/** Get Value from the indexer not the doc
+	/** Get Value from the Rune Indexer
+	 * @deprecated Will be removed in future release
 	 * @param url
 	 * @return String
 	 * 
@@ -92,7 +106,7 @@ public class Runemap {
 		
 	}
 	
-	public void update() {
+	void update() {
 		this.map.update();
 	}
 	
@@ -191,21 +205,29 @@ public class Runemap {
 	public String getParentUrl(String url) {
 		return new Attr(url).getParent();
 	}
-
-	public void writeOut() {
+	
+	void writeOut() {
 		map.writeOut();
 	}
+	/** Write document to a file
+	 * @param f 
+	 * 
+	 * */
 	public void writeOut(File f) {
 		map.writeOut(f);
 	}
 
-	
+	/** Removes the Specified container
+	 * @param url
+	 * */
 	public void removeContainer(String url) {
 		this.removeElement(url);
 		
 
 	}
-	
+	/** Removes the Specified Element
+	 * @param url
+	 * */
 	public void removeElement(String url) {
 		map.removeAttr(url);
 		
@@ -289,7 +311,7 @@ public class Runemap {
 	}
 	
 
-	/** Returns all the sub Urls of the parent container (Only Direct Level Below)
+	/** Returns all the children urls of the parent container (Only Direct Level Below)
 	 * @param url Parent Url (Container)
 	 * @return ArrayList of sub elements or null
 	 * 
@@ -368,7 +390,7 @@ public class Runemap {
 	 * @param url
 	 * @return list form of the url
 	 * */
-	ArrayList<String> urlToList(String dxmlurl){
+	private ArrayList<String> urlToList(String dxmlurl){
 		ArrayList<String> tmp = new ArrayList<String>();
 		String full = dxmlurl;
 		for(int i=0;i<full.length();i++) {
@@ -401,7 +423,7 @@ public class Runemap {
 	
 
 	/**
-	 * @return the xml
+	 * @return the xml file
 	 */
 	public File getXml() {
 		return xml;
@@ -425,12 +447,20 @@ public class Runemap {
 	/**
 	 * @return the fullMap
 	 */
-	public HashMap<String, String> getAllValues() {
+	public HashMap<String, String> getFullMap() {
 		return fullMap;
 	}
+	/** If Is live it will write out automatically as soon as an element is added
+	 * 
+	 * */
 	public boolean isLive() {
 		return live;
 	}
+	/** Set the value to {@link Runemap#isLive() live}
+	 * @param live
+	 * @deprecated Please use {@link LiveRunemap} instead
+	 * 
+	 * */
 	public void setLive(boolean live) {
 		this.live = live;
 	}
