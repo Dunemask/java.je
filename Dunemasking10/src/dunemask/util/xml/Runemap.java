@@ -11,13 +11,14 @@ import java.util.HashMap;
  * @author dunemask
  *
  */
-public class RuneMap2 {
+public class Runemap {
 
 	
 	DXMLMap map;
+	private boolean live = false;
 	
-	public static RuneMap2 parseRunemap(File runemap) {
-		RuneMap2 map = new RuneMap2();
+	public static Runemap parseRunemap(File runemap) {
+		Runemap map = new Runemap();
 		map.xml = runemap;
 		map.map = DXMLMap.ParseMap(runemap);
 		map.mapAll();
@@ -55,18 +56,18 @@ public class RuneMap2 {
 	
 	
 	
-	public RuneMap2(File runemap) {
+	public Runemap(File runemap) {
 		this.xml= runemap;
 		runemap.delete();
 		map = new DXMLMap();
 		map.file = this.xml;
-		setAllURLS(new ArrayList<String>());
+		this.xmlurl =(new ArrayList<String>());
 		this.fullMap  = new HashMap<String,String>();
 	}
 	
-	public RuneMap2() {
+	public Runemap() {
 		map = new DXMLMap();
-		setAllURLS(new ArrayList<String>());
+		this.xmlurl =(new ArrayList<String>());
 		this.fullMap  = new HashMap<String,String>();
 	}
 	
@@ -221,6 +222,10 @@ public class RuneMap2 {
 				i=0;
 			}
 		}
+		
+		if(this.isLive()) {
+			writeOut();
+		}
 
 	}
 	
@@ -241,6 +246,9 @@ public class RuneMap2 {
 		map.addElement(url, value);
 		addurl(url);
 		this.addValue(url, String.valueOf(value));
+		if(this.isLive()) {
+			writeOut();
+		}
 	}
 	/** Write a Container
 	 * @param url Url
@@ -255,6 +263,9 @@ public class RuneMap2 {
 		}
 		map.update();
 		addurl(url);
+		if(this.isLive()) {
+			writeOut();
+		}
 	}
 	
 	/** Get the parent from the url
@@ -276,7 +287,7 @@ public class RuneMap2 {
 	 * @return ArrayList of sub elements or null
 	 * 
 	 * */
-	public ArrayList<String> getSubURLS(String url){
+	public ArrayList<String> getChildrenURLS(String url){
 		
 		if(!this.isCont(url)) {
 			throw new DMXMLException("URL IS ELEMENT NOT CONTAINER");
@@ -392,12 +403,7 @@ public class RuneMap2 {
 
 
 
-	/**
-	 * @param xml the xml to set
-	 */
-	public void setXml(File xml) {
-		this.xml = xml;
-	}
+
 
 
 	/**
@@ -407,18 +413,28 @@ public class RuneMap2 {
 		return xmlurl;
 	}
 
-	/**
-	 * @param xmlurl the xmlurl to set
-	 */
-	public void setAllURLS(ArrayList<String> xmlurl) {
-		this.xmlurl = xmlurl;
-	}
+
 
 	/**
 	 * @return the fullMap
 	 */
 	public HashMap<String, String> getAllValues() {
 		return fullMap;
+	}
+	/** If Document is Live It Will be physically  
+	 * <p>written everytime an Attribute is added</p>
+	 * 
+	 * @return if document is live
+	 * */
+	public boolean isLive() {
+		return live;
+	}
+	/** Set Document to live
+	 * @param live
+	 * 
+	 * */
+	public void setLive(boolean live) {
+		this.live = live;
 	}
 	
 	
