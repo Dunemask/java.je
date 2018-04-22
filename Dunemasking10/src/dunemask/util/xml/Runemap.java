@@ -222,10 +222,13 @@ public class Runemap {
 				i=0;
 			}
 		}
-		
-		if(this.isLive()) {
-			writeOut();
+		this.getXml().delete();
+		if(live) {
+			this.update();
+			this.writeOut();
 		}
+		
+		
 
 	}
 	
@@ -246,8 +249,10 @@ public class Runemap {
 		map.addElement(url, value);
 		addurl(url);
 		this.addValue(url, String.valueOf(value));
-		if(this.isLive()) {
-			writeOut();
+		this.getXml().delete();
+		if(live) {
+			this.update();
+			this.writeOut();
 		}
 	}
 	/** Write a Container
@@ -263,8 +268,10 @@ public class Runemap {
 		}
 		map.update();
 		addurl(url);
-		if(this.isLive()) {
-			writeOut();
+		this.getXml().delete();
+		if(live) {
+			this.update();
+			this.writeOut();
 		}
 	}
 	
@@ -421,18 +428,9 @@ public class Runemap {
 	public HashMap<String, String> getAllValues() {
 		return fullMap;
 	}
-	/** If Document is Live It Will be physically  
-	 * <p>written everytime an Attribute is added</p>
-	 * 
-	 * @return if document is live
-	 * */
 	public boolean isLive() {
 		return live;
 	}
-	/** Set Document to live
-	 * @param live
-	 * 
-	 * */
 	public void setLive(boolean live) {
 		this.live = live;
 	}

@@ -12,6 +12,7 @@ class DXMLMap {
 	
 	
 	public void writeOut(File f) {
+		f.delete();
 		RW.writeAll(f, newLines.toArray(new String[newLines.size()]));
 
 	}
