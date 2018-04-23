@@ -1,4 +1,0 @@
-<Handler>
-	<blox>resources/textures/blocks/block.xml</blox>
-	<sounds>resources/sounds/Index.xml</sounds>
-</Handler>
