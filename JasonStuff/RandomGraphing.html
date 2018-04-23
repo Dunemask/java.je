@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Random Graphing</title>
+         <style>.button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>Random Graphing</h1>
+            <p id = "sos"></p>
+            <p><button class="button" id = "b1">RESET</button></p>
+            <canvas id = "can1"></canvas>
+        
+            <script>
+                var csize=300;
+                var out = 1;
+                var num = 30;
+                var randeq = new Array(num);
+                var canvas = document.getElementById("can1");
+                var ctx = canvas.getContext("2d");
+                canvas.setAttribute("width",csize);
+                canvas.setAttribute("height",csize);
+                var val =0.1;
+                
+                var b1 = document.getElementById("b1");
+                b1.onclick = function rebut(){
+                    newar();
+                    reset();   
+                }
+                //reset();
+                
+                //setfun(0,0,0);
+                function reset(){
+                    ctx.clearRect
+                    ctx.fillStyle = "#000000";
+                    ctx.fillRect(0,0,csize,csize);
+                    for(var x = 0;x<csize;x++){
+                        for(var y = 0;y<csize;y++){
+                            val =0.1;
+                            for(var i = 0;i < num;i++){
+                                //setfun(randeq[i],x,y);
+                            }
+                            var color =rgbToHex(y,x,0);
+                            ctx.fillStyle = color;
+                            ctx.fillRect(x,y,1,1);
+                    }
+                    }
+                }
+                
+                function newar(){
+                    for(var i = 0;i < num;i++){
+                        randeq[i] = Math.floor(Math.random() * 10);
+                    }
+                }
+                
+                function setfun(i,x,y){
+                    if(i==0){
+                        val=val+y;
+                    }
+                    if(i==1){
+                        val=val+x;
+                    }
+                    if(i==2){
+                        val=val*y;
+                    }
+                    if(i==3){
+                        val=val*y;
+                    }
+                    if(i==4){
+                        val=10* Math.cos(val/180*3.14);
+                    }
+                    if(i==5){
+                        val=10* Math.sin(val/180*3.14);
+                    }
+                    if(i==6){
+                        val = log(val);  
+                    }
+                    if(i==7){
+                        val=Math.floor(val/10)*10;
+                    }
+                    if(i==8){
+                        val=Math.atan(1/val);
+                    }
+                    if(i==9){
+                        val = val*Math.sin((y-x));
+                    }
+                    
+                }
+                
+                function rgbToHex(r, g, b) {
+                        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+                }
+            </script>
+        
+        
+        
+        </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    </body>
+    
+    
+    
+    
+</html>
