@@ -8,12 +8,11 @@
  * (To Change This Go To Window > Preferences 
  * > Java > Code Style > Code Templates)
  */
-package dunemask.dm;
+package dunemask.other;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -23,7 +22,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -36,7 +34,6 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import dunemask.util.FileUtil;
 import dunemask.util.RW;
 
 /**
@@ -55,8 +52,8 @@ public class Capture {
 	
 	/**Turn On Capture*/
 	public static void setUpStreams() {
-	    System.setOut(new PrintStream(outContent));
-	    System.setErr(new PrintStream(errContent));
+		    System.setOut(new PrintStream(outContent));
+		    System.setErr(new PrintStream(errContent));
 	}
 
 	/**Turn Off Capture
@@ -116,7 +113,8 @@ public class Capture {
 	 */
 	public static void startConsole() {
 		Capture.setUpStreams();
-		System.setErr(new PrintStream(outContent));
+		//System.out.println("bleh");
+		//System.setErr(new PrintStream(outContent));
 		System.out.println("[DM Console]");
 		cons.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);// <- prevent closing
 		cons.addWindowListener(new WindowAdapter() {
@@ -126,15 +124,14 @@ public class Capture {
 		});
 		cons.setSize(800, 500);
 		//jta.append(Capture.outContent.toString());
-		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/dm_terminal_icon_black.png");
+		//File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/dm_terminal_icon_black.png");
 		
-		try {
+		/*try {
 			cons.setIconImage(Toolkit.getDefaultToolkit().getImage(icon.toURI().toURL()));
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Couldn't get icon");
 			e.printStackTrace();
-		}
-	
+		}*/
 		jip.setLayout( new BoxLayout(jip, BoxLayout.PAGE_AXIS));
 
         JTextArea jta = new JTextArea(5, 30);

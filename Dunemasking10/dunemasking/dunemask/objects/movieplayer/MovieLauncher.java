@@ -19,7 +19,7 @@ import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import dunemask.dm.Capture;
+import dunemask.other.Capture;
 import dunemask.util.FileUtil;
 import dunemask.util.internal.InternalFileUtil;
 import javafx.application.Application;
