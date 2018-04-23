@@ -1,5 +1,6 @@
 <Test>
 	<Elements>
 		<Element>Value1</Element>
+		<Element2>Value1</Element2>
 	</Elements>
 </Test>

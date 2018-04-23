@@ -1,0 +1,66 @@
+
+
+Version:	3.10
+CmdLine:	C:\Users\dunemask\Documents\GitHub\java.je\ElijahStuff\summer2018\Runemap Workspace\Runemask\dunemask.runemap.editor\export\Editor.exe --l4j-debug
+WOW64:		yes
+Create mutex:	DMEXETESTV1.0
+Working dir:	C:\Users\dunemask\Documents\GitHub\java.je\ElijahStuff\summer2018\Runemap Workspace\Runemask\dunemask.runemap.editor\export\.
+Java min ver:	1.9.1
+Java max ver:	
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+32-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Ignore:		1.8
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_171
+Ignore:		1.8.0_171
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.8
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_161
+Ignore:		1.8.0_161
+32-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+Check:		SOFTWARE\JavaSoft\JRE\10.0.1
+Check launcher:	C:\Program Files\Java\jre-10.0.1\bin\javaw.exe (OK)
+Match:		10.0.1
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\10.0.1
+Ignore:		10.0.1
+Runtime used:	10.0.1 (64-bit)
+Launcher:	C:\Program Files\Java\jre-10.0.1\bin\javaw.exe
+Launcher args:	-jar "C:\Users\dunemask\Documents\GitHub\java.je\ElijahStuff\summer2018\Runemap Workspace\Runemask\dunemask.runemap.editor\export\Editor.exe"
+Args length:	141/32768 chars
+Exit code:	0
+
+
+Version:	3.10
+CmdLine:	C:\Users\dunemask\Documents\GitHub\java.je\ElijahStuff\summer2018\Runemap Workspace\Runemask\dunemask.runemap.editor\export\Editor.exe --l4j-debug
+WOW64:		yes
+Create mutex:	DMEXETESTV1.0
+Working dir:	C:\Users\dunemask\Documents\GitHub\java.je\ElijahStuff\summer2018\Runemap Workspace\Runemask\dunemask.runemap.editor\export\.
+Java min ver:	1.9.1
+Java max ver:	
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+32-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Ignore:		1.8
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_171
+Ignore:		1.8.0_171
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.8
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_161
+Ignore:		1.8.0_161
+32-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+Check:		SOFTWARE\JavaSoft\JRE\10.0.1
+Check launcher:	C:\Program Files\Java\jre-10.0.1\bin\javaw.exe (OK)
+Match:		10.0.1
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\10.0.1
+Ignore:		10.0.1
+Runtime used:	10.0.1 (64-bit)
+Launcher:	C:\Program Files\Java\jre-10.0.1\bin\javaw.exe
+Launcher args:	-jar "C:\Users\dunemask\Documents\GitHub\java.je\ElijahStuff\summer2018\Runemap Workspace\Runemask\dunemask.runemap.editor\export\Editor.exe"
+Args length:	141/32768 chars
+Exit code:	0

@@ -1,0 +1,4 @@
+java -jar RunemapEditor.jar ../resources/test.drm
+
+java -jar RunemapEditor.jar <Path To File Here>
+

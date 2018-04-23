@@ -29,6 +29,7 @@ public class WriteTestMap {
 		map.writeContainer("Test/");
 		map.writeContainer("Test/Elements");
 		map.writeElement("Test/Elements/Element", "Value1");
+		map.writeElement("Test/Elements/Element2", "Value1");
 		map.write();
 
 	}
