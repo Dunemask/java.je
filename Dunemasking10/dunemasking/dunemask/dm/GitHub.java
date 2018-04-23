@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import dunemask.other.Capture;
 import dunemask.util.FileUtil;
 import dunemask.util.RW;
 import dunemask.util.internal.InternalFileUtil;

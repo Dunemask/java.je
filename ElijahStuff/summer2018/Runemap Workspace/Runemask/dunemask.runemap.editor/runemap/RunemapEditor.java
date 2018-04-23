@@ -4,14 +4,10 @@
 package runemap;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URL;
 
-import javax.swing.JOptionPane;
-
+import dunemask.other.Capture;
 import dunemask.util.FileUtil;
 import dunemask.util.xml.Runemap;
-
 /**
  * @author dunemask
  *
@@ -24,22 +20,20 @@ public class RunemapEditor {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		args = new String[1];
-		args[0] = "C:\\Users\\dunemask\\Desktop\\alpha.drm";
-		
+			Capture.startConsole();	
 		try {
 			File f = new File(args[0].replace("\\", "/"));
-			JOptionPane.showMessageDialog(null, "FILE:"+f.getAbsolutePath());
+			System.out.println("FILE:"+f.getAbsolutePath());
 			File out = new File(f.getParentFile().getAbsolutePath()+File.separator+"temp.drm");
-			JOptionPane.showMessageDialog(null,out.exists()+"@"+out.getAbsolutePath());
+			System.out.println(out.exists()+"@"+out.getAbsolutePath());
 			map = Runemap.parseRunemap(f);
 			System.out.println(map.getAllURLS());
 			map.writeForcedElement("Test/Elements/Element", "ElementAlpha");
 			map.write();
-			FileUtil.writeFile(f, out);
+			//FileUtil.writeFile(f, out);
+			map.writeOut(out);
 		}catch(IndexOutOfBoundsException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Sorry :(");
+			System.out.println("Would open up default editor now");
 		}
 
 		
