@@ -206,6 +206,10 @@ public class Runemap {
 		return new Attr(url).getParent();
 	}
 	
+	public void write() {
+		this.writeOut();
+	}
+	
 	void writeOut() {
 		map.writeOut();
 	}
