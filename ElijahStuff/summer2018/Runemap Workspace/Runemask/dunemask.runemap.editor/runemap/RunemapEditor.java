@@ -6,7 +6,6 @@ package runemap;
 import java.io.File;
 
 import dunemask.other.Capture;
-import dunemask.util.FileUtil;
 import dunemask.util.xml.Runemap;
 /**
  * @author dunemask
