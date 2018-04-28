@@ -17,6 +17,9 @@ import java.util.HashMap;
 public class Runemap {
 
 	
+	
+	private int bufferSize=1024;
+	
 	DXMLMap map;
 	private boolean live = false;
 	/** 'Reads' a {@link Runemap} from a file
@@ -206,19 +209,19 @@ public class Runemap {
 		return new Attr(url).getParent();
 	}
 	
-	public void write() {
-		this.writeOut();
+	public void write(int buffersize) {
+		this.writeOut(buffersize);
 	}
 	
-	void writeOut() {
-		map.writeOut();
+	void writeOut(int buffersize) {
+		map.writeOut(buffersize);
 	}
 	/** Write document to a file
 	 * @param f 
 	 * 
 	 * */
-	public void writeOut(File f) {
-		map.writeOut(f);
+	public void writeOut(File f,int buffersize) {
+		map.writeOut(f,buffersize);
 	}
 
 	/** Removes the Specified container
@@ -251,7 +254,7 @@ public class Runemap {
 		this.getXml().delete();
 		if(live) {
 			this.update();
-			this.writeOut();
+			this.writeOut(this.bufferSize);
 		}
 		
 		
@@ -278,7 +281,7 @@ public class Runemap {
 		this.getXml().delete();
 		if(live) {
 			this.update();
-			this.writeOut();
+			this.writeOut(this.bufferSize);
 		}
 	}
 	/** Write a Container
@@ -297,7 +300,7 @@ public class Runemap {
 		this.getXml().delete();
 		if(live) {
 			this.update();
-			this.writeOut();
+			this.writeOut(this.bufferSize);
 		}
 	}
 	
@@ -467,6 +470,12 @@ public class Runemap {
 	 * */
 	public void setLive(boolean live) {
 		this.live = live;
+	}
+	public int getBufferSize() {
+		return bufferSize;
+	}
+	public void setBufferSize(int bufferSize) {
+		this.bufferSize = bufferSize;
 	}
 	
 	

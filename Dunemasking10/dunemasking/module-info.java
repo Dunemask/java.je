@@ -17,5 +17,6 @@ module dunemasking{
 	exports dunemask.objects;
 	exports dunemask.objects.movieplayer;
 	exports dunemask.util.xml;
+	exports dunemask.util.rw;
 	exports dunemask.other;
 }

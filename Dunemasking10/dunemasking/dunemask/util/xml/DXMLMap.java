@@ -4,20 +4,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import dunemask.util.RW;
 import dunemask.util.StringUtil;
+import dunemask.util.rw.BRW;
+import dunemask.util.rw.RW;
 
 class DXMLMap {
 	private static ArrayList<String> newLines = new ArrayList<String>();
 	
 	
-	public void writeOut(File f) {
+	public void writeOut(File f,int buffersize) {
 		f.delete();
-		RW.writeAll(f, newLines.toArray(new String[newLines.size()]));
+		BRW.writeAll(f, newLines.toArray(new String[newLines.size()]),buffersize);
 
 	}
-	public void writeOut() {
-		this.writeOut(this.file);
+	public void writeOut(int buffersize) {
+		this.writeOut(this.file,buffersize);
 	}
 	
 	public void addElement(String url,Object val) {

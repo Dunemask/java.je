@@ -34,7 +34,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import dunemask.util.RW;
+import dunemask.util.rw.RW;
 
 /**
  * TO Parse an output as a string value do outContent.parse();

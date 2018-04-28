@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import dunemask.util.RW;
 import dunemask.util.StringUtil;
+import dunemask.util.rw.RW;
 /**Dunemasking FileUtil for easy editing and changing of filesv
  * <p>Test In List: {@link dunemask.util.FileUtil#alreadyInFile(File, String)}</p>
  * <p>Remove Extension From File: {@link dunemask.util.FileUtil#removeExtension(String)}</p>

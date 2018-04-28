@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import dunemask.util.rw.RW;
 /**Dunemasking FileUtil for easy editing and changing of filesv
  * <p>Test In List: {@link dunemask.util.FileUtil#alreadyInFile(File, String)}</p>
  * <p>Remove Extension From File: {@link dunemask.util.FileUtil#removeExtension(String)}</p>
@@ -72,7 +74,7 @@ public class FileUtil{
    				out.write(bytes, 0, read);
    			}
        		
-       		
+       		out.flush();
        		out.close();
        		in.close();	
        		//webFile.deleteOnExit();

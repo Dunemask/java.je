@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 import dunemask.other.Capture;
 import dunemask.util.FileUtil;
-import dunemask.util.RW;
 import dunemask.util.internal.InternalFileUtil;
+import dunemask.util.rw.RW;
 
 /**
  * @author karib

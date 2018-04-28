@@ -25,7 +25,7 @@ public class LiveRunemap extends Runemap {
 	
 	
 	@Override
-	public void writeOut() {
+	public void writeOut(int buffersize) {
 		
 	}
 
