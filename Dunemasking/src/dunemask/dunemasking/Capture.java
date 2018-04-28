@@ -13,7 +13,6 @@ package dunemask.dunemasking;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -23,7 +22,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -36,7 +34,6 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import dunemask.util.FileUtil;
 import dunemask.util.RW;
 
 /**
@@ -126,14 +123,14 @@ public class Capture {
 		});
 		cons.setSize(800, 500);
 		//jta.append(Capture.outContent.toString());
-		File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/dm_terminal_icon_black.png");
+		/*File icon = FileUtil.getWebFile("https://github.com/Dunemask/dunemask.github.io/raw/master/resources/media/images/dm_terminal_icon_black.png");
 		
 		try {
 			cons.setIconImage(Toolkit.getDefaultToolkit().getImage(icon.toURI().toURL()));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	
 		jip.setLayout( new BoxLayout(jip, BoxLayout.PAGE_AXIS));
 

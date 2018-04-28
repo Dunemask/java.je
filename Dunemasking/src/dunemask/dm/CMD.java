@@ -44,6 +44,23 @@ public class CMD {
 		
 		return cmd;
 	}
+	/** Delete file
+	 * @return del file thing
+	 * 
+	 * */
+	public static String delFile(String path) {
+		if(!path.startsWith("\"")) {
+			path = "\""+path;
+		}
+		if(!path.endsWith("\"")) {
+			path = path+"\"";
+		}
+		return "del "+path;
+
+	}
+	
+	
+	
 	/** Creates Relative Directory
 	 * */
 	public static String mkdir(String dir) {
