@@ -1,2 +1,0 @@
-Version 4.64
-Library Version: 4.0

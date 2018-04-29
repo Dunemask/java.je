@@ -8,7 +8,7 @@
  * > Java > Code Style > Code Templates)
  * <p>Belongs to Package {@link dunemask.objects.movieplayer }</p>
  */
-package dunemask.objects.movieplayer;
+package movieplayer;
 
 import java.io.File;
 import java.net.URL;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
+import dunemask.util.FileUtil;
 import dunemask.util.StringUtil;
-import dunemask.util.internal.InternalFileUtil;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -503,7 +503,7 @@ public class MoviePlayer implements Initializable  {
 	 */
 	private void initPlayer() {
 		if(media==null) {
-		media = new Media(InternalFileUtil.getResource("dunemask/resources/media/Cool Beans.mp3").toURI().toString());
+		media = new Media(FileUtil.getResource("dunemask/resources/media/Cool Beans.mp3").toURI().toString());
 		}
 		mediaPlayer = new MediaPlayer(getMedia());
 		mv.setMediaPlayer(mediaPlayer);

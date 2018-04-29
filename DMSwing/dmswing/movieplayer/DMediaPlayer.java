@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dunemask.objects;
+package movieplayer;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.SwingUtilities;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dunemask.util;
+package utils;
 
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
@@ -12,13 +12,13 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 /**Media Player for mp3 and wav files, Uses deprectaed API
- * <p>Play Song Once {@link dunemask.util.MediaUtil#play(File)}</p>
- * <p>Play a song on Repeat {@link dunemask.util.MediaUtil#playRepeat(File)}</p>
- * <p>Stop Music{@link dunemask.util.MediaUtil#stop()}</p>
- * <p>Pause Music {@link dunemask.util.MediaUtil#pause()}</p>
- * <p>Resume Music {@link dunemask.util.MediaUtil#resume()}</p>
- * <p>Sets song to start repeating {@link dunemask.util.MediaUtil#setOnRepeat()}</p>
- * <p>Sets song to end when done Running {@link dunemask.util.MediaUtil#removeRepeat()}</p>
+ * <p>Play Song Once {@link utils.MediaUtil#play(File)}</p>
+ * <p>Play a song on Repeat {@link utils.MediaUtil#playRepeat(File)}</p>
+ * <p>Stop Music{@link utils.MediaUtil#stop()}</p>
+ * <p>Pause Music {@link utils.MediaUtil#pause()}</p>
+ * <p>Resume Music {@link utils.MediaUtil#resume()}</p>
+ * <p>Sets song to start repeating {@link utils.MediaUtil#setOnRepeat()}</p>
+ * <p>Sets song to end when done Running {@link utils.MediaUtil#removeRepeat()}</p>
  * @author Elijah
  *
  */

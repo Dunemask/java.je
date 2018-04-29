@@ -8,7 +8,7 @@
  * (To Change This Go To Window > Preferences 
  * > Java > Code Style > Code Templates)
  */
-package dunemask.other;
+package utils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -34,15 +34,16 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import dunemask.util.rw.RW;
+import dunemask.util.RW;
 
 /**
  * TO Parse an output as a string value do outContent.parse();
  * Perform setup to capture and cleanup to close
  * @author Elijah
  *
+ *@deprecated will not function as of jdk11 thus will be removed
  */
-public class Capture {
+public class JConsole {
 	/**Version*/
     final static double version = 4.5;
 	public static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -61,7 +62,6 @@ public class Capture {
 	public static void cleanUpStreams() {
 	    System.setOut(sysDefaultOut);
 	    System.setErr(sysDefaultErr);
-	  
 	}
 	
 	/**@param msg Message
@@ -112,7 +112,7 @@ public class Capture {
 	 * 
 	 */
 	public static void startConsole() {
-		Capture.setUpStreams();
+		JConsole.setUpStreams();
 		//System.out.println("bleh");
 		//System.setErr(new PrintStream(outContent));
 		System.out.println("[DM Console]");
@@ -177,7 +177,7 @@ public class Capture {
 					}		
 				}
 				String desktop = System.getProperty("user.home") + "/Desktop/";
-				RW.write(new File(desktop+Capture.getInput("Name Of File (Will Be Placed on Desktop)")+".txt"),lines.toArray(new String[lines.size()]), 1);
+				RW.write(new File(desktop+JConsole.getInput("Name Of File (Will Be Placed on Desktop)")+".txt"),lines.toArray(new String[lines.size()]), 1);
 			}
 			
 		});
@@ -190,10 +190,10 @@ public class Capture {
 		Thread update =    new Thread( () -> {
 			   while(consOpen) {
 				
-				   if(!jta.getText().equals(Capture.outContent.toString()+Capture.errContent.toString())) {
+				   if(!jta.getText().equals(JConsole.outContent.toString()+JConsole.errContent.toString())) {
 					   		
 					   
-					 jta.setText(Capture.outContent.toString()+Capture.errContent.toString());
+					 jta.setText(JConsole.outContent.toString()+JConsole.errContent.toString());
 					 
 					
 					 JScrollBar vertical = scrollPane.getVerticalScrollBar();
@@ -219,7 +219,7 @@ public class Capture {
 	 * */
 	public static void closeConsole() {
 		consOpen = false;
-		Capture.cleanUpStreams();
+		JConsole.cleanUpStreams();
 		
 		
 	}

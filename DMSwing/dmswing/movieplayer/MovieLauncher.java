@@ -8,7 +8,7 @@
  * > Java > Code Style > Code Templates)
  * <p>Belongs to Package {@link dunemask.objects.movieplayer }</p>
  */
-package dunemask.objects.movieplayer;
+package movieplayer;
 
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
@@ -18,10 +18,8 @@ import java.net.MalformedURLException;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-
-import dunemask.other.Capture;
+import dunemask.dunemasking.Capture;
 import dunemask.util.FileUtil;
-import dunemask.util.internal.InternalFileUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -115,7 +113,7 @@ public class MovieLauncher extends Application {
 	public void start(Stage stage) throws Exception {
 		Capture.setUpStreams();
 		
-		FXMLLoader loader = new FXMLLoader(InternalFileUtil.getResource("dunemask/objects/movieplayer/DMPlayer.fxml").toURI().toURL());
+		FXMLLoader loader = new FXMLLoader(FileUtil.getResource("dunemask/objects/movieplayer/DMPlayer.fxml").toURI().toURL());
 		loader.setController(current);
 		  
 		Parent root = loader.load();
@@ -152,6 +150,7 @@ public class MovieLauncher extends Application {
 			try {
 				frame.setIconImage(Toolkit.getDefaultToolkit().getImage(icon.toURI().toURL()));
 			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		 
