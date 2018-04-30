@@ -7,6 +7,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import dunemask.util.internal.DMRW;
+
 /** This is an Interprited form of xml that should only be change/edited
  * from Dunemasking however is probably externally readable
  * 
@@ -15,7 +17,6 @@ import java.util.HashMap;
  *
  */
 public class Runemap {
-
 	
 	
 	private int bufferSize=1024;
@@ -60,6 +61,35 @@ public class Runemap {
 			}
 		}	
 
+	}
+	/** Prints all the attributes, and values
+	 * 
+	 * */
+	public void printAttr() {
+		for(int i=0;i<map.getAttributes().size();i++) {
+			printAtr(map.getAttributes().get(i));
+		}
+		
+		
+		
+	}
+	
+	void printAtr(Attr parent) {
+		
+		if(parent.isContainer()) {
+			System.out.println(parent.getUrl());
+			for(int i=0;i<parent.getChildren().size();i++) {
+				printAtr(parent.getChildren().get(i));
+			}
+			
+			
+		}else {
+			System.out.println(parent.getUrl()+",VALUE:"+parent.getValue());
+		}
+		
+		
+		
+		
 	}
 	
 	
@@ -119,6 +149,7 @@ public class Runemap {
 	/** Write a Container and forces the Write (Creates parents)
 	 * @param url Url
 	 * @param value Value
+	 * @return 
 	 * 
 	 * */
 	public void writeForcedContainer(String url) {;
@@ -140,14 +171,13 @@ public class Runemap {
 			}
 		}
 		
-		this.writeContainer(url);
-		
 		
 	}
 	
 	/**  Write an Element and forces the Write (Creates parents)
 	 * @param url Url
 	 * @param value Value
+	 * @return 
 	 * 
 	 * */
 	public void writeForcedElement(String url,Object value) {
@@ -209,8 +239,8 @@ public class Runemap {
 		return new Attr(url).getParent();
 	}
 	
-	public void write(int buffersize) {
-		this.writeOut(buffersize);
+	public void write() {
+		this.writeOut(this.bufferSize);
 	}
 	
 	void writeOut(int buffersize) {
@@ -218,10 +248,18 @@ public class Runemap {
 	}
 	/** Write document to a file
 	 * @param f 
-	 * 
+	 * @param buffersize
 	 * */
 	public void writeOut(File f,int buffersize) {
 		map.writeOut(f,buffersize);
+	}
+	
+	/** Write document to a file
+	 * @param f 
+	 * 
+	 * */
+	public void writeOut(File f) {
+		map.writeOut(f,this.bufferSize);
 	}
 
 	/** Removes the Specified container
@@ -264,13 +302,16 @@ public class Runemap {
 	/** Write an Element
 	 * @param url Url
 	 * @param value Value
+	 * @return 
 	 * 
 	 * */
 	public void writeElement(String url,Object value) {
 		if(url.endsWith("/")) {
 			url = url.substring(0, url.length()-1);
 		}
-		
+		if(url.contains(">")||url.contains("<")) {
+			throw new RunemapURLExcpetion("URL:"+url+" Contains '<' or '>' Characters!"+" "+"Try: "+url.replace(">", "").replace("<", ""));
+		}
 		
 		if(map.itemExists(url)) {
 			map.removeAttr(url);
@@ -286,14 +327,19 @@ public class Runemap {
 	}
 	/** Write a Container
 	 * @param url Url
+	 * @return 
 	 * 
 	 * */
 	public void writeContainer(String url) {
 		if(!url.endsWith("/")) {
 			url+="/";
 		}
+		if(url.contains(">")||url.contains("<")) {
+			throw new RunemapURLExcpetion("URL:"+url+" Contains '<' or '>' Characters!");
+		}
+		
 		if(!map.itemExists(url)) {
-		map.addContainer(url);
+			map.addContainer(url);
 		}
 		map.update();
 		addurl(url);
@@ -302,7 +348,19 @@ public class Runemap {
 			this.update();
 			this.writeOut(this.bufferSize);
 		}
+
 	}
+	private String lastAttributeAccessed;
+	
+	/** Gets the last attritue accessed
+	 * @return last attribute
+	 * 
+	 * */
+	public String getLastAttributeAccessed() {
+		return this.lastAttributeAccessed;
+		
+	}
+	
 	
 	/** Get the parent from the url
 	 * @param url URL
@@ -358,9 +416,9 @@ public class Runemap {
 	
 	
 	
-	/**
-	 * @param arrayList 
-	 * @return
+	/**Get value from doc
+	 * @param url
+	 * @return Value from doc
 	 */
 	public String getvalue(String url) {
 		return map.getVal(url);
@@ -370,7 +428,7 @@ public class Runemap {
 
 	
 	private void addurl(String url) {
-		
+			this.lastAttributeAccessed = url;
 			this.getAllURLS().add(url);
 		
 	}
@@ -465,10 +523,9 @@ public class Runemap {
 	}
 	/** Set the value to {@link Runemap#isLive() live}
 	 * @param live
-	 * @deprecated Please use {@link LiveRunemap} instead
 	 * 
 	 * */
-	public void setLive(boolean live) {
+	void setLive(boolean live) {
 		this.live = live;
 	}
 	public int getBufferSize() {

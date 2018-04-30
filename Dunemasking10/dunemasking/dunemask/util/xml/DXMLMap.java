@@ -14,14 +14,15 @@ class DXMLMap {
 	
 	public void writeOut(File f,int buffersize) {
 		f.delete();
+		//System.out.println("^^");
 		BRW.writeAll(f, newLines.toArray(new String[newLines.size()]),buffersize);
-
+		//System.out.println("^^");
 	}
 	public void writeOut(int buffersize) {
 		this.writeOut(this.file,buffersize);
 	}
 	
-	public void addElement(String url,Object val) {
+	public Attr addElement(String url,Object val) {
 		//System.out.println("Wants to add:"+url);
 		if(url.endsWith("/")) {
 			url = url.substring(0,url.length()-1);
@@ -55,6 +56,9 @@ class DXMLMap {
 		}
 		if(found) {
 			this.update();
+			return child;
+		}else {
+			return null;
 		}
 		
 	}
@@ -209,7 +213,7 @@ class DXMLMap {
 	
 	
 	
-	public void addContainer(String url) {
+	public Attr addContainer(String url) {
 		if(!url.endsWith("/")) {
 			url+="/";
 		}
@@ -240,6 +244,9 @@ class DXMLMap {
 		}
 		if (found){
 			this.update();
+			return child;
+		}else {
+			return null;
 		}
 	}
 	
@@ -396,7 +403,9 @@ class DXMLMap {
 		}else {
 			str = str.replaceFirst("<","");
 		}
-		int clchar =str.indexOf(">");
+		int clchar = str.indexOf(">");
+
+		
 		if(clchar!=-1) {
 		str = str.substring(0,clchar);
 		}

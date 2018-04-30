@@ -24,10 +24,4 @@ public class LiveRunemap extends Runemap {
 	}
 	
 	
-	@Override
-	public void writeOut(int buffersize) {
-		
-	}
-
-	
 }

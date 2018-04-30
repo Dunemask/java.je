@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import dunemask.dunemasking.Capture;
+import utils.JConsole;
 import dunemask.util.FileUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -111,9 +111,9 @@ public class MovieLauncher extends Application {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
-		Capture.setUpStreams();
+		JConsole.setUpStreams();
 		
-		FXMLLoader loader = new FXMLLoader(FileUtil.getResource("dunemask/objects/movieplayer/DMPlayer.fxml").toURI().toURL());
+		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("DMPlayer.fxml").toURI().toURL());
 		loader.setController(current);
 		  
 		Parent root = loader.load();
@@ -134,7 +134,7 @@ public class MovieLauncher extends Application {
 		
 		//stage.setScene(scene);
 		
-		Capture.cleanUpStreams();
+		JConsole.cleanUpStreams();
 		//Key Event Listener if needed later
 		  scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	            @Override

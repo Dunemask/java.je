@@ -502,9 +502,6 @@ public class MoviePlayer implements Initializable  {
 	 * 
 	 */
 	private void initPlayer() {
-		if(media==null) {
-		media = new Media(FileUtil.getResource("dunemask/resources/media/Cool Beans.mp3").toURI().toString());
-		}
 		mediaPlayer = new MediaPlayer(getMedia());
 		mv.setMediaPlayer(mediaPlayer);
 	

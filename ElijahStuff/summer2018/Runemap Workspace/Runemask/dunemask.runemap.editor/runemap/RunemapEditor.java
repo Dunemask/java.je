@@ -4,9 +4,8 @@
 package runemap;
 
 import java.io.File;
-
-import dunemask.other.Capture;
 import dunemask.util.xml.Runemap;
+import utils.JConsole;
 /**
  * @author dunemask
  *
@@ -19,7 +18,7 @@ public class RunemapEditor {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-			Capture.startConsole();	
+			JConsole.startConsole();	
 		try {
 			File f = new File(args[0].replace("\\", "/"));
 			System.out.println("FILE:"+f.getAbsolutePath());
@@ -30,7 +29,7 @@ public class RunemapEditor {
 			map.writeForcedElement("Test/Elements/Element", "ElementAlpha");
 			map.write();
 			//FileUtil.writeFile(f, out);
-			map.writeOut(out);
+			map.writeOut(out,8192);
 		}catch(IndexOutOfBoundsException e) {
 			System.out.println("Would open up default editor now");
 		}
