@@ -19,12 +19,12 @@ public class VBoxInit {
 		num = num.replace(" ", "");
 		ArrayList<String> com = new ArrayList<String>();
 		com.add("echo Cookie!");
-		com.add(CMD.delFile("C:\\Users\\dunemask\\VirtualBox VMs\\Removeable Kali\\Removeable Kali.vmdk\""));
-		String command = "VBoxManage internalcommands createrawvmdk -filename \"C:\\Users\\dunemask\\VirtualBox VMs\\Removeable Kali\\Removeable Kali.vmdk\" -rawdisk \\\\.\\PhysicalDrive"+num;
+		com.add(CMD.delFile("C:\\Users\\dunemask\\VirtualBox VMs\\Debian\\Debian.vmdk\""));
+		String command = "VBoxManage internalcommands createrawvmdk -filename \"C:\\Users\\dunemask\\VirtualBox VMs\\Debian\\Debian.vmdk\" -rawdisk \\\\.\\PhysicalDrive"+num;
 		com.add("cd C:\\Program Files\\Oracle\\VirtualBox\\");
 		com.add(command);
 		com.add("pause");
-		//CMD.openElevatedCmd(com);
+		CMD.openElevatedCmd(com);
 		Capture.closeConsole();
 		
 		
