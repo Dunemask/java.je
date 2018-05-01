@@ -6,9 +6,6 @@ package dunemask.util.xml;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import dunemask.util.internal.DMRW;
-
 /** This is an Interprited form of xml that should only be change/edited
  * from Dunemasking however is probably externally readable
  * 
@@ -106,7 +103,7 @@ public class Runemap {
 		this.fullMap  = new HashMap<String,String>();
 	}
 	
-	Runemap() {
+	 Runemap() {
 		map = new DXMLMap();
 		this.xmlurl =(new ArrayList<String>());
 		this.fullMap  = new HashMap<String,String>();
@@ -244,7 +241,7 @@ public class Runemap {
 	}
 	
 	void writeOut(int buffersize) {
-		map.writeOut(buffersize);
+		map.writeOut(this.getXml(),buffersize);
 	}
 	/** Write document to a file
 	 * @param f 
@@ -289,7 +286,7 @@ public class Runemap {
 				i=0;
 			}
 		}
-		this.getXml().delete();
+		//this.getXml().delete();
 		if(live) {
 			this.update();
 			this.writeOut(this.bufferSize);
@@ -319,7 +316,8 @@ public class Runemap {
 		map.addElement(url, value);
 		addurl(url);
 		this.addValue(url, String.valueOf(value));
-		this.getXml().delete();
+		
+		//this.getXml().delete();
 		if(live) {
 			this.update();
 			this.writeOut(this.bufferSize);

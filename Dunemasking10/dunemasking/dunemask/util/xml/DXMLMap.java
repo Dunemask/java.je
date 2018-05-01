@@ -14,6 +14,7 @@ class DXMLMap {
 	
 	public void writeOut(File f,int buffersize) {
 		f.delete();
+		//System.out.println(f.getAbsolutePath()+"HERE");
 		//System.out.println("^^");
 		BRW.writeAll(f, newLines.toArray(new String[newLines.size()]),buffersize);
 		//System.out.println("^^");
