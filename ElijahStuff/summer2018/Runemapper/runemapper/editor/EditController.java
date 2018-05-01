@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
+import dunemask.util.FileUtil;
 import dunemask.util.xml.Runemap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +21,10 @@ public class EditController implements Initializable {
 	private MenuBar menuBar;
 	@FXML
 	private MenuItem openFileMenuItem;
+	@FXML
+	private MenuItem saveFileMenuItem;
+	@FXML
+	private MenuItem saveFileAsMenuItem;
 	
 	private Runemap map;
 	/** Open File
@@ -31,8 +38,37 @@ public class EditController implements Initializable {
 		File file = fileChooser.showOpenDialog(null);
 		if(file!=null) {
 			map = Runemap.parseRunemap(file);
+			JOptionPane.showMessageDialog(null, "FILE:"+file.getPath());
 		}
 	}
+	/** Saves the oppened file
+	 * 
+	 * */
+	public void saveFile() {
+		if(map==null) {
+			this.saveFileAs();
+		}else {
+			//map.writeForcedElement("ANOTHER ELM", "666");
+			map.write();
+		}
+		
+	}
+	/** Asks user where to save file
+	 * 
+	 * */
+	public void saveFileAs() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Runemap");
+        try {
+        File file = new File(FileUtil.removeExtension(fileChooser.showSaveDialog(null).getAbsolutePath())+".drm");
+        	//map.writeForcedElement("This is an element", "DIS IS A VALUE!");
+        	map.writeOut(file);
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "PLEASE CHOOSE A VALID FILE!");
+        }
+	}
+	
 	
 	
 	public EditController() {

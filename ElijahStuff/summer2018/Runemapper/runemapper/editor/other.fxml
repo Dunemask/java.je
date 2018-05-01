@@ -4,7 +4,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ToolBar style="-fx-background-color: #232323;">
@@ -14,6 +13,8 @@
                 <Menu mnemonicParsing="false" text="File">
                   <items>
                     <MenuItem fx:id="openFile" mnemonicParsing="false" onAction="#openFile" text="Open" />
+                        <MenuItem fx:id="saveFileMenuItem" mnemonicParsing="false" onAction="#saveFile" text="Save" />
+                        <MenuItem fx:id="saveFileAsMenuItem" mnemonicParsing="false" onAction="#saveFileAs" text="Save As" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">

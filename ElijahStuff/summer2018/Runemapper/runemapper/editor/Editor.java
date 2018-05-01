@@ -1,6 +1,8 @@
 package editor;
 import java.io.File;
 
+import javax.swing.JOptionPane;
+
 import dunemask.util.FileUtil;
 import dunemask.util.xml.Runemap;
 import javafx.application.Application;
@@ -17,11 +19,12 @@ import javafx.stage.Stage;
 public class Editor extends Application {
 	
 	public static void main(String[] args) {
-		String filePath = System.getProperty("user.home"+"/Desktop/Temp.drm");
+		String filePath = System.getProperty("user.home")+"/Desktop/Temp.drm";
 		File f = new File(filePath);
-		Runemap rm = new Runemap();
-		
-		
+		Runemap rm = new Runemap(f);
+		rm.writeForcedElement("Alpha/Beta/Gamma", "Greek alphabet");
+		//rm.printAttr();
+		rm.write();
 		try {
 			Editor.launch(args);
 			
