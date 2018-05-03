@@ -38,23 +38,21 @@ public class Editor extends Application {
 	EditController  editController = new EditController();
 	@Override
 	public void start(Stage stage) throws Exception {
+		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("other.fxml"));
+		loader.setController(this.editController);
 		try {
 			this.getParameters().getRaw().get(0);
 			if(this.getParameters().getRaw().get(0)!=null) {
 				File f = new File(this.getParameters().getRaw().get(0).replace("\\", "/"));
 				this.editController.setMap(Runemap.parseRunemap(f));
+				stage.setTitle("DM Runemap Editor - "+f.getPath());
 			}
 		}catch(Exception e) {
-		}
-
-		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("other.fxml"));
-		loader.setController(this.editController);
-		  
+			stage.setTitle("DM Runemap Editor");
+		}  
 		Parent root = loader.load();
 		Scene scene = new Scene(root,800,400,Color.BLACK);
 		stage.setScene(scene);
-		
-		stage.setTitle("DM - Runemap Editor");
 		
 		
 		stage.show();

@@ -9,10 +9,18 @@ import javax.swing.JOptionPane;
 
 import dunemask.util.FileUtil;
 import dunemask.util.xml.Runemap;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 public class EditController implements Initializable {
@@ -25,6 +33,10 @@ public class EditController implements Initializable {
 	private MenuItem saveFileMenuItem;
 	@FXML
 	private MenuItem saveFileAsMenuItem;
+	@FXML
+	private Pane backPane;
+	@FXML
+	private TableView<String> elmTable;
 	
 	private Runemap map;
 	/** Open File
@@ -38,7 +50,8 @@ public class EditController implements Initializable {
 		File file = fileChooser.showOpenDialog(null);
 		if(file!=null) {
 			map = Runemap.parseRunemap(file);
-			JOptionPane.showMessageDialog(null, "FILE:"+file.getPath());
+			((javafx.stage.Stage) this.backPane.getScene().getWindow()).setTitle("DM Runemap Editor - "+file.getPath());
+			//System.out.println(((javafx.stage.Stage) this.backPane.getScene().getWindow()).getTitle());
 		}
 	}
 	/** Saves the oppened file
@@ -64,7 +77,7 @@ public class EditController implements Initializable {
         	//map.writeForcedElement("This is an element", "DIS IS A VALUE!");
         	map.writeOut(file);
         }catch(Exception e) {
-        	e.printStackTrace();
+        	//e.printStackTrace();
         	JOptionPane.showMessageDialog(null, "PLEASE CHOOSE A VALID FILE!");
         }
 	}
@@ -74,10 +87,13 @@ public class EditController implements Initializable {
 	public EditController() {
 		
 	}
-
+	private void setBackColor(Node n,String str) {
+		n.setStyle("-fx-background-color: #"+str);
+	}
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
 		
 		
 	}
@@ -96,6 +112,25 @@ public class EditController implements Initializable {
 	 */
 	public void setMap(Runemap map) {
 		this.map = map;
+		load();
+	}
+	/**
+	 * 
+	 */
+	private void load() {
+		ArrayList<TableColumn<String,?>> tables = new ArrayList<TableColumn<String,?>>();
+		TableColumn<String,?> temp = new TableColumn();
+		temp.setOnEditStart(new EventHandler<Object>() {
+
+			@Override
+			public void handle(Event event) {
+				
+				
+			}
+			
+		});
+		tables.add(temp);
+		this.elmTable.getColumns().addAll(tables);
 	}
 
 }
