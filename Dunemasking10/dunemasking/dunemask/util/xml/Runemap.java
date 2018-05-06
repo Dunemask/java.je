@@ -6,6 +6,8 @@ package dunemask.util.xml;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import dunemask.util.StringUtil;
 /** This is an Interprited form of xml that should only be change/edited
  * from Dunemasking however is probably externally readable
  * 
@@ -46,6 +48,19 @@ public class Runemap {
 		}
 		
 	}
+	/** Returns all top level elements
+	 * 
+	 * */
+	public ArrayList<String> getTop(){
+		ArrayList<String> ats = new ArrayList<String>();
+		for(int i=0;i<this.map.getAttributes().size();i++) {
+			ats.add(map.getAttributes().get(i).getUrl());
+		}
+	
+		return ats; 
+	}
+	
+	
 	private void map(Attr cur) {
 		for(int i=0;i<cur.getChildren().size();i++) {
 			Attr tmp = cur.getChildren().get(i);
@@ -341,7 +356,7 @@ public class Runemap {
 		}
 		map.update();
 		addurl(url);
-		this.getXml().delete();
+		//this.getXml().delete();
 		if(live) {
 			this.update();
 			this.writeOut(this.bufferSize);
@@ -380,16 +395,16 @@ public class Runemap {
 	 * 
 	 * */
 	public ArrayList<String> getChildrenURLS(String url){
-		
 		if(!this.isCont(url)) {
 			throw new DMXMLException("URL IS ELEMENT NOT CONTAINER");
 		}
 		
 		ArrayList<String> match = new ArrayList<String>();
-		ArrayList<String> keys = new ArrayList<String>(this.fullMap.keySet());
-		for(int i=0;i<keys.size();i++) {
-			if(this.getParentUrl(keys.get(i)).equals(url)) {
-				match.add(keys.get(i));
+		var urls = this.getAllURLS();
+		for(int i=0;i<urls.size();i++) {
+			String parent = this.getParentUrl(urls.get(i));
+			if(parent!=null&&parent.equals(url)) {
+				match.add(urls.get(i));
 			}else {
 			}
 		}
@@ -426,8 +441,9 @@ public class Runemap {
 
 	
 	private void addurl(String url) {
+		//System.out.println("ADD:"+url);
 			this.lastAttributeAccessed = url;
-			this.getAllURLS().add(url);
+			this.xmlurl.add(url);
 		
 	}
 
@@ -491,7 +507,21 @@ public class Runemap {
 	public File getXml() {
 		return xml;
 	}
-
+	
+	/** Get name from url
+	 * @param url
+	 * @return url name
+	 * 
+	 * */
+	public String getName(String url) {
+		if(this.isCont(url)) {
+			url = StringUtil.replaceLast(url, "/", "");
+		}
+		url = url.substring(url.lastIndexOf("/")+1,url.length());
+		return url;
+		
+		
+	}
 
 
 

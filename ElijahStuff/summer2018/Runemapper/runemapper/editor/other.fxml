@@ -13,13 +13,17 @@
                 <Menu mnemonicParsing="false" text="File">
                   <items>
                     <MenuItem fx:id="openFile" mnemonicParsing="false" onAction="#openFile" text="Open" />
+                        <MenuItem mnemonicParsing="false" onAction="#newFile" text="New" />
                         <MenuItem fx:id="saveFileMenuItem" mnemonicParsing="false" onAction="#saveFile" text="Save" />
                         <MenuItem fx:id="saveFileAsMenuItem" mnemonicParsing="false" onAction="#saveFileAs" text="Save As" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem fx:id="addMenuItem" mnemonicParsing="false" onAction="#addMenuPushed" text="Add" />
+                    <MenuItem mnemonicParsing="false" onAction="#deleteMenuPushed" text="Delete" />
+                        <MenuItem fx:id="navUp" mnemonicParsing="false" onAction="#navigateUp" text="Nav Up" />
+                        <MenuItem fx:id="navDown" mnemonicParsing="false" onAction="#navigateDown" text="Nav Down" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -31,5 +35,7 @@
             </MenuBar>
          </items>
       </ToolBar>
+      <TableView fx:id="elmTable" layoutY="35.0" prefHeight="365.0" prefWidth="600.0" />
+      <Label fx:id="selParentLabel" layoutX="173.0" layoutY="-1.0" prefHeight="35.0" prefWidth="114.0" text="Parent:" />
    </children>
 </Pane>
