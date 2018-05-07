@@ -1,11 +1,10 @@
-package editor;
+package rmeditor;
 import java.io.File;
 
 import javax.swing.JOptionPane;
 
 import dunemask.util.FileUtil;
 import dunemask.util.xml.Runemap;
-import editor.EditController.Record;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import rmeditor.EditController.Record;
 
 public class Editor extends Application {
 	

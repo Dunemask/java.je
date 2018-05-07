@@ -1,4 +1,4 @@
-package editor;
+package rmeditor;
 
 import java.io.File;
 import java.net.URL;

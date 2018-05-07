@@ -400,7 +400,7 @@ public class Runemap {
 		}
 		
 		ArrayList<String> match = new ArrayList<String>();
-		var urls = this.getAllURLS();
+		ArrayList<String> urls = this.getAllURLS();
 		for(int i=0;i<urls.size();i++) {
 			String parent = this.getParentUrl(urls.get(i));
 			if(parent!=null&&parent.equals(url)) {

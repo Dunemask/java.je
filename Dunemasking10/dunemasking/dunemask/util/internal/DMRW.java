@@ -300,10 +300,10 @@ public class DMRW {
 	
 		String tmp;
 		
-		var fos = new FileOutputStream(file);
-		var bos = new BufferedOutputStream(fos,bwsize);
-		var osw = new OutputStreamWriter(bos);
-		var bw = new BufferedWriter(osw);
+		FileOutputStream fos = new FileOutputStream(file);
+		BufferedOutputStream bos = new BufferedOutputStream(fos,bwsize);
+		OutputStreamWriter osw = new OutputStreamWriter(bos);
+		BufferedWriter bw = new BufferedWriter(osw);
 
 		for(i=1; i<startLine;i++) {
 			tmp = documentText[i-1];
