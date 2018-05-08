@@ -25,15 +25,16 @@ import javax.swing.WindowConstants;
 
 /**
  * Jar Utilities
- * <p>Extract Jar: {@link dunemask.util.internal.JarUtil#extractAll(String, String, String)}</p>
- * <p>Extract Jar With Progress Bar: {@link dunemask.util.internal.JarUtil#extractAllOpenDialog(String, String, String)}</p>
- * <p>Get Jar Program Path: {@link dunemask.util.internal.JarUtil#getProgramPath()}</p>
- * <p>Is jar:  {@link dunemask.util.internal.JarUtil#isJar(String)}</p>
- * <p>List jar Entries: {@link dunemask.util.internal.JarUtil#listJarEntries(File)}</p>
- * <p>Load File From Jar: {@link dunemask.util.internal.JarUtil#loadFileInJar(File, String)}</p>
+ * <p>Extract Jar: {@link dunemask.util.internal.JarInternalUtil#extractAll(String, String, String)}</p>
+ * <p>Extract Jar With Progress Bar: {@link dunemask.util.internal.JarInternalUtil#extractAllOpenDialog(String, String, String)}</p>
+ * <p>Get Jar Program Path: {@link dunemask.util.internal.JarInternalUtil#getProgramPath()}</p>
+ * <p>Is jar:  {@link dunemask.util.internal.JarInternalUtil#isJar(String)}</p>
+ * <p>List jar Entries: {@link dunemask.util.internal.JarInternalUtil#listJarEntries(File)}</p>
+ * <p>Load File From Jar: {@link dunemask.util.internal.JarInternalUtil#loadFileInJar(File, String)}</p>
  * @author Elijah
+ * @deprecated Will be removed in next version
  **/
-public class JarUtil{
+public class JarInternalUtil{
 	
 	/***Version*/
     final static double version = 4.7;
@@ -268,7 +269,7 @@ public class JarUtil{
 			jarName = InternalFileUtil.removeExtension(jarName);
 		}
 
-		if (new File(InternalFileUtil.fixSpaces(JarUtil.getProgramPath()).replaceAll("%20", " ") + jarName + ".jar").exists()) {
+		if (new File(InternalFileUtil.fixSpaces(JarInternalUtil.getProgramPath()).replaceAll("%20", " ") + jarName + ".jar").exists()) {
 			
 			isJar = true;
 		}

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
-import dunemask.util.FileUtil;
 import dunemask.util.StringUtil;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
