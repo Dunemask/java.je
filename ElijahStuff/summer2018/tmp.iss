@@ -5,7 +5,7 @@
 #define MyAppVersion "1.0"
 #define MyAppPublisher "Dunemask"
 #define MyAppURL "https://github.com/Dunemask/"
-#define MyAppExeName "DMRunemapper.exe"
+#define MyAppExeName "Runemapper.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
