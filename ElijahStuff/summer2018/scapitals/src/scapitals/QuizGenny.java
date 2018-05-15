@@ -7,11 +7,11 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 import dunemask.util.StringUtil;
+import dunemask.util.rw.RW;
 import dunemask.util.xml.Runemap;
 
 /**
@@ -39,7 +39,8 @@ public class QuizGenny {
 		int wrongAnswerCnt = 3;
 		int rightAnswerCnt = 1;
 		int statecount = 50;
-		
+		Random r = new Random();
+		//Quiz count number
 		for(int i=1;i<=studentcount;i++) {
 			ArrayList<String> altList = new ArrayList<String>(states);
 			java.util.Collections.shuffle(altList);
@@ -47,11 +48,43 @@ public class QuizGenny {
 			lines.add("Name:");
 			lines.add("Date:");
 			lines.add(StringUtil.tab+"States and Capitals Test");
-			File out = new File(testpath+"Test "+i);
-			for(int c=0;c<statecount;c++) {
+			File out = new File(testpath+"Test "+i+".txt");
+			File keyOut = new File(testpath+"TestKey "+i+".txt");
+			ArrayList<String> keyLines = new ArrayList<String>();
+			for(int c=0;c<altList.size();c++) {
+				String cstate = altList.get(c);
+				String rcap = map.getvalue(cstate);
+				
+				ArrayList<String> altCaps = new ArrayList<String>(caps);
+				Collections.shuffle(altCaps);
+				ArrayList<String> answers = new ArrayList<String>();
+				answers.add(rcap);
+				altCaps.remove(rcap);
+				for(int a=0;a<wrongAnswerCnt;a++) {
+					String tmp = altCaps.get(r.nextInt(altCaps.size()));
+					answers.add(tmp);
+					altCaps.remove(tmp);	
+				}
+				Collections.shuffle(answers);
+				int num = answers.indexOf(rcap);
+				/*System.out.println("State:"+cstate);
+				System.out.println("A:"+answers.get(0));
+				System.out.println("B:"+answers.get(1));
+				System.out.println("C:"+answers.get(2));
+				System.out.println("D:"+answers.get(3));*/
+				lines.add(c +".  State: "+cstate);
+				lines.add("A:"+answers.get(0));
+				lines.add("B:"+answers.get(1));
+				lines.add("C:"+answers.get(2));
+				lines.add("D:"+answers.get(3));
+				lines.add(System.lineSeparator());
+				keyLines.add(Arrays.asList("ABCD".toCharArray()).get(num)+"");
+				
+				
+				
 				
 			}
-			
+			RW.writeAll(out, lines.toArray(new String[lines.size()]));
 			
 			
 			
@@ -60,9 +93,6 @@ public class QuizGenny {
 			
 			
 		}
-		
-		
-
 		
 		
 		
