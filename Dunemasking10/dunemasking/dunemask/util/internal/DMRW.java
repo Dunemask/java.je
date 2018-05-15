@@ -16,11 +16,11 @@ import dunemask.util.FileUtil;
 
 /**
  * Reads And Writes Files
- * <p>Write One Line of Text: {@link dunemask.util.rw.RW#write(File, String, int)}</p>
- * <p>Write Multiple Lines of Text: {@link dunemask.util.rw.RW#write(File, String[], int)}</p>
- * <p>Read One Line of Text From File: {@link dunemask.util.rw.RW#read(File, int)}</p>
- * <p>Read Lines from File: {@link dunemask.util.rw.RW#read(File, int, int)}</p>
- * <p>Reads all lines from File: {@link dunemask.util.rw.RW#readAll(File)}</p>
+ * <p>Write One Line of Text: {@link dunemask.util.RW#write(File, String, int)}</p>
+ * <p>Write Multiple Lines of Text: {@link dunemask.util.RW#write(File, String[], int)}</p>
+ * <p>Read One Line of Text From File: {@link dunemask.util.RW#read(File, int)}</p>
+ * <p>Read Lines from File: {@link dunemask.util.RW#read(File, int, int)}</p>
+ * <p>Reads all lines from File: {@link dunemask.util.RW#readAll(File)}</p>
  * @author Elijah Dunemask
  **/
 public class DMRW {

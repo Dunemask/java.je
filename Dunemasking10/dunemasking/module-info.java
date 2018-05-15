@@ -10,6 +10,5 @@ module dunemasking{
 	exports dunemask.util;
 	exports dunemask.objects;
 	exports dunemask.util.xml;
-	exports dunemask.util.rw;
 	exports dunemask.other;
 }

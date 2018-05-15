@@ -34,7 +34,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import dunemask.util.rw.RW;
+import dunemask.util.RW;
 
 /**
  * TO Parse an output as a string value do outContent.parse();
@@ -177,7 +177,7 @@ public class JConsole {
 					}		
 				}
 				String desktop = System.getProperty("user.home") + "/Desktop/";
-				RW.write(new File(desktop+JConsole.getInput("Name Of File (Will Be Placed on Desktop)")+".txt"),lines.toArray(new String[lines.size()]), 1);
+				RW.write(new File(desktop+JConsole.getInput("Name Of File (Will Be Placed on Desktop)")+".txt"),lines, 1);
 			}
 			
 		});

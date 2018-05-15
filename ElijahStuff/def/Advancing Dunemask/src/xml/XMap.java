@@ -1,4 +1,4 @@
-package dunemask.util.xml;
+package xml;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,31 +6,30 @@ import java.util.ArrayList;
 import dunemask.util.RW;
 import dunemask.util.StringUtil;
 
-class DXMLMap {
+public class XMap {
 	private static ArrayList<String> newLines = new ArrayList<String>();
 	
 	
 	public void writeOut(File f) {
-		this.update();
 		f.delete();
 		//System.out.println(f.getAbsolutePath()+"HERE");
 		//System.out.println("^^");
 		RW.writeAll(f, newLines);
 		//System.out.println("^^");
 	}
-	public void writeOut() {
+	public void writeOut(int buffersize) {
 		this.writeOut(this.file);
 	}
 	
-	public Attr addElement(String url,Object val) {
+	public Rune addElement(String url,Object val) {
 		//System.out.println("Wants to add:"+url);
 		if(url.endsWith("/")) {
 			url = url.substring(0,url.length()-1);
 		}
-		Attr child = new Attr(url,String.valueOf(val));
+		Rune child = new Rune(url,String.valueOf(val));
 		boolean found = false;
 		for(int i=0;i<this.attributes.size();i++) {
-			Attr cur = attributes.get(i);
+			Rune cur = attributes.get(i);
 			//System.out.println(cur.getUrl()+"!="+child.getParent());
 			if(cur.isContainer()) {
 				if(cur.getUrl().equals(child.getParent())) {
@@ -55,7 +54,7 @@ class DXMLMap {
 			found = true;
 		}
 		if(found) {
-			//this.update();
+			this.update();
 			return child;
 		}else {
 			return null;
@@ -85,11 +84,11 @@ class DXMLMap {
 	
 	
 	
-	Attr getAttr(String url) {
-		Attr child = new Attr(url);
-		Attr found = null;
+	Rune getAttr(String url) {
+		Rune child = new Rune(url);
+		Rune found = null;
 		for(int i=0;i<this.attributes.size();i++) {
-			Attr cur = attributes.get(i);
+			Rune cur = attributes.get(i);
 			if(child.getParent()==null&&cur.getUrl().equals(child.getUrl())) {
 				found = (attributes.get(i));
 				i=this.attributes.size();
@@ -120,10 +119,10 @@ class DXMLMap {
 	
 	public void removeAttr(String url) {
 		
-		Attr child = new Attr(url);
+		Rune child = new Rune(url);
 		boolean found = false;
 		for(int i=0;i<this.attributes.size();i++) {
-			Attr cur = attributes.get(i);
+			Rune cur = attributes.get(i);
 			if(child.getParent()==null&&cur.getUrl().equals(child.getUrl())) {
 				attributes.remove(attributes.get(i));
 				found = true;
@@ -144,14 +143,14 @@ class DXMLMap {
 			}
 		}
 		if(found) {
-		//this.update();
+		this.update();
 		}else {
 			//System.out.println("DID't INFD "+url);
 		}
 	}
 	
-	private Attr findAttr(Attr at,Attr elm) {
-		Attr found = null;
+	private Rune findAttr(Rune at,Rune elm) {
+		Rune found = null;
 		//System.out.println(" URL FOR PAR "+at.getUrl());
 		if(at.getUrl().equals(elm.getParent())) {
 			return at.getChild(elm.getUrl());
@@ -166,14 +165,14 @@ class DXMLMap {
 						}
 			}
 		}else {
-			//System.out.println("ATTR:"+at.getUrl()+"IS NOT A CONTAINER");
+			//System.out.println("Rune:"+at.getUrl()+"IS NOT A CONTAINER");
 		}
 		return found;
 	}
 	
 	
 	
-	private boolean findRem(Attr at,Attr rmv) {
+	private boolean findRem(Rune at,Rune rmv) {
 		boolean found = false;
 		//System.out.println(" URL FOR PAR "+at.getUrl());
 		if(at.isContainer()) {
@@ -203,7 +202,7 @@ class DXMLMap {
 				}
 			}
 		}else {
-			//System.out.println("ATTR:"+at.getUrl()+"IS NOT A CONTAINER");
+			//System.out.println("Rune:"+at.getUrl()+"IS NOT A CONTAINER");
 		}
 		return found;
 	}
@@ -213,15 +212,15 @@ class DXMLMap {
 	
 	
 	
-	public Attr addContainer(String url) {
+	public Rune addContainer(String url) {
 		if(!url.endsWith("/")) {
 			url+="/";
 		}
-		Attr child = new Attr(url);
+		Rune child = new Rune(url);
 		//System.out.println("CHILD: "+url+" IS CONTAINER: "+child.isContainer());
 		boolean found = false;
 		for(int i=0;i<this.attributes.size();i++) {
-			Attr cur = attributes.get(i);
+			Rune cur = attributes.get(i);
 			if(cur.isContainer()) {
 				if(cur.getUrl().equals(child.getParent())) {
 					attributes.get(i).addChild(child);
@@ -243,7 +242,7 @@ class DXMLMap {
 			found = true;
 		}
 		if (found){
-			//this.update();
+			this.update();
 			return child;
 		}else {
 			return null;
@@ -253,7 +252,7 @@ class DXMLMap {
 	
 	
 	
-	private boolean itterFind(Attr at,Attr toadd) {
+	private boolean itterFind(Rune at,Rune toadd) {
 		boolean found = false;
 		//System.out.println(" URL FOR PAR "+at.getUrl());
 		if(at.isContainer()) {
@@ -278,7 +277,7 @@ class DXMLMap {
 				}
 			}
 		}else {
-			//System.out.println("ATTR:"+at.getUrl()+"IS NOT A CONTAINER");
+			//System.out.println("Rune:"+at.getUrl()+"IS NOT A CONTAINER");
 		}
 		return found;
 	}
@@ -297,7 +296,7 @@ class DXMLMap {
 		}
 		
 	}
-	private void itter(Attr at) {
+	private void itter(Rune at) {
 		makeOp(at);
 		if(at.isContainer()) {
 			for(int i=0;i<at.getChildren().size();i++) {
@@ -308,7 +307,7 @@ class DXMLMap {
 		
 	}
 	
-	private void makeClose(Attr at) {
+	private void makeClose(Rune at) {
 		String tab = "";
 		int tabs = tabsNeeded(at);
 		for(int i=1;i<=tabs;i++) {
@@ -321,7 +320,7 @@ class DXMLMap {
 	/**
 	 * @param at
 	 */
-	private void makeOp(Attr at) {
+	private void makeOp(Rune at) {
 		String tab = "";
 		int tabs = tabsNeeded(at);
 		for(int i=1;i<=tabs;i++) {
@@ -337,7 +336,7 @@ class DXMLMap {
 		
 	}
 	/**For write*/
-	private  int tabsNeeded(Attr at) {
+	private  int tabsNeeded(Rune at) {
 		int tabs=0;
 		String cur = at.getUrl();
 		//System.out.println(cur);
@@ -361,7 +360,7 @@ class DXMLMap {
 	
 	
 	private ArrayList<String> lines = new ArrayList<String>();
-	private ArrayList<Attr> attributes = new ArrayList<Attr>();
+	private ArrayList<Rune> attributes = new ArrayList<Rune>();
 	/**
 	 * @return the lines
 	 */
@@ -379,14 +378,14 @@ class DXMLMap {
 	/**
 	 * @return the attributes
 	 */
-	 ArrayList<Attr> getAttributes() {
+	 ArrayList<Rune> getAttributes() {
 		return attributes;
 	}
 
 	/**
 	 * @param attributes the attributes to set
 	 */
-	void setAttributes(ArrayList<Attr> attributes) {
+	void setAttributes(ArrayList<Rune> attributes) {
 		this.attributes = attributes;
 	}
 
@@ -422,8 +421,8 @@ class DXMLMap {
 	}
 	
 	
-	public static DXMLMap ParseMap(File file) {
-		DXMLMap m = new DXMLMap();
+	public static XMap ParseMap(File file) {
+		XMap m = new XMap();
 		m.file = file;
 		m.lines = RW.readAll(RW.FTU(file));
 		m.parse();	
@@ -431,18 +430,18 @@ class DXMLMap {
 		
 	}
 	
-	public DXMLMap() {
+	public XMap() {
 		
 	}
 	
 	/** Create new Map
 	 * 
 	 * */
-	public DXMLMap(File file) {
+	public XMap(File file) {
 		this.file = file;
 		
 	/*for(int i=0;i<this.attributes.size();i++) {
-		Attr cur = this.attributes.get(i);
+		Rune cur = this.attributes.get(i);
 
 		printAll(cur);
 		
@@ -544,7 +543,7 @@ class DXMLMap {
 				if(closeLoc!=-1&&closeLoc==i) {
 					//Element
 					String elmForm = this.parseElement(curLine);
-					Attr celm = new Attr(elmForm,this.parseValue(curLine));
+					Rune celm = new Rune(elmForm,this.parseValue(curLine));
 					this.attributes.add(celm);
 				}else if(closeLoc!=-1) {
 					//Container
@@ -572,11 +571,11 @@ class DXMLMap {
 	 * @param start
 	 * @param close
 	 */
-	private Attr map(String elm, int start, int close) {
+	private Rune map(String elm, int start, int close) {
 		if(!elm.endsWith("/")) {
 			elm+="/";
 		}
-		Attr cont = new Attr(elm);
+		Rune cont = new Rune(elm);
 		int tbcount = this.tabCount(lines.get(start));
 		////System.out.println(tbcount+"@from:"+lines.get(start));
 		////System.out.println("CUR:"+elm);
@@ -590,7 +589,7 @@ class DXMLMap {
 					if(closeLoc!=-1&&closeLoc==i) {
 						//Element
 						String elmForm = this.parseElement(curLine);
-						Attr celm = new Attr(elm+elmForm,this.parseValue(curLine));
+						Rune celm = new Rune(elm+elmForm,this.parseValue(curLine));
 						cont.addChild(celm);
 					}else if(closeLoc!=-1) {
 						//Container
@@ -598,7 +597,7 @@ class DXMLMap {
 						////System.out.println("ELM@I:"+curLine);
 						////System.out.println("Wants to Map:"+elm+elmForm);
 						////System.out.println("Will Find Lines"+Arrays.asList(RW.read(file, i,closeLoc)));
-						Attr child = (this.map(elm+elmForm,i+1,closeLoc));
+						Rune child = (this.map(elm+elmForm,i+1,closeLoc));
 						cont.addChild(child);
 					}	
 				}else {

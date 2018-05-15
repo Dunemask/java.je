@@ -252,18 +252,11 @@ public class Runemap {
 	}
 	
 	public void write() {
-		this.writeOut(this.bufferSize);
+		this.writeOut();
 	}
 	
-	void writeOut(int buffersize) {
-		map.writeOut(this.getXml(),buffersize);
-	}
-	/** Write document to a file
-	 * @param f 
-	 * @param buffersize
-	 * */
-	public void writeOut(File f,int buffersize) {
-		map.writeOut(f,buffersize);
+	void writeOut() {
+		map.writeOut(this.getXml());
 	}
 	
 	/** Write document to a file
@@ -271,7 +264,7 @@ public class Runemap {
 	 * 
 	 * */
 	public void writeOut(File f) {
-		map.writeOut(f,this.bufferSize);
+		map.writeOut(f);
 	}
 
 	/** Removes the Specified container
@@ -304,7 +297,7 @@ public class Runemap {
 		//this.getXml().delete();
 		if(live) {
 			this.update();
-			this.writeOut(this.bufferSize);
+			this.writeOut();
 		}
 		
 		
@@ -335,7 +328,7 @@ public class Runemap {
 		//this.getXml().delete();
 		if(live) {
 			this.update();
-			this.writeOut(this.bufferSize);
+			this.writeOut();
 		}
 	}
 	/** Write a Container
@@ -359,7 +352,7 @@ public class Runemap {
 		//this.getXml().delete();
 		if(live) {
 			this.update();
-			this.writeOut(this.bufferSize);
+			this.writeOut();
 		}
 
 	}

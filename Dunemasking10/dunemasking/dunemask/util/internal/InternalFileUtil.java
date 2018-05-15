@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import dunemask.util.StringUtil;
-import dunemask.util.rw.RW;
 /**Dunemasking FileUtil for easy editing and changing of filesv
  * <p>Test In List: {@link dunemask.util.FileUtil#alreadyInFile(File, String)}</p>
  * <p>Remove Extension From File: {@link dunemask.util.FileUtil#removeExtension(String)}</p>
@@ -212,7 +211,7 @@ public class InternalFileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int findInIgnoreCaseDocument(File file, String text) {
-		String[] lines = RW.readAll(file);
+		String[] lines = DMRW.readAll(file);
 		
 		int location = -5;
 		// Start at first line (Not 0 lines in file :P)
@@ -242,7 +241,7 @@ public class InternalFileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int findInIgnoreCaseDocumentBounds(File file, String text,int low,int high) {
-		String[] lines = RW.readAll(file);
+		String[] lines = DMRW.readAll(file);
 		
 		if(low>lines.length) {
 			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
@@ -275,7 +274,7 @@ public class InternalFileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int findInDocument(File file, String text) {
-		String[] lines = RW.readAll(file);
+		String[] lines = DMRW.readAll(file);
 		
 		int location = -5;
 		// Start at first line (Not 0 lines in file :P)
@@ -305,7 +304,7 @@ public class InternalFileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int findInDocumentBounds(File file, String text,int low,int high) {
-		String[] lines = RW.readAll(file);
+		String[] lines = DMRW.readAll(file);
 		
 		if(low>lines.length) {
 			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
@@ -338,7 +337,7 @@ public class InternalFileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int containsInDocument(File file, String text) {
-		String[] lines = RW.readAll(file);
+		String[] lines = DMRW.readAll(file);
 		
 		int location = -5;
 		// Start at first line (Not 0 lines in file :P)
@@ -369,7 +368,7 @@ public class InternalFileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int containsInDocumentBounds(File file, String text,int low,int high) {
-		String[] lines = RW.readAll(file);
+		String[] lines = DMRW.readAll(file);
 		
 		if(low>lines.length) {
 			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
@@ -403,7 +402,7 @@ public class InternalFileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int containsIgnoreCaseInDocument(File file, String text) {
-		String[] lines = RW.read(file, 1, InternalFileUtil.linesInFile(file));
+		String[] lines = DMRW.read(file, 1, InternalFileUtil.linesInFile(file));
 		
 		int location = -5;
 		// Start at first line (Not 0 lines in file :P)
@@ -434,7 +433,7 @@ public class InternalFileUtil{
 	 * @return The line where the text is located
 	 */
 	public static int containsIgnoreCaseInDocumentBounds(File file, String text,int low,int high) {
-		String[] lines = RW.read(file, 1, InternalFileUtil.linesInFile(file));
+		String[] lines = DMRW.read(file, 1, InternalFileUtil.linesInFile(file));
 		
 		if(low>lines.length) {
 			throw new RuntimeException("Lower Bounds "+ low + " Exceed the File's Length of "+lines.length);
