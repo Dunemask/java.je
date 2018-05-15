@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import dunemask.util.StringUtil;
-import dunemask.util.rw.RW;
+import dunemask.util.RW;
 import dunemask.util.xml.Runemap;
 
 /**
@@ -34,7 +34,7 @@ public class QuizGenny {
 		ArrayList<String> states = new ArrayList<String>(map.getFullMap().keySet());
 		ArrayList<String> caps = new ArrayList<String>(map.getFullMap().values());
 		for(int i=0;i<states.size();i++) {
-			System.out.println(states.get(i)+","+caps.get(i));
+			//System.out.println(states.get(i)+","+caps.get(i));
 		}
 		int wrongAnswerCnt = 3;
 		int rightAnswerCnt = 1;
@@ -54,7 +54,7 @@ public class QuizGenny {
 			for(int c=0;c<altList.size();c++) {
 				String cstate = altList.get(c);
 				String rcap = map.getvalue(cstate);
-				
+				int dispNum=c+1;
 				ArrayList<String> altCaps = new ArrayList<String>(caps);
 				Collections.shuffle(altCaps);
 				ArrayList<String> answers = new ArrayList<String>();
@@ -72,20 +72,16 @@ public class QuizGenny {
 				System.out.println("B:"+answers.get(1));
 				System.out.println("C:"+answers.get(2));
 				System.out.println("D:"+answers.get(3));*/
-				lines.add(c +".  State: "+cstate);
+				lines.add(dispNum +".  State: "+cstate);
 				lines.add("A:"+answers.get(0));
 				lines.add("B:"+answers.get(1));
 				lines.add("C:"+answers.get(2));
 				lines.add("D:"+answers.get(3));
 				lines.add(System.lineSeparator());
-				keyLines.add(Arrays.asList("ABCD".toCharArray()).get(num)+"");
-				
-				
-				
-				
+				keyLines.add(dispNum+":"+new String[] {"A","B","C","D"}[num]+"");
 			}
-			RW.writeAll(out, lines.toArray(new String[lines.size()]));
-			
+			RW.writeAll(out, lines);
+			RW.writeAll(keyOut,keyLines);
 			
 			
 			

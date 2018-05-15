@@ -12,6 +12,91 @@ import dunemask.util.StringUtil;
  */
 public class CompressedScriptProcessor {
 
+	String fullLine;
+	/** Assembles an Out Line
+	 * 
+	 * */
+	public void assemble() {
+		fullLine = "";
+		for(int i=0;i<compressedRunes.size();i++) {
+			CompressedRune open = compressedRunes.get(i);
+			fullLine +=opencform(open.getName());
+			if(open.isContainer()) {
+				assembleCont((CompressedRuneSlot)open);
+			}else {
+				assembleElm((CompressedRuneElement)open);
+			}
+			fullLine+="}";
+			//System.out.println(fullLine);
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * @param open
+	 */
+	private void assembleElm(CompressedRuneElement open) {
+		//String op = opencform(open.getName());
+		//System.out.println("OPENING:"+open.getName());
+		ArrayList<String> key = new ArrayList<String>(open.getValues().keySet());
+		for(int i=0;i<key.size();i++) {
+			String inval = open.getValues().get(key.get(i));
+			String inop = key.get(i)+":\""+inval+"\"";
+			fullLine+=inop;
+		}
+		
+	}
+
+
+
+
+
+
+	/**
+	 * @param open
+	 */
+	private void assembleCont(CompressedRuneSlot parent) {
+		for(int i=0;i<parent.getChildren().size();i++) {
+			CompressedRune open = parent.getChildren().get(i);
+			fullLine +=opencform(open.getName());
+			if(open.isContainer()) {
+				assembleCont((CompressedRuneSlot)open);
+			}else {
+				assembleElm((CompressedRuneElement)open);
+			}
+			fullLine+="}";
+			
+			
+			
+			
+		}
+		
+	}
+
+
+
+
+
+
+	private String opencform(String cont) {
+		return cont+":{";
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -42,6 +127,10 @@ public class CompressedScriptProcessor {
 	
 	public CompressedScriptProcessor() {
 		this.setRunes(new ArrayList<CompressedRune>());
+	}
+	public CompressedScriptProcessor(String textAsLine) {
+		this.setRunes(new ArrayList<CompressedRune>());
+		this.process(textAsLine);
 	}
 	
 	/** Remove a Rune	
@@ -269,6 +358,7 @@ public class CompressedScriptProcessor {
 	 * */
 	public void process(String str) {
 		str = str.replaceAll(regex, "");
+		//System.out.println(str);
 		String full = str;
 		String change = full;
 		while(change.contains("}")) {
