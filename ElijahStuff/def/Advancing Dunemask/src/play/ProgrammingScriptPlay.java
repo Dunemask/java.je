@@ -3,6 +3,8 @@
  */
 package play;
 
+import java.io.File;
+
 /**
  * @author dunemask
  *
@@ -30,7 +32,11 @@ public class ProgrammingScriptPlay {
 		var nsp = new CompressedScriptProcessor(sp.fullLine);
 		nsp.assemble();
 		System.out.println(nsp.fullLine);
-		
+		CompressedRunemap rm = new CompressedRunemap(new File(System.getProperty("user.home")+"/Desktop/Test.crm"));
+		CompressedRunemap crm = new CompressedRunemap(new File(System.getProperty("user.home")+"/Desktop/Alt.crm"));
+		//crm.setSp(nsp);
+		crm.addElement("Lolz", "Moo", "Yes");
+		crm.compressedWrite();
 		
 
 	}

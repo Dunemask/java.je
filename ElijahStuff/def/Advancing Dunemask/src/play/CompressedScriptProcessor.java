@@ -271,9 +271,6 @@ public class CompressedScriptProcessor {
 	
 	
 	
-	
-	
-	
 	public void addRune(String url) {
 		boolean isCont = false;
 		CompressedRune re=null;
@@ -288,6 +285,13 @@ public class CompressedScriptProcessor {
 		}else {
 			re = new CompressedRuneSlot(name);
 		}
+		addRune(url,re);
+	}
+	
+	
+	public void addRune(String url,CompressedRune re) {
+		String[] split = url.split("/");
+		String name = split[split.length-1];
 		boolean found = false;
 		if(split.length==1) {
 			for(int i=0;i<compressedRunes.size();i++) {
