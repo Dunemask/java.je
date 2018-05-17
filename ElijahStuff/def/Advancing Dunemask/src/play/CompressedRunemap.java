@@ -4,6 +4,7 @@
 package play;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import dunemask.util.RW;
@@ -17,6 +18,17 @@ public class CompressedRunemap {
 	private HashMap<String,CompressedRune> index = new  HashMap<String,CompressedRune>();
 	private CompressedScriptProcessor sp= new CompressedScriptProcessor();
 	private File file;
+	
+	
+	public ArrayList<CompressedRune> getChildren(String url) {
+		if(!url.endsWith("/")) {
+			throw new CompressedInvalidRuneUrlExcpetion("URL IS AN ELEMNT NOT A CONTAINER");
+		}
+		return ((CompressedRuneSlot)sp.getRune(url)).getChildren(); 
+		
+		
+		
+	}
 	
 	
 	/** Add Value to a Compressed Runemap
@@ -36,7 +48,6 @@ public class CompressedRunemap {
 		if(valName.contains(" ")) {
 			throw new CompressedInvalidRuneUrlExcpetion("YOUR VALUENAME CONTAINS A SPACE!");
 		}
-		CompressedRuneElement re =null;
 		//try {
 		((CompressedRuneElement)sp.getRune(url)).getValues().put(valName, String.valueOf(val));
 		((CompressedRuneElement)this.index.get(url)).getValues().put(valName, String.valueOf(val));
@@ -56,15 +67,24 @@ public class CompressedRunemap {
 		if(url.contains(" ")) {
 			throw new CompressedInvalidRuneUrlExcpetion("YOUR URL CONTAINS A SPACE!");
 		}
-		sp.addRune(url);
-		
-		
+		sp.addRune(url);	
+		this.index.put(url, CompressedRune.CompressedRuneFromUrl(url));
 	}
 	
 	
 	public void removeRune(String url) {
 		this.index.remove(url);
 		sp.removeRune(url);
+		if(url.endsWith("/")) {
+			url = StringUtil.replaceLast(url, "/", "");
+			String parent = url.substring(0, url.lastIndexOf("/"));
+			var kl = new ArrayList<String>(index.keySet());
+			for(int i=0;i<kl.size();i++) {
+				if(kl.get(i).startsWith(parent)) {
+					kl.remove(kl.get(i));
+				}
+			}
+		}
 		
 	}
 	
@@ -79,7 +99,11 @@ public class CompressedRunemap {
 			secr.getValues().remove(name);
 	}
 	
-	
+	/** Get Value based on url and name 
+	 * @param url
+	 * @param name
+	 * 
+	 * */
 	public String getValue(String url,String name) {
 		if(url.endsWith("/")) {
 			throw new CompressedInvalidRuneUrlExcpetion("URL IS A CONTAINER NOT ELEMENT!");
@@ -104,7 +128,7 @@ public class CompressedRunemap {
 	
 	/** Based on url does stuff
 	 * 
-	 * */
+	 *
 	private CompressedRune internalAdd(String url) {
 		CompressedRune cr = null;
 		String[] split = url.split("/");
@@ -116,7 +140,7 @@ public class CompressedRunemap {
 		}
 		return cr;
 		
-	}
+	} */
 	
 	
 	/** Compressed Runemap instance
@@ -143,22 +167,69 @@ public class CompressedRunemap {
 		RW.write(this.file, sp.fullLine, 0);
 	}
 	
+	private static CompressedRunemap tcr = null;
 	public static CompressedRunemap parseCompressedRunemap(File f) {
-		CompressedRunemap cr = null;
-		/*String line = "";
+		tcr = null;
+		String line = "";
 		var lines = RW.readAll(RW.FTU(f));
+		System.out.println(lines);
 		for(int i=0;i<lines.size();i++) {
 			line+=lines.get(i);
 		}
-		sp = new CompressedScriptProcessor(line);
-		sp.assemble();*/
-		return cr;
+		tcr=new CompressedRunemap(f);
+		tcr.sp = new CompressedScriptProcessor(line);
+		tcr.sp.assemble();
+		for(int i=0;i<tcr.sp.getRunes().size();i++) {
+			CompressedRune cor = tcr.sp.getRunes().get(i);
+			if(cor.isContainer()) {
+				String curl = cor.getName()+"/";
+				tcr.index.put(curl, cor);
+				mapChildren(curl,(CompressedRuneSlot)cor);
+			}else {
+				String curl = cor.getName();
+				tcr.index.put(curl, cor);
+			}
+		}
+		
+		
+		return tcr;
 	}
+	/**
+	 * @param curl
+	 * @param cor
+	 */
+	private static void mapChildren(String curl, CompressedRuneSlot cr) {
+		for(int i=0;i<cr.getChildren().size();i++) {
+			CompressedRune cor = cr.getChildren().get(i);
+			if(cor.isContainer()) {
+				String nurl = curl+cor.getName()+"/";
+				tcr.index.put(nurl, cor);
+				mapChildren(nurl,(CompressedRuneSlot)cor);
+			}else {
+				String nurl = curl+cor.getName();
+				tcr.index.put(nurl, cor);
+			}
+		}
+	}
+
 	public HashMap<String,CompressedRune> getIndex() {
 		return index;
 	}
 	public void setIndex(HashMap<String,CompressedRune> index) {
 		this.index = index;
+	}
+	/** @param file the file to set
+	 * 
+	 * 
+	 * */
+	public void setFile(File file) {
+		this.file = file;
+	}
+	/** return the file
+	 * 
+	 * */
+	public File getFile() {
+		return file;
 	}
 	/**
 	 * @return the sp

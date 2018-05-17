@@ -36,14 +36,18 @@ public class ProgrammingScriptPlay {
 		//CompressedRunemap crm = new CompressedRunemap(new File(System.getProperty("user.home")+"/Desktop/Alt.crm"));
 		rm.addRune("Country/");
 		rm.addRune("Country/UnitedStates/");
+		rm.addRune("Country/UnitedStates/Utah");
 		rm.addValue("Country/UnitedStates/Utah", "ID", 48);
 		rm.addValue("Country/UnitedStates/Utah","Capital","Salt Lake City");
-		rm.addValue("Country/UnitedStates/Utah", "State Bird", "Turkey");
+		rm.addValue("Country/UnitedStates/Utah", "StateBird", "Turkey");
 		rm.compressedWrite();
 		System.out.println(rm.getSp().fullLine);
 		var crm = new CompressedRunemap();
 		crm.setSp(new CompressedScriptProcessor(rm.getSp().fullLine));
 		System.out.println(crm.getValue("Country/UnitedStates/Utah", "StateBird"));
+		var ncrm = CompressedRunemap.parseCompressedRunemap(rm.getFile());
+		System.out.println("*******");
+		System.out.println("*******");
 		
 
 	}
