@@ -218,7 +218,7 @@ public class CompressedScriptProcessor {
 				}
 			}
 			if(found ==null) {
-				throw new play.CompressedInvalidRuneUrlExcpetion("COULD NOT FIND");
+				throw new play.CompressedInvalidRuneUrlExcpetion("COULD NOT FIND "+url);
 			}
 			return found;
 		}else {
@@ -330,7 +330,9 @@ public class CompressedScriptProcessor {
 		boolean itemIsCont = re.isContainer();
 		boolean lim = lvl+1 == split.length;
 		boolean found=false;
-		if(lim) {
+		//System.out.println(lim+"@"+nameWantHere);
+		//System.out.println(compressedRuneSlot.getName());
+		if(lim&&compressedRuneSlot.getName().equals(split[lvl-1])) {
 			compressedRuneSlot.getChildren().add(re);
 			found = true;
 			return found;

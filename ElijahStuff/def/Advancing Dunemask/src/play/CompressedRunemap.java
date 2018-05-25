@@ -67,8 +67,13 @@ public class CompressedRunemap {
 		if(url.contains(" ")) {
 			throw new CompressedInvalidRuneUrlExcpetion("YOUR URL CONTAINS A SPACE!");
 		}
-		sp.addRune(url);	
-		this.index.put(url, CompressedRune.CompressedRuneFromUrl(url));
+		
+		if(!this.index.containsKey(url)) {
+			sp.addRune(url);	
+			this.index.put(url, CompressedRune.CompressedRuneFromUrl(url));
+		}else {
+			System.err.println("ATTRIBUTE AT URL ALREADY EXISTS!");
+		}
 	}
 	
 	
@@ -143,6 +148,16 @@ public class CompressedRunemap {
 	} */
 	
 	
+	public String getParentFromURL(String url) {
+		String[] split = url.split("/");
+		String parpath = "";
+		for(int i=0;i<split.length-1;i++) {
+			parpath+=(split[i]+"/");
+		}
+		return parpath;
+		
+		
+	}
 	/** Compressed Runemap instance
 	 * 
 	 *  */
@@ -172,7 +187,7 @@ public class CompressedRunemap {
 		tcr = null;
 		String line = "";
 		var lines = RW.readAll(RW.FTU(f));
-		System.out.println(lines);
+		//System.out.println(lines);
 		for(int i=0;i<lines.size();i++) {
 			line+=lines.get(i);
 		}

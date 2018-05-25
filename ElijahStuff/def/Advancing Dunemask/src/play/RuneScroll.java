@@ -4,6 +4,7 @@
 package play;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import dunemask.util.StringUtil;
 
@@ -31,7 +32,13 @@ public class RuneScroll {
 		if(!url.endsWith("/")){
 			url+="/";
 		}
-		this.rm.addRune(url);
+		//If Contains parent
+		String par = rm.getParentFromURL(url);
+		if(rm.getIndex().containsKey(par)||par.equals("")) {
+			this.rm.addRune(url);
+		}else {
+			throw new CompressedRuneException("PARENT:"+par+" DOES NOT EXIST");
+		}
 	}
 	public void addObject(String url) {
 		if(url.endsWith("/")){
@@ -56,6 +63,19 @@ public class RuneScroll {
 		String elmid = fullUrl.substring( fullUrl.lastIndexOf("/")+1,fullUrl.length());
 		return this.getElement(oburl,elmid);
 	}
+	/** Write the Scroll
+	 * 
+	 * */
+	public void write() {
+		this.rm.compressedWrite();
+	}
+	/** WRite the Scroll to a file
+	 * @param f
+	 * 
+	 * */
+	public void write(File f) {
+		this.rm.compressedWriteOut(f);
+	}
 	
 	/** Get Element From Object 
 	 * @param objectUrl
@@ -64,6 +84,18 @@ public class RuneScroll {
 	 * */
 	public String getElement(String objectUrl,String elementId) {
 		return this.rm.getValue(objectUrl, elementId);
+	}
+	public ArrayList<String> getChildren(String parentUrl){
+		if(!parentUrl.endsWith("/")){
+			parentUrl+="/";
+		}
+		var fl = this.rm.getChildren(parentUrl);
+		ArrayList<String> al = new ArrayList<String>();
+		for(int i=0;i<fl.size();i++) {
+			al.add(parentUrl+fl.get(i).getName());
+		}
+		return al;
+		
 	}
 	
 	RuneScroll()
@@ -78,6 +110,12 @@ public class RuneScroll {
 		
 	}
 	
+	/** Get Parent From Url
+	 * 
+	 * */
+	public String getParentFromURL(String parentUrl) {
+		return rm.getParentFromURL(parentUrl);
+	}
 	/**
 	 * @param parseCompressedRunemap
 	 */
@@ -92,6 +130,17 @@ public class RuneScroll {
 	public static RuneScroll ParseScroll(File f) {
 		RuneScroll scroll = new RuneScroll(CompressedRunemap.parseCompressedRunemap(f));
 		return scroll;
+	}
+	
+	public void changeElement(String objectUrl,String elementId,Object value) {
+		boolean nexist = this.rm.getIndex().get(objectUrl)==null;
+		if(!nexist) {
+			this.rm.removeValue(objectUrl, elementId);
+			this.rm.addValue(objectUrl, elementId, value);
+		}else {
+			throw new RuntimeException("RUNE DOES NOT EXIST!");
+		}
+
 	}
 	/**
 	 * @return the rm
