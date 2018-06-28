@@ -97,6 +97,45 @@ public class RuneScroll {
 		return al;
 		
 	}
+	/** Get Top Elements
+	 * @return top elements with "$name$/" when container else just $name$
+	 * 
+	 * 
+	 * **/
+	public ArrayList<String> getTop(){
+		ArrayList<String> top = new ArrayList<String>();
+		var tmp = rm.getIndex();
+		var keys = new ArrayList<String>(tmp.keySet());
+		for(int i=0;i<tmp.keySet().size();i++) {
+			var rune = tmp.get(keys.get(i));
+			String name = (rune.getName());
+			boolean isCont = (rune.isContainer());
+			if(isCont) {
+				try {
+				rm.getChildren(name+"/");
+				
+				top.add(tmp.get(keys.get(i)).getName()+"/");
+				}catch(Exception e) {
+				}
+			}else {
+				try {
+				var intKeyset = new ArrayList<String>(((CompressedRuneElement)rune).getValues().keySet());
+				for(int c=0;c<intKeyset.size();c++) {
+					rm.getValue(name, intKeyset.get(c));
+					
+					//System.out.println("VALUE "+ val + " FROM "+name);
+				}
+				
+				top.add(tmp.get(keys.get(i)).getName());
+				}catch(Exception e) {
+					
+				}
+			}
+		}
+		return top;
+		
+		
+	}
 	
 	RuneScroll()
 	{

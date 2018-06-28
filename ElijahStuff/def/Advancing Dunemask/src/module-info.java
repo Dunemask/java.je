@@ -1,6 +1,5 @@
 module mod{
-	requires dunemasking;
-	requires java.xml.bind;
+	requires transitive dunemasking;
 	requires java.xml;
 	exports play;
 	
