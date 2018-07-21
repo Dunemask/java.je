@@ -11,4 +11,5 @@ module dunemasking{
 	exports dunemask.objects;
 	exports dunemask.util.xml;
 	exports dunemask.other;
+	exports dunemask.at;
 }
