@@ -13,12 +13,12 @@ import dunemask.util.StringUtil;
  * 
  * 
  * @author dunemask
- *
+ * 
+ * 
  */
 public class Runemap {
 	
 	
-	private int bufferSize=1024;
 	
 	DXMLMap map;
 	private boolean live = false;
@@ -549,12 +549,7 @@ public class Runemap {
 	void setLive(boolean live) {
 		this.live = live;
 	}
-	public int getBufferSize() {
-		return bufferSize;
-	}
-	public void setBufferSize(int bufferSize) {
-		this.bufferSize = bufferSize;
-	}
+
 	
 	
 	

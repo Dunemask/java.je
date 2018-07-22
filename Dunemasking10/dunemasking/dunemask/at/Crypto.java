@@ -25,7 +25,55 @@ import javax.crypto.Cipher;
  *
  */
 public class Crypto {
-
+	/** UTF-8 Encoding Style 
+	 * <p>Useage: String.getBytes(Crypto.UTF8)</p>
+	 * 
+	 * */
+	public static final String UTF8 = "UTF-8";
+	
+	
+	/** Encrypts the File with the Public Key
+	 * @param f File
+	 * @param pubkey Public Key
+	 * 
+	 * */
+	public static void encryptFile(File f,PublicKey pubkey) {
+		var in = Crypto.getBytes(f.toURI());
+		byte[] scrambled = null;
+		try {
+			scrambled = Crypto.encrypt(pubkey, in);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		f.delete();
+		Crypto.writeBytes(scrambled, f);
+	}
+	/**Decrypts a File with the PrivateKey
+	 * @param f File
+	 * @param prkey Private Key
+	 * 
+	 * 
+	 * */
+	public static void decryptFile(File f,PrivateKey prkey) {
+		var in = Crypto.getBytes(f.toURI());
+		byte[] unscrambled = null;
+		try {
+			unscrambled = Crypto.decrypt(prkey, in);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		f.delete();
+		Crypto.writeBytes(unscrambled, f);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/** Write A Byte Array
 	 * @param bytes
 	 * @param out
