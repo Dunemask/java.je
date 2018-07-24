@@ -49,6 +49,21 @@ public class KeyPair {
 		KeyPair kp = new KeyPair(priv,pub);
 		return kp;
 	}
+	/** Test if the pair are indeed a pair ^^
+	 * @param pub Public Key
+	 * @param priv Private key
+	 * @return pair || no pair
+	 * */
+	public static boolean verifyPair(PubKey pub,PrivKey priv) {
+		int pubval = CryptoUtil.Cipher.getVal(pub.getCode());
+		int prival = CryptoUtil.Cipher.getVal(priv.getCode());
+		return ((pubval*prival)==priv.getUval());
+		
+	}
+	
+	
+	
+	
 	
 	private static ArrayList<Integer> calcPrime(int mx) {
 		boolean[] numberList = new boolean[mx+1];

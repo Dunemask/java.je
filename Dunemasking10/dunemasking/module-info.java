@@ -12,4 +12,5 @@ module dunemasking{
 	exports dunemask.util.xml;
 	exports dunemask.other;
 	exports dunemask.at;
+	exports dunemask.crypto;
 }

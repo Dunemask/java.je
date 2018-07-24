@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import dunemask.util.IOUtil;
 import dunemask.util.RW;
 import dunemask.util.StringUtil;
 
@@ -18,6 +19,32 @@ import dunemask.util.StringUtil;
  */
 public class CryptoUtil {
 
+	/** Encrypts a file using the Public Key
+	 * @param key Public Key
+	 * @param file File
+	 * 
+	 * */
+	public static void encryptFile(PubKey key,File file) {
+		var in = IOUtil.getBytes(IOUtil.FTU(file));
+		var encrypted = CryptoUtil.encrypt(key, in);
+		file.delete();
+		IOUtil.writeBytes(encrypted, file);
+	}
+	/** Decrypts a file using the Private Key
+	 * @param key Private Key
+	 * @param file File
+	 * 
+	 * */
+	public static void decryptFile(PrivKey key,File file) {
+		var in = IOUtil.getBytes(IOUtil.FTU(file));
+		var decrypted = CryptoUtil.decrypt(key, in);
+		file.delete();
+		IOUtil.writeBytes(decrypted, file);
+	}
+	
+	
+	
+	
 	/** Write Public Key
 	 * @param key Public Key
 	 * @param file File
@@ -38,7 +65,7 @@ public class CryptoUtil {
 		String code = key.getCode();
 		String ucode = CryptoUtil.Cipher.getCode(key.getUval());
 		String pform = "DMPKey:{"+code+"}";
-		String uform = "DMkey:{"+ucode+"}";
+		String uform = "DMKey:{"+ucode+"}";
 		RW.writeAll(file, new ArrayList<String>(Arrays.asList(new String[] {pform,uform})));
 	}
 	/** Read Private Key
@@ -48,7 +75,6 @@ public class CryptoUtil {
 	 * */
 	public static PrivKey readPrivKey(URL url) {
 		var lines = RW.readAll(url);
-		System.out.println(lines);
 		var pcode = StringUtil.replaceLast(lines.get(0).replace("DMPKey:{", ""),"}","");
 		var ucode = StringUtil.replaceLast(lines.get(1).replace("DMKey:{", ""),"}","");
 		int pval = Cipher.getVal(pcode);
@@ -63,7 +89,6 @@ public class CryptoUtil {
 	 * */
 	public static PubKey readPubKey(URL url) {
 		var lines = RW.readAll(url);
-		System.out.println(lines);
 		var code = StringUtil.replaceLast(lines.get(0).replace("DMPUBKey:{", ""),"}","");
 		int val = Cipher.getVal(code);
 		return new PubKey(val);
@@ -103,8 +128,9 @@ public class CryptoUtil {
 		return ret;
 	}
 	
-	
 	static class Cipher{
+
+		
 		
 		static final int base = 33;
 		static int getVal(String code) {
@@ -121,7 +147,7 @@ public class CryptoUtil {
 			for(int i=0;i<spl.size();i++) {
 				c = spl.get(i).toCharArray()[0]; //Each Is only 1
 				tmp = (int)c;
-				cout = (tmp-base)/11;
+				cout = (tmp-base)/9;
 				dig+=(String.valueOf(cout));
 			}
 			val = Integer.parseInt(dig);		
@@ -144,7 +170,7 @@ public class CryptoUtil {
 			char c;
 			for(int i=0;i<dig.size();i++) {
 				tmp = Integer.valueOf(dig.get(i));
-				 c = (char)(base+(11*tmp));
+				 c = (char)(base+(9*tmp));
 				code+= Character.toString(c);
 			}		
 			return code;
