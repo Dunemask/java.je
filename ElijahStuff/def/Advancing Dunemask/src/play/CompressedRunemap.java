@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import dunemask.util.IOUtil;
 import dunemask.util.RW;
 import dunemask.util.StringUtil;
 
@@ -186,7 +187,7 @@ public class CompressedRunemap {
 	public static CompressedRunemap parseCompressedRunemap(File f) {
 		tcr = null;
 		String line = "";
-		var lines = RW.readAll(RW.FTU(f));
+		var lines = RW.readAll(IOUtil.FTU(f));
 		//System.out.println(lines);
 		for(int i=0;i<lines.size();i++) {
 			line+=lines.get(i);
