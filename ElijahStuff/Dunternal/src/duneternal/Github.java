@@ -4,7 +4,10 @@
 package duneternal;
 
 import java.io.File;
+
+import dunemask.crypto.CryptoUtil;
 import dunemask.util.FileUtil;
+import dunemask.util.IOUtil;
 
 /**
  * @author Dunemask
@@ -35,13 +38,13 @@ public class Github {
 	/** Get sealed file from Duneternal repo
 	 * @param path
 	 * @return sealed file
-	 * 
+	 * */
 	public static File getSealedFile(String path) {
 		File f = getFile(Default.Duneternal,path);
 		//FileUtil.writeFile(f,new File(System.getProperty("user.home")+"/Desktop/tmp.file") );
-		Crypto.decryptFile(f, Crypto.getPrivKey(new File(Default.PrivateKey).toURI()));
+		CryptoUtil.decryptFile(CryptoUtil.readPrivKey(IOUtil.FTU(new File(Default.PrivateKey))), f);
 		return f;
-	}*/
+	}
 	
 	
 	

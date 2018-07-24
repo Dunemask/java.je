@@ -30,7 +30,7 @@ public class KeyPair {
 	 * @return keypair
 	*/
 	public static KeyPair gen() {
-		return gen(16000);
+		return gen(23170);
 	}
 	
 	/** Generate a keypair
@@ -38,7 +38,7 @@ public class KeyPair {
 	 * <p>Bigger is more difficult to decrypt</p>
 	 * 
 	 * */
-	public static KeyPair gen(int max) {
+	static KeyPair gen(int max) {
 		var pnum = calcPrime(max);
 		var sr = new SecureRandom();
 		int priv = pnum.get(sr.nextInt(pnum.size()));
