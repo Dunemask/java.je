@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,17 +63,6 @@ public class RW {
 		
 		
 		
-	}
-	/** Convert File to URL
-	 * 
-	 * */
-	public static URL FTU(File file) {
-		try {
-			return file.toURI().toURL();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
 	

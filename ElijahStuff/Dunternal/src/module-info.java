@@ -5,5 +5,7 @@
  * @author Dunemask
  *
  */
-module dunternal {
+module duneternal {
+	requires transitive dunemasking;
+	exports duneternal;
 }

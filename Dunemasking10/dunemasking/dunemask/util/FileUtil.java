@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 /**Dunemasking FileUtil for easy editing and changing of filesv
@@ -25,8 +27,58 @@ import java.util.Arrays;
  * @author Elijah
  * */
 public class FileUtil{
-    /**Get File From Specified URL
-	 * <p>(Web File)</p>
+    /** Write the url to the File Not to be mistaken with {@link ResourceUtil#writeUrl(URL, File)}
+     * <p>Primarily Used for Retrieving Files From the Web</p>
+     * @param path URL path
+     * @return 
+     * */
+    public static File retrieveFile(String path) {
+    	File tmp = null;
+    	try {
+			tmp = File.createTempFile("Temp"+new SecureRandom(), ".dtmp");
+			FileUtil.retrieveFile(path, tmp);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return tmp;
+    }
+    
+
+    /** Write the url to the File Not to be mistaken with {@link ResourceUtil#writeUrl(URL, File)}
+     * <p>Primarily Used for Retrieving Files From the Web</p>
+     * @param path URL path
+     * @param file file where the url will be written
+     * */
+    public static void retrieveFile(String path,File file) {
+    	path = path.replace(" ", "%20");
+    	URLConnection connection;
+		try {
+			URL url = new URL(path);
+			connection = url.openConnection();
+    	InputStream in = connection.getInputStream();
+    	FileOutputStream fos = new FileOutputStream(file);
+    	byte[] buf = new byte[512];
+    	while (true) {
+    	    int len = in.read(buf);
+    	    if (len == -1) {
+    	        break;
+    	    }
+    	    fos.write(buf, 0, len);
+    	}
+    	in.close();
+    	fos.flush();
+    	fos.close();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+    }
+    
+    
+    /**@deprecated use {@link FileUtil#retrieveFile(String)}
+	 * <p>Get File From Specified URL (Web File)</p>
 	 * @param address  address
 	 * @return Return file from url
 	 * */
@@ -43,8 +95,9 @@ public class FileUtil{
     	
     }
     
-    /**Get File From Specified URL and download to Wanted 'File'
-   	 * <p>(Web File)</p>
+    /**@deprecated Use: {@link FileUtil#retrieveFile(String, File)}
+     * 
+   	 * <p>Get File From Specified URL and download to Wanted 'File' (Web File)</p>
    	 * @param address  address
    	 * @return Return file from url
    	 * */
@@ -113,23 +166,7 @@ public class FileUtil{
     
     
     
-    
-    /**
-	 * @param fileName
-	 *            (String)
-	 * @return Return filename without the extension (This also removes the period,)
-	 * <p>If No Period is found it will go boom</p>
-	 */
-	public static String removeExtension(String fileName) {
-		int dotPosition = fileName.lastIndexOf(".");
-		if (dotPosition == -1) {
-			//No Period found
-			return fileName;
-		} else {
-			//Period found
-			return fileName.substring(0, dotPosition);
-		}
-	}
+
 
 
 
@@ -142,15 +179,10 @@ public class FileUtil{
 	 * @return Returns the number of lines in the file or -1 if it blew up
 	 */
 	public static int linesInFile(File file) {
-		return RW.countLines(RW.FTU(file));
+		return RW.countLines(IOUtil.FTU(file));
 
 	}
 
-
-
-	
-
-	
 	/**Get a list of files and folders from a package
 	 * @param dir Starts at src level and works relative from that
 	 * @return Returnrs array of files

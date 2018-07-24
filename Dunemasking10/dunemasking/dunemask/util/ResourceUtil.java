@@ -12,7 +12,7 @@ import java.net.URL;
 
 /**
  * @author dunemask
- *
+ *@deprecated
  */
 public class ResourceUtil {
 	
@@ -46,7 +46,7 @@ public class ResourceUtil {
 			return null;
 		}
 	}
-	public static int bytesize = 1024^3;
+	private static int bytesize = 1024^3;
 	
 	private static File writeFile(URL url,File file) throws Exception {
 		InputStream is = url.openStream();

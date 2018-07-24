@@ -3,10 +3,13 @@
  */
 package dunemask.at;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
@@ -17,14 +20,13 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-
 import javax.crypto.Cipher;
 
 /**
  * @author Dunemask
  *
  */
-public class Crypto {
+public class RSACrypto {
 	/** UTF-8 Encoding Style 
 	 * <p>Useage: String.getBytes(Crypto.UTF8)</p>
 	 * 
@@ -38,15 +40,15 @@ public class Crypto {
 	 * 
 	 * */
 	public static void encryptFile(File f,PublicKey pubkey) {
-		var in = Crypto.getBytes(f.toURI());
+		var in = RSACrypto.getBytes(f.toURI().toString());
 		byte[] scrambled = null;
 		try {
-			scrambled = Crypto.encrypt(pubkey, in);
+			scrambled = RSACrypto.encrypt(pubkey, in);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		f.delete();
-		Crypto.writeBytes(scrambled, f);
+		RSACrypto.writeBytes(scrambled, f);
 	}
 	/**Decrypts a File with the PrivateKey
 	 * @param f File
@@ -55,15 +57,15 @@ public class Crypto {
 	 * 
 	 * */
 	public static void decryptFile(File f,PrivateKey prkey) {
-		var in = Crypto.getBytes(f.toURI());
+		var in = RSACrypto.getBytes(f.toURI().toString());
 		byte[] unscrambled = null;
 		try {
-			unscrambled = Crypto.decrypt(prkey, in);
+			unscrambled = RSACrypto.decrypt(prkey, in);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		f.delete();
-		Crypto.writeBytes(unscrambled, f);
+		RSACrypto.writeBytes(unscrambled, f);
 	}
 	
 	
@@ -88,20 +90,63 @@ public class Crypto {
 				e.printStackTrace();
 			}
 	}
+	
+	/** Read Bytes from a path
+	 * @param String path
+	 * @return byte array
+	 * 
+	 * */
+	public static byte[] getBytes(String path) {
+		URL url = null;
+		InputStream is = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			url = new URL(path.replace(" ", "%20"));
+		  is = url.openStream ();
+		  byte[] byteChunk = new byte[4096]; // Or whatever size you want to read in at a time.
+		  int n;
+
+		  while ( (n = is.read(byteChunk)) > 0 ) {
+		    baos.write(byteChunk, 0, n);
+		  }
+		}
+		catch (IOException e) {
+		  System.err.printf ("Failed while reading bytes from %s: %s", url.toExternalForm(), e.getMessage());
+		  e.printStackTrace ();
+		  // Perform any other exception handling that's appropriate.
+		}
+		finally {
+		  if (is != null) { try {
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} }
+		}
+		return baos.toByteArray();
+	}
+	
+	
+	
 	/** Read bytes from URI
 	 * @param uri
 	 * @return array of bytes from file
 	 * 
-	 * */
+	 * 
 	public static byte[] getBytes(URI uri) {
-		byte[] bytes = null;
-		try {
-			bytes = Files.readAllBytes(Paths.get(uri));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return bytes;
-	}
+		 byte[] getBytes = {};
+		    try {
+		        File file = new File(uri);
+		        getBytes = new byte[(int) file.length()];
+		        InputStream is = new FileInputStream(file);
+		        is.read(getBytes);
+		        is.close();
+		    } catch (FileNotFoundException e) {
+		        e.printStackTrace();
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		    return getBytes;
+	}*/
 	
 	
 	

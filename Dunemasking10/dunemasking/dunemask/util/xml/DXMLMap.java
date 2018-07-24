@@ -3,6 +3,7 @@ package dunemask.util.xml;
 import java.io.File;
 import java.util.ArrayList;
 
+import dunemask.util.IOUtil;
 import dunemask.util.RW;
 import dunemask.util.StringUtil;
 
@@ -425,7 +426,7 @@ class DXMLMap {
 	public static DXMLMap ParseMap(File file) {
 		DXMLMap m = new DXMLMap();
 		m.file = file;
-		m.lines = RW.readAll(RW.FTU(file));
+		m.lines = RW.readAll(IOUtil.FTU(file));
 		m.parse();	
 		return m;
 		
