@@ -5,8 +5,6 @@ package security;
 
 import java.io.File;
 
-import dunemask.crypto.CryptoUtil;
-import dunemask.crypto.KeyPair;
 import dunemask.util.IOUtil;
 import dunemask.util.RW;
 import duneternal.Github;

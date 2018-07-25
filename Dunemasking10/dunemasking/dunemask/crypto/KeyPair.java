@@ -13,13 +13,12 @@ import java.util.ArrayList;
 public class KeyPair {
 	private PrivKey priv;
 	private PubKey pub;
-	private int lval;
 	/**@param lval
 	 * @param pub 
 	 * 
 	 */
 	KeyPair(int priv, int pub) {
-		this.lval = priv*pub;
+		var lval = priv*pub;
 		this.priv = new PrivKey(priv,lval);
 		this.pub = new PubKey(pub);
 	}
