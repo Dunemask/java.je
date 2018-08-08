@@ -26,7 +26,13 @@ public class CryptoUtil {
 	 * */
 	public static void encryptFile(PubKey key,File file) {
 		var in = IOUtil.getBytes(IOUtil.FTU(file));
-		var encrypted = CryptoUtil.encrypt(key, in);
+		byte[] encrypted = null;
+		try {
+		encrypted = CryptoUtil.encrypt(key, in);
+		}catch(java.lang.ArithmeticException e) {
+			throw new RuntimeException("Ensure data is less than 200MB!");
+		}
+		
 		file.delete();
 		IOUtil.writeBytes(encrypted, file);
 	}
