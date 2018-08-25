@@ -4,6 +4,8 @@
 package aug;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -16,25 +18,43 @@ public class AugTest {
 	
 	public static void main(String[] args) {
 		var rand = new Random();
-		int ss = 2;
+		int ss = 1;
+		int nodeSize = 3;
 		int lc = 5;
 		var subs = new ArrayList<FoodBot>(ss);
-		for(int i=0;i<subs.size();i++) {
-			var fb = new FoodBot(3);
-			if(rand.nextBoolean()==true) {
-				fb.pos = 1;
-			}else {
-				fb.pos = -1;
+		
+		var food = new ArrayList<Integer>();
+		for(int i=0;i<3;i++) {
+			food.add(rand.nextInt(8));
+		}
+		
+		for(int i=0;i<ss;i++) {
+			var fb = new FoodBot(nodeSize);
+			var ls = new ArrayList<Float>();
+			for(int c=0;c<fb.inodes.length;c++) {
+				ls.add(Float.valueOf(fb.inodes[c]));
 			}
-			fb.lastMove = fb.pos;
+			Collections.sort(ls);
+			for(int c=0;c<ls.size();c++) {
+				fb.inodes[c] = ls.get(c);
+			}
+			System.out.println(ls);
 			subs.add(fb);
 		}
 		
-		int foodDis = rand.nextInt(10);
-		System.out.println(subs.get(0).inodes.length);
 		
-		
-		
+		subs.get(0);
+		var fb = subs.get(0);
+		//int move = move(food,fb);
+		/*for(int i=0;i<fb.inodes.length;i++) {
+			System.out.println(fb.inodes[i]);
+		}
+		System.out.println("___________");
+		for(int i=0;i<fb.onodes.length;i++) {
+			System.out.println(fb.onodes[i]);
+		}*/
+
+		//System.out.println("POS:"+fb.pos+",MOVE"+move+",Loc:"+food);
 		
 		
 		
@@ -47,34 +67,34 @@ public class AugTest {
 	}
 	
 	
-	public static int move(FoodBot cb) {
+	public static int move(int food,FoodBot cb) {
 		int move = 0;
-		/*int res1=0;
-		int res2=0;
-		if(warmer(res1,res2)) {
-			move = cb.lastMove;
+		float[] con = new float[4];
+		con[0]= 0;
+		con[con.length-1]=0;
+		
+		if(food>cb.inodes[1]) {
+			con[1] = .9f;
+			con[2] = -.9f;
+					
 		}else {
-			
-		}*/
+			con[2] = .9f;
+			con[1] = -.9f;
+		}
+		
+		
+		cb.runLayer(con);
+		
+		
+		
+		
+		float res1=cb.onodes[0];
+		float res2=cb.onodes[1];
+		System.out.println(res1+"R,L"+res2);
 		
 		
 		return move;
 	}
-	
-	/** Returns if Choice 1 is the prominent choice
-	 * 
-	 * */
-	public static boolean warmer(int res1,int res2) {
-		return res1>res2;
-	}
-	
-	
-	public static double connection() {
-		int con = 0;
-		return con;
-	}
-	
-	
 	
 	
 	
