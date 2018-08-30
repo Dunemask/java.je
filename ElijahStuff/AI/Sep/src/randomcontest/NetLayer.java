@@ -90,6 +90,10 @@ public class NetLayer {
 		
 	}
 
+	
+	public Onode[] getOnodes() {
+		return this.onodes;
+	}
 
 	/**
 	 * @return the connections
