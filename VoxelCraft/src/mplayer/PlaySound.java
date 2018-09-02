@@ -1,6 +1,3 @@
-/**
- * 
- */
 package mplayer;
 
 import java.io.File;
@@ -14,10 +11,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import mc.ResourceHandler;
 
-/**
- * @author Dunemask
- *
- */
 public class PlaySound {
 	private static boolean init = false;
 	public static boolean overlapSongs = false;
@@ -202,8 +195,4 @@ public class PlaySound {
 	
 	
 	
-	
-	
-	
-
 }
