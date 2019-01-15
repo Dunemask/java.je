@@ -9,16 +9,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import dunemask.objects.DMediaPlayer;
 import dunemask.util.StringUtil;
 import minerender.Block;
 import minerender.FileControl;
 import minerender.Vector3;
 import minerender.VoxelCt;
 import mplayer.PlaySound;
-import mplayer.Sound;
 import mplayer.SoundEngine;
-import mplayer.SoundHandler;
 
 /**
  * @author Dunemask
@@ -123,7 +120,7 @@ public class MineCommands {
 				}
 				try {
 				//System.out.println(SoundHandler.loadSong(com[2])+":"+com[2]);
-				Sound wanted = SoundHandler.loadSong(com[2]);
+				
 				//PlaySound.playSound(wanted);
 				}catch(Exception e) {
 					Minecraft.vx.printText("Could Not Play|Find "+com[2]);
